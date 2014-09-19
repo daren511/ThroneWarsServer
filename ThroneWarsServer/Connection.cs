@@ -49,7 +49,7 @@ namespace ThroneWarsServer
             }
         }
 
-
+        
 
         private void ErrorMessage(OracleException Ex)
         {
