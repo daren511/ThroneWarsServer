@@ -10,7 +10,7 @@ namespace ThroneWarsServer
     {
         static void Main(string[] args)
         {
-            int test;
+            
         }
     }
 }
