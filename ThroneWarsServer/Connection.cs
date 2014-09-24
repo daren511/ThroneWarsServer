@@ -10,7 +10,7 @@ namespace ThroneWarsServer
 
     class Connection
     {
-        private OracleConnection conn = null;
+        public OracleConnection conn { get; private set; }
         private static Connection instance;
         public static Connection GetInstance()
         {
@@ -31,9 +31,8 @@ namespace ThroneWarsServer
                + "(CONNECT_DATA=(SERVICE_NAME=ORCL)))";
 
                 String ChaineConnexion = "Data Source=" + Dsource
-                + ";User Id='Throne'; Password ='Warst'";
-                conn = new OracleConnection();
-                conn.ConnectionString = ChaineConnexion;
+                + ";User Id=THRONE; Password =Warst";
+                conn = new OracleConnection(ChaineConnexion);
 
                 conn.Open();
 
@@ -45,27 +44,7 @@ namespace ThroneWarsServer
             }
             catch (OracleException ex)
             {
-                ErrorMessage(ex);
-            }
-        }
-
-        
-
-        private void ErrorMessage(OracleException Ex)
-        {
-            switch (Ex.Number)
-            {
-                case 1017:
-                    Console.WriteLine("*Erreur Usager/Mot de passe");
-                    break;
-                case 12170:
-                    Console.WriteLine("Erreur 12170:La base de données est indisponible,réessayer plus tard");
-                    break;
-                case 12543:
-                    Console.WriteLine("Erreur 12543:Connexion impossible,Vérifiez votre connection internet");
-                    break;
-                default: Console.WriteLine(Ex.Message.ToString());
-                    break;
+                Erreur.ErrorMessage(ex);
             }
         }
     }

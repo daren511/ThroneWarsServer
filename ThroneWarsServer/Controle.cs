@@ -1,0 +1,122 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Security.Cryptography;
+using System.Globalization;
+using Oracle.DataAccess.Client;
+
+namespace ThroneWarsServer
+{
+
+    
+    class Controle
+    {
+        private static int SaltValueSize = 16;
+        public static bool insertplayer(String username,String email,String password)
+        {
+            OracleConnection conn = Connection.GetInstance().conn;
+
+            string sqlAjout = "insert into joueurs (username,EMAIL,Hash_KEY)" +
+                    " VALUES(:username,:EMAIL,:Hash_KEY)";
+            try
+            {
+
+                OracleCommand oraAjout = new OracleCommand(sqlAjout, conn);
+
+                OracleParameter OraParaUsername = new OracleParameter(":username", OracleDbType.Varchar2, 40);
+                OracleParameter OraParamEmail = new OracleParameter(":EMAIL", OracleDbType.Varchar2, 40);
+                OracleParameter OraParamHashKey = new OracleParameter(":Hash_KEY", OracleDbType.Char, 75);  //Ajout
+
+                OraParaUsername.Value = username;
+                OraParamEmail.Value = email;
+                OraParamHashKey.Value = Controle.HashPassword(password, null, System.Security.Cryptography.SHA256.Create());
+
+
+                oraAjout.Parameters.Add(OraParaUsername);
+                oraAjout.Parameters.Add(OraParamEmail);
+                oraAjout.Parameters.Add(OraParamHashKey);
+
+                oraAjout.ExecuteNonQuery();
+
+                return true;
+            }
+            catch (OracleException ex)
+            {
+                Erreur.ErrorMessage(ex);
+                return false;
+            }
+
+           
+        }
+
+        private static string GenerateSaltValue()
+        {
+            UnicodeEncoding utf16 = new UnicodeEncoding();
+
+            if (utf16 != null)
+            {
+                    string saltValueString = "DECDEADDEAD";
+                    return saltValueString;
+            }
+
+            return null;
+        }
+
+        public static string HashPassword(string clearData, string saltValue, HashAlgorithm hash)
+        {
+            UnicodeEncoding encoding = new UnicodeEncoding();
+
+            if (clearData != null && hash != null && encoding != null)
+            {
+                // If the salt string is null or the length is invalid then
+                // create a new valid salt value.
+
+                if (saltValue == null)
+                {
+                    // Generate a salt string.
+                    saltValue = GenerateSaltValue();
+                }
+
+                // Convert the salt string and the password string to a single
+                // array of bytes. Note that the password string is Unicode and
+                // therefore may or may not have a zero in every other byte.
+
+                byte[] binarySaltValue = new byte[SaltValueSize];
+
+                binarySaltValue[0] = byte.Parse(saltValue.Substring(0, 2), System.Globalization.NumberStyles.HexNumber, CultureInfo.InvariantCulture.NumberFormat);
+                binarySaltValue[1] = byte.Parse(saltValue.Substring(2, 2), System.Globalization.NumberStyles.HexNumber, CultureInfo.InvariantCulture.NumberFormat);
+                binarySaltValue[2] = byte.Parse(saltValue.Substring(4, 2), System.Globalization.NumberStyles.HexNumber, CultureInfo.InvariantCulture.NumberFormat);
+                binarySaltValue[3] = byte.Parse(saltValue.Substring(6, 2), System.Globalization.NumberStyles.HexNumber, CultureInfo.InvariantCulture.NumberFormat);
+
+                byte[] valueToHash = new byte[SaltValueSize + encoding.GetByteCount(clearData)];
+                byte[] binaryPassword = encoding.GetBytes(clearData);
+
+                // Copy the salt value and the password to the hash buffer.
+
+                binarySaltValue.CopyTo(valueToHash, 0);
+                binaryPassword.CopyTo(valueToHash, SaltValueSize);
+
+                byte[] hashValue = hash.ComputeHash(valueToHash);
+
+                // The hashed password is the salt plus the hash value (as a string).
+
+                string hashedPassword = saltValue;
+
+                foreach (byte hexdigit in hashValue)
+                {
+                    hashedPassword += hexdigit.ToString("X2", CultureInfo.InvariantCulture.NumberFormat);
+                }
+
+                // Return the hashed password as a string.
+
+                return hashedPassword;
+            }
+
+            return null;
+        }
+
+
+    }
+}
