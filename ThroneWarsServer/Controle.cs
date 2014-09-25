@@ -14,7 +14,48 @@ namespace ThroneWarsServer
     class Controle
     {
         private static int SaltValueSize = 16;
-        public static bool insertplayer(String username,String email,String password)
+
+
+        //TEMPORAIRE VERIFIER Si jid ou USERNAME
+        public static bool updatePlayer(int jid,string username,string email,string password)
+        {
+            OracleConnection conn = Connection.GetInstance().conn;
+
+            string sqlupdate = "update joueurs set email=:EMAIL,Hash_KEY=:Hash_KEY where jid=:jid";
+
+            try
+            {
+
+                OracleCommand oraUpdate = new OracleCommand(sqlupdate, conn);
+
+                //OracleParameter OraParaUsername = new OracleParameter(":username", OracleDbType.Varchar2, 40);
+                OracleParameter OraParamEmail = new OracleParameter(":EMAIL", OracleDbType.Varchar2, 40);
+                OracleParameter OraParamHashKey = new OracleParameter(":Hash_KEY", OracleDbType.Char, 75);  //Ajout
+                OracleParameter OraParamJid = new OracleParameter(":jid", OracleDbType.Int32);
+
+                //OraParaUsername.Value = username;
+                OraParamEmail.Value = email;
+                OraParamHashKey.Value = Controle.HashPassword(password, null, System.Security.Cryptography.SHA256.Create());
+                OraParamJid.Value = jid;
+
+
+                //oraUpdate.Parameters.Add(OraParaUsername);
+                oraUpdate.Parameters.Add(OraParamEmail);
+                oraUpdate.Parameters.Add(OraParamHashKey);
+                oraUpdate.Parameters.Add(OraParamJid);
+
+                oraUpdate.ExecuteNonQuery();
+
+                return true;
+            }
+            catch (OracleException ex)
+            {
+                Erreur.ErrorMessage(ex);
+                return false;
+            }
+        }
+
+        public static bool insertplayer(string username,string email,string password)
         {
             OracleConnection conn = Connection.GetInstance().conn;
 
@@ -47,8 +88,6 @@ namespace ThroneWarsServer
                 Erreur.ErrorMessage(ex);
                 return false;
             }
-
-           
         }
 
         private static string GenerateSaltValue()
