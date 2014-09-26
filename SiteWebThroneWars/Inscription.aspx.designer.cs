@@ -10,6 +10,6 @@
 namespace SiteWebThroneWars {
     
     
-    public partial class Page_Principale {
+    public partial class Inscription {
     }
 }
