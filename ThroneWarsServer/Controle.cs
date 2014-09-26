@@ -15,6 +15,37 @@ namespace ThroneWarsServer
     {
         private static int SaltValueSize = 16;
 
+        public static bool confirmAccount(int jid)
+        {
+            OracleConnection conn = Connection.GetInstance().conn;
+
+            string sqlconfirmation = "update joueurs set CONFIRMED=:CONFIRMED where jid=:jid";
+
+            try
+            {
+                OracleCommand oraUpdate = new OracleCommand(sqlconfirmation, conn);
+
+                OracleParameter OraParamConfirmed = new OracleParameter(":CONFIRMED", OracleDbType.Char, 1);
+                OracleParameter OraParamJid = new OracleParameter(":jid", OracleDbType.Int32);
+
+                OraParamConfirmed.Value = 'T';
+                OraParamJid.Value = jid;
+
+                oraUpdate.Parameters.Add(OraParamConfirmed);
+                oraUpdate.Parameters.Add(OraParamJid);
+
+                oraUpdate.ExecuteNonQuery();
+
+                return true;
+            }
+            catch (OracleException ex)
+            {
+                Erreur.ErrorMessage(ex);
+                return false;
+            }
+        }
+
+
 
         //TEMPORAIRE VERIFIER Si jid ou USERNAME
         public static bool updatePlayer(int jid,string username,string email,string password)
