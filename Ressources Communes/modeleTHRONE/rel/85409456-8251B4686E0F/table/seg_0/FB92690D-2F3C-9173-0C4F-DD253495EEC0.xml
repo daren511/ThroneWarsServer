@@ -1,0 +1,129 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="FB92690D-2F3C-9173-0C4F-DD253495EEC0" name="MATCHSJOUEURS">
+<createdBy>201093812</createdBy>
+<createdTime>2014-09-10 16:07:29 UTC</createdTime>
+<generatorID>Généré par l&apos;utilisateur</generatorID>
+<ownerDesignName>modeleTHRONE</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="MID" id="56304926-D0D7-5CA7-DF1E-80A39C314E5C">
+<createdBy>201093812</createdBy>
+<createdTime>2014-09-10 16:09:25 UTC</createdTime>
+<generatorID>Généré par l&apos;utilisateur</generatorID>
+<ownerDesignName>modeleTHRONE</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>10</dataTypePrecision>
+<delegate>45895568-0361-2D0F-E0C9-AECD732EEAAA</delegate>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="75DAAE20-88B6-CC6B-D988-EF4886C82445" referredColumn="45895568-0361-2D0F-E0C9-AECD732EEAAA"/>
+</associations>
+</Column>
+<Column name="JID" id="696C77B3-ADFB-CB40-ADDA-74FADCBD0ED3">
+<createdBy>201093812</createdBy>
+<createdTime>2014-09-10 16:09:25 UTC</createdTime>
+<generatorID>Généré par l&apos;utilisateur</generatorID>
+<ownerDesignName>modeleTHRONE</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>10</dataTypePrecision>
+<delegate>3E9B1026-9FFC-16ED-EA14-A90C11A1DAAA</delegate>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="3E39DC26-6E75-3ABC-23A0-31777E2BCCE0" referredColumn="3E9B1026-9FFC-16ED-EA14-A90C11A1DAAA"/>
+</associations>
+</Column>
+<Column name="GUID" id="1AC1CACD-CFBD-FFB2-B4EF-37713A76020E">
+<createdBy>201093812</createdBy>
+<createdTime>2014-09-10 16:09:25 UTC</createdTime>
+<generatorID>Généré par l&apos;utilisateur</generatorID>
+<ownerDesignName>modeleTHRONE</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>10</dataTypePrecision>
+<delegate>069E68CD-8713-3243-F6EC-6BCFBED5B4A8</delegate>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="2E08F288-1D10-367B-CA44-81C7A9B0AAF6" referredColumn="069E68CD-8713-3243-F6EC-6BCFBED5B4A8"/>
+</associations>
+</Column>
+<Column name="KILLS" id="898A4C4E-1D47-F5BE-5872-FB89459F11D9">
+<createdBy>201093812</createdBy>
+<createdTime>2014-09-10 16:09:25 UTC</createdTime>
+<generatorID>Généré par l&apos;utilisateur</generatorID>
+<ownerDesignName>modeleTHRONE</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>1</dataTypePrecision>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="ISDEAD" id="976F3791-E842-7ABB-3B55-F310A38B112B">
+<createdBy>201093812</createdBy>
+<createdTime>2014-09-10 16:09:43 UTC</createdTime>
+<generatorID>Généré par l&apos;utilisateur</generatorID>
+<ownerDesignName>modeleTHRONE</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT006</logicalDatatype>
+<dataTypeSize>1</dataTypeSize>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="0FDA161F-2F4C-9CA5-C0BB-98D16BBEAB31" name="MATCHSJOUEURS_PK">
+<createdBy>201093812</createdBy>
+<createdTime>2014-09-10 16:09:25 UTC</createdTime>
+<generatorID>Généré par l&apos;utilisateur</generatorID>
+<ownerDesignName>modeleTHRONE</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="56304926-D0D7-5CA7-DF1E-80A39C314E5C"/>
+<colUsage columnID="696C77B3-ADFB-CB40-ADDA-74FADCBD0ED3"/>
+<colUsage columnID="1AC1CACD-CFBD-FFB2-B4EF-37713A76020E"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="DBCB7E3E-BE2A-6AEC-9B5E-DC104ABEA748" name="MATCHSJOUEURS_PERSONNAGES_FK">
+<createdBy>201093812</createdBy>
+<createdTime>2014-09-10 16:11:11 UTC</createdTime>
+<generatorID>Généré par l&apos;utilisateur</generatorID>
+<ownerDesignName>modeleTHRONE</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="1AC1CACD-CFBD-FFB2-B4EF-37713A76020E"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="2BF9888B-E810-A49E-0DC5-C51BC4D661F8" name="MATCHSJOUEURS_JOUEURS_FK">
+<createdBy>201093812</createdBy>
+<createdTime>2014-09-10 16:11:11 UTC</createdTime>
+<generatorID>Généré par l&apos;utilisateur</generatorID>
+<ownerDesignName>modeleTHRONE</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="696C77B3-ADFB-CB40-ADDA-74FADCBD0ED3"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="61836DCE-B90B-4A43-DCA7-C871DC54101D" name="MATCHSJOUEURS_MATCHS_FK">
+<createdBy>201093812</createdBy>
+<createdTime>2014-09-10 16:11:11 UTC</createdTime>
+<generatorID>Généré par l&apos;utilisateur</generatorID>
+<ownerDesignName>modeleTHRONE</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="56304926-D0D7-5CA7-DF1E-80A39C314E5C"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

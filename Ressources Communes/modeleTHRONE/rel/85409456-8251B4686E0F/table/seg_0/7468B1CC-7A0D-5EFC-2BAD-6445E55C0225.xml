@@ -1,0 +1,107 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="7468B1CC-7A0D-5EFC-2BAD-6445E55C0225" name="JOUEURS">
+<createdBy>201093812</createdBy>
+<createdTime>2014-09-10 13:16:10 UTC</createdTime>
+<generatorID>Généré par l&apos;utilisateur</generatorID>
+<ownerDesignName>modeleTHRONE</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="JID" id="3E9B1026-9FFC-16ED-EA14-A90C11A1DAAA">
+<createdBy>201093812</createdBy>
+<createdTime>2014-09-10 13:20:16 UTC</createdTime>
+<generatorID>Généré par l&apos;utilisateur</generatorID>
+<ownerDesignName>modeleTHRONE</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>10</dataTypePrecision>
+<autoIncrementColumn>true</autoIncrementColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<autoIncrementSequenceName>SEQ_JOUEURS</autoIncrementSequenceName>
+<autoIncrementTriggerName>INC_JOUEURS</autoIncrementTriggerName>
+</Column>
+<Column name="USERNAME" id="F1D83C1B-EC25-02DC-6E20-1438468CCA89">
+<createdBy>201093812</createdBy>
+<createdTime>2014-09-10 13:20:16 UTC</createdTime>
+<generatorID>Généré par l&apos;utilisateur</generatorID>
+<ownerDesignName>modeleTHRONE</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>32</dataTypeSize>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="EMAIL" id="23871D5C-2791-3115-80A4-1B4555464429">
+<createdBy>201093812</createdBy>
+<createdTime>2014-09-10 13:25:13 UTC</createdTime>
+<generatorID>Généré par l&apos;utilisateur</generatorID>
+<ownerDesignName>modeleTHRONE</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>255</dataTypeSize>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="Hash_KEY" id="EDBE5B90-D49A-20D6-D397-4F20533383FE">
+<createdBy>201093812</createdBy>
+<createdTime>2014-09-10 13:29:17 UTC</createdTime>
+<generatorID>Généré par l&apos;utilisateur</generatorID>
+<ownerDesignName>modeleTHRONE</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>40</dataTypeSize>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="JOINDATE" id="E7A36AC1-D5D2-772A-A19A-43A9B794ED2C">
+<createdBy>201093812</createdBy>
+<createdTime>2014-09-10 13:30:14 UTC</createdTime>
+<generatorID>Généré par l&apos;utilisateur</generatorID>
+<ownerDesignName>modeleTHRONE</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="MONEY" id="37A7B001-BD5F-8394-210C-305E28E7AF00">
+<createdBy>201093812</createdBy>
+<createdTime>2014-09-10 14:30:40 UTC</createdTime>
+<generatorID>Généré par l&apos;utilisateur</generatorID>
+<ownerDesignName>modeleTHRONE</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>20</dataTypePrecision>
+<usesDefaultValue>true</usesDefaultValue>
+<defaultValue>100</defaultValue>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="827CC3CC-C30C-AAA4-18BE-1A467624DF9D" name="Joueurs_PK">
+<createdBy>201093812</createdBy>
+<createdTime>2014-09-10 13:20:16 UTC</createdTime>
+<generatorID>Généré par l&apos;utilisateur</generatorID>
+<ownerDesignName>modeleTHRONE</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="3E9B1026-9FFC-16ED-EA14-A90C11A1DAAA"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="03F11805-CF3C-312C-981A-42E526099124" name="Joueurs__UN">
+<createdBy>201093812</createdBy>
+<createdTime>2014-09-10 15:52:17 UTC</createdTime>
+<generatorID>Généré par l&apos;utilisateur</generatorID>
+<ownerDesignName>modeleTHRONE</ownerDesignName>
+<indexState>Unique Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="F1D83C1B-EC25-02DC-6E20-1438468CCA89"/>
+<colUsage columnID="23871D5C-2791-3115-80A4-1B4555464429"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

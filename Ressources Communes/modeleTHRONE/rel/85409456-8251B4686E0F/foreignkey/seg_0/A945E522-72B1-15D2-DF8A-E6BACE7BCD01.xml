@@ -1,0 +1,14 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="A945E522-72B1-15D2-DF8A-E6BACE7BCD01" name="HABILITE_LEVELPERSONNAGES_FK">
+<createdBy>201093812</createdBy>
+<createdTime>2014-09-17 14:10:20 UTC</createdTime>
+<generatorID>Généré par l&apos;utilisateur</generatorID>
+<ownerDesignName>modeleTHRONE</ownerDesignName>
+<containerWithKeyObject>7617576F-519C-EADC-66FC-E63B6FC34EC3</containerWithKeyObject>
+<deleteRule>NO ACTION</deleteRule>
+<localFKIndex>0ACC227F-2B89-7A8B-63E9-1805164A1C9F</localFKIndex>
+<keyObject>6801CA4E-F5AA-CF7D-2722-084020CE0C0B</keyObject>
+<mandatory>true</mandatory>
+<transferable>true</transferable>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>

@@ -1,0 +1,102 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="3D9D45F8-45BC-9D84-E4D0-664FEAA363D3" name="ITEMS">
+<createdBy>201093812</createdBy>
+<createdTime>2014-09-10 15:56:56 UTC</createdTime>
+<generatorID>Généré par l&apos;utilisateur</generatorID>
+<ownerDesignName>modeleTHRONE</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="IID" id="00851714-C333-828D-FCE3-04E1711F77A9">
+<createdBy>201093812</createdBy>
+<createdTime>2014-09-10 15:57:22 UTC</createdTime>
+<generatorID>Généré par l&apos;utilisateur</generatorID>
+<ownerDesignName>modeleTHRONE</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>10</dataTypePrecision>
+<autoIncrementColumn>true</autoIncrementColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<autoIncrementSequenceName>SEQ_ITEM</autoIncrementSequenceName>
+<autoIncrementTriggerName>INC_ITEM</autoIncrementTriggerName>
+</Column>
+<Column name="NOM" id="FBF2FDAE-3673-B58E-CCE2-C31518E9AE89">
+<createdBy>201093812</createdBy>
+<createdTime>2014-09-10 15:59:31 UTC</createdTime>
+<generatorID>Généré par l&apos;utilisateur</generatorID>
+<ownerDesignName>modeleTHRONE</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>40</dataTypeSize>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="CID" id="50573D8E-CF0D-4F15-FD47-DB2CBDC7737E">
+<createdBy>201093812</createdBy>
+<createdTime>2014-09-10 15:59:31 UTC</createdTime>
+<generatorID>Généré par l&apos;utilisateur</generatorID>
+<ownerDesignName>modeleTHRONE</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>10</dataTypePrecision>
+<delegate>95CD0321-120A-0B60-282A-EF04CC3BF2A6</delegate>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="3DDFAEAA-BE58-38A0-ED59-C85B05A11B56" referredColumn="95CD0321-120A-0B60-282A-EF04CC3BF2A6"/>
+</associations>
+</Column>
+<Column name="LEVEL" id="CAED776C-6508-0A54-A1ED-E91093CFB32F">
+<createdBy>201093812</createdBy>
+<createdTime>2014-09-10 19:36:33 UTC</createdTime>
+<generatorID>Généré par l&apos;utilisateur</generatorID>
+<ownerDesignName>modeleTHRONE</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>2</dataTypePrecision>
+<delegate>B6C3855B-9473-154F-E913-6829D14005F3</delegate>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="D7C4BE48-9322-0119-78B5-F0383EFCE9D0" referredColumn="B6C3855B-9473-154F-E913-6829D14005F3"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="7F26A6D8-241F-2E8C-8487-3C0DE7F5D6F6" name="ITEMS_PK">
+<createdBy>201093812</createdBy>
+<createdTime>2014-09-10 15:57:22 UTC</createdTime>
+<generatorID>Généré par l&apos;utilisateur</generatorID>
+<ownerDesignName>modeleTHRONE</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="00851714-C333-828D-FCE3-04E1711F77A9"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="5ECAE2D9-7C43-812F-2953-3CD8A5E033F9" name="ITEMS_CLASSES_FK">
+<createdBy>201093812</createdBy>
+<createdTime>2014-09-10 15:59:31 UTC</createdTime>
+<generatorID>Généré par l&apos;utilisateur</generatorID>
+<ownerDesignName>modeleTHRONE</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="50573D8E-CF0D-4F15-FD47-DB2CBDC7737E"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="BEC846CA-5F61-A610-82D7-4DEE90FFF200" name="ITEMS_LEVELPERSONNAGES_FK">
+<createdBy>201093812</createdBy>
+<createdTime>2014-09-17 14:09:27 UTC</createdTime>
+<generatorID>Généré par l&apos;utilisateur</generatorID>
+<ownerDesignName>modeleTHRONE</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="CAED776C-6508-0A54-A1ED-E91093CFB32F"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

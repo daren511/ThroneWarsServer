@@ -1,0 +1,134 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="7D019ED0-8F9D-625E-8A0E-09635DECCCC8" name="CLASSESLEVELS">
+<createdBy>201093812</createdBy>
+<createdTime>2014-09-17 17:24:19 UTC</createdTime>
+<generatorID>Généré par l&apos;utilisateur</generatorID>
+<ownerDesignName>modeleTHRONE</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="CID" id="8488E9DE-AD8E-DF4B-DA4C-E042C77C6AC9">
+<createdBy>201093812</createdBy>
+<createdTime>2014-09-17 17:24:32 UTC</createdTime>
+<generatorID>Généré par l&apos;utilisateur</generatorID>
+<ownerDesignName>modeleTHRONE</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>10</dataTypePrecision>
+<delegate>95CD0321-120A-0B60-282A-EF04CC3BF2A6</delegate>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="3DC584C2-D18B-BDDC-2ABB-DE995C42383D" referredColumn="95CD0321-120A-0B60-282A-EF04CC3BF2A6"/>
+</associations>
+</Column>
+<Column name="LEVEL" id="5557E2EB-4CA6-08B8-6921-98B9145511AB">
+<createdBy>201093812</createdBy>
+<createdTime>2014-09-17 17:24:42 UTC</createdTime>
+<generatorID>Généré par l&apos;utilisateur</generatorID>
+<ownerDesignName>modeleTHRONE</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>2</dataTypePrecision>
+<delegate>B6C3855B-9473-154F-E913-6829D14005F3</delegate>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="4D3EA8EC-ECBD-FF8D-AA01-0B9E2D812BF5" referredColumn="B6C3855B-9473-154F-E913-6829D14005F3"/>
+</associations>
+</Column>
+<Column name="LIFE" id="08EDDABB-A881-B209-D0FB-5FC264DE3455">
+<createdBy>201093812</createdBy>
+<createdTime>2014-09-17 17:24:42 UTC</createdTime>
+<generatorID>Généré par l&apos;utilisateur</generatorID>
+<ownerDesignName>modeleTHRONE</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>4</dataTypePrecision>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="WATK" id="33897F02-1031-0352-ECB0-E67620E92BF6">
+<createdBy>201093812</createdBy>
+<createdTime>2014-09-17 17:24:51 UTC</createdTime>
+<generatorID>Généré par l&apos;utilisateur</generatorID>
+<ownerDesignName>modeleTHRONE</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>4</dataTypePrecision>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="WDEF" id="BD1F95DB-5139-0704-6E8D-CFB7D83E5BBB">
+<createdBy>201093812</createdBy>
+<createdTime>2014-09-17 17:27:10 UTC</createdTime>
+<generatorID>Généré par l&apos;utilisateur</generatorID>
+<ownerDesignName>modeleTHRONE</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>4</dataTypePrecision>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="MATK" id="0808249A-4F39-1742-7B6F-BB2C274CE440">
+<createdBy>201093812</createdBy>
+<createdTime>2014-09-17 17:27:10 UTC</createdTime>
+<generatorID>Généré par l&apos;utilisateur</generatorID>
+<ownerDesignName>modeleTHRONE</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>4</dataTypePrecision>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="MDEF" id="B27DA0C2-818F-F9CF-BE9D-A2439E886C3F">
+<createdBy>201093812</createdBy>
+<createdTime>2014-09-17 17:27:10 UTC</createdTime>
+<generatorID>Généré par l&apos;utilisateur</generatorID>
+<ownerDesignName>modeleTHRONE</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>4</dataTypePrecision>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="ED3CDD03-6F8F-16B9-E8B7-27612066240D" name="CLASSESLEVELS_PK">
+<createdBy>201093812</createdBy>
+<createdTime>2014-09-17 17:27:10 UTC</createdTime>
+<generatorID>Généré par l&apos;utilisateur</generatorID>
+<ownerDesignName>modeleTHRONE</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="8488E9DE-AD8E-DF4B-DA4C-E042C77C6AC9"/>
+<colUsage columnID="5557E2EB-4CA6-08B8-6921-98B9145511AB"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="F8BBD648-0CD4-A7BC-83BE-D152E44E86E3" name="CLASSESLEVELS_CLASSES_FK">
+<createdBy>201093812</createdBy>
+<createdTime>2014-09-17 17:36:36 UTC</createdTime>
+<generatorID>Généré par l&apos;utilisateur</generatorID>
+<ownerDesignName>modeleTHRONE</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="8488E9DE-AD8E-DF4B-DA4C-E042C77C6AC9"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="A1189551-182E-A6CE-4336-B8D0701D1212" name="CLASSESLEVELS_LVLPERSO_FK">
+<createdBy>201093812</createdBy>
+<createdTime>2014-09-17 17:36:36 UTC</createdTime>
+<generatorID>Généré par l&apos;utilisateur</generatorID>
+<ownerDesignName>modeleTHRONE</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="5557E2EB-4CA6-08B8-6921-98B9145511AB"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

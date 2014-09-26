@@ -1,0 +1,89 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="1B1DD3E5-8D18-DBB0-C22C-8BE46D6E0152" name="INVENTAIREJOUEUR">
+<createdBy>201093812</createdBy>
+<createdTime>2014-09-10 17:04:07 UTC</createdTime>
+<generatorID>Généré par l&apos;utilisateur</generatorID>
+<ownerDesignName>modeleTHRONE</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="JID" id="3B839171-CB95-2923-CEA8-437D9EEAC033">
+<createdBy>201093812</createdBy>
+<createdTime>2014-09-10 17:04:36 UTC</createdTime>
+<generatorID>Généré par l&apos;utilisateur</generatorID>
+<ownerDesignName>modeleTHRONE</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>10</dataTypePrecision>
+<delegate>3E9B1026-9FFC-16ED-EA14-A90C11A1DAAA</delegate>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="25033518-A25E-DD57-BEE9-F1CD42DB5B97" referredColumn="3E9B1026-9FFC-16ED-EA14-A90C11A1DAAA"/>
+</associations>
+</Column>
+<Column name="IID" id="2393B021-49E6-D2DC-A2C0-561687642D80">
+<createdBy>201093812</createdBy>
+<createdTime>2014-09-10 17:04:36 UTC</createdTime>
+<generatorID>Généré par l&apos;utilisateur</generatorID>
+<ownerDesignName>modeleTHRONE</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>10</dataTypePrecision>
+<delegate>00851714-C333-828D-FCE3-04E1711F77A9</delegate>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="FCF1E8B8-36BC-B34C-5BD4-D727A7F1DEAA" referredColumn="00851714-C333-828D-FCE3-04E1711F77A9"/>
+</associations>
+</Column>
+<Column name="QUANTITY" id="2C06A77F-EFED-9633-23D6-3EB82592F2B6">
+<createdBy>201093812</createdBy>
+<createdTime>2014-09-10 19:15:54 UTC</createdTime>
+<generatorID>Généré par l&apos;utilisateur</generatorID>
+<ownerDesignName>modeleTHRONE</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>2</dataTypePrecision>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="D49E7EC8-B530-5E26-3920-5B3A64E95F3F" name="ITEMSJOUEURS_PK">
+<createdBy>201093812</createdBy>
+<createdTime>2014-09-10 17:04:36 UTC</createdTime>
+<generatorID>Généré par l&apos;utilisateur</generatorID>
+<ownerDesignName>modeleTHRONE</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="3B839171-CB95-2923-CEA8-437D9EEAC033"/>
+<colUsage columnID="2393B021-49E6-D2DC-A2C0-561687642D80"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="291755E8-17F4-5651-7D74-5A4D64102577" name="ITEMSJOUEURS_ITEMS_FK">
+<createdBy>201093812</createdBy>
+<createdTime>2014-09-10 17:04:58 UTC</createdTime>
+<generatorID>Généré par l&apos;utilisateur</generatorID>
+<ownerDesignName>modeleTHRONE</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="2393B021-49E6-D2DC-A2C0-561687642D80"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="03941001-EE52-BF51-134B-69D35F55D0F0" name="ITEMSJOUEURS_JOUEURS_FK">
+<createdBy>201093812</createdBy>
+<createdTime>2014-09-10 17:04:58 UTC</createdTime>
+<generatorID>Généré par l&apos;utilisateur</generatorID>
+<ownerDesignName>modeleTHRONE</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="3B839171-CB95-2923-CEA8-437D9EEAC033"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

@@ -1,0 +1,50 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="19172EF9-1F81-BD7F-785A-0138C00AC2DE" name="CLASSES">
+<createdBy>201093812</createdBy>
+<createdTime>2014-09-10 15:47:11 UTC</createdTime>
+<generatorID>Généré par l&apos;utilisateur</generatorID>
+<ownerDesignName>modeleTHRONE</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="CID" id="95CD0321-120A-0B60-282A-EF04CC3BF2A6">
+<createdBy>201093812</createdBy>
+<createdTime>2014-09-10 15:47:43 UTC</createdTime>
+<generatorID>Généré par l&apos;utilisateur</generatorID>
+<ownerDesignName>modeleTHRONE</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>10</dataTypePrecision>
+<autoIncrementColumn>true</autoIncrementColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<autoIncrementSequenceName>SEQ_CLASSE</autoIncrementSequenceName>
+<autoIncrementTriggerName>INC_CLASSE</autoIncrementTriggerName>
+</Column>
+<Column name="CNAME" id="BD604553-B62D-0717-B2DF-7CDFA551B993">
+<createdBy>201093812</createdBy>
+<createdTime>2014-09-10 15:49:16 UTC</createdTime>
+<generatorID>Généré par l&apos;utilisateur</generatorID>
+<ownerDesignName>modeleTHRONE</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>40</dataTypeSize>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="0AA22B3E-4B54-B18D-AF55-C9A58E379C7A" name="CLASSES_PK">
+<createdBy>201093812</createdBy>
+<createdTime>2014-09-10 15:47:43 UTC</createdTime>
+<generatorID>Généré par l&apos;utilisateur</generatorID>
+<ownerDesignName>modeleTHRONE</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="95CD0321-120A-0B60-282A-EF04CC3BF2A6"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>
