@@ -11,7 +11,7 @@ namespace ThroneWarsServer
 {
 
     
-    class Controle
+    public class Controle
     {
         private static int SaltValueSize = 16;
 

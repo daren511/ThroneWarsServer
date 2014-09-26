@@ -120,6 +120,12 @@
       <DependentUpon>Stats.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ControleBD\ControleBD.csproj">
+      <Project>{4edee1ef-7c68-46fd-ada8-3834f82ac21f}</Project>
+      <Name>ControleBD</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
