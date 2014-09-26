@@ -45,8 +45,6 @@ namespace ThroneWarsServer
             }
         }
 
-
-
         //TEMPORAIRE VERIFIER Si jid ou USERNAME
         public static bool updatePlayer(int jid,string username,string email,string password)
         {

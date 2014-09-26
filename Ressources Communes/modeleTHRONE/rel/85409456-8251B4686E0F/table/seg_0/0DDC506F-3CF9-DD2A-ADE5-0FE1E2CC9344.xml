@@ -1,0 +1,87 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="0DDC506F-3CF9-DD2A-ADE5-0FE1E2CC9344" name="MATCHS">
+<createdBy>201093812</createdBy>
+<createdTime>2014-09-10 15:59:52 UTC</createdTime>
+<generatorID>Généré par l&apos;utilisateur</generatorID>
+<ownerDesignName>modeleTHRONE</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="MID" id="45895568-0361-2D0F-E0C9-AECD732EEAAA">
+<createdBy>201093812</createdBy>
+<createdTime>2014-09-10 16:00:50 UTC</createdTime>
+<generatorID>Généré par l&apos;utilisateur</generatorID>
+<ownerDesignName>modeleTHRONE</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>10</dataTypePrecision>
+<autoIncrementColumn>true</autoIncrementColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<autoIncrementSequenceName>SEQ_MATCH</autoIncrementSequenceName>
+<autoIncrementTriggerName>INC_MATCH</autoIncrementTriggerName>
+</Column>
+<Column name="DATE" id="C8974AEF-09B1-5184-AA66-850640072A1F">
+<createdBy>201093812</createdBy>
+<createdTime>2014-09-10 16:00:50 UTC</createdTime>
+<generatorID>Généré par l&apos;utilisateur</generatorID>
+<ownerDesignName>modeleTHRONE</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="MAP" id="DED703E3-F19A-4B6D-0E31-69A94F095333">
+<createdBy>201093812</createdBy>
+<createdTime>2014-09-10 16:00:50 UTC</createdTime>
+<generatorID>Généré par l&apos;utilisateur</generatorID>
+<ownerDesignName>modeleTHRONE</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>10</dataTypePrecision>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="WINNER" id="8D77E66D-E154-5B60-64B9-F3EBB2BF27C1">
+<createdBy>201093812</createdBy>
+<createdTime>2014-09-10 16:01:11 UTC</createdTime>
+<generatorID>Généré par l&apos;utilisateur</generatorID>
+<ownerDesignName>modeleTHRONE</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>10</dataTypePrecision>
+<delegate>3E9B1026-9FFC-16ED-EA14-A90C11A1DAAA</delegate>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="E3C0DD36-FC3A-0984-A8FA-B6F1760E480C" referredColumn="3E9B1026-9FFC-16ED-EA14-A90C11A1DAAA"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="12181B88-F4CF-2BFC-4873-C2D6AD910239" name="MATCHS_PK">
+<createdBy>201093812</createdBy>
+<createdTime>2014-09-10 16:00:50 UTC</createdTime>
+<generatorID>Généré par l&apos;utilisateur</generatorID>
+<ownerDesignName>modeleTHRONE</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="45895568-0361-2D0F-E0C9-AECD732EEAAA"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="E38615BC-05EA-D837-2E0F-51918C3AE428" name="MATCHS_Joueurs_FK">
+<createdBy>201093812</createdBy>
+<createdTime>2014-09-10 16:01:39 UTC</createdTime>
+<generatorID>Généré par l&apos;utilisateur</generatorID>
+<ownerDesignName>modeleTHRONE</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="8D77E66D-E154-5B60-64B9-F3EBB2BF27C1"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

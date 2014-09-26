@@ -1,0 +1,94 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="68FFF3BD-A98F-40FE-EF3A-91E86E1CA95D" name="ITEMSPERSONNAGES">
+<createdBy>201093812</createdBy>
+<createdTime>2014-09-10 16:58:50 UTC</createdTime>
+<generatorID>Généré par l&apos;utilisateur</generatorID>
+<ownerDesignName>modeleTHRONE</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="GUID" id="A333664E-DA67-7492-5187-9956748FCE97">
+<createdBy>201093812</createdBy>
+<createdTime>2014-09-10 16:59:43 UTC</createdTime>
+<generatorID>Généré par l&apos;utilisateur</generatorID>
+<ownerDesignName>modeleTHRONE</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>10</dataTypePrecision>
+<delegate>069E68CD-8713-3243-F6EC-6BCFBED5B4A8</delegate>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="DEC93CF4-FAEF-BBC2-8BCE-089B0F3D7501" referredColumn="069E68CD-8713-3243-F6EC-6BCFBED5B4A8"/>
+</associations>
+</Column>
+<Column name="IID" id="9255E858-C5A6-0C76-490F-EA52D26D012B">
+<createdBy>201093812</createdBy>
+<createdTime>2014-09-10 17:00:12 UTC</createdTime>
+<generatorID>Généré par l&apos;utilisateur</generatorID>
+<ownerDesignName>modeleTHRONE</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>10</dataTypePrecision>
+<delegate>2393B021-49E6-D2DC-A2C0-561687642D80</delegate>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="2BEE6223-D2C8-0598-6AFC-02A281A562CD" referredColumn="2393B021-49E6-D2DC-A2C0-561687642D80"/>
+</associations>
+</Column>
+<Column name="JID" id="9FE00B14-5901-B320-C6E7-56AB5F6309FD">
+<createdBy>201093812</createdBy>
+<createdTime>2014-09-10 20:01:31 UTC</createdTime>
+<generatorID>Généré par l&apos;utilisateur</generatorID>
+<ownerDesignName>modeleTHRONE</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>10</dataTypePrecision>
+<delegate>3B839171-CB95-2923-CEA8-437D9EEAC033</delegate>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="2BEE6223-D2C8-0598-6AFC-02A281A562CD" referredColumn="3B839171-CB95-2923-CEA8-437D9EEAC033"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="FB658F13-B3B2-BC2E-4183-C0D7296F7650" name="ITEMSPERSONNAGES_PKv2">
+<createdBy>201093812</createdBy>
+<createdTime>2014-09-17 14:34:49 UTC</createdTime>
+<generatorID>Généré par l&apos;utilisateur</generatorID>
+<ownerDesignName>modeleTHRONE</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="A333664E-DA67-7492-5187-9956748FCE97"/>
+<colUsage columnID="9255E858-C5A6-0C76-490F-EA52D26D012B"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="9390F4B2-EC50-0A1D-D7B6-3C8EB701B1C1" name="ITEMSPERSO_INVJOUEUR_FK">
+<createdBy>201093812</createdBy>
+<createdTime>2014-09-10 20:01:31 UTC</createdTime>
+<generatorID>Généré par l&apos;utilisateur</generatorID>
+<ownerDesignName>modeleTHRONE</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="9FE00B14-5901-B320-C6E7-56AB5F6309FD"/>
+<colUsage columnID="9255E858-C5A6-0C76-490F-EA52D26D012B"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="439DD724-AEA2-368E-464D-794175B9E431" name="ITEMSPERSO_PERSO_FK">
+<createdBy>201093812</createdBy>
+<createdTime>2014-09-17 14:25:13 UTC</createdTime>
+<generatorID>Généré par l&apos;utilisateur</generatorID>
+<ownerDesignName>modeleTHRONE</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="A333664E-DA67-7492-5187-9956748FCE97"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

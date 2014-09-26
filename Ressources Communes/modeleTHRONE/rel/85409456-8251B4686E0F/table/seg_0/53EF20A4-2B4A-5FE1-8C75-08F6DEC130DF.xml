@@ -1,0 +1,46 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="53EF20A4-2B4A-5FE1-8C75-08F6DEC130DF" name="LEVELPERSONNAGES">
+<createdBy>201093812</createdBy>
+<createdTime>2014-09-10 17:08:37 UTC</createdTime>
+<generatorID>Généré par l&apos;utilisateur</generatorID>
+<ownerDesignName>modeleTHRONE</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="LEVEL" id="B6C3855B-9473-154F-E913-6829D14005F3">
+<createdBy>201093812</createdBy>
+<createdTime>2014-09-10 17:25:17 UTC</createdTime>
+<generatorID>Généré par l&apos;utilisateur</generatorID>
+<ownerDesignName>modeleTHRONE</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>2</dataTypePrecision>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="LXP" id="D6CD0E6B-F1FB-0173-54CF-E808180CC673">
+<createdBy>201093812</createdBy>
+<createdTime>2014-09-10 17:25:17 UTC</createdTime>
+<generatorID>Généré par l&apos;utilisateur</generatorID>
+<ownerDesignName>modeleTHRONE</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="6801CA4E-F5AA-CF7D-2722-084020CE0C0B" name="LEVELJOUEURS_PK">
+<createdBy>201093812</createdBy>
+<createdTime>2014-09-10 17:25:17 UTC</createdTime>
+<generatorID>Généré par l&apos;utilisateur</generatorID>
+<ownerDesignName>modeleTHRONE</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="B6C3855B-9473-154F-E913-6829D14005F3"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

@@ -1,0 +1,124 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="7617576F-519C-EADC-66FC-E63B6FC34EC3" name="HABILITE">
+<createdBy>201093812</createdBy>
+<createdTime>2014-09-10 18:33:28 UTC</createdTime>
+<generatorID>Généré par l&apos;utilisateur</generatorID>
+<ownerDesignName>modeleTHRONE</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="HID" id="2AF37E9D-8689-1913-6905-6D21700DE322">
+<createdBy>201093812</createdBy>
+<createdTime>2014-09-10 18:34:18 UTC</createdTime>
+<generatorID>Généré par l&apos;utilisateur</generatorID>
+<ownerDesignName>modeleTHRONE</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>10</dataTypePrecision>
+<autoIncrementColumn>true</autoIncrementColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<autoIncrementSequenceName>SEQ_HABILITE</autoIncrementSequenceName>
+<autoIncrementTriggerName>INC_HABILITE</autoIncrementTriggerName>
+</Column>
+<Column name="DAMAGE" id="694330A3-B9EA-AA22-FAAD-74CFAD177049">
+<createdBy>201093812</createdBy>
+<createdTime>2014-09-10 18:35:33 UTC</createdTime>
+<generatorID>Généré par l&apos;utilisateur</generatorID>
+<ownerDesignName>modeleTHRONE</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>2</dataTypePrecision>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="COST" id="E66EA97C-9907-F573-E4B0-8E8D543690BD">
+<createdBy>201093812</createdBy>
+<createdTime>2014-09-10 18:36:36 UTC</createdTime>
+<generatorID>Généré par l&apos;utilisateur</generatorID>
+<ownerDesignName>modeleTHRONE</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>2</dataTypePrecision>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="RANGE" id="39AA4D02-39B6-0C92-138D-9FE7CE368557">
+<createdBy>201093812</createdBy>
+<createdTime>2014-09-10 18:36:55 UTC</createdTime>
+<generatorID>Généré par l&apos;utilisateur</generatorID>
+<ownerDesignName>modeleTHRONE</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>2</dataTypePrecision>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="LEVEL" id="4D31FB32-F599-1FE0-5F6E-71871A900315">
+<createdBy>201093812</createdBy>
+<createdTime>2014-09-10 18:55:38 UTC</createdTime>
+<generatorID>Généré par l&apos;utilisateur</generatorID>
+<ownerDesignName>modeleTHRONE</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>2</dataTypePrecision>
+<delegate>B6C3855B-9473-154F-E913-6829D14005F3</delegate>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="A945E522-72B1-15D2-DF8A-E6BACE7BCD01" referredColumn="B6C3855B-9473-154F-E913-6829D14005F3"/>
+</associations>
+</Column>
+<Column name="CID" id="720DB3D4-89C5-D7F5-56A9-891594215A1E">
+<createdBy>201093812</createdBy>
+<createdTime>2014-09-10 18:56:08 UTC</createdTime>
+<generatorID>Généré par l&apos;utilisateur</generatorID>
+<ownerDesignName>modeleTHRONE</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>10</dataTypePrecision>
+<delegate>95CD0321-120A-0B60-282A-EF04CC3BF2A6</delegate>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="F00BD3B7-5733-ADE6-4599-5959DE42D813" referredColumn="95CD0321-120A-0B60-282A-EF04CC3BF2A6"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="0BE53F65-2B38-03B6-DB15-D27717F92417" name="HABILITE_PK">
+<createdBy>201093812</createdBy>
+<createdTime>2014-09-10 18:34:18 UTC</createdTime>
+<generatorID>Généré par l&apos;utilisateur</generatorID>
+<ownerDesignName>modeleTHRONE</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="2AF37E9D-8689-1913-6905-6D21700DE322"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="1F43C160-CDED-5CCC-9E36-E03D92BBBD45" name="HABILITE_CLASSES_FK">
+<createdBy>201093812</createdBy>
+<createdTime>2014-09-10 18:57:06 UTC</createdTime>
+<generatorID>Généré par l&apos;utilisateur</generatorID>
+<ownerDesignName>modeleTHRONE</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="720DB3D4-89C5-D7F5-56A9-891594215A1E"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="0ACC227F-2B89-7A8B-63E9-1805164A1C9F" name="HABILITE_LEVELPERSONNAGES_FK">
+<createdBy>201093812</createdBy>
+<createdTime>2014-09-17 14:10:20 UTC</createdTime>
+<generatorID>Généré par l&apos;utilisateur</generatorID>
+<ownerDesignName>modeleTHRONE</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="4D31FB32-F599-1FE0-5F6E-71871A900315"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

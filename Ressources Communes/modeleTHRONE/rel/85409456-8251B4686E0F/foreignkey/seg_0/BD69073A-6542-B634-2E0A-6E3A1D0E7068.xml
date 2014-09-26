@@ -1,0 +1,14 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="BD69073A-6542-B634-2E0A-6E3A1D0E7068" name="PERSONNAGES_JOUEURS_FK">
+<createdBy>201093812</createdBy>
+<createdTime>2014-09-10 19:10:47 UTC</createdTime>
+<generatorID>Généré par l&apos;utilisateur</generatorID>
+<ownerDesignName>modeleTHRONE</ownerDesignName>
+<containerWithKeyObject>A7A3D9EF-20D8-8048-EB77-C9A3D9B63FDE</containerWithKeyObject>
+<deleteRule>NO ACTION</deleteRule>
+<localFKIndex>58924B74-6F04-6DEC-FA10-D53D248CCFAD</localFKIndex>
+<keyObject>827CC3CC-C30C-AAA4-18BE-1A467624DF9D</keyObject>
+<mandatory>true</mandatory>
+<transferable>true</transferable>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>
