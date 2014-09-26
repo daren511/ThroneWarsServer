@@ -7,7 +7,7 @@ using System.Security.Cryptography;
 using System.Globalization;
 using Oracle.DataAccess.Client;
 
-namespace ThroneWarsServer
+namespace ControleBD
 {
 
     

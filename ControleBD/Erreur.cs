@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Oracle.DataAccess.Client;
 
-namespace ThroneWarsServer
+namespace ControleBD
 {
     class Erreur
     {
