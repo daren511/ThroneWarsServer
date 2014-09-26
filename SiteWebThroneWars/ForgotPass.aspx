@@ -25,9 +25,9 @@
 			</ul>
 		</div>
 		<div class="FormForgot">
-			<form action="sumbit" autocomplete="on"/>
-  			Courriel: <input type="email" name="email" autocomplete="off"><br>
-  			<input type="submit"/>
+			<form runat="server" action="ForgotPass.aspx" autocomplete="on">
+  			Courriel: <input type="email" name="email" autocomplete="off"/><br/>
+  			<asp:Button runat="server" onclick="clicktest" />
             </form>
   		</div>
   	</body>

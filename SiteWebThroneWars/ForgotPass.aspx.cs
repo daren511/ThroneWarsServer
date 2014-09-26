@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using ControleBD;
 
 namespace SiteWebThroneWars
 {
@@ -11,7 +12,12 @@ namespace SiteWebThroneWars
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+                      
 
+        }
+        protected void clicktest(object sender, EventArgs e)
+        {
+            Controle.insertplayer("Daren511222", "testing@hotmail.com", "ablldf");
         }
     }
 }
