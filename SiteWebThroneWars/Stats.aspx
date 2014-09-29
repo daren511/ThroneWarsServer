@@ -10,7 +10,7 @@
 </head>
 <body>
     <div class="Entete" align="center">
-        <img src="./Images/Logo.jpg"/>
+        <img src="./Images/Logo_Grand.png" style="max-height:100%; max-width:100%;"/>
         <!-- A checker les dimensions ou plus grosse image -->
     </div>
     <br />

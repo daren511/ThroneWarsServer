@@ -75,6 +75,7 @@
     <Content Include="Images\Charles.jpg" />
     <Content Include="Images\Daren.jpg" />
     <Content Include="Images\logo.jpg" />
+    <Content Include="Images\Logo_Grand.png" />
     <Content Include="Images\Tattoo.jpg" />
     <Content Include="Inscription.aspx" />
     <Content Include="Media.aspx" />
