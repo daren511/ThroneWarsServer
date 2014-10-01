@@ -17,7 +17,7 @@ namespace SiteWebThroneWars
         }
         protected void clicktest(object sender, EventArgs e)
         {
-            Controle.insertplayer("Daren511222", "testin@hotmail.com", "ablldf");
+            Controle.insertplayer("DARENSAMARCHETU", "BIZOUNE@hotmail.com", "B»LLLAAAAAf");
         }
     }
 }

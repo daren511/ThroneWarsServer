@@ -10,7 +10,7 @@
 	</head>
 	
 	<body>
-		<div class="Entete" align="center">
+		<div class="Entete">
 			<img src="./Images/Logo_Grand.png" style="max-height:100%; max-width:100%;"> <!-- A checker les dimensions ou plus grosse image -->
 		</div>
 		<br/>
@@ -18,10 +18,10 @@
 			<div class="Table">
 			<ul id="menu-bar">
  				<li class="active">
- 					<li><a href="Page Principale.html">Accueil</a></li>
- 					<li><a href="Inscription.html">Inscription</a></li>
-				 	<li><a href="Stats.html">Statistiques</a></li>
-				 	<li><a href="Media.html">Média</a></li>
+ 					<li><a href="Page Principale.aspx">Accueil</a></li>
+ 					<li><a href="Inscription.aspx">Inscription</a></li>
+				 	<li><a href="Stats.aspx">Statistiques</a></li>
+				 	<li><a href="Media.aspx">Média</a></li>
 				 </li>
 			</ul>
 		</div>

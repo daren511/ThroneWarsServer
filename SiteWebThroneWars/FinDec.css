@@ -1,6 +1,6 @@
 body{
-	background-image: url("./Images/background.jpg");
-  background-size: cover;
+  background-image: url("./Images/background.jpg");
+  background-size: 100% auto;
   width: 1200px;
   margin:0 auto;
 }
@@ -223,9 +223,8 @@ div.Stats label{
 
 /* BARRE D'ACCUEIL*/
 #menu-bar {
-  
+  margin-left:30%;
   width: 40%;
-  margin: 0px 0px 0px 0px;
   padding: 6px 6px 4px 6px;
   height: 30px;
   line-height: 100%;
@@ -241,7 +240,6 @@ div.Stats label{
   background: -webkit-gradient(linear, left top, left bottom, from(#A9A9A9), to(#7A7A7A));
   background: -moz-linear-gradient(top,  #A9A9A9,  #7A7A7A);
   border: solid 1px #6D6D6D;
-  position:relative;
   z-index:999;
 }
 #menu-bar li {
