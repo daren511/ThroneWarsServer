@@ -1,7 +1,7 @@
 ﻿
 body{
   background-image: url("./Images/background.jpg");
-  background-size: 100% auto;
+  background-size: cover;
   width: 1200px;
   margin:0 auto;
 }
@@ -85,10 +85,24 @@ div.Telechargement{
 
 /* DIV MÉDIA*/
 div.Photos{
-	background-color: green;
+  background-color: #219ac2;
+  border-radius: 50px 50px 50px 50px;
+  -moz-border-radius: 50px 50px 50px 50px;
+  -webkit-border-radius: 50px 50px 50px 50px;
+  border: 4px solid #000000;
+  -webkit-box-shadow: 31px 7px 32px 3px rgba(0,0,0,0.75);
+  -moz-box-shadow: 31px 7px 32px 3px rgba(0,0,0,0.75);
+  box-shadow: 31px 7px 32px 3px rgba(0,0,0,0.75);
 }
 div.Videos{
-	background-color: blue;
+  background-color: #219ac2;
+  border-radius: 50px 50px 50px 50px;
+  -moz-border-radius: 50px 50px 50px 50px;
+  -webkit-border-radius: 50px 50px 50px 50px;
+  border: 4px solid #000000;
+  -webkit-box-shadow: 31px 7px 32px 3px rgba(0,0,0,0.75);
+  -moz-box-shadow: 31px 7px 32px 3px rgba(0,0,0,0.75);
+  box-shadow: 31px 7px 32px 3px rgba(0,0,0,0.75);
 }
 
 
@@ -226,7 +240,6 @@ div.Stats label{
 #menu-bar {
   margin-left:30%;
   width: 40%;
-  margin: 0px 0px 0px 0px;
   padding: 6px 6px 4px 6px;
   height: 30px;
   line-height: 100%;

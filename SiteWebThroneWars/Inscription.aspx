@@ -26,12 +26,19 @@
 		</div>
 		<div class="Inscription">
 		<form runat="server" action="Inscription.aspx" autocomplete="on">
-  			<label>Nom d'utilisateur</label><input type="text" name="username"/><br/>
-  			<label>Mot de passe</label> <input type="password" name="password"/><br/>
-  			<label>Confirmer mot de passe</label> <input type="password" name="cpassword"/><br/>
-  			<label>Courriel</label> <input type="email" name="email" autocomplete="off"/><br/>
-  			<label>Confirmer courriel</label> <input type="email" name="cemail" autocomplete="off"/><br/>	
-            <asp:Button Text="Valider" onClick="inscriptionJoueur" runat="server"/>
+  			<label>Nom d'utilisateur</label>
+                <asp:Textbox ID="username" TextMode="SingleLine" runat="server"/><br/>
+  			<label>Mot de passe</label>
+                <asp:TextBox id="password" TextMode="password" runat="server"/><br/>
+  			<label>Confirmer mot de passe</label>
+                <asp:TextBox id="cpassword" TextMode="password" runat="server"/><br />
+            <label>Courriel</label>
+                <asp:Textbox ID="email" TextMode="SingleLine" runat="server"/><br/>
+  			<label>Confirmer courriel</label>
+                <asp:Textbox ID="cemail" TextMode="SingleLine" runat="server"/><br/>
+            
+            
+            <asp:Button Text="Valider" onClick="inscriptionJoueur_Click" runat="server"/>
 		</form>
           
 			<a href="ForgotPass.aspx">Mot de passe oublié?</a>

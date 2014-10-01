@@ -51,7 +51,7 @@
 								<p>Charles Hunter-Roy</p>
 									<img src="./Images/Charles.jpg" width="200" height="200" />
 								<p>Alexis Lalonde</p>
-									<img src="./Images/Alexis.jpg" width="200" height="200" />
+									<img src="./Images/Alexis2.jpg" width="200" height="200" />
 							</div>
 				
 						
