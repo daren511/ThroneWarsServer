@@ -6,7 +6,7 @@
 <head runat="server">
 	<meta charset="utf-8"/> 
 	<title>Throne Wars -Projet FinDec - Media</title>
-    <link rel="stylesheet" type="text/css" href="FinDec.css"/>
+    <link rel="stylesheet" type="text/css" href="./FinDec.css"/>
 	</head>
 	
 	<body>

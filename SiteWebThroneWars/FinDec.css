@@ -1,3 +1,4 @@
+﻿
 body{
   background-image: url("./Images/background.jpg");
   background-size: 100% auto;
@@ -225,6 +226,7 @@ div.Stats label{
 #menu-bar {
   margin-left:30%;
   width: 40%;
+  margin: 0px 0px 0px 0px;
   padding: 6px 6px 4px 6px;
   height: 30px;
   line-height: 100%;
@@ -371,4 +373,5 @@ div.Stats label{
 * html #menu-bar {
   height: 1%;
 }
+
 

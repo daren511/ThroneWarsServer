@@ -11,7 +11,6 @@
 <body>
     <div class="Entete">
         <img src="./Images/Logo_Grand.png" style="max-height:100%; max-width:100%;"/>
-        <!-- A checker les dimensions ou plus grosse image -->
     </div>
     <br />
     <br />
