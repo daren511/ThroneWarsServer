@@ -9,31 +9,39 @@
 <link rel="stylesheet" type="text/css" href="FinDec.css"/>
 </head>
 <body>
-		<div class="Entete" align="center">
-			<img src="./Images/Logo.jpg"/> <!-- A checker les dimensions ou plus grosse image -->
+		<div class="Entete">
+			<img src="./Images/Logo_Grand.png" style="max-height:100%; max-width:100%;"/> <!-- A checker les dimensions ou plus grosse image -->
 		</div>
 		<br/>
 		<br/>
 		<div class="Table">
 			<ul id="menu-bar">
  				<li class="active">
- 					<li><a href="Page Principale.html">Accueil</a></li>
- 					<li><a href="Inscription.html">Inscription</a></li>
-				 	<li><a href="Stats.html">Statistiques</a></li>
-				 	<li><a href="Media.html">Média</a></li>
+ 					<li><a href="Page Principale.aspx">Accueil</a></li>
+ 					<li><a href="Inscription.aspx">Inscription</a></li>
+				 	<li><a href="Stats.aspx">Statistiques</a></li>
+				 	<li><a href="Media.aspx">Média</a></li>
 				 </li>
 			</ul>
 		</div>
 		<div class="Inscription">
-		<form action="submit" autocomplete="on">
-  			<label>Nom d'utilisateur</label><input type="text" name="username"/><br/>
-  			<label>Mot de passe</label> <input type="password" name="password"/><br/>
-  			<label>Confirmer mot de passe</label> <input type="password" name="cpassword"/><br/>
-  			<label>Courriel</label> <input type="email" name="email" autocomplete="off"/><br/>
-  			<label>Confirmer courriel</label> <input type="email" name="cemail" autocomplete="off"/><br/>
-  			<input type="submit">
+		<form runat="server" action="Inscription.aspx" autocomplete="on">
+  			<label>Nom d'utilisateur</label>
+                <asp:Textbox ID="username" TextMode="SingleLine" runat="server"/><br/>
+  			<label>Mot de passe</label>
+                <asp:TextBox id="password" TextMode="password" runat="server"/><br/>
+  			<label>Confirmer mot de passe</label>
+                <asp:TextBox id="cpassword" TextMode="password" runat="server"/><br />
+            <label>Courriel</label>
+                <asp:Textbox ID="email" TextMode="SingleLine" runat="server"/><br/>
+  			<label>Confirmer courriel</label>
+                <asp:Textbox ID="cemail" TextMode="SingleLine" runat="server"/><br/>
+            
+            
+            <asp:Button Text="Valider" onClick="inscriptionJoueur_Click" runat="server"/>
 		</form>
-			<a href="ForgotPass.html">Mot de passe oublié?</a>
+          
+			<a href="ForgotPass.aspx">Mot de passe oublié?</a>
 		</div>
 </body>
 </html>

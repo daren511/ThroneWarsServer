@@ -12,18 +12,18 @@
 </head>
 <body>
 	
-		<div class="Entete" align="center">
-		<img src="./Images/Logo.jpg"/> <!-- A checker les dimensions ou plus grosse image -->
+		<div class="Entete">
+		<img src="./Images/Logo_Grand.png" style="max-height:100%; max-width:100%;"/> <!-- A checker les dimensions ou plus grosse image -->
 		</div>
 		<br/>
 		<br/>
 			<div class="Table">
 			<ul id="menu-bar">
  				<li class="active">
- 					<li><a href="Page Principale.html">Accueil</a></li>
- 					<li><a href="Inscription.html">Inscription</a></li>
-				 	<li><a href="Stats.html">Statistiques</a></li>
-				 	<li><a href="Media.html">Média</a></li>
+ 					<li><a href="Page Principale.aspx">Accueil</a></li>
+ 					<li><a href="Inscription.aspx">Inscription</a></li>
+				 	<li><a href="Stats.aspx">Statistiques</a></li>
+				 	<li><a href="Media.aspx">Média</a></li>
 				 </li>
 			</ul>
 			</div>
@@ -45,13 +45,13 @@
 						<div class="Membres">
 								<h2>Équipe</h2>
 								<p>Daren-Ken St-Laurent</p>
-									<img src="./Images/Daren.jpg" width="200" height="200" >
+									<img src="./Images/Daren.jpg" width="200" height="200"/ >
 								<p>Francis Côté</p>
-									<img src="./Images/Tattoo.jpg" width="200" height="200" >
+									<img src="./Images/Tattoo.jpg" width="200" height="200"/ >
 								<p>Charles Hunter-Roy</p>
-									<img src="./Images/Charles.jpg" width="200" height="200" >
+									<img src="./Images/Charles.jpg" width="200" height="200" />
 								<p>Alexis Lalonde</p>
-									<img src="./Images/Alexis.jpg" width="200" height="200" >
+									<img src="./Images/Alexis2.jpg" width="200" height="200" />
 							</div>
 				
 						

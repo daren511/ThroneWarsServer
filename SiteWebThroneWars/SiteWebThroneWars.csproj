@@ -69,12 +69,12 @@
     <Content Include="ForgotPass.aspx" />
     <Content Include="Images\1.jpg" />
     <Content Include="Images\2.jpg" />
-    <Content Include="Images\34289_403445083014_4876962_n.jpg" />
-    <Content Include="Images\Alexis.jpg" />
+    <Content Include="Images\Alexis2.jpg" />
     <Content Include="Images\background.jpg" />
     <Content Include="Images\Charles.jpg" />
     <Content Include="Images\Daren.jpg" />
     <Content Include="Images\logo.jpg" />
+    <Content Include="Images\Logo_Grand.png" />
     <Content Include="Images\Tattoo.jpg" />
     <Content Include="Inscription.aspx" />
     <Content Include="Media.aspx" />

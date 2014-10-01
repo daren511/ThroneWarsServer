@@ -9,9 +9,8 @@
     <link rel="stylesheet" type="text/css" href="FinDec.css"/>
 </head>
 <body>
-    <div class="Entete" align="center">
-        <img src="./Images/Logo.jpg"/>
-        <!-- A checker les dimensions ou plus grosse image -->
+    <div class="Entete">
+        <img src="./Images/Logo_Grand.png" style="max-height:100%; max-width:100%;"/>
     </div>
     <br />
     <br />
@@ -19,10 +18,10 @@
     <div class="Table">
         <ul id="menu-bar">
             <li class="active">
-                <li><a href="Page Principale.html">Accueil</a></li>
-                <li><a href="Inscription.html">Inscription</a></li>
-                <li><a href="Stats.html">Statistiques</a></li>
-                <li><a href="Media.html">Média</a></li>
+                <li><a href="Page Principale.aspx">Accueil</a></li>
+                <li><a href="Inscription.aspx">Inscription</a></li>
+                <li><a href="Stats.aspx">Statistiques</a></li>
+                <li><a href="Media.aspx">Média</a></li>
             </li>
         </ul>
     </div>
@@ -151,25 +150,26 @@
     <div class="Stats">
         <form>
             <label>Nom utilisateur</label>
-            <input type="text" name="Username" disabled>
+            <input type="text" name="Username" disabled/>
             <label>XP</label>
-            <input type="text" name="XP" disabled></br></br></br>
+            <input type="text" name="XP" disabled/></br></br></br>
         		<label>Personnage 1</label>
-            <input type="text" name="Player1" disabled>
+            <input type="text" name="Player1" disabled/>
             <label>Niveau</label>
-            <input type="Number" name="LVPlayer1" disabled><br>
+            <input type="Number" name="LVPlayer1" disabled/><br>
             <label>Personnage 2</label>
-            <input type="text" name="Player2" disabled>
+            <input type="text" name="Player2" disabled/>
             <label>Niveau</label>
-            <input type="Number" name="LVPlayer2" disabled><br>
+            <input type="Number" name="LVPlayer2" disabled/><br>
             <label>Personnage 3</label>
-            <input type="text" name="Player3" disabled>
+            <input type="text" name="Player3" disabled/>
             <label>Niveau</label>
-            <input type="Number" name="LVPlayer3" disabled><br>
+            <input type="Number" name="LVPlayer3" disabled/><br>
             <label>Personnage 4</label>
-            <input type="text" name="Player4" disabled>
+            <input type="text" name="Player4" disabled/>
             <label>Niveau</label>
-            <input type="Number" name="LVPlayer4" disabled><br>
+            <input type="Number" name="LVPlayer4" disabled/><br>
         </form>
+    </div>
 </body>
 </html>

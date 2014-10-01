@@ -6,22 +6,22 @@
 <head runat="server">
 	<meta charset="utf-8"/> 
 	<title>Throne Wars -Projet FinDec - Media</title>
-    <link rel="stylesheet" type="text/css" href="FinDec.css"/>
+    <link rel="stylesheet" type="text/css" href="./FinDec.css"/>
 	</head>
 	
 	<body>
-		<div class="Entete" align="center">
-			<img src="./Images/Logo.jpg"> <!-- A checker les dimensions ou plus grosse image -->
+		<div class="Entete">
+			<img src="./Images/Logo_Grand.png" style="max-height:100%; max-width:100%;"> <!-- A checker les dimensions ou plus grosse image -->
 		</div>
 		<br/>
 		<br/>
 			<div class="Table">
 			<ul id="menu-bar">
  				<li class="active">
- 					<li><a href="Page Principale.html">Accueil</a></li>
- 					<li><a href="Inscription.html">Inscription</a></li>
-				 	<li><a href="Stats.html">Statistiques</a></li>
-				 	<li><a href="Media.html">Média</a></li>
+ 					<li><a href="Page Principale.aspx">Accueil</a></li>
+ 					<li><a href="Inscription.aspx">Inscription</a></li>
+				 	<li><a href="Stats.aspx">Statistiques</a></li>
+				 	<li><a href="Media.aspx">Média</a></li>
 				 </li>
 			</ul>
 		</div>
