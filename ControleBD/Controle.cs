@@ -119,16 +119,13 @@ namespace ControleBD
             }
         }
 
-        public static bool deleteplayer(int JID)
+        public static bool deletePlayer(int JID)
         {
             OracleConnection conn = Connection.GetInstance().conn;
-
             string sqldelete = "delete cascade from joueurs where JID = " + JID;
-
             try 
             {
                 OracleCommand oraDelete = new OracleCommand(sqldelete, conn);
-
                 oraDelete.ExecuteNonQuery();
                 return true;
             }
@@ -143,13 +140,10 @@ namespace ControleBD
         public static bool deletePerso(int GUID)
         {
             OracleConnection conn = Connection.GetInstance().conn;
-
             string sqldelete = "delete cascade from Personnages where GUID = " + GUID;
-
             try
             {
                 OracleCommand oraDelete = new OracleCommand(sqldelete, conn);
-
                 oraDelete.ExecuteNonQuery();
                 return true;
             }
@@ -163,13 +157,10 @@ namespace ControleBD
         public static bool deleteItem(int IID)
         {
             OracleConnection conn = Connection.GetInstance().conn;
-
             string sqldelete = "delete cascade from Items where IID = " + IID;
-
             try
             {
                 OracleCommand oraDelete = new OracleCommand(sqldelete, conn);
-
                 oraDelete.ExecuteNonQuery();
                 return true;
             }
@@ -183,13 +174,10 @@ namespace ControleBD
         public static bool deleteHabiite(int HID)
         {
             OracleConnection conn = Connection.GetInstance().conn;
-
             string sqldelete = "delete cascade from Items where HID = " + HID;
-
             try
             {
                 OracleCommand oraDelete = new OracleCommand(sqldelete, conn);
-
                 oraDelete.ExecuteNonQuery();
                 return true;
             }
@@ -200,27 +188,8 @@ namespace ControleBD
             }
         }
 
-        public static bool deleteHabiite(int HID)
-        {
-            OracleConnection conn = Connection.GetInstance().conn;
 
-            string sqldelete = "delete cascade from Items where HID = " + HID;
-
-            try
-            {
-                OracleCommand oraDelete = new OracleCommand(sqldelete, conn);
-
-                oraDelete.ExecuteNonQuery();
-                return true;
-            }
-            catch (OracleException ex)
-            {
-                Erreur.ErrorMessage(ex);
-                return false;
-            }
-        }
-
-        public static bool AjoutMoneyToJoueurs(int JID , int montant)
+        public static bool AjoutMoneyJoueur(int JID , int montant)
         {
             OracleConnection conn = Connection.GetInstance().conn;
 
@@ -229,13 +198,10 @@ namespace ControleBD
             try
             {
                 OracleCommand oraUpdate = new OracleCommand(sqlupdate, conn);
-                
                 OracleParameter OraParaMoney = new OracleParameter(":montant", OracleDbType.Int32);
-
                 OraParaMoney.Value = montant;
                 oraUpdate.Parameters.Add(OraParaMoney);
                 oraUpdate.ExecuteNonQuery();
-
                 return true;
             }
             catch (OracleException ex)
@@ -245,18 +211,19 @@ namespace ControleBD
             }
         }
 
-        public static bool deleteHabiite(int HID)
+        public static bool AjoutXPPersonnage(int GUID, int XP)
         {
             OracleConnection conn = Connection.GetInstance().conn;
 
-            string sqldelete = "delete cascade from Items where HID = " + HID;
+            string sqlupdate = "update Personnages set XP=:xp where guid=" + GUID;
 
             try
             {
-
-                OracleCommand oraDelete = new OracleCommand(sqldelete, conn);
-
-                oraDelete.ExecuteNonQuery();
+                OracleCommand oraUpdate = new OracleCommand(sqlupdate, conn);
+                OracleParameter OraParaXP = new OracleParameter(":XP", OracleDbType.Int32);
+                OraParaXP.Value = XP;
+                oraUpdate.Parameters.Add(OraParaXP);
+                oraUpdate.ExecuteNonQuery();
                 return true;
             }
             catch (OracleException ex)
@@ -265,11 +232,6 @@ namespace ControleBD
                 return false;
             }
         }
-
-
-
-
-
 
 
 
