@@ -15,6 +15,40 @@ namespace ControleBD
     {
         private static int SaltValueSize = 16;
 
+        public static bool insertPersonnage(string username, string email, string password)
+        {
+            OracleConnection conn = Connection.GetInstance().conn;
+
+            string sqlAjout = "insert into joueurs (username,EMAIL,Hash_KEY)" +
+                    " VALUES(:username,:EMAIL,:Hash_KEY)";
+            try
+            {
+
+                OracleCommand oraAjout = new OracleCommand(sqlAjout, conn);
+
+                OracleParameter OraParaUsername = new OracleParameter(":username", OracleDbType.Varchar2, 40);
+                OracleParameter OraParamEmail = new OracleParameter(":EMAIL", OracleDbType.Varchar2, 40);
+                OracleParameter OraParamHashKey = new OracleParameter(":Hash_KEY", OracleDbType.Char, 75);  //Ajout
+
+                OraParaUsername.Value = username;
+                OraParamEmail.Value = email;
+                OraParamHashKey.Value = Controle.HashPassword(password, null, System.Security.Cryptography.SHA256.Create());
+
+
+                oraAjout.Parameters.Add(OraParaUsername);
+                oraAjout.Parameters.Add(OraParamEmail);
+                oraAjout.Parameters.Add(OraParamHashKey);
+
+                oraAjout.ExecuteNonQuery();
+
+                return true;
+            }
+            catch (OracleException ex)
+            {
+                Erreur.ErrorMessage(ex);
+                return false;
+            }
+        }
         public static bool confirmAccount(int jid)
         {
             OracleConnection conn = Connection.GetInstance().conn;
@@ -57,18 +91,15 @@ namespace ControleBD
 
                 OracleCommand oraUpdate = new OracleCommand(sqlupdate, conn);
 
-                //OracleParameter OraParaUsername = new OracleParameter(":username", OracleDbType.Varchar2, 40);
                 OracleParameter OraParamEmail = new OracleParameter(":EMAIL", OracleDbType.Varchar2, 40);
                 OracleParameter OraParamHashKey = new OracleParameter(":Hash_KEY", OracleDbType.Char, 75);  //Ajout
                 OracleParameter OraParamJid = new OracleParameter(":jid", OracleDbType.Int32);
 
-                //OraParaUsername.Value = username;
                 OraParamEmail.Value = email;
                 OraParamHashKey.Value = Controle.HashPassword(password, null, System.Security.Cryptography.SHA256.Create());
                 OraParamJid.Value = jid;
 
 
-                //oraUpdate.Parameters.Add(OraParaUsername);
                 oraUpdate.Parameters.Add(OraParamEmail);
                 oraUpdate.Parameters.Add(OraParamHashKey);
                 oraUpdate.Parameters.Add(OraParamJid);
