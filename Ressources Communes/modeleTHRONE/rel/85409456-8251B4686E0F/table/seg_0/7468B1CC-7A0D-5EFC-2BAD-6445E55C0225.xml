@@ -77,6 +77,22 @@
 <defaultValue>100</defaultValue>
 <autoIncrementCycle>false</autoIncrementCycle>
 </Column>
+<Column name="CONFIRMED" id="68D61039-6FE7-B693-3665-F49DC974D867">
+<createdBy>Daren511</createdBy>
+<createdTime>2014-10-09 16:32:43 UTC</createdTime>
+<generatorID>Généré par l&apos;utilisateur</generatorID>
+<ownerDesignName>modeleTHRONE</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT025</logicalDatatype>
+<usesDefaultValue>true</usesDefaultValue>
+<listOfValues>
+<valueDef value="F" description=""/>
+<valueDef value="T" description=""/>
+</listOfValues>
+<defaultValue>F</defaultValue>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
 </columns>
 <indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
 <ind_PK_UK id="827CC3CC-C30C-AAA4-18BE-1A467624DF9D" name="Joueurs_PK">
@@ -100,6 +116,16 @@
 <isSurrogateKey>false</isSurrogateKey>
 <indexColumnUsage>
 <colUsage columnID="F1D83C1B-EC25-02DC-6E20-1438468CCA89"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="7B735FB1-E870-EC46-89A2-AF2E073C9AD9" name="JOUEURS__EM">
+<createdBy>Daren511</createdBy>
+<createdTime>2014-10-09 16:34:02 UTC</createdTime>
+<generatorID>Généré par l&apos;utilisateur</generatorID>
+<ownerDesignName>modeleTHRONE</ownerDesignName>
+<indexState>Unique Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
 <colUsage columnID="23871D5C-2791-3115-80A4-1B4555464429"/>
 </indexColumnUsage>
 </ind_PK_UK>

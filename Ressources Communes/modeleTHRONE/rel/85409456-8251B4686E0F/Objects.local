@@ -14,7 +14,6 @@
    <object objectType="Table" objectID="A7A3D9EF-20D8-8048-EB77-C9A3D9B63FDE" name="PERSONNAGES" seqName="seg_0"/>
    <object objectType="FKIndexAssociation" objectID="3DC584C2-D18B-BDDC-2ABB-DE995C42383D" name="CLASSESLEVELS_CLASSES_FK" seqName="seg_0"/>
    <object objectType="FKIndexAssociation" objectID="4D3EA8EC-ECBD-FF8D-AA01-0B9E2D812BF5" name="CLASSESLEVELS_LVLPERSO_FK" seqName="seg_0"/>
-   <object objectType="FKIndexAssociation" objectID="A2FC6AD1-F35A-EBBD-6A8D-60A75EF39EDA" name="MATCHS_Maps_FK" seqName="seg_0"/>
    <object objectType="FKIndexAssociation" objectID="F00BD3B7-5733-ADE6-4599-5959DE42D813" name="HABILITE_CLASSES_FK" seqName="seg_0"/>
    <object objectType="FKIndexAssociation" objectID="A945E522-72B1-15D2-DF8A-E6BACE7BCD01" name="HABILITE_LEVELPERSONNAGES_FK" seqName="seg_0"/>
    <object objectType="FKIndexAssociation" objectID="FCF1E8B8-36BC-B34C-5BD4-D727A7F1DEAA" name="ITEMSJOUEURS_ITEMS_FK" seqName="seg_0"/>
@@ -27,6 +26,7 @@
    <object objectType="FKIndexAssociation" objectID="75DAAE20-88B6-CC6B-D988-EF4886C82445" name="MATCHSJOUEURS_MATCHS_FK" seqName="seg_0"/>
    <object objectType="FKIndexAssociation" objectID="2E08F288-1D10-367B-CA44-81C7A9B0AAF6" name="MATCHSJOUEURS_PERSONNAGES_FK" seqName="seg_0"/>
    <object objectType="FKIndexAssociation" objectID="E3C0DD36-FC3A-0984-A8FA-B6F1760E480C" name="MATCHS_Joueurs_FK" seqName="seg_0"/>
+   <object objectType="FKIndexAssociation" objectID="A2FC6AD1-F35A-EBBD-6A8D-60A75EF39EDA" name="MATCHS_Maps_FK" seqName="seg_0"/>
    <object objectType="FKIndexAssociation" objectID="BD69073A-6542-B634-2E0A-6E3A1D0E7068" name="PERSONNAGES_JOUEURS_FK" seqName="seg_0"/>
    <object objectType="FKIndexAssociation" objectID="880D8E71-DDAE-C669-B0D9-7AA98A99867E" name="PERSONNAGES_LVLPERSO_FK" seqName="seg_0"/>
    <object objectType="FKIndexAssociation" objectID="0D9602C5-F4D1-98B6-F10D-27EA1DB2CDAE" name="Personnages_CLASSES_FK" seqName="seg_0"/>
