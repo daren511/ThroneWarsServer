@@ -8,6 +8,7 @@ using System.Text.RegularExpressions;
 using ControleBD;
 using System.Globalization;
 
+
 namespace SiteWebThroneWars
 {
     public partial class Inscription : System.Web.UI.Page
@@ -29,18 +30,41 @@ namespace SiteWebThroneWars
             // a verifier si marche
             bool legitEmail = IsEmail(courriel);
 
-            // Verifier si mot de passe = confirmation && Email == confirmation && Email legit
-            if (password.Text == cpassword.Text && email.Text == cemail.Text && legitEmail)
-            {
-                // Inserer dans oracle
-                Controle.insertplayer(user, pass, courriel);
+            //Variable string text pour les different string du messagebox Erreur / Success
+            string message = "";
 
-                // Message de confirmation
+            
+            
+                // Verifier si mot de passe = confirmation && Email == confirmation && Email legit
+                if (password.Text == cpassword.Text && email.Text == cemail.Text && legitEmail)
+                {
 
-                // Message d'erreur
+                    // Inserer dans oracle
+                    Controle.insertplayer(user, pass, courriel);
 
-                // Send email de confirmation
-            }
+                    // Message de confirmation
+                    message = "L'inscription à reussie";
+                    ClientScript.RegisterStartupScript(this.GetType(), "myalert", "alert('" + message + "');", true);  
+
+                    // Send email de confirmation
+                }
+                else
+                {
+                    // Message d'erreur
+                    if (password.Text != cpassword.Text)
+                        message = "Les mots de passe ne sont pas compatibles";
+                    if (email.Text == cemail.Text)
+                        message = "Les courriels ne sont pas compatibles";
+                    if (!legitEmail)
+                        message = "Le format du courriel n'est pas valide";
+
+                    // À vérifier si sa marche
+                    ClientScript.RegisterStartupScript(this.GetType(), "myalert", "alert('" + message + "');", true);  
+                }
+                
+
+                
+            
         }
         public const string MatchEmailPattern =
             @"^(([\w-]+\.)+[\w-]+|([a-zA-Z]{1}|[\w-]{2,}))@"

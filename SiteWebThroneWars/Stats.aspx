@@ -4,13 +4,13 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <meta charset="utf-8"/>
+    <meta charset="utf-8" />
     <title>Throne Wars -Projet FinDec - Stats</title>
-    <link rel="stylesheet" type="text/css" href="FinDec.css"/>
+    <link rel="stylesheet" type="text/css" href="FinDec.css" />
 </head>
-<body>
+<body runat="server">
     <div class="Entete">
-        <img src="./Images/Logo_Grand.png" style="max-height:100%; max-width:100%;"/>
+        <img src="./Images/Logo_Grand.png" style="max-height: 100%; max-width: 100%;" />
     </div>
     <br />
     <br />
@@ -27,10 +27,10 @@
     </div>
 
     <div class="FormRecherche">
-        <form action="sumbit" autocomplete="on">
+        <form method="post" action="Stats.aspx" autocomplete="on">
             <label>Nom d'utilisateur</label>
-            <input type="text" name="username" autocomplete="off"/><br>
-            <input type="submit"/>
+            <asp:Textbox ID="TB_UsernameSearch" TextMode="SingleLine" runat="server"/><br />
+            <asp:Button Text="Rechercher" OnClick="Rechercher_Click" runat="server"/>
         </form>
     </div>
 
@@ -148,27 +148,27 @@
 
 
     <div class="Stats">
-        <form>
+        <form method="post" action="Stats.aspx">
             <label>Nom utilisateur</label>
-            <input type="text" name="Username" disabled/>
+            <asp:Label ID="LB_UsernameStats" TextMode="SingleLine" runat="server" /><br />
             <label>XP</label>
-            <input type="text" name="XP" disabled/></br></br></br>
+            <asp:Label ID="LB_XPStats" TextMode="Number" runat="server" /><br/><br/><br/><br/>
         		<label>Personnage 1</label>
-            <input type="text" name="Player1" disabled/>
+            <asp:Label ID="LB_Player1" TextMode="SingleLine" runat="server" />
             <label>Niveau</label>
-            <input type="Number" name="LVPlayer1" disabled/><br>
+            <asp:Label ID="LB_LVP1" TextMode="Number" runat="server" /><br/>
             <label>Personnage 2</label>
-            <input type="text" name="Player2" disabled/>
+            <asp:Label ID="LB_Player2" TextMode="SingleLine" runat="server" />
             <label>Niveau</label>
-            <input type="Number" name="LVPlayer2" disabled/><br>
+            <asp:Label ID="LB_LVP2" TextMode="Number" runat="server" />
             <label>Personnage 3</label>
-            <input type="text" name="Player3" disabled/>
+            <asp:Label ID="LB_Player3" TextMode="SingleLine" runat="server" />
             <label>Niveau</label>
-            <input type="Number" name="LVPlayer3" disabled/><br>
+            <asp:Label ID="LB_LVP3" TextMode="Number" runat="server" />
             <label>Personnage 4</label>
-            <input type="text" name="Player4" disabled/>
+            <asp:Label ID="LB_Player4" TextMode="SingleLine" runat="server" />
             <label>Niveau</label>
-            <input type="Number" name="LVPlayer4" disabled/><br>
+            <asp:Label ID="LB_LVP4" TextMode="Number" runat="server" />
         </form>
     </div>
 </body>
