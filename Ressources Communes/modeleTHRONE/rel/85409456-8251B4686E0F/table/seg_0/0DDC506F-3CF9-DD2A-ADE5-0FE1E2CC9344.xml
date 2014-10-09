@@ -31,7 +31,7 @@
 <logicalDatatype>LOGDT007</logicalDatatype>
 <autoIncrementCycle>false</autoIncrementCycle>
 </Column>
-<Column name="MAP" id="DED703E3-F19A-4B6D-0E31-69A94F095333">
+<Column name="MAPID" id="DED703E3-F19A-4B6D-0E31-69A94F095333">
 <createdBy>201093812</createdBy>
 <createdTime>2014-09-10 16:00:50 UTC</createdTime>
 <generatorID>Généré par l&apos;utilisateur</generatorID>
@@ -40,7 +40,11 @@
 <use>1</use>
 <logicalDatatype>LOGDT019</logicalDatatype>
 <dataTypePrecision>10</dataTypePrecision>
+<delegate>54285C4C-E5D3-93D3-D6F4-30222E3570C3</delegate>
 <autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="A2FC6AD1-F35A-EBBD-6A8D-60A75EF39EDA" referredColumn="54285C4C-E5D3-93D3-D6F4-30222E3570C3"/>
+</associations>
 </Column>
 <Column name="WINNER" id="8D77E66D-E154-5B60-64B9-F3EBB2BF27C1">
 <createdBy>201093812</createdBy>
@@ -81,6 +85,17 @@
 <isSurrogateKey>false</isSurrogateKey>
 <indexColumnUsage>
 <colUsage columnID="8D77E66D-E154-5B60-64B9-F3EBB2BF27C1"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="81C24D6E-6D4E-8AF2-BDAE-A34CA9CD746C" name="MATCHS_Maps_FK">
+<createdBy>Daren511</createdBy>
+<createdTime>2014-10-09 14:22:44 UTC</createdTime>
+<generatorID>Généré par l&apos;utilisateur</generatorID>
+<ownerDesignName>modeleTHRONE</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="DED703E3-F19A-4B6D-0E31-69A94F095333"/>
 </indexColumnUsage>
 </ind_PK_UK>
 </indexes>

@@ -62,6 +62,50 @@
 <colAssociation fkAssociation="D7C4BE48-9322-0119-78B5-F0383EFCE9D0" referredColumn="B6C3855B-9473-154F-E913-6829D14005F3"/>
 </associations>
 </Column>
+<Column name="WATK" id="12D539A3-71ED-8F0E-B14B-74675164837F">
+<createdBy>Daren511</createdBy>
+<createdTime>2014-10-09 14:23:57 UTC</createdTime>
+<generatorID>Généré par l&apos;utilisateur</generatorID>
+<ownerDesignName>modeleTHRONE</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>4</dataTypePrecision>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="WDEF" id="BBF86EA9-9280-4033-D9ED-061BF9BF510A">
+<createdBy>Daren511</createdBy>
+<createdTime>2014-10-09 14:23:57 UTC</createdTime>
+<generatorID>Généré par l&apos;utilisateur</generatorID>
+<ownerDesignName>modeleTHRONE</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>4</dataTypePrecision>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="MATK" id="F0492D24-0468-8D75-D353-360A03F1AB3A">
+<createdBy>Daren511</createdBy>
+<createdTime>2014-10-09 14:23:57 UTC</createdTime>
+<generatorID>Généré par l&apos;utilisateur</generatorID>
+<ownerDesignName>modeleTHRONE</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>4</dataTypePrecision>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="MDEF" id="8D25D39F-D416-EA18-F6FF-94AE355805CD">
+<createdBy>Daren511</createdBy>
+<createdTime>2014-10-09 14:23:57 UTC</createdTime>
+<generatorID>Généré par l&apos;utilisateur</generatorID>
+<ownerDesignName>modeleTHRONE</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>4</dataTypePrecision>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
 </columns>
 <indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
 <ind_PK_UK id="7F26A6D8-241F-2E8C-8487-3C0DE7F5D6F6" name="ITEMS_PK">

@@ -69,6 +69,8 @@
 <use>1</use>
 <logicalDatatype>LOGDT019</logicalDatatype>
 <dataTypePrecision>2</dataTypePrecision>
+<usesDefaultValue>true</usesDefaultValue>
+<defaultValue>1</defaultValue>
 <delegate>B6C3855B-9473-154F-E913-6829D14005F3</delegate>
 <autoIncrementCycle>false</autoIncrementCycle>
 <associations>
