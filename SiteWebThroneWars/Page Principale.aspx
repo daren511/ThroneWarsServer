@@ -22,7 +22,7 @@
  				<li class="active">
  					<li><a href="Page Principale.aspx">Accueil</a></li>
  					<li><a href="Inscription.aspx">Inscription</a></li>
-				 	<li><a href="Stats.aspx">Statistiques</a></li>
+				 	<li><a href="Stats2.aspx">Statistiques</a></li>
 				 	<li><a href="Media.aspx">Média</a></li>
 				 </li>
 			</ul>

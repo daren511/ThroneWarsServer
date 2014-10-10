@@ -79,7 +79,7 @@
     <Content Include="Inscription.aspx" />
     <Content Include="Media.aspx" />
     <Content Include="Page Principale.aspx" />
-    <Content Include="Stats.aspx" />
+    <Content Include="Stats2.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -112,12 +112,12 @@
       <DependentUpon>Page Principale.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Stats.aspx.cs">
-      <DependentUpon>Stats.aspx</DependentUpon>
+    <Compile Include="Stats2.aspx.cs">
+      <DependentUpon>Stats2.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Stats.aspx.designer.cs">
-      <DependentUpon>Stats.aspx</DependentUpon>
+    <Compile Include="Stats2.aspx.designer.cs">
+      <DependentUpon>Stats2.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
