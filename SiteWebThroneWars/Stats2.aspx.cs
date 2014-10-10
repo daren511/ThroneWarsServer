@@ -11,34 +11,33 @@ namespace SiteWebThroneWars
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            Leaderboard_Croissant();
         }
 
-        protected void Unnamed1_Click(object sender, EventArgs e)
+        protected void Rechercher_Click(object sender, EventArgs e)
         {
-            Build_Table();
+            // Chercher le username dans la bd, rammene la position leaderboard + stats joueur 
+            Leaderboard_Croissant();
         }
 
-        private void Build_Table()  
+        private void Leaderboard_Croissant()
         {
-           
-            // Pour tous les enrigistrements de la BD
-            for (int i = 0; i < 10; ++i)
+
+            //Pour tous les enrigistrements de la BD
+            for (int i = 1; i < 100; ++i)
             {
                 TableRow tr = new TableRow();
                 table.Rows.Add(tr);
-                // POur tous les champs de lerigistrements courant
-
-                for (int j = 0; j < 5; ++j)
-                {
-                    TableCell td = new TableCell();
-
-                    tr.Cells.Add(td);
-
-                    td.Text = i.ToString() + "Hcfranck";
-
-
-                }
+                // Pour tous les champs de l'enrigistrements courant
+                TableCell tdPosition = new TableCell();
+                TableCell tdUsername = new TableCell();
+                TableCell tdXP = new TableCell();
+                tr.Cells.Add(tdPosition);
+                tr.Cells.Add(tdUsername);
+                tr.Cells.Add(tdXP);
+                tdPosition.Text = i.ToString();
+                tdUsername.Text = "Hcfranck";
+                tdXP.Text = "13154651531";
 
 
             }

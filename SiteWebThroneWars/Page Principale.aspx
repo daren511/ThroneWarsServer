@@ -45,9 +45,9 @@
 						<div class="Membres">
 								<h2>Équipe</h2>
 								<p>Daren-Ken St-Laurent</p>
-									<img src="./Images/Daren.jpg" width="200" height="200"/ >
+									<img src="./Images/Daren.jpg" width="200" height="200"/>
 								<p>Francis Côté</p>
-									<img src="./Images/Tattoo.jpg" width="200" height="200"/ >
+									<img src="./Images/Tattoo.jpg" width="200" height="200"/>
 								<p>Charles Hunter-Roy</p>
 									<img src="./Images/Charles.jpg" width="200" height="200" />
 								<p>Alexis Lalonde</p>
