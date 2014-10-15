@@ -50,6 +50,28 @@ namespace ControleBD
                 return false;
             }
         }
+
+        public static bool deletePerso(int GUID)
+        {
+            OracleConnection conn = Connection.GetInstance().conn;
+            string sqldelete = "delete cascade from Personnages where GUID =:GUID";
+            try
+            {
+                OracleCommand oraDelete = new OracleCommand(sqldelete, conn);
+                OracleParameter OraParaGUID = new OracleParameter(":GUID", OracleDbType.Int32);
+                oraDelete.Parameters.Add(OraParaGUID);
+                oraDelete.ExecuteNonQuery();
+                return true;
+            }
+            catch (OracleException ex)
+            {
+                Erreur.ErrorMessage(ex);
+                return false;
+            }
+        }
+
+
+
         public static bool confirmAccount(int jid)
         {
             OracleConnection conn = Connection.GetInstance().conn;
@@ -79,6 +101,44 @@ namespace ControleBD
                 return false;
             }
         }
+
+        //-------------------------------------INSERT / UPDATE / DELETE PLAYER-------------------------------------------
+
+        public static bool insertplayer(string username, string email, string password)
+        {
+            OracleConnection conn = Connection.GetInstance().conn;
+
+            string sqlAjout = "insert into joueurs (username,EMAIL,Hash_KEY)" +
+                    " VALUES(:username,:EMAIL,:Hash_KEY)";
+            try
+            {
+
+                OracleCommand oraAjout = new OracleCommand(sqlAjout, conn);
+
+                OracleParameter OraParaUsername = new OracleParameter(":username", OracleDbType.Varchar2, 40);
+                OracleParameter OraParamEmail = new OracleParameter(":EMAIL", OracleDbType.Varchar2, 40);
+                OracleParameter OraParamHashKey = new OracleParameter(":Hash_KEY", OracleDbType.Char, 75);  //Ajout
+
+                OraParaUsername.Value = username;
+                OraParamEmail.Value = email;
+                OraParamHashKey.Value = Controle.HashPassword(password, null, System.Security.Cryptography.SHA256.Create());
+
+
+                oraAjout.Parameters.Add(OraParaUsername);
+                oraAjout.Parameters.Add(OraParamEmail);
+                oraAjout.Parameters.Add(OraParamHashKey);
+
+                oraAjout.ExecuteNonQuery();
+
+                return true;
+            }
+            catch (OracleException ex)
+            {
+                Erreur.ErrorMessage(ex);
+                return false;
+            }
+        }
+
 
         //TEMPORAIRE VERIFIER Si jid ou USERNAME
         public static bool updatePlayer(int jid, string username, string email, string password)
@@ -116,41 +176,7 @@ namespace ControleBD
             }
         }
 
-        public static bool insertplayer(string username, string email, string password)
-        {
-            OracleConnection conn = Connection.GetInstance().conn;
-
-            string sqlAjout = "insert into joueurs (username,EMAIL,Hash_KEY)" +
-                    " VALUES(:username,:EMAIL,:Hash_KEY)";
-            try
-            {
-
-                OracleCommand oraAjout = new OracleCommand(sqlAjout, conn);
-
-                OracleParameter OraParaUsername = new OracleParameter(":username", OracleDbType.Varchar2, 40);
-                OracleParameter OraParamEmail = new OracleParameter(":EMAIL", OracleDbType.Varchar2, 40);
-                OracleParameter OraParamHashKey = new OracleParameter(":Hash_KEY", OracleDbType.Char, 75);  //Ajout
-
-                OraParaUsername.Value = username;
-                OraParamEmail.Value = email;
-                OraParamHashKey.Value = Controle.HashPassword(password, null, System.Security.Cryptography.SHA256.Create());
-
-
-                oraAjout.Parameters.Add(OraParaUsername);
-                oraAjout.Parameters.Add(OraParamEmail);
-                oraAjout.Parameters.Add(OraParamHashKey);
-
-                oraAjout.ExecuteNonQuery();
-
-                return true;
-            }
-            catch (OracleException ex)
-            {
-                Erreur.ErrorMessage(ex);
-                return false;
-            }
-        }
-
+        
         public static bool deletePlayer(int JID)
         {
             OracleConnection conn = Connection.GetInstance().conn;
@@ -169,25 +195,6 @@ namespace ControleBD
                 return false;
             }
 
-        }
-
-        public static bool deletePerso(int GUID)
-        {
-            OracleConnection conn = Connection.GetInstance().conn;
-            string sqldelete = "delete cascade from Personnages where GUID =:GUID";
-            try
-            {
-                OracleCommand oraDelete = new OracleCommand(sqldelete, conn);
-                OracleParameter OraParaGUID = new OracleParameter(":GUID", OracleDbType.Int32);
-                oraDelete.Parameters.Add(OraParaGUID);
-                oraDelete.ExecuteNonQuery();
-                return true;
-            }
-            catch (OracleException ex)
-            {
-                Erreur.ErrorMessage(ex);
-                return false;
-            }
         }
 
         public static bool deleteItem(int IID)
@@ -347,6 +354,69 @@ namespace ControleBD
             return null;
         }
 
+        
+
+        /// <summary>
+        /// Add the 4 remaining players in the match
+        /// </summary>
+        /// <param name="mID">Match ID</param>
+        /// <param name="jID">Player ID</param>
+        /// <param name="guID1">Character1 ID</param>
+        /// <param name="guID2">Character2 ID</param>
+        /// <param name="guID3">Character3 ID</param>
+        /// <param name="guID4">Character4 ID</param>
+        /// <returns>True if the function worked</returns>
+        private static bool addPlayer(int mID, int jID, int guID1, int guID2, int guID3, int guID4)
+        {
+            OracleConnection conn = Connection.GetInstance().conn;
+            try
+            {
+                OracleCommand oraAdd = new OracleCommand("PACK_MATCHS", conn);
+                oraAdd.CommandText = "PACK_MATCHS.ADD_PLAYER_IN_MATCH";
+                oraAdd.CommandType = CommandType.StoredProcedure;
+
+                OracleParameter oraParamMID = new OracleParameter("pMID", OracleDbType.Int32);
+                oraParamMID.Direction = ParameterDirection.Input;
+                oraParamMID.Value = mID;
+                oraAdd.Parameters.Add(oraParamMID);
+
+                OracleParameter oraParamJID = new OracleParameter("pJID", OracleDbType.Int32);
+                oraParamJID.Direction = ParameterDirection.Input;
+                oraParamJID.Value = jID;
+                oraAdd.Parameters.Add(oraParamJID);
+
+                OracleParameter oraParamGUID1 = new OracleParameter("pGUID1", OracleDbType.Int32);
+                oraParamGUID1.Direction = ParameterDirection.Input;
+                oraParamGUID1.Value = guID1;
+                oraAdd.Parameters.Add(oraParamGUID1);
+
+                OracleParameter oraParamGUID2 = new OracleParameter("pGUID2", OracleDbType.Int32);
+                oraParamGUID2.Direction = ParameterDirection.Input;
+                oraParamGUID2.Value = guID2;
+                oraAdd.Parameters.Add(oraParamGUID2);
+
+                OracleParameter oraParamGUID3 = new OracleParameter("pGUID3", OracleDbType.Int32);
+                oraParamGUID3.Direction = ParameterDirection.Input;
+                oraParamGUID3.Value = guID3;
+                oraAdd.Parameters.Add(oraParamGUID3);
+
+                OracleParameter oraParamGUID4 = new OracleParameter("pGUID4", OracleDbType.Int32);
+                oraParamGUID4.Direction = ParameterDirection.Input;
+                oraParamGUID4.Value = guID4;
+                oraAdd.Parameters.Add(oraParamGUID4);
+
+                oraAdd.ExecuteNonQuery();
+                return true;
+            }
+            catch (OracleException ex)
+            {
+                Erreur.ErrorMessage(ex);
+                return false;
+            }
+        }
+
+        //----------------------------------------------------CREATE / UPDATE MATCH
+
         /// <summary>
         /// Create the match and insert the first 4 players in it
         /// </summary>
@@ -403,65 +473,6 @@ namespace ControleBD
                 oraCreate.Parameters.Add(oraParamGUID4);
 
                 oraCreate.ExecuteNonQuery();
-                return true;
-            }
-            catch (OracleException ex)
-            {
-                Erreur.ErrorMessage(ex);
-                return false;
-            }
-        }
-
-        /// <summary>
-        /// Add the 4 remaining players in the match
-        /// </summary>
-        /// <param name="mID">Match ID</param>
-        /// <param name="jID">Player ID</param>
-        /// <param name="guID1">Character1 ID</param>
-        /// <param name="guID2">Character2 ID</param>
-        /// <param name="guID3">Character3 ID</param>
-        /// <param name="guID4">Character4 ID</param>
-        /// <returns>True if the function worked</returns>
-        private static bool addPlayer(int mID, int jID, int guID1, int guID2, int guID3, int guID4)
-        {
-            OracleConnection conn = Connection.GetInstance().conn;
-            try
-            {
-                OracleCommand oraAdd = new OracleCommand("PACK_MATCHS", conn);
-                oraAdd.CommandText = "PACK_MATCHS.ADD_PLAYER_IN_MATCH";
-                oraAdd.CommandType = CommandType.StoredProcedure;
-
-                OracleParameter oraParamMID = new OracleParameter("pMID", OracleDbType.Int32);
-                oraParamMID.Direction = ParameterDirection.Input;
-                oraParamMID.Value = mID;
-                oraAdd.Parameters.Add(oraParamMID);
-
-                OracleParameter oraParamJID = new OracleParameter("pJID", OracleDbType.Int32);
-                oraParamJID.Direction = ParameterDirection.Input;
-                oraParamJID.Value = jID;
-                oraAdd.Parameters.Add(oraParamJID);
-
-                OracleParameter oraParamGUID1 = new OracleParameter("pGUID1", OracleDbType.Int32);
-                oraParamGUID1.Direction = ParameterDirection.Input;
-                oraParamGUID1.Value = guID1;
-                oraAdd.Parameters.Add(oraParamGUID1);
-
-                OracleParameter oraParamGUID2 = new OracleParameter("pGUID2", OracleDbType.Int32);
-                oraParamGUID2.Direction = ParameterDirection.Input;
-                oraParamGUID2.Value = guID2;
-                oraAdd.Parameters.Add(oraParamGUID2);
-
-                OracleParameter oraParamGUID3 = new OracleParameter("pGUID3", OracleDbType.Int32);
-                oraParamGUID3.Direction = ParameterDirection.Input;
-                oraParamGUID3.Value = guID3;
-                oraAdd.Parameters.Add(oraParamGUID3);
-
-                OracleParameter oraParamGUID4 = new OracleParameter("pGUID4", OracleDbType.Int32);
-                oraParamGUID4.Direction = ParameterDirection.Input;
-                oraParamGUID4.Value = guID4;
-                oraAdd.Parameters.Add(oraParamGUID4);
-
-                oraAdd.ExecuteNonQuery();
                 return true;
             }
             catch (OracleException ex)

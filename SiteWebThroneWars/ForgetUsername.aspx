@@ -1,10 +1,10 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="ForgotPass.aspx.cs" Inherits="SiteWebThroneWars.ForgotPass" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="ForgetUsername.aspx.cs" Inherits="SiteWebThroneWars.ForgetUsername" %>
 
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-<title>Throne Wars -Projet FinDec - Forgot Password</title>
+<title>Throne Wars -Projet FinDec - Forgot Username</title>
 <meta charset="utf-8"/> 
 <link rel="stylesheet" type="text/css" href="FinDec.css"/>
 </head>
@@ -24,10 +24,10 @@
 				 </li>
 			</ul>
 		</div>
-        <form runat="server" action="ForgotPass.aspx" autocomplete="on">
+        <form runat="server" action="ForgotUsername.aspx" autocomplete="on">
 		<div class="FormForgot">
   			Courriel: <asp:Textbox ID="TB_Email" TextMode="Email" runat="server"/><br/><br/>
-  			<asp:Button Text="Envoyer" runat="server" onclick="PasswordRecovery" />
+  			<asp:Button Text="Envoyer" runat="server" onclick="UsernameRecovery" />
   		</div>
         </form>
   	</body>

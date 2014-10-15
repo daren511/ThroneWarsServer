@@ -1,33 +1,33 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
 <oracle.dbtools.crest.model.design.relational.RelationalDesign>
+   <object objectType="Table" objectID="0DDC506F-3CF9-DD2A-ADE5-0FE1E2CC9344" name="MATCHS" seqName="seg_0"/>
    <object objectType="Table" objectID="19172EF9-1F81-BD7F-785A-0138C00AC2DE" name="CLASSES" seqName="seg_0"/>
-   <object objectType="Table" objectID="7D019ED0-8F9D-625E-8A0E-09635DECCCC8" name="CLASSESLEVELS" seqName="seg_0"/>
-   <object objectType="Table" objectID="7617576F-519C-EADC-66FC-E63B6FC34EC3" name="HABILITE" seqName="seg_0"/>
    <object objectType="Table" objectID="1B1DD3E5-8D18-DBB0-C22C-8BE46D6E0152" name="INVENTAIREJOUEUR" seqName="seg_0"/>
    <object objectType="Table" objectID="3D9D45F8-45BC-9D84-E4D0-664FEAA363D3" name="ITEMS" seqName="seg_0"/>
+   <object objectType="Table" objectID="53EF20A4-2B4A-5FE1-8C75-08F6DEC130DF" name="LEVELPERSONNAGES" seqName="seg_0"/>
    <object objectType="Table" objectID="68FFF3BD-A98F-40FE-EF3A-91E86E1CA95D" name="ITEMSPERSONNAGES" seqName="seg_0"/>
    <object objectType="Table" objectID="7468B1CC-7A0D-5EFC-2BAD-6445E55C0225" name="JOUEURS" seqName="seg_0"/>
-   <object objectType="Table" objectID="53EF20A4-2B4A-5FE1-8C75-08F6DEC130DF" name="LEVELPERSONNAGES" seqName="seg_0"/>
-   <object objectType="Table" objectID="0DDC506F-3CF9-DD2A-ADE5-0FE1E2CC9344" name="MATCHS" seqName="seg_0"/>
-   <object objectType="Table" objectID="FB92690D-2F3C-9173-0C4F-DD253495EEC0" name="MATCHSJOUEURS" seqName="seg_0"/>
+   <object objectType="Table" objectID="7617576F-519C-EADC-66FC-E63B6FC34EC3" name="HABILITE" seqName="seg_0"/>
+   <object objectType="Table" objectID="7D019ED0-8F9D-625E-8A0E-09635DECCCC8" name="CLASSESLEVELS" seqName="seg_0"/>
    <object objectType="Table" objectID="97066691-2D97-2779-8CF8-8D85FEA02C9D" name="Maps" seqName="seg_0"/>
    <object objectType="Table" objectID="A7A3D9EF-20D8-8048-EB77-C9A3D9B63FDE" name="PERSONNAGES" seqName="seg_0"/>
-   <object objectType="FKIndexAssociation" objectID="3DC584C2-D18B-BDDC-2ABB-DE995C42383D" name="CLASSESLEVELS_CLASSES_FK" seqName="seg_0"/>
-   <object objectType="FKIndexAssociation" objectID="4D3EA8EC-ECBD-FF8D-AA01-0B9E2D812BF5" name="CLASSESLEVELS_LVLPERSO_FK" seqName="seg_0"/>
-   <object objectType="FKIndexAssociation" objectID="A2FC6AD1-F35A-EBBD-6A8D-60A75EF39EDA" name="MATCHS_Maps_FK" seqName="seg_0"/>
-   <object objectType="FKIndexAssociation" objectID="F00BD3B7-5733-ADE6-4599-5959DE42D813" name="HABILITE_CLASSES_FK" seqName="seg_0"/>
-   <object objectType="FKIndexAssociation" objectID="A945E522-72B1-15D2-DF8A-E6BACE7BCD01" name="HABILITE_LEVELPERSONNAGES_FK" seqName="seg_0"/>
-   <object objectType="FKIndexAssociation" objectID="FCF1E8B8-36BC-B34C-5BD4-D727A7F1DEAA" name="ITEMSJOUEURS_ITEMS_FK" seqName="seg_0"/>
+   <object objectType="Table" objectID="FB92690D-2F3C-9173-0C4F-DD253495EEC0" name="MATCHSJOUEURS" seqName="seg_0"/>
+   <object objectType="FKIndexAssociation" objectID="0D9602C5-F4D1-98B6-F10D-27EA1DB2CDAE" name="Personnages_CLASSES_FK" seqName="seg_0"/>
    <object objectType="FKIndexAssociation" objectID="25033518-A25E-DD57-BEE9-F1CD42DB5B97" name="ITEMSJOUEURS_JOUEURS_FK" seqName="seg_0"/>
    <object objectType="FKIndexAssociation" objectID="2BEE6223-D2C8-0598-6AFC-02A281A562CD" name="ITEMSPERSO_INVJOUEUR_FK" seqName="seg_0"/>
-   <object objectType="FKIndexAssociation" objectID="DEC93CF4-FAEF-BBC2-8BCE-089B0F3D7501" name="ITEMSPERSO_PERSO_FK" seqName="seg_0"/>
-   <object objectType="FKIndexAssociation" objectID="3DDFAEAA-BE58-38A0-ED59-C85B05A11B56" name="ITEMS_CLASSES_FK" seqName="seg_0"/>
-   <object objectType="FKIndexAssociation" objectID="D7C4BE48-9322-0119-78B5-F0383EFCE9D0" name="ITEMS_LEVELPERSONNAGES_FK" seqName="seg_0"/>
-   <object objectType="FKIndexAssociation" objectID="3E39DC26-6E75-3ABC-23A0-31777E2BCCE0" name="MATCHSJOUEURS_JOUEURS_FK" seqName="seg_0"/>
-   <object objectType="FKIndexAssociation" objectID="75DAAE20-88B6-CC6B-D988-EF4886C82445" name="MATCHSJOUEURS_MATCHS_FK" seqName="seg_0"/>
    <object objectType="FKIndexAssociation" objectID="2E08F288-1D10-367B-CA44-81C7A9B0AAF6" name="MATCHSJOUEURS_PERSONNAGES_FK" seqName="seg_0"/>
-   <object objectType="FKIndexAssociation" objectID="E3C0DD36-FC3A-0984-A8FA-B6F1760E480C" name="MATCHS_Joueurs_FK" seqName="seg_0"/>
-   <object objectType="FKIndexAssociation" objectID="BD69073A-6542-B634-2E0A-6E3A1D0E7068" name="PERSONNAGES_JOUEURS_FK" seqName="seg_0"/>
+   <object objectType="FKIndexAssociation" objectID="3DC584C2-D18B-BDDC-2ABB-DE995C42383D" name="CLASSESLEVELS_CLASSES_FK" seqName="seg_0"/>
+   <object objectType="FKIndexAssociation" objectID="3DDFAEAA-BE58-38A0-ED59-C85B05A11B56" name="ITEMS_CLASSES_FK" seqName="seg_0"/>
+   <object objectType="FKIndexAssociation" objectID="3E39DC26-6E75-3ABC-23A0-31777E2BCCE0" name="MATCHSJOUEURS_JOUEURS_FK" seqName="seg_0"/>
+   <object objectType="FKIndexAssociation" objectID="4D3EA8EC-ECBD-FF8D-AA01-0B9E2D812BF5" name="CLASSESLEVELS_LVLPERSO_FK" seqName="seg_0"/>
+   <object objectType="FKIndexAssociation" objectID="75DAAE20-88B6-CC6B-D988-EF4886C82445" name="MATCHSJOUEURS_MATCHS_FK" seqName="seg_0"/>
    <object objectType="FKIndexAssociation" objectID="880D8E71-DDAE-C669-B0D9-7AA98A99867E" name="PERSONNAGES_LVLPERSO_FK" seqName="seg_0"/>
-   <object objectType="FKIndexAssociation" objectID="0D9602C5-F4D1-98B6-F10D-27EA1DB2CDAE" name="Personnages_CLASSES_FK" seqName="seg_0"/>
+   <object objectType="FKIndexAssociation" objectID="A2FC6AD1-F35A-EBBD-6A8D-60A75EF39EDA" name="MATCHS_Maps_FK" seqName="seg_0"/>
+   <object objectType="FKIndexAssociation" objectID="A945E522-72B1-15D2-DF8A-E6BACE7BCD01" name="HABILITE_LEVELPERSONNAGES_FK" seqName="seg_0"/>
+   <object objectType="FKIndexAssociation" objectID="BD69073A-6542-B634-2E0A-6E3A1D0E7068" name="PERSONNAGES_JOUEURS_FK" seqName="seg_0"/>
+   <object objectType="FKIndexAssociation" objectID="D7C4BE48-9322-0119-78B5-F0383EFCE9D0" name="ITEMS_LEVELPERSONNAGES_FK" seqName="seg_0"/>
+   <object objectType="FKIndexAssociation" objectID="DEC93CF4-FAEF-BBC2-8BCE-089B0F3D7501" name="ITEMSPERSO_PERSO_FK" seqName="seg_0"/>
+   <object objectType="FKIndexAssociation" objectID="E3C0DD36-FC3A-0984-A8FA-B6F1760E480C" name="MATCHS_Joueurs_FK" seqName="seg_0"/>
+   <object objectType="FKIndexAssociation" objectID="F00BD3B7-5733-ADE6-4599-5959DE42D813" name="HABILITE_CLASSES_FK" seqName="seg_0"/>
+   <object objectType="FKIndexAssociation" objectID="FCF1E8B8-36BC-B34C-5BD4-D727A7F1DEAA" name="ITEMSJOUEURS_ITEMS_FK" seqName="seg_0"/>
 </oracle.dbtools.crest.model.design.relational.RelationalDesign>
