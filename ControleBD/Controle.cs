@@ -693,13 +693,6 @@ namespace ControleBD
             }
         }
 
-
-
-
-
-
-
-
         //-----------------------------------------  FONCTIONS SITE WEB ---------------------------------------------
 
         public static bool PasswordRecovery(string username)
