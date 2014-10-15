@@ -32,8 +32,18 @@
 					<div class="Description">
 					<h1>Description</h1>
 					<p>
-						Jeu de stratégie tour-à-tour, pour 2 joueurs. Chaque joueur commence avec 4 personnages qu’il peut faire évoluer après chaque combats, avec de l’expérience acquise par ennemi vaincu et ils peuvent aussi utiliser le magasin du jeu pour acheter de l’équipement. Chacun des personnages du joueur possèdent des habilités/classes différentes (magicien, guerrier, archer, prêtre, etc). Le but de la partie est de vaincre tous les personnages de l’adversaire.
-					</p></br></br></br></br></br>
+						Jeu de stratégie tour-à-tour, pour 2 joueurs. 
+                        Chaque joueur commence avec 4 personnages qu’il peut faire évoluer après chaque combats, 
+                        avec de l’expérience acquise par ennemi vaincu et ils peuvent aussi utiliser le magasin du jeu 
+                        pour acheter de l’équipement. Chacun des personnages du joueur possèdent des habilités/classes différentes 
+                        (magicien, guerrier, archer, prêtre, etc). Le but de la partie est de vaincre tous les personnages de 
+                        l’adversaire.
+                    </p>
+                        <br />
+                    <p style="text-align:center">
+                        Supervisé par Francois Jean
+                    </p>
+					
 
 					</div>
 					<div class="Telechargement">
@@ -44,18 +54,14 @@
 				</div>
 						<div class="Membres">
 								<h2>Équipe</h2>
-								<p>Daren-Ken St-Laurent</p>
-									<img src="./Images/Daren.jpg" width="200" height="200"/>
-								<p>Francis Côté</p>
-									<img src="./Images/Tattoo.jpg" width="200" height="200"/>
-								<p>Charles Hunter-Roy</p>
-									<img src="./Images/Charles.jpg" width="200" height="200" />
-								<p>Alexis Lalonde</p>
-									<img src="./Images/Alexis2.jpg" width="200" height="200" />
-							</div>
-				
-						
-				
-							
+								<a href="mailto:Daren@thronewars.ca" target="_top">Daren Ken St-Laurent</a><br />
+									<img src="./Images/Daren.jpg" width="200" height="200"/><br /><br />
+								<a href="mailto:Francis@thronewars.ca" target="_top">Francis Côté</a><br />
+									<img src="./Images/Tattoo.jpg" width="200" height="200"/><br /><br />
+								<a href="mailto:Charles@thronewars.ca" target="_top">Charles Hunter-Roy</a><br />
+									<img src="./Images/Charles.jpg" width="200" height="200" /><br /><br />
+								<a href="mailto:Alexis@thronewars.ca" target="_top">Alexis Lalonde</a><br />
+									<img src="./Images/Alexis2.jpg" width="200" height="200" /><br /><br />
+							</div>						
 </body>
 </html>

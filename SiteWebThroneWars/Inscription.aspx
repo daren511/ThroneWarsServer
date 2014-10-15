@@ -42,6 +42,7 @@
 		</form>
           
 			<a href="ForgotPass.aspx">Mot de passe oublié?</a>
+            <a href="ForgotUsername.aspx">Nom d'utilisateur oublié?</a>
 		</div>
 </body>
 </html>

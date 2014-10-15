@@ -23,8 +23,8 @@ namespace SiteWebThroneWars
 
             // Si legit envoyer mess with username
             if (legitEmail)
-            { 
-                
+            {
+
             }
         }
 
@@ -48,6 +48,5 @@ namespace SiteWebThroneWars
             if (email != null) return Regex.IsMatch(email, MatchEmailPattern);
             else return false;
         }
-    }
     }
 }
