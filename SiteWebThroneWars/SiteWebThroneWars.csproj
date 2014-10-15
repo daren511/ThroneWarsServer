@@ -67,6 +67,7 @@
   <ItemGroup>
     <Content Include="ConfirmAccount.aspx" />
     <Content Include="FinDec.css" />
+    <Content Include="ForgetUsername.aspx" />
     <Content Include="ForgotPass.aspx" />
     <Content Include="Images\1.jpg" />
     <Content Include="Images\2.jpg" />
@@ -90,6 +91,13 @@
     </Compile>
     <Compile Include="ConfirmAccount.aspx.designer.cs">
       <DependentUpon>ConfirmAccount.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ForgetUsername.aspx.cs">
+      <DependentUpon>ForgetUsername.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ForgetUsername.aspx.designer.cs">
+      <DependentUpon>ForgetUsername.aspx</DependentUpon>
     </Compile>
     <Compile Include="ForgotPass.aspx.cs">
       <DependentUpon>ForgotPass.aspx</DependentUpon>
