@@ -84,7 +84,7 @@ public class CombatMenu : MonoBehaviour
     {
         DisplayCharacterStats();
 
-        if(characterChosen)
+        if(characterChosen) 
         {
             GameController.FindObjectOfType<GameController>().allowInput = false;
             InitializeStats();
