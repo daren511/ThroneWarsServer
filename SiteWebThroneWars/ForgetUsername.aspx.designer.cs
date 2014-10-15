@@ -10,15 +10,15 @@
 namespace SiteWebThroneWars {
     
     
-    public partial class ForgotPass {
+    public partial class ForgetUsername {
         
         /// <summary>
-        /// Contrôle TB_Username.
+        /// Contrôle TB_Email.
         /// </summary>
         /// <remarks>
         /// Champ généré automatiquement.
         /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TB_Username;
+        protected global::System.Web.UI.WebControls.TextBox TB_Email;
     }
 }

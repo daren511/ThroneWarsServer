@@ -65,7 +65,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="ConfirmAccount.aspx" />
     <Content Include="FinDec.css" />
+    <Content Include="ForgetUsername.aspx" />
     <Content Include="ForgotPass.aspx" />
     <Content Include="Images\1.jpg" />
     <Content Include="Images\2.jpg" />
@@ -79,10 +81,24 @@
     <Content Include="Inscription.aspx" />
     <Content Include="Media.aspx" />
     <Content Include="Page Principale.aspx" />
-    <Content Include="Stats.aspx" />
+    <Content Include="Stats2.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConfirmAccount.aspx.cs">
+      <DependentUpon>ConfirmAccount.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ConfirmAccount.aspx.designer.cs">
+      <DependentUpon>ConfirmAccount.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ForgetUsername.aspx.cs">
+      <DependentUpon>ForgetUsername.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ForgetUsername.aspx.designer.cs">
+      <DependentUpon>ForgetUsername.aspx</DependentUpon>
+    </Compile>
     <Compile Include="ForgotPass.aspx.cs">
       <DependentUpon>ForgotPass.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -112,12 +128,12 @@
       <DependentUpon>Page Principale.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Stats.aspx.cs">
-      <DependentUpon>Stats.aspx</DependentUpon>
+    <Compile Include="Stats2.aspx.cs">
+      <DependentUpon>Stats2.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Stats.aspx.designer.cs">
-      <DependentUpon>Stats.aspx</DependentUpon>
+    <Compile Include="Stats2.aspx.designer.cs">
+      <DependentUpon>Stats2.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
