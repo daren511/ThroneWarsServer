@@ -9,7 +9,7 @@ namespace Emails
 {
     public static class Email
     {
-        public static bool sendMail(string email,string subject,string )
+        public static bool sendMail(string email,string subject,string message)
         {
             try
             {
@@ -17,9 +17,9 @@ namespace Emails
                 SmtpClient SmtpServer = new SmtpClient("smtpout.secureserver.net");
 
                 mail.From = new MailAddress("noreply@thronewars.ca");
-                mail.To.Add("5148089676@txt.bell.ca");
-                mail.Subject = "Test Mail";
-                mail.Body = "This is for testing SMTP mail from GMAIL";
+                mail.To.Add(email);
+                mail.Subject = subject;
+                mail.Body = message;
 
                 SmtpServer.Port = 25;
                 SmtpServer.Credentials = new System.Net.NetworkCredential("noreply@thronewars.ca", "ProjetDEC");
