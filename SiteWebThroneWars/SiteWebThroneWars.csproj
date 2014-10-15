@@ -66,6 +66,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ConfirmAccount.aspx" />
+    <Content Include="Connexion.aspx" />
     <Content Include="FinDec.css" />
     <Content Include="ForgetUsername.aspx" />
     <Content Include="ForgotPass.aspx" />
@@ -91,6 +92,13 @@
     </Compile>
     <Compile Include="ConfirmAccount.aspx.designer.cs">
       <DependentUpon>ConfirmAccount.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Connexion.aspx.cs">
+      <DependentUpon>Connexion.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Connexion.aspx.designer.cs">
+      <DependentUpon>Connexion.aspx</DependentUpon>
     </Compile>
     <Compile Include="ForgetUsername.aspx.cs">
       <DependentUpon>ForgetUsername.aspx</DependentUpon>
