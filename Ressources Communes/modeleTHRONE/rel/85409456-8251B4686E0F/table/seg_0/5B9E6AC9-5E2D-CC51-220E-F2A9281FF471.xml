@@ -1,0 +1,117 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="5B9E6AC9-5E2D-CC51-220E-F2A9281FF471" name="POTIONS">
+<createdBy>Daren511</createdBy>
+<createdTime>2014-10-15 18:52:18 UTC</createdTime>
+<generatorID>Généré par l&apos;utilisateur</generatorID>
+<ownerDesignName>modeleTHRONE</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="PID" id="B1A544F8-729E-F739-9EBC-A68996259286">
+<createdBy>Daren511</createdBy>
+<createdTime>2014-10-15 18:54:27 UTC</createdTime>
+<generatorID>Généré par l&apos;utilisateur</generatorID>
+<ownerDesignName>modeleTHRONE</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>10</dataTypePrecision>
+<autoIncrementColumn>true</autoIncrementColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<autoIncrementSequenceName>SEQ_POTION</autoIncrementSequenceName>
+<autoIncrementTriggerName>INC_POTION</autoIncrementTriggerName>
+</Column>
+<Column name="NOM" id="7F6E1397-4BD8-F6F7-B40C-89E3BBE2D127">
+<createdBy>Daren511</createdBy>
+<createdTime>2014-10-15 18:54:27 UTC</createdTime>
+<generatorID>Généré par l&apos;utilisateur</generatorID>
+<ownerDesignName>modeleTHRONE</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>40</dataTypeSize>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="DESCRIPTION" id="40BA8EA2-8A01-3098-81D2-75527F8F44F7">
+<createdBy>Daren511</createdBy>
+<createdTime>2014-10-15 18:54:27 UTC</createdTime>
+<generatorID>Généré par l&apos;utilisateur</generatorID>
+<ownerDesignName>modeleTHRONE</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>255</dataTypeSize>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="DURATION" id="D134EC3A-668A-163F-8161-EF355C5099EB">
+<createdBy>Daren511</createdBy>
+<createdTime>2014-10-15 18:54:27 UTC</createdTime>
+<generatorID>Généré par l&apos;utilisateur</generatorID>
+<ownerDesignName>modeleTHRONE</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>1</dataTypePrecision>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="WATK" id="4AA833E0-D049-8E99-ADFB-381A732A91A2">
+<createdBy>Daren511</createdBy>
+<createdTime>2014-10-15 18:54:27 UTC</createdTime>
+<generatorID>Généré par l&apos;utilisateur</generatorID>
+<ownerDesignName>modeleTHRONE</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>4</dataTypePrecision>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="WDEF" id="FA04AD83-C47F-F59A-1F68-CD115BA5DBEF">
+<createdBy>Daren511</createdBy>
+<createdTime>2014-10-15 18:54:27 UTC</createdTime>
+<generatorID>Généré par l&apos;utilisateur</generatorID>
+<ownerDesignName>modeleTHRONE</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>4</dataTypePrecision>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="MATK" id="4BEF5221-3449-F3C4-505D-D4E52506352E">
+<createdBy>Daren511</createdBy>
+<createdTime>2014-10-15 18:54:27 UTC</createdTime>
+<generatorID>Généré par l&apos;utilisateur</generatorID>
+<ownerDesignName>modeleTHRONE</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>4</dataTypePrecision>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="MDEF" id="7B4B06B3-546A-3D3A-D8DF-5BF0282C2605">
+<createdBy>Daren511</createdBy>
+<createdTime>2014-10-15 18:54:27 UTC</createdTime>
+<generatorID>Généré par l&apos;utilisateur</generatorID>
+<ownerDesignName>modeleTHRONE</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>4</dataTypePrecision>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="75A73D12-C93C-71FC-1F3F-6EAA3EA4CE72" name="POTIONS_PK">
+<createdBy>Daren511</createdBy>
+<createdTime>2014-10-15 18:54:27 UTC</createdTime>
+<generatorID>Généré par l&apos;utilisateur</generatorID>
+<ownerDesignName>modeleTHRONE</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="B1A544F8-729E-F739-9EBC-A68996259286"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

@@ -92,6 +92,24 @@
 <colAssociation fkAssociation="0D9602C5-F4D1-98B6-F10D-27EA1DB2CDAE" referredColumn="95CD0321-120A-0B60-282A-EF04CC3BF2A6"/>
 </associations>
 </Column>
+<Column name="ISACTIVE" id="1001562E-BFDA-4A06-9983-C7B1A16A129C">
+<createdBy>Daren511</createdBy>
+<createdTime>2014-10-15 18:52:04 UTC</createdTime>
+<generatorID>Généré par l&apos;utilisateur</generatorID>
+<ownerDesignName>modeleTHRONE</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT006</logicalDatatype>
+<dataTypeSize>1</dataTypeSize>
+<usesDefaultValue>true</usesDefaultValue>
+<listOfValues>
+<valueDef value="0" description="False"/>
+<valueDef value="1" description="true"/>
+</listOfValues>
+<defaultValue>1</defaultValue>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
 </columns>
 <indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
 <ind_PK_UK id="4A06D9B5-7B31-9EDD-B833-094CAD223BE0" name="Personnages_PK">

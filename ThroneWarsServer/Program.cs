@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ControleBD;
-
+using Emails;
 
 
 namespace ThroneWarsServer
@@ -13,7 +13,7 @@ namespace ThroneWarsServer
     {
         static void Main(string[] args)
         {
-            Console.WriteLine(Controle.insertplayer("hcfranck2","hc_throwdown2@hotmail.com","tattoo").ToString());
+            Console.WriteLine(Email.sendMail("charles@thronewars.ca","TESTING LE CHARLES","CECI EST UN TEST").ToString());
             Console.ReadKey();
         }
     }

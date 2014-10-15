@@ -38,7 +38,7 @@ namespace ControleBD
 
                 if (conn.State.ToString() != "Open")
                 {
-
+                    // to do
                 }
 
             }

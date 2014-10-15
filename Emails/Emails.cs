@@ -21,7 +21,7 @@ namespace Emails
                 mail.Subject = subject;
                 mail.Body = message;
 
-                SmtpServer.Port = 25;
+                SmtpServer.Port = 80;
                 SmtpServer.Credentials = new System.Net.NetworkCredential("noreply@thronewars.ca", "ProjetDEC");
                 SmtpServer.EnableSsl = false;
 

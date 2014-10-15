@@ -1,0 +1,89 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="3A5D0603-CC3D-9CC6-EA7A-562FA3997D26" name="POTIONJOUEURS">
+<createdBy>Daren511</createdBy>
+<createdTime>2014-10-15 18:57:25 UTC</createdTime>
+<generatorID>Généré par l&apos;utilisateur</generatorID>
+<ownerDesignName>modeleTHRONE</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="PID" id="E3D0A50F-B32D-77E3-9997-BDA258354B8B">
+<createdBy>Daren511</createdBy>
+<createdTime>2014-10-15 18:58:14 UTC</createdTime>
+<generatorID>Généré par l&apos;utilisateur</generatorID>
+<ownerDesignName>modeleTHRONE</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>10</dataTypePrecision>
+<delegate>B1A544F8-729E-F739-9EBC-A68996259286</delegate>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="A9C10BE3-EA71-5281-C372-A2CB11888AC6" referredColumn="B1A544F8-729E-F739-9EBC-A68996259286"/>
+</associations>
+</Column>
+<Column name="JID" id="5231668A-2BE2-AF2E-2E50-0EC52D616DC5">
+<createdBy>Daren511</createdBy>
+<createdTime>2014-10-15 18:58:14 UTC</createdTime>
+<generatorID>Généré par l&apos;utilisateur</generatorID>
+<ownerDesignName>modeleTHRONE</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>10</dataTypePrecision>
+<delegate>3E9B1026-9FFC-16ED-EA14-A90C11A1DAAA</delegate>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="E71A401F-A89F-FB7B-3A05-24FA59D1BDF3" referredColumn="3E9B1026-9FFC-16ED-EA14-A90C11A1DAAA"/>
+</associations>
+</Column>
+<Column name="QUANTITY" id="2EEE7D2E-B52E-FF1D-2E8A-148EA62C4F12">
+<createdBy>Daren511</createdBy>
+<createdTime>2014-10-15 18:58:14 UTC</createdTime>
+<generatorID>Généré par l&apos;utilisateur</generatorID>
+<ownerDesignName>modeleTHRONE</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<dataTypePrecision>2</dataTypePrecision>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="54D5EC86-FA00-1B5A-3AC5-1E15B20A231A" name="POTIONJOUEURS_PK">
+<createdBy>Daren511</createdBy>
+<createdTime>2014-10-15 18:58:14 UTC</createdTime>
+<generatorID>Généré par l&apos;utilisateur</generatorID>
+<ownerDesignName>modeleTHRONE</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="E3D0A50F-B32D-77E3-9997-BDA258354B8B"/>
+<colUsage columnID="5231668A-2BE2-AF2E-2E50-0EC52D616DC5"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="B6CAA6F2-8272-EE03-C4CE-FB638BE8C429" name="POTIONJOUEURS_JOUEURS_FK">
+<createdBy>Daren511</createdBy>
+<createdTime>2014-10-15 18:58:27 UTC</createdTime>
+<generatorID>Généré par l&apos;utilisateur</generatorID>
+<ownerDesignName>modeleTHRONE</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="5231668A-2BE2-AF2E-2E50-0EC52D616DC5"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="91E4778E-F60E-D80E-3159-3CA4EE388001" name="POTIONJOUEURS_POTIONS_FK">
+<createdBy>Daren511</createdBy>
+<createdTime>2014-10-15 18:58:36 UTC</createdTime>
+<generatorID>Généré par l&apos;utilisateur</generatorID>
+<ownerDesignName>modeleTHRONE</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="E3D0A50F-B32D-77E3-9997-BDA258354B8B"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

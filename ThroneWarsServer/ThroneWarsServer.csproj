@@ -53,6 +53,10 @@
       <Project>{4edee1ef-7c68-46fd-ada8-3834f82ac21f}</Project>
       <Name>ControleBD</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Emails\Emails.csproj">
+      <Project>{356048cc-271e-4dd5-bba7-da109e00abd0}</Project>
+      <Name>Emails</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

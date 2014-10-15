@@ -50,8 +50,8 @@
 <ownerDesignName>modeleTHRONE</ownerDesignName>
 <useDomainConstraints>false</useDomainConstraints>
 <use>1</use>
-<logicalDatatype>LOGDT024</logicalDatatype>
-<dataTypeSize>40</dataTypeSize>
+<logicalDatatype>LOGDT025</logicalDatatype>
+<dataTypeSize>75</dataTypeSize>
 <autoIncrementCycle>false</autoIncrementCycle>
 </Column>
 <Column name="JOINDATE" id="E7A36AC1-D5D2-772A-A19A-43A9B794ED2C">
@@ -84,13 +84,14 @@
 <ownerDesignName>modeleTHRONE</ownerDesignName>
 <useDomainConstraints>false</useDomainConstraints>
 <use>1</use>
-<logicalDatatype>LOGDT025</logicalDatatype>
+<logicalDatatype>LOGDT006</logicalDatatype>
+<dataTypeSize>1</dataTypeSize>
 <usesDefaultValue>true</usesDefaultValue>
 <listOfValues>
-<valueDef value="F" description=""/>
-<valueDef value="T" description=""/>
+<valueDef value="0" description="False"/>
+<valueDef value="1" description="True"/>
 </listOfValues>
-<defaultValue>F</defaultValue>
+<defaultValue>0</defaultValue>
 <autoIncrementCycle>false</autoIncrementCycle>
 </Column>
 </columns>
