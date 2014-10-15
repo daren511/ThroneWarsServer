@@ -26,7 +26,7 @@
 		</div>
         <form runat="server" action="ForgotPass.aspx" autocomplete="on">
 		<div class="FormForgot">
-  			Courriel: <asp:Textbox ID="TB_Email" TextMode="Email" runat="server"/><br/><br/>
+  			Nom d'utilisateur: <asp:Textbox ID="TB_Username" TextMode="SingleLine" runat="server"/><br/><br/>
   			<asp:Button Text="Envoyer" runat="server" onclick="PasswordRecovery" />
   		</div>
         </form>

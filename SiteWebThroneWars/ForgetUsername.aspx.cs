@@ -21,7 +21,7 @@ namespace SiteWebThroneWars
             // Valider que le email est legit
             bool legitEmail = IsEmail(courriel);
 
-            // Si legit envoyer mess with password
+            // Si legit envoyer mess with username
             if (legitEmail)
             { 
                 

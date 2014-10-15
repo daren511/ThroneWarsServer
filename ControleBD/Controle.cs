@@ -692,5 +692,82 @@ namespace ControleBD
                 return false;
             }
         }
+
+
+
+
+
+
+
+
+        //-----------------------------------------  FONCTIONS SITE WEB ---------------------------------------------
+
+        public static bool PasswordRecovery(string username)
+        {
+            OracleConnection conn = Connection.GetInstance().conn;
+
+            string sqlSelect = "select username from joueurs where username = :username";
+            string result ="";
+            try
+            {
+                OracleCommand oraSelect = new OracleCommand(sqlSelect,conn);
+                oraSelect.CommandType = CommandType.Text;
+
+                OracleDataReader objRead = oraSelect.ExecuteReader();
+                while(objRead.Read())
+                {
+                     result = objRead.GetString(0);
+                }
+                objRead.Close();
+
+                // Checker si le username existe ou non
+                if (result != null)
+                { 
+                    //Dehastage le password, envoie un email au courriel correspondant du username
+
+                }
+                return true;
+                
+            }
+            catch (OracleException ex)
+            {
+                Erreur.ErrorMessage(ex);
+                return false;
+            }
+        }
+
+        public static bool UsernameRecovery(string email)
+        {
+            OracleConnection conn = Connection.GetInstance().conn;
+
+            string sqlSelect = "select email from joueurs where email = :email";
+            string result = "";
+            try
+            {
+                OracleCommand oraSelect = new OracleCommand(sqlSelect, conn);
+                oraSelect.CommandType = CommandType.Text;
+
+                OracleDataReader objRead = oraSelect.ExecuteReader();
+                while (objRead.Read())
+                {
+                    result = objRead.GetString(0);
+                }
+                objRead.Close();
+
+                // Checker si le username existe ou non
+                if (result != null)
+                {
+                    //envoie un email au courriel correspondant du username
+
+                }
+                return true;
+
+            }
+            catch (OracleException ex)
+            {
+                Erreur.ErrorMessage(ex);
+                return false;
+            }
+        }
     }
 }
