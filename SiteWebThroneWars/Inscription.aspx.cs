@@ -7,6 +7,7 @@ using System.Web.UI.WebControls;
 using System.Text.RegularExpressions;
 using ControleBD;
 using System.Globalization;
+using Emails;
 
 
 namespace SiteWebThroneWars
@@ -43,10 +44,11 @@ namespace SiteWebThroneWars
                     Controle.insertplayer(user, pass, courriel);
 
                     // Message de confirmation
-                    message = "L'inscription à reussie";
+                    message = "L'inscription à reussie, veuillez visiter votre courriel pour confirmer votre compte";
                     ClientScript.RegisterStartupScript(this.GetType(), "myalert", "alert('" + message + "');", true);  
 
                     // Send email de confirmation
+                    Email.sendMail(courriel,Email.SujetInscription,Email.bodyConfirmation);
                 }
                 else
                 {

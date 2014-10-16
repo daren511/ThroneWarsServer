@@ -9,6 +9,9 @@ namespace Emails
 {
     public static class Email
     {
+        public static string SujetInscription = "Confirmation compte Throne Wars";
+        public static string bodyConfirmation = "Veuillez confirmer votre account lier à ce courriel." +
+            "Voici votre lien pour confirmer : www.thronewars.ca/confirmaccount";
         public static bool sendMail(string email,string subject,string message)
         {
             try

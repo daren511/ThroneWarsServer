@@ -9,6 +9,7 @@
 <link rel="stylesheet" type="text/css" href="FinDec.css"/>
 </head>
 <body>
+    <form runat="server" action="Inscription.aspx" autocomplete="on">
 		<div class="Entete">
 			<img src="./Images/Logo_Grand.png" style="max-height:100%; max-width:100%;"/> <!-- A checker les dimensions ou plus grosse image -->
 		</div>
@@ -26,7 +27,6 @@
 			</ul>
 		</div>
 		<div class="Inscription">
-		<form runat="server" action="Inscription.aspx" autocomplete="on">
   			<label>Nom d'utilisateur</label>
                 <asp:Textbox ID="username" TextMode="SingleLine" runat="server"/><br/>
   			<label>Mot de passe</label>
@@ -40,11 +40,9 @@
             
             
             <asp:Button Text="Valider" onClick="inscriptionJoueur_Click" runat="server"/>
-		</form>
-          
-			<a href="ForgotPass.aspx">Mot de passe oublié?</a>
-            <a href="ForgetUsername.aspx">Nom d'utilisateur oublié?</a>
+		
 		</div>
+        </form>
 </body>
 </html>
 

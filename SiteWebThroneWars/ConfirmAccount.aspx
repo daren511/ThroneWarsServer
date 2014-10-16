@@ -6,7 +6,7 @@
 <head runat="server">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link rel="stylesheet" type="text/css" href="FinDec.css" />
-    <title></title>
+    <title>Throne Wars -Projet FinDec - Confirmer son compte</title>
 </head>
 <body>
     <form id="form1" runat="server">
