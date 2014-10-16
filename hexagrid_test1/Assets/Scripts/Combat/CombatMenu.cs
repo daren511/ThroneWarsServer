@@ -40,6 +40,8 @@ public class CombatMenu : MonoBehaviour
     public GUIStyle _healthBarFront;
     public GUIStyle _magicBarFront;
     public GUIStyle _barBackground;
+    public GUIStyle _statsTexture;
+
 
     public Texture2D _healthTexture;
     public Texture2D _magicTexture;
@@ -84,7 +86,7 @@ public class CombatMenu : MonoBehaviour
     {
         DisplayCharacterStats();
 
-        if(characterChosen)
+        if(characterChosen) 
         {
             GameController.FindObjectOfType<GameController>().allowInput = false;
             InitializeStats();
@@ -138,6 +140,7 @@ public class CombatMenu : MonoBehaviour
             GameController.FindObjectOfType<GameController>().movementAllowed = true;
             GameController.FindObjectOfType<GameController>().attackAllowed = false;
             GameController.FindObjectOfType<GameController>().FakeUnitClick(go);
+
             GameController.FindObjectOfType<GameController>().allowInput = true;
         }
 
@@ -146,8 +149,9 @@ public class CombatMenu : MonoBehaviour
         {
             GameController.FindObjectOfType<GameController>().attackAllowed = true;
             GameController.FindObjectOfType<GameController>().movementAllowed = false;
-            //GameController.FindObjectOfType<GameController>().FakeUnitClick(go);
-            GameController.FindObjectOfType<GameController>().allowInput = true;
+            GameController.FindObjectOfType<GameController>().FakeUnitClick(go);
+
+            //GameController.FindObjectOfType<GameController>().allowInput = true;
         }
 
         GUI.enabled = itemEnabled;
@@ -157,7 +161,7 @@ public class CombatMenu : MonoBehaviour
             showItems = true;
             GameController.FindObjectOfType<GameController>().movementAllowed = false;
             GameController.FindObjectOfType<GameController>().attackAllowed = false;
-            //GameController.FindObjectOfType<GameController>().FakeUnitClick(go);
+            GameController.FindObjectOfType<GameController>().FakeUnitClick(go);
         }
 
         if (GUI.Button(new Rect(_menuContainer.x, _menuContainer.y + 60, 100, 20), "Défendre"))
@@ -175,36 +179,42 @@ public class CombatMenu : MonoBehaviour
         GUI.Label(new Rect(_itemContainer.x + 250, _itemContainer.y, 150, 25), "Quantité");
 
 
-        if (GUI.Button(new Rect(_itemContainer.x + _itemContainer.width - 100, _itemContainer.y + _itemContainer.height - 20, 100, 20), "Retour"))
+        if (GUI.Button(new Rect(_itemContainer.x + _itemContainer.width - 100, _itemContainer.y + _itemContainer.height - 20, 100, 20),
+                        "Retour"))
         {
             characterChosen = true;
             showItems = false;            
         }
 
         //scrollViewVector = GUILayout.BeginScrollView(scrollViewVector);
-        scrollViewVector = GUI.BeginScrollView(new Rect(_itemContainer.x, _itemContainer.y, _itemContainer.width, _itemContainer.height - 20), scrollViewVector, new Rect(0, 0, 200, 400));
         //GUILayout.BeginArea(_itemContainer);
+
+        scrollViewVector = GUI.BeginScrollView(new Rect(_itemContainer.x, _itemContainer.y, _itemContainer.width, _itemContainer.height - 20),
+                                                         scrollViewVector, new Rect(_itemContainer.x, _itemContainer.y, 200, 400));
         //GUI.BeginGroup(_itemContainer);
         
         for (int i = 0; i < PlayerManager._instance._playerInventory._invent.Count; ++i)
         {
-            button = new Rect(_itemContainer.x, _itemContainer.y + (i * 25) + 20, 150, 25);
+            button = new Rect(_itemContainer.x, _itemContainer.y + (i * 25) + 20, _itemContainer.width / 2, 25);
             
-            GUIContent content = new GUIContent(PlayerManager._instance._playerInventory._invent[i]._itemName, PlayerManager._instance._playerInventory._invent[i]._itemDescription);
+            GUIContent content = new GUIContent(PlayerManager._instance._playerInventory._invent[i]._itemName, 
+                                     PlayerManager._instance._playerInventory._invent[i]._itemDescription);
 
             if (GUI.Button(button, content))
             {
                 //utiliser l'item
             }
-            GUI.Label(new Rect(_itemContainer.x + _itemContainer.width - 250, _itemContainer.y + (i * 25) + 20, 150, 25), PlayerManager._instance._playerInventory._invent[i]._quantity.ToString());
+            GUI.Label(new Rect(_itemContainer.x + 250, _itemContainer.y + (i * 25) + 20, 150, 25), 
+                                PlayerManager._instance._playerInventory._invent[i]._quantity.ToString());
+
             GUI.Label(new Rect(button.x, button.y, 150, 20), GUI.tooltip);
-            //GUILayout.Label(PlayerManager._instance._playerInventory._invent[i]._quantity.ToString());
-            //GUILayout.Label(GUI.tooltip);
+            GUILayout.Label(PlayerManager._instance._playerInventory._invent[i]._quantity.ToString());
+            GUILayout.Label(GUI.tooltip);
         }
-        //GUILayout.EndArea();
         //GUILayout.EndScrollView();
-        //GUI.EndGroup();
+        //GUILayout.EndArea();
         GUI.EndScrollView();
+        //GUI.EndGroup();
     }
 
 }
