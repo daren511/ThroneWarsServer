@@ -473,14 +473,14 @@ public class GameController : TMNController
                 CombatMenu.FindObjectOfType<CombatMenu>().moveEnabled = false;
 				// do a fake click on the unit to "select" it again
 				this.OnNaviUnitClick(unit.gameObject);
-				allowInput = true; // allow input again
+				//allowInput = true; // allow input again
 			//}
 		}
 
 		// eventcode 2 = unit done attacking
 		if (eventCode == 2)
 		{
-			allowInput = true; // allow input again
+			//allowInput = true; // allow input again
 
             //if (!useTurns)
             //{

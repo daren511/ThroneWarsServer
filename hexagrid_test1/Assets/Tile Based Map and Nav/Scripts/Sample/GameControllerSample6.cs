@@ -40,6 +40,7 @@ public class GameControllerSample6 : MonoBehaviour
         {
             n.collider.enabled = true;
         }
+        map.ShowAllTileNodes(true);
     }
 
     void OnGUI()
