@@ -19,7 +19,7 @@ namespace SiteWebThroneWars
         {
             if (apassword == npassword || npassword != ncpassword)
             { 
-                
+               oldpass 
             }
         }
     }
