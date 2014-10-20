@@ -28,13 +28,13 @@
         </div>
 
         <div class="Inscription">
-            <label id="OldPass">Ancien mot de passe</label>
+            <asp:label id="OldPass" runat="server">Ancien mot de passe</asp:label><br/>
                 <asp:TextBox id="apassword" TextMode="password" runat="server"/><br/>
-  			<label id="NewPass">Nouveau mot de passe</label>
+  			<asp:label id="NewPass" runat="server">Nouveau mot de passe</asp:label><br/>
                 <asp:TextBox id="npassword" TextMode="password" runat="server"/><br />
-            <label id="cNewPass">Confirmer nouveau mot de passe</label>
+            <asp:label id="cNewPass" runat="server">Confirmer nouveau mot de passe</asp:label><br/>
                 <asp:TextBox id="ncpassword" TextMode="password" runat="server"/><br />
-            <asp:Button Text="Valider" onClick="ChangePassword_Click" runat="server"/>
+            <asp:Button id="Button_Valider" Text="Valider" onClick="ChangePassword_Click" runat="server"/>
 
         </div>
     </form>

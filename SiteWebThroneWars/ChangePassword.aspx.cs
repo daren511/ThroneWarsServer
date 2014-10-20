@@ -11,16 +11,20 @@ namespace SiteWebThroneWars
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            
+            Button_Valider.Enabled = false;
         }
 
 
         protected void ChangePassword_Click(object sender, EventArgs e)
         {
+            
             if (apassword == npassword || npassword != ncpassword)
-            { 
-               oldpass 
+            {
+                //OldPass.ForeColor = ; // couleur -- not sure forecolor checker
+                //NewPass.ForeColor = ;
+                //cNewPass.ForeColor = ;
             }
         }
+
     }
 }
