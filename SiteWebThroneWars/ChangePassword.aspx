@@ -21,13 +21,15 @@
                     <li><a href="Page Principale.aspx">Accueil</a></li>
                     <li><a href="Inscription.aspx">Inscription</a></li>
                     <li><a href="Connexion.aspx">Connexion</a></li>
-                    <li><a href="Stats2.aspx">Recherche Joueur</a></li>
+                    <li><a href="Recherche.aspx">Recherche Joueur</a></li>
                     <li><a href="Media.aspx">Média</a></li>
                 </li>
             </ul>
         </div>
 
         <div class="Inscription">
+            <asp:label id="usernameLB" runat="server">Nom d'utilisateur</asp:label><br/>
+                <asp:TextBox id="username" TextMode="SingleLine" runat="server"/><br/>
             <asp:label id="OldPass" runat="server">Ancien mot de passe</asp:label><br/>
                 <asp:TextBox id="apassword" TextMode="password" runat="server"/><br/>
   			<asp:label id="NewPass" runat="server">Nouveau mot de passe</asp:label><br/>

@@ -11,20 +11,41 @@ namespace SiteWebThroneWars
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            Button_Valider.Enabled = false;
         }
 
 
         protected void ChangePassword_Click(object sender, EventArgs e)
         {
-            
-            if (apassword == npassword || npassword != ncpassword)
+            bool ChampsValide = VerifChamps();
+            if (ChampsValide)
             {
-                //OldPass.ForeColor = ; // couleur -- not sure forecolor checker
-                //NewPass.ForeColor = ;
-                //cNewPass.ForeColor = ;
+                if (apassword == npassword || npassword != ncpassword)
+                {
+                    //Verif si forecolor is the right thing
+                    OldPass.ForeColor = System.Drawing.Color.Red;
+                    NewPass.ForeColor = System.Drawing.Color.Red;
+                    cNewPass.ForeColor = System.Drawing.Color.Red;
+                }
+                else
+                {
+                    //Chercher le username et son password correspondant 
+                    // Verif si le text d'ancien mot de passe est correspondant a celui dans la BD
+                    // Crypter le nouveau mot de passe et envoyer
+                    // Messagebox changement réussi
+                }
             }
+
         }
+        protected bool VerifChamps()
+        {
+            bool Valide = false;
+            if (!string.IsNullOrWhiteSpace(apassword.Text) || !string.IsNullOrWhiteSpace(npassword.Text) || !string.IsNullOrWhiteSpace(ncpassword.Text))
+            {
+                Valide = true;
+            }
+            return Valide;
+        }
+
 
     }
 }

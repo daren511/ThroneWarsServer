@@ -20,53 +20,57 @@ namespace SiteWebThroneWars
         }
         protected void inscriptionJoueur_Click(object sender, EventArgs e)
         {
+            // Verif si all textbox sont pas vide
+
             string user = username.Text;
             string pass = password.Text;
             string courriel = email.Text;
 
             // Verifier si username est dispo
-            // Si le nom est legit avec le server aka pas deja pris
 
             // Verifier si email est legit ou non vide
             // a verifier si marche
             bool legitEmail = IsEmail(courriel);
+            // Verifier si Courriel est dispo
+
+
+
 
             //Variable string text pour les different string du messagebox Erreur / Success
             string message = "";
 
-            
-            
-                // Verifier si mot de passe = confirmation && Email == confirmation && Email legit
-                if (password.Text == cpassword.Text && email.Text == cemail.Text && legitEmail)
-                {
 
-                    // Inserer dans oracle
-                    Controle.insertplayer(user, pass, courriel);
+            // Verifier si mot de passe = confirmation && Email == confirmation && Email legit
+            if (password.Text == cpassword.Text && email.Text == cemail.Text && legitEmail)
+            {
 
-                    // Message de confirmation
-                    message = "L'inscription à reussie, veuillez visiter votre courriel pour confirmer votre compte";
-                    ClientScript.RegisterStartupScript(this.GetType(), "myalert", "alert('" + message + "');", true);  
+                // Inserer dans oracle
+                Controle.insertplayer(user, pass, courriel);
 
-                    // Send email de confirmation
-                    Email.sendMail(courriel,Email.SujetInscription,Email.bodyConfirmation);
-                }
-                else
-                {
-                    // Message d'erreur
-                    if (password.Text != cpassword.Text)
-                        message = "Les mots de passe ne sont pas compatibles";
-                    if (email.Text == cemail.Text)
-                        message = "Les courriels ne sont pas compatibles";
-                    if (!legitEmail)
-                        message = "Le format du courriel n'est pas valide";
+                // Message de confirmation
+                message = "L'inscription à reussie, veuillez visiter votre courriel pour confirmer votre compte";
+                ClientScript.RegisterStartupScript(this.GetType(), "myalert", "alert('" + message + "');", true);
 
-                    // À vérifier si sa marche
-                    ClientScript.RegisterStartupScript(this.GetType(), "myalert", "alert('" + message + "');", true);  
-                }
-                
+                // Send email de confirmation
+                Email.sendMail(courriel, Email.SujetInscription, Email.bodyConfirmation);
+            }
+            else
+            {
+                // Message d'erreur
+                if (password.Text != cpassword.Text)
+                    message = "Les mots de passe ne sont pas compatibles";
+                if (email.Text == cemail.Text)
+                    message = "Les courriels ne sont pas compatibles";
+                if (!legitEmail)
+                    message = "Le format du courriel n'est pas valide";
 
-                
-            
+                // À vérifier si sa marche
+                ClientScript.RegisterStartupScript(this.GetType(), "myalert", "alert('" + message + "');", true);
+            }
+
+
+
+
         }
         public const string MatchEmailPattern =
             @"^(([\w-]+\.)+[\w-]+|([a-zA-Z]{1}|[\w-]{2,}))@"

@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <link rel="stylesheet" type="text/css" href="FinDec.css"/>
+    <link rel="stylesheet" type="text/css" href="FinDec.css" />
     <title></title>
 </head>
 <body>
@@ -21,7 +21,7 @@
                 <li><a href="Page Principale.aspx">Accueil</a></li>
                 <li><a href="Inscription.aspx">Inscription</a></li>
                 <li><a href="Connexion.aspx">Connexion</a></li>
-                <li><a href="Stats2.aspx">Recherche Joueur</a></li>
+                <li><a href="Recherche.aspx">Recherche Joueur</a></li>
                 <li><a href="Media.aspx">Média</a></li>
             </li>
         </ul>
@@ -42,7 +42,8 @@
                 <asp:TableHeaderRow runat="server" ForeColor="Red">
                     <asp:TableHeaderCell>Position</asp:TableHeaderCell>
                     <asp:TableHeaderCell>Nom d'utilisateur</asp:TableHeaderCell>
-                    <asp:TableHeaderCell>XP</asp:TableHeaderCell>
+                    <asp:TableHeaderCell>Victoires</asp:TableHeaderCell>
+                    <asp:TableHeaderCell>Défaites</asp:TableHeaderCell>
                 </asp:TableHeaderRow>
             </asp:Table>
         </div>
@@ -57,19 +58,19 @@
             <label>Personnage 1</label>
             <input type="text" name="Player1" disabled="disabled" />
             <label>Niveau</label>
-            <input type="number" name="LVPlayer1" disabled="disabled" /><br/>
+            <input type="number" name="LVPlayer1" disabled="disabled" /><br />
             <label>Personnage 2</label>
             <input type="text" name="Player2" disabled="disabled" />
             <label>Niveau</label>
-            <input type="number" name="LVPlayer2" disabled="disabled" /><br/>
+            <input type="number" name="LVPlayer2" disabled="disabled" /><br />
             <label>Personnage 3</label>
             <input type="text" name="Player3" disabled="disabled" />
             <label>Niveau</label>
-            <input type="number" name="LVPlayer3" disabled="disabled" /><br/>
+            <input type="number" name="LVPlayer3" disabled="disabled" /><br />
             <label>Personnage 4</label>
             <input type="text" name="Player4" disabled="disabled" />
             <label>Niveau</label>
-            <input type="number" name="LVPlayer4" disabled="disabled" /><br/>
+            <input type="number" name="LVPlayer4" disabled="disabled" /><br />
         </div>
     </form>
 </body>

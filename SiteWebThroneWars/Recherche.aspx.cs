@@ -31,13 +31,17 @@ namespace SiteWebThroneWars
                 // Pour tous les champs de l'enrigistrements courant
                 TableCell tdPosition = new TableCell();
                 TableCell tdUsername = new TableCell();
-                TableCell tdXP = new TableCell();
+                TableCell tdVictoires = new TableCell();
+                TableCell tdDefaites = new TableCell();
                 tr.Cells.Add(tdPosition);
                 tr.Cells.Add(tdUsername);
-                tr.Cells.Add(tdXP);
+                tr.Cells.Add(tdVictoires);
+                tr.Cells.Add(tdDefaites);
                 tdPosition.Text = i.ToString();
                 tdUsername.Text = "Hcfranck";
-                tdXP.Text = "13154651531";
+                tdVictoires.Text = "9001";
+                tdDefaites.Text = "1";
+                
 
 
             }

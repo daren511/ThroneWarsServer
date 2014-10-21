@@ -14,8 +14,19 @@ namespace SiteWebThroneWars
 
         }
         protected void Connexion_Click(object sender, EventArgs e)
-        { 
-        
+        {
+            // Text box pas null
+
+            //Vérif si Username existe dans la BD
+
+            //Vérif si Username et Password sont correspondant
+
+            //Si oui > Ramener la position du leaderboard
+
+            // XP and Perso and Niveau
+
+            //Si non -> Erreur
+
         }
     }
 }

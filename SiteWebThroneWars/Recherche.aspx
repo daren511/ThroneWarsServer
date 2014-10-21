@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Stats2.aspx.cs" Inherits="SiteWebThroneWars.Stats2" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Recherche.aspx.cs" Inherits="SiteWebThroneWars.Stats2" %>
 
 <!DOCTYPE html>
 
@@ -21,7 +21,7 @@
                 <li><a href="Page Principale.aspx">Accueil</a></li>
                 <li><a href="Inscription.aspx">Inscription</a></li>
                 <li><a href="Connexion.aspx">Connexion</a></li>
-                <li><a href="Stats2.aspx">Recherche Joueur</a></li>
+                <li><a href="Recherche.aspx">Recherche Joueur</a></li>
                 <li><a href="Media.aspx">Média</a></li>
             </li>
         </ul>
@@ -37,8 +37,9 @@
             <asp:Table ID="table" runat="server" GridLines="Both">
                 <asp:TableHeaderRow runat="server" ForeColor="Red">
                     <asp:TableHeaderCell>Position</asp:TableHeaderCell>
-                    <asp:TableHeaderCell>Nom d'utilisateur</asp:TableHeaderCell>
-                    <asp:TableHeaderCell>XP</asp:TableHeaderCell>
+                    <asp:TableHeaderCell>Nom d'utilisateur</asp:TableHeaderCell> 
+                    <asp:TableHeaderCell>Victoires</asp:TableHeaderCell>
+                    <asp:TableHeaderCell>Défaites</asp:TableHeaderCell>
                 </asp:TableHeaderRow>
             </asp:Table>
         </div>
