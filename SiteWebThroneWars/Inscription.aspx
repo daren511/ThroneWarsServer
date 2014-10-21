@@ -27,15 +27,15 @@
 			</ul>
 		</div>
 		<div class="Inscription">
-  			<label>Nom d'utilisateur</label>
+  			<asp:label id="usernameLB" runat="server">Nom d'utilisateur</asp:label>
                 <asp:Textbox ID="username" TextMode="SingleLine" runat="server"/><br/>
-  			<label>Mot de passe</label>
+  			<asp:label id="PasswordLB" runat="server">Nom d'utilisateur</asp:label>
                 <asp:TextBox id="password" TextMode="password" runat="server"/><br/>
-  			<label>Confirmer mot de passe</label>
+  			<asp:label id="CPasswordLB" runat="server">Nom d'utilisateur</asp:label>
                 <asp:TextBox id="cpassword" TextMode="password" runat="server"/><br />
-            <label>Courriel</label>
+            <asp:label id="EmailLB" runat="server">Nom d'utilisateur</asp:label>
                 <asp:Textbox ID="email" TextMode="SingleLine" runat="server"/><br/>
-  			<label>Confirmer courriel</label>
+  			<asp:label id="CEmailLB" runat="server">Nom d'utilisateur</asp:label>
                 <asp:Textbox ID="cemail" TextMode="SingleLine" runat="server"/><br/>
             
             
