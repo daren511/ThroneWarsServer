@@ -28,9 +28,9 @@
     </div>
     <form id="form1" runat="server">
         <div class="Inscription">
-            <label>Nom d'utilisateur</label>
+            <asp:label id="usernameLB" runat="server">Nom d'utilisateur</asp:label>
             <asp:TextBox ID="username" TextMode="SingleLine" runat="server" /><br />
-            <label>Mot de passe</label>
+            <asp:label id="passwordLB" runat="server">Mot de Passe</asp:label>
             <asp:TextBox ID="password" TextMode="password" runat="server" /><br />
             <asp:Button Text="Se connecter" OnClick="Connexion_Click" runat="server" /><br />
             <a href="ForgotPass.aspx">Mot de passe oublié?</a><br />

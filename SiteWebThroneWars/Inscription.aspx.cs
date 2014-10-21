@@ -22,31 +22,37 @@ namespace SiteWebThroneWars
         {
             //Variable string text pour les different string du messagebox Erreur / Success
             string message = "";
+            bool userexiste = true;
+            bool emailexiste = true;
             // Verif si all textbox sont pas vide
             bool ok = VerifChamps();
             if (ok)
             {
+                // Variable des textbox
                 string user = username.Text;
                 string pass = password.Text;
                 string courriel = email.Text;
 
                 // Verifier si username est dispo
-
+                userexiste = Controle.UsernameExiste(user);
+                
                 // Verifier si email est legit ou non vide
-                // a verifier si marche
                 bool legitEmail = IsEmail(courriel);
+                
                 // Verifier si Courriel est dispo
+                if (legitEmail)
+                    emailexiste = Controle.CourrielExiste(courriel);
 
 
                 // Verifier si mot de passe = confirmation && Email == confirmation && Email legit
-                if (password.Text == cpassword.Text && email.Text == cemail.Text && legitEmail)
+                if (password.Text == cpassword.Text && email.Text == cemail.Text && legitEmail && !userexiste && !emailexiste)
                 {
 
                     // Inserer dans oracle
                     Controle.insertplayer(user, pass, courriel);
 
                     // Message de confirmation
-                    message = "L'inscription à reussie, veuillez visiter votre courriel pour confirmer votre compte";
+                    message = "L'inscription à réussie, veuillez visiter votre courriel pour confirmer votre compte";
                     ClientScript.RegisterStartupScript(this.GetType(), "myalert", "alert('" + message + "');", true);
 
                     // Send email de confirmation
