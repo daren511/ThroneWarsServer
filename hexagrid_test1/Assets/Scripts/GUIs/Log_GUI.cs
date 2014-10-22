@@ -91,7 +91,7 @@ public class Log_GUI : MonoBehaviour
                     GetPlayerInfo();
 
                     //chargement du menu principal
-                    Application.LoadLevel("MainMenu");
+                    Application.LoadLevel("placement");
                 }
                 else
                 {

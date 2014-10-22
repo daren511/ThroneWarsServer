@@ -57,7 +57,7 @@ public class CameraMove : MonoBehaviour
 		if (target && followTarget)
 		{
 			Vector3 difference = target.position - tr.position;
-			tr.position = Vector3.Slerp(tr.position, target.position - new Vector3(0, -10, 0), Time.deltaTime * Mathf.Clamp(difference.magnitude, 0f, 2f));
+			tr.position = Vector3.Slerp(tr.position, target.position , Time.deltaTime * Mathf.Clamp(difference.magnitude, 0f, 2f));
 		}
 	}
 

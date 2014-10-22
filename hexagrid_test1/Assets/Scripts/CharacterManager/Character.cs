@@ -79,7 +79,7 @@ public class Character : NaviUnit
     public string _name;
 
     public bool _isCasting = false;
-    public Vector3 _direction = Vector3.zero;
+    public Vector3 _lookDirection = Vector3.zero;
 
     public SampleWeapon weapon;
 

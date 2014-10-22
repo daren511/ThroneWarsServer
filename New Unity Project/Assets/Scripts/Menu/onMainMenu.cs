@@ -89,6 +89,7 @@ public class onMainMenu : MonoBehaviour
         if (GUILayout.Button("Jouer"))
         {
             // Go to the place character screen
+            Application.LoadLevel("placement");
         }
     }
 
