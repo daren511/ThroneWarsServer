@@ -7,9 +7,19 @@
 <title>Throne Wars -Projet FinDec - Inscription</title>
 <meta charset="utf-8"/> 
 <link rel="stylesheet" type="text/css" href="FinDec.css"/>
+<script src="lib/sweet-alert.min.js"></script> 
+<link rel="stylesheet" type="text/css" href="lib/sweet-alert.css"/>
 </head>
 <body>
     <form runat="server" action="Inscription.aspx" autocomplete="on">
+        <script lang="JavaScript">
+            function MessageBoxReussi() {
+                swal("Bravo!", "Votre inscription est réussie", "success")
+            }
+            function MessageBoxErreur() {
+                swal("Erreur!", "Quelque chose n'a pas été bien fait", "error")
+            }
+        </script>
 		<div class="Entete">
 			<img src="./Images/Logo_Grand.png" style="max-height:100%; max-width:100%;"/> <!-- A checker les dimensions ou plus grosse image -->
 		</div>
