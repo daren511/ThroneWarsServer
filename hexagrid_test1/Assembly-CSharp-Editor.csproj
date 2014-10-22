@@ -46,6 +46,24 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\ThirdParty\NGUI\Scripts\Editor\ComponentSelector.cs" />
+     <Compile Include="Assets\ThirdParty\NGUI\Scripts\Editor\NGUITransformInspector.cs" />
+     <Compile Include="Assets\ThirdParty\NGUI\Scripts\Editor\UIAtlasInspector.cs" />
+     <Compile Include="Assets\ThirdParty\NGUI\Scripts\Editor\UIDrawCallInspector.cs" />
+     <Compile Include="Assets\ThirdParty\NGUI\Scripts\Editor\UIFilledSpriteInspector.cs" />
+     <Compile Include="Assets\ThirdParty\NGUI\Scripts\Editor\UIFontInspector.cs" />
+     <Compile Include="Assets\ThirdParty\NGUI\Scripts\Editor\UIImageButtonInspector.cs" />
+     <Compile Include="Assets\ThirdParty\NGUI\Scripts\Editor\UILabelInspector.cs" />
+     <Compile Include="Assets\ThirdParty\NGUI\Scripts\Editor\UIPopupListInspector.cs" />
+     <Compile Include="Assets\ThirdParty\NGUI\Scripts\Editor\UIScrollBarInspector.cs" />
+     <Compile Include="Assets\ThirdParty\NGUI\Scripts\Editor\UISettings.cs" />
+     <Compile Include="Assets\ThirdParty\NGUI\Scripts\Editor\UISlicedSpriteInspector.cs" />
+     <Compile Include="Assets\ThirdParty\NGUI\Scripts\Editor\UISliderInspector.cs" />
+     <Compile Include="Assets\ThirdParty\NGUI\Scripts\Editor\UISpriteAnimationInspector.cs" />
+     <Compile Include="Assets\ThirdParty\NGUI\Scripts\Editor\UISpriteInspector.cs" />
+     <Compile Include="Assets\ThirdParty\NGUI\Scripts\Editor\UITextureInspector.cs" />
+     <Compile Include="Assets\ThirdParty\NGUI\Scripts\Editor\UITiledSpriteInspector.cs" />
+     <Compile Include="Assets\ThirdParty\NGUI\Scripts\Editor\UIWidgetInspector.cs" />
      <Compile Include="Assets\Tile Based Map and Nav\Editor\MapNavCreateWindow.cs" />
      <Compile Include="Assets\Tile Based Map and Nav\Editor\MapNavEditor.cs" />
      <Compile Include="Assets\Tile Based Map and Nav\Editor\MarkerCreateWindow.cs" />
@@ -53,7 +71,25 @@
      <Compile Include="Assets\Tile Based Map and Nav\Editor\TMNEditorUtil.cs" />
      <Compile Include="Assets\Tile Based Map and Nav\Editor\TNELinksOnOffSwitch_Inspector.cs" />
      <Compile Include="Assets\Tile Based Map and Nav\Editor\TileNodeEditor.cs" />
+     <None Include="Assets\ThirdParty\NGUI\Resources\Shaders\Depth.shader" />
      <None Include="Assets\Tile Based Map and Nav\Documentation\readme.txt" />
+     <None Include="Assets\ThirdParty\NGUI\Resources\Shaders\Unlit - Masked Colored.shader" />
+     <None Include="Assets\ThirdParty\NGUI\Resources\Shaders\Unlit - Transparent Colored (AlphaClip).shader" />
+     <None Include="Assets\Water\Sources\Shaders\FX-Water Simple.shader" />
+     <None Include="Assets\ReadMe.txt" />
+     <None Include="Assets\ThirdParty\NGUI\ReadMe.txt" />
+     <None Include="Assets\ThirdParty\NGUI\Resources\Shaders\Unlit - Transparent Colored.shader" />
+     <None Include="Assets\ThirdParty\NGUI\Resources\Shaders\Unlit - Transparent Colored (HardClip).shader" />
+     <None Include="Assets\ThirdParty\NGUI\Resources\Shaders\Unlit - Transparent Colored Overlay.shader" />
+     <None Include="Assets\ThirdParty\NGUI\Resources\Shaders\Unlit - Transparent Colored (Packed).shader" />
+     <None Include="Assets\ThirdParty\NGUI\Resources\Shaders\Unlit - Additive Colored.shader" />
+     <None Include="Assets\ThirdParty\NGUI\Resources\Shaders\Unlit - Transparent Colored (SoftClip).shader" />
+ <Reference Include="NGUI">
+ <HintPath>C:/Users/Administrateur/Documents/GitHub/ThroneWarsServer/hexagrid_test1/Assets/ThirdParty/NGUI/DLLs/NGUI.dll</HintPath>
+ </Reference>
+ <Reference Include="NGUI_Editor">
+ <HintPath>C:/Users/Administrateur/Documents/GitHub/ThroneWarsServer/hexagrid_test1/Assets/ThirdParty/NGUI/DLLs/Editor/NGUI_Editor.dll</HintPath>
+ </Reference>
  <Reference Include="SyntaxTree.VisualStudio.Unity.Bridge">
  <HintPath>C:/Users/Administrateur/Documents/GitHub/ThroneWarsServer/hexagrid_test1/Assets/UnityVS/Editor/SyntaxTree.VisualStudio.Unity.Bridge.dll</HintPath>
  </Reference>

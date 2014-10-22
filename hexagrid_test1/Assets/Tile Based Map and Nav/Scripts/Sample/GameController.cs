@@ -326,6 +326,9 @@ public class GameController : TMNController
 			prevNode = selectedUnit.node; // needed if unit is gonna move
 			if (selectedUnit.MoveTo(node, ref selectedUnit.currMoves))
 			{
+                selectedUnit._lookDirection = node.transform.position - prevNode.transform.position;
+                //selectedUnit._lookDirection =  selectedUnit._lookDirection.normalized;
+
 				// dont want the player clicking around while a unit is moving
 				allowInput = false;
 
@@ -388,7 +391,8 @@ public class GameController : TMNController
 	protected override void OnNaviUnitClick(GameObject go)
 	{
 		base.OnNaviUnitClick(go);
-		
+        attackRangeMarker.HideAll();
+
         Character unit = go.GetComponent<Character>();        
 
 		// jump camera to the unit that was clicked on
@@ -416,10 +420,12 @@ public class GameController : TMNController
                 }
 
 				// show how far this unit can attack at, if unit did not attack yet this turn
-				if (!selectedUnit.didAttack && attackAllowed)
+				if (!selectedUnit.didAttack)
 				{
                     if (attackAllowed)
-					    attackRangeMarker.Show(selectedUnit.transform.position, selectedUnit.attackRange);
+                        attackRangeMarker.Show(selectedUnit.transform.position, selectedUnit.attackRange);
+                    else
+                        attackRangeMarker.HideAll();
 				}
 			}
 
