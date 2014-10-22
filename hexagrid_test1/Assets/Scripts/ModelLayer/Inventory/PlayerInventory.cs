@@ -4,11 +4,11 @@ using System.Collections.Generic;
 
 public class PlayerInventory
 {
-    public List<UseableItem> _invent = new List<UseableItem>();
-
-    public PlayerInventory(List<UseableItem> items)
+    public List<Potion> _potions = new List<Potion>();
+    public List<EquipableItem> _equips = new List<EquipableItem>();
+    public PlayerInventory(List<Potion> potions)
     {
-        _invent = items;
+        _potions = potions;
     }
 
 }

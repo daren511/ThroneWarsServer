@@ -8,7 +8,7 @@ using System.Collections;
  * */
 public class Character : NaviUnit
 {
-    public static Character CreateCharacter(string charName, string className, int level, int move, int hp, int mp, CharacterInventory invent, int patk, int pdef, int matk, int mdef)
+    public static Character CreateCharacter(string charName, string className, int level, int move, int range,int hp, int mp, CharacterInventory invent, int patk, int pdef, int matk, int mdef)
     {
         var thisObj = CharOBJ.AddComponent<Character>();
 
@@ -17,12 +17,13 @@ public class Character : NaviUnit
 
         thisObj._characterClass = new CharacterClass(className, level);
         thisObj._moves = move;
+        thisObj.attackRange = range;
 
         thisObj._maxHealth = hp;
         thisObj._currHealth = hp;
 
         thisObj._maxMagic = mp;
-        thisObj._currMagic = mp;        
+        thisObj._currMagic = mp;
 
         thisObj._characterInventory = invent;
         thisObj._physAttack = patk;
@@ -68,9 +69,19 @@ public class Character : NaviUnit
     public int _magicAttack;// { get;  set; }
     public int _magicDefense;// { get;  set; }
 
+    public int _currPhysAttack;// { get;  set; }
+    public int _currPhysDefense;//{ get;  set; }
+    public int _currMagicAttack;// { get;  set; }
+    public int _currMagicDefense;// { get;  set; }
 
-    public bool _isAlive;
+
+    public bool _isAlive = true;
     public string _name;
+
+    public bool _isCasting = false;
+    public Vector3 _direction = Vector3.zero;
+
+    public SampleWeapon weapon;
 
     #endregion
 
@@ -82,7 +93,6 @@ public class Character : NaviUnit
 
     public bool didAttack { get; set; }
 
-    private SampleWeapon weapon;
 
     #endregion
 
@@ -90,12 +100,13 @@ public class Character : NaviUnit
 
     // ====================================================================================================================
     #region pub
-    public Character(string className, int level, int move, int hp, int mp, CharacterInventory invent, int patk, int pdef, int matk, int mdef)
+    public Character(string className, int level, int move,int range, int hp, int mp, CharacterInventory invent, int patk, int pdef, int matk, int mdef)
     {
         _characterClass = new CharacterClass(className, level);
         this._moves = move;
         this._maxHealth = hp;
         this._maxMagic = mp;
+        this.attackRange = range;
 
         this._currHealth = hp;
         this._currMagic = mp;
@@ -107,14 +118,20 @@ public class Character : NaviUnit
         this._physDefense = pdef;
         this._magicAttack = matk;
         this._magicDefense = mdef;
+
+        this._currPhysAttack = patk;
+        this._currPhysDefense = pdef;
+        this._currMagicAttack = matk;
+        this._currMagicDefense = mdef;
+
     }
 
     public override void Start()
     {
         base.Start();
         DontDestroyOnLoad(this);
-        weapon = gameObject.GetComponent<SampleWeapon>();
-        weapon.Init(OnAttackDone);
+
+        //weapon.Init(OnAttackDone);
     }
     public override void Update()
     {
@@ -157,13 +174,14 @@ public class Character : NaviUnit
         Vector3 direction = target.transform.position - transform.position; direction.y = 0f;
         transform.rotation = Quaternion.LookRotation(direction);
 
+        this.GetComponent<Billboard>().AttackAnimation();
         weapon.Play(target);
 
         /*
          * TRAITER L'ATTAQUE, EN L'ENVOYANT AU SERVEUR ET AFFECTER LES 2 CLIENTS
          * 
          * */
-       
+
 
         return true;
     }
@@ -172,6 +190,99 @@ public class Character : NaviUnit
     {
         // tell whomever is listening that I am done with my attack. eventCode 2
         if (onUnitEvent != null) onUnitEvent(this, 2);
+    }
+    /// <summary>
+    /// Reçoit des dégâts
+    /// </summary>
+    /// <param name="dmg"> Le nombre de dégâts reçus, provient du serveur</param>
+    public void ReceiveDamage(int dmg)
+    {
+        GameObject.Find("DamageIndicator").SendMessage("ShowDamage", dmg);
+        if (_isAlive)
+        {
+            if (_currHealth - dmg < 0)
+            {
+                _currHealth = 0;
+            }
+            else
+            {
+                _currHealth -= dmg;
+            }
+        }
+    }
+    private void ShowDamage()
+    {
+
+    }
+    public void UseSpecialAttack()
+    {
+
+    }
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="pot">Les caractéristiques de la potion (vie restorée, bonus aux statistiques)
+    /// sont ajoutés à celles du personnage</param>
+    public void UsePotion(Potion pot)
+    {
+        if (_currHealth + pot._lifeRestore > _maxHealth)
+        {
+            _currHealth = _maxHealth;
+        }
+        else
+        {
+            _currHealth += pot._lifeRestore;
+        }
+        if(_currPhysAttack + pot._bonusPhysAtk < 0)
+        {
+            _currPhysAttack = 0;
+        }
+        else
+        {
+            _currPhysAttack += pot._bonusPhysAtk;
+        }
+        if (_currPhysDefense + pot._bonusPhysDef < 0)
+        {
+            _currPhysDefense = 0;
+        }
+        else
+        {
+            _currPhysDefense += pot._bonusPhysDef;
+        }
+        if (_currMagicAttack + pot._bonusMagicAtk < 0)
+        {
+            _currMagicAttack = 0;
+        }
+        else
+        {
+            _currMagicAttack += pot._bonusMagicAtk;
+        }
+        if (_currMagicDefense + pot._bonusMagicDef < 0)
+        {
+            _currMagicDefense = 0;
+        }
+        else
+        {
+            _currMagicDefense += pot._bonusMagicDef;
+        }        
+    }
+    /// <summary>
+    /// Augmente la défense de n points jusqu'au prochain tour
+    /// </summary>
+    public void Defend()
+    {
+        //todo:augmenter la défense de n points jusqu'au prochain tour
+
+        currMoves = 0;
+        didAttack = true;
+    }
+    /// <summary>
+    /// Détermine si le personnage à utiliser toutes ses actions
+    /// </summary>
+    /// <returns>Si le personnage a fini son tour</returns>
+    public bool TurnDone()
+    {
+        return currMoves == 0 && didAttack;
     }
     #endregion
     // ====================================================================================================================

@@ -93,6 +93,10 @@ public class Log_GUI : MonoBehaviour
                     //chargement du menu principal
                     Application.LoadLevel("MainMenu");
                 }
+                else
+                {
+
+                }
             }
             if (GUI.Button(_quitButton, "Quitter"))
             {
@@ -108,34 +112,50 @@ public class Log_GUI : MonoBehaviour
 
         return connect;
     }
+    /// <summary>
+    /// Instancie le joueur, ses personnages, son inventaire, etc
+    /// </summary>
     private void GetPlayerInfo()
     {
         CharacterInventory characterInvent = new CharacterInventory();
         PlayerInventory playerInvent = null;
-        List<UseableItem> list = new List<UseableItem>();
-        UseableItem uItem;
+        List<Potion> list = new List<Potion>();
+        Potion uItem;
         EquipableItem eItem;
+
+        GameManager._instance._enemySide = 2;
+        PlayerManager._instance._playerSide = 1;
         //infos venant du serveur
-        //for (int i = 0; i < 4; ++i)
-        //{
-            //PlayerManager._instance._characters[i] = Character.CreateCharacter("Guerrier", 1, 3, 100, 10, characterInvent, 10, 10, 10, 10);
-        //}
 
-        uItem = new UseableItem(1, "All", "Potion de soins", "Guérit de 20 points de vie", "", 20, 0, 10);
+        /*
+         *  CES LIGNES SERVENT AUX TESTS, LES VALEURS SONT BIDONS, ET PROVIENDRONT DE LA BD LORSQUE PRÊT
+         * */
+
+        //on génère l'inventaire du joueur, peut être mis dans la DLL commune au serveur, pour recevoir l'inventaire complet plutôt
+        //que de le génèrer du côté client
+        uItem = new Potion(1, "", "Potion de soins", "Guérit de 20 points de vie", 0, 10, 0, 0, 0, 0, 20);
+        list.Add(uItem);
+        uItem = new Potion(2, "", "Potion d'attaque", "Augmente les capacités physiques", 3, 5, 10, 0, 0, 0, 0);
         list.Add(uItem);
 
-        uItem = new UseableItem(1, "All", "Potion de magie", "Guérit de 10 points de magie", "", 20, 0, 5);
-        list.Add(uItem);
-
+        //on crée l'inventaire de chaque personnage, encore içi, peut être mis dans la DLL commune au serveur, pour reçevoir les infos
+        //directement
         playerInvent = new PlayerInventory(list);
-        
         eItem = new EquipableItem(1, "Guerrier", "Épée de fer", "Une simple épée en fer", "WATK", 10, "Weapon", 1);
         characterInvent._invent.Add(eItem);
 
-        PlayerManager._instance._characters[0] = Character.CreateCharacter("Bartoc", "Guerrier", 1, 3, 100, 10, characterInvent, 20, 10, 0, 10);
-        PlayerManager._instance._characters[1] = Character.CreateCharacter("Kodak", "Mage", 1, 2, 50, 50, characterInvent, 10, 10, 10, 10);
-        PlayerManager._instance._characters[2] = Character.CreateCharacter("Bubulle","Archer", 1, 4, 100, 10, characterInvent, 10, 10, 10, 10);
-        PlayerManager._instance._characters[3] = Character.CreateCharacter("MrPoire","Prêtre", 1, 2, 60, 40, characterInvent, 10, 10, 10, 10);
+        //tout les personnages du joueur, pour le menu prinçipal
+        PlayerManager._instance._characters.Add(Character.CreateCharacter("Bartoc", "Guerrier", 2, 3, 2, 100, 10, characterInvent, 20, 10, 0, 10));
+        PlayerManager._instance._characters.Add(Character.CreateCharacter("Kodak", "Mage", 1, 2, 1, 50, 50, characterInvent, 10, 10, 10, 10));
+        PlayerManager._instance._characters.Add(Character.CreateCharacter("Bubulle", "Archer", 1, 4, 10, 100, 10, characterInvent, 10, 10, 10, 10));
+        PlayerManager._instance._characters.Add(Character.CreateCharacter("Mr Poire", "Prêtre", 1, 2, 1, 60, 40, characterInvent, 10, 10, 10, 10));
+
+        //quand on choisit un personnage qui participera à la partie
+        PlayerManager._instance._chosenTeam[0] = Character.CreateCharacter("Bartoc", "Guerrier", 2, 20, 1, 100, 10, characterInvent, 20, 10, 0, 10);
+        PlayerManager._instance._chosenTeam[1] = Character.CreateCharacter("Kodak", "Mage", 1, 15, 1, 50, 50, characterInvent, 10, 10, 10, 10);
+        PlayerManager._instance._chosenTeam[2] = Character.CreateCharacter("Bubulle", "Archer", 1, 15, 3, 100, 10, characterInvent, 10, 10, 10, 10);
+        PlayerManager._instance._chosenTeam[3] = Character.CreateCharacter("Mr Poire", "Prêtre", 1, 15, 1, 60, 40, characterInvent, 10, 10, 10, 10);
+
 
         PlayerManager._instance._playerInventory = playerInvent;
     }

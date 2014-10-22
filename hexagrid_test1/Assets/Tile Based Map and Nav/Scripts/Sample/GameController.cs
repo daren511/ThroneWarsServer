@@ -19,6 +19,9 @@ public class GameController : TMNController
 	public GameObject[] unitFabs;				// unit prefabs
 	public int spawnCount = 8;					// how many units to spawn
 
+    public static GameObject[] unitsFabs;
+    public static GameObject[] enemyFabs;
+
 	// these are samples of ways you might like to handle the visible markers
 	// please optimise to your needs by removing this and the if() statements
 	public bool hideSelectorOnMove = true;		// hide the selection marker when a unit moves?
@@ -101,77 +104,148 @@ public class GameController : TMNController
 	}
     private void SpawnUnits()
     {
-        for (int i = 0; i < PlayerManager._instance._characters.Length; ++i)
+        for (int i = 0; i < PlayerManager._instance._chosenTeam.Length; ++i)
         {
-            Character unitFab = unitFabs[i].GetComponent<Character>();
+            Character unitFab = unitsFabs[i].GetComponent<Character>();
 
             TileNode node = null;
 
-            unitFab._name = PlayerManager._instance._characters[i]._name;
-            unitFab._maxHealth = PlayerManager._instance._characters[i]._maxHealth;
-            unitFab._currHealth = PlayerManager._instance._characters[i]._currHealth;
-            unitFab._maxMagic = PlayerManager._instance._characters[i]._maxMagic;
-            unitFab._currMagic = PlayerManager._instance._characters[i]._currMagic;
+            unitFab._name = PlayerManager._instance._chosenTeam[i]._name;
+            unitFab._maxHealth = PlayerManager._instance._chosenTeam[i]._maxHealth;
+            unitFab._currHealth = PlayerManager._instance._chosenTeam[i]._currHealth;
+            unitFab._maxMagic = PlayerManager._instance._chosenTeam[i]._maxMagic;
+            unitFab._currMagic = PlayerManager._instance._chosenTeam[i]._currMagic;
 
-            unitFab._magicAttack = PlayerManager._instance._characters[i]._magicAttack;
-            unitFab._magicDefense = PlayerManager._instance._characters[i]._magicDefense;
-            unitFab._moves = PlayerManager._instance._characters[i]._moves;
-            unitFab._physAttack = PlayerManager._instance._characters[i]._physAttack;
-            unitFab._physDefense = PlayerManager._instance._characters[i]._physDefense;
+            unitFab._magicAttack = PlayerManager._instance._chosenTeam[i]._magicAttack;
+            unitFab._magicDefense = PlayerManager._instance._chosenTeam[i]._magicDefense;
+            unitFab._currMagicAttack = PlayerManager._instance._chosenTeam[i]._magicAttack;
+            unitFab._currMagicDefense = PlayerManager._instance._chosenTeam[i]._magicDefense;
+            unitFab._moves = PlayerManager._instance._chosenTeam[i]._moves;
+            unitFab.attackRange = PlayerManager._instance._chosenTeam[i].attackRange;
+            unitFab._physAttack = PlayerManager._instance._chosenTeam[i]._physAttack;
+            unitFab._physDefense = PlayerManager._instance._chosenTeam[i]._physDefense;
+            unitFab._currPhysAttack = PlayerManager._instance._chosenTeam[i]._physAttack;
+            unitFab._currPhysDefense = PlayerManager._instance._chosenTeam[i]._physDefense;
 
             while (node == null)
             {
                 if (unitFab.CanStandOn(map[i], true))
                 {
-                    node = map[ GameManager._instance._playerPositions[i]];
+                    //node = map[ GameManager._instance._playerPositions[i] + map.Length/4];
+                    node = map[map.Length / GameManager._instance._playerPositions[i]];
                 }
             }
             
             // spawn the unit
             Character unit = (Character)Character.SpawnUnit(unitFab.gameObject, map, node);
-            unit._characterClass = PlayerManager._instance._characters[i]._characterClass.GetCharacterClass();
-            unit._characterInventory = PlayerManager._instance._characters[i]._characterInventory;
+            unit._characterClass = PlayerManager._instance._chosenTeam[i]._characterClass.GetCharacterClass();
+            unit._characterInventory = PlayerManager._instance._chosenTeam[i]._characterInventory;
             unit.Init(OnUnitEvent);
             unit.name = "unit-" + i;
             units[unit.playerSide - 1].Add(unit);
         }
 
-        OnNaviUnitClick(units[currPlayerTurn][activeCharacterIndex].GetComponent<Character>().gameObject);
-    }
 
+    }
+    private void SpawnEnemyUnits()
+    {
+
+        GameManager._instance._enemyPositions.Add(378);
+        GameManager._instance._enemyPositions.Add(402);
+        GameManager._instance._enemyPositions.Add(403);
+        GameManager._instance._enemyPositions.Add(379);
+
+        for (int i = 0; i < GameManager._instance._enemyTeam.Length; ++i)
+        {
+            Character unitFab = enemyFabs[i].GetComponent<Character>();
+
+            TileNode node = null;
+
+            unitFab._name = GameManager._instance._enemyTeam[i]._name;
+            unitFab._maxHealth = GameManager._instance._enemyTeam[i]._maxHealth;
+            unitFab._currHealth = GameManager._instance._enemyTeam[i]._currHealth;
+            unitFab._maxMagic = GameManager._instance._enemyTeam[i]._maxMagic;
+            unitFab._currMagic = GameManager._instance._enemyTeam[i]._currMagic;
+
+            unitFab._magicAttack = GameManager._instance._enemyTeam[i]._magicAttack;
+            unitFab._magicDefense = GameManager._instance._enemyTeam[i]._magicDefense;
+            unitFab._currMagicAttack = GameManager._instance._enemyTeam[i]._magicAttack;
+            unitFab._currMagicDefense = GameManager._instance._enemyTeam[i]._magicDefense;
+            unitFab._moves = GameManager._instance._enemyTeam[i]._moves;
+            unitFab.attackRange = GameManager._instance._enemyTeam[i].attackRange;
+            unitFab._physAttack = GameManager._instance._enemyTeam[i]._physAttack;
+            unitFab._physDefense = GameManager._instance._enemyTeam[i]._physDefense;
+            unitFab._currPhysAttack = GameManager._instance._enemyTeam[i]._physAttack;
+            unitFab._currPhysDefense = GameManager._instance._enemyTeam[i]._physDefense;
+
+            while (node == null)
+            {
+                if (unitFab.CanStandOn(map[i], true))
+                {
+                    node = map[GameManager._instance._enemyPositions[i]];
+                }
+            }
+
+            // spawn the unit
+            Character unit = (Character)Character.SpawnUnit(unitFab.gameObject, map, node);
+            unit._characterClass = GameManager._instance._enemyTeam[i]._characterClass.GetCharacterClass();
+            unit._characterInventory = GameManager._instance._enemyTeam[i]._characterInventory;
+            unit.Init(OnUnitEvent);
+            unit.name = "enemy-" + i;
+            units[unit.playerSide + 1].Add(unit);
+        }
+    }
     private bool PlayerTurnDone()
     {
         bool done = true;
 
-        for (int i = 0; i < PlayerManager._instance._characters.Length; ++i)
+        for (int i = 0; i < PlayerManager._instance._chosenTeam.Length && done; ++i)
         {
-            if (!units[currPlayerTurn][i].didAttack || units[currPlayerTurn][i].currMoves > 0)
+            if (!units[PlayerManager._instance._playerSide][i].TurnDone())
             {
                 done = false;
             }
         }
         return done;
     }
-    private bool CharacterTurnDone(Character unit)
+    public void ClickNextActiveCharacter()
     {
-        return unit.currMoves > 0 && unit.didAttack;
-    }
-    
-    private void ClickNextActiveCharacter()
-    {
-        if (activeCharacterIndex == units[currPlayerTurn].Count-1)
+        int done = 0;
+        bool stillActive = false;
+
+        while(done < PlayerManager._instance._chosenTeam.Length && !stillActive)
         {
-            activeCharacterIndex = 0;
+            if(activeCharacterIndex == PlayerManager._instance._chosenTeam.Length - 1)
+            {
+                activeCharacterIndex = 0;
+            }
+            else
+            {
+                activeCharacterIndex++;
+            }
+            if (units[PlayerManager._instance._playerSide - 1][activeCharacterIndex].didAttack &&
+                units[PlayerManager._instance._playerSide - 1][activeCharacterIndex].currMoves == 0)
+            {
+                done++;
+            }
+            else
+            {
+                stillActive = true;
+            }
+        }
+        if (done == PlayerManager._instance._chosenTeam.Length && PlayerManager._instance._playerSide == currPlayerTurn)
+        {
+            //tour du joueur terminer
+        }
+        OnNaviUnitClick(units[PlayerManager._instance._playerSide - 1][activeCharacterIndex].gameObject);
+        if (PlayerManager._instance._playerSide - 1 == currPlayerTurn)
+        {
+            CombatMenu.FindObjectOfType<CombatMenu>().characterChosen = true;
         }
         else
         {
-            activeCharacterIndex++;
+            CombatMenu.FindObjectOfType<CombatMenu>().characterChosen = false;
         }
-        if (units[currPlayerTurn][activeCharacterIndex].didAttack && units[currPlayerTurn][activeCharacterIndex].currMoves == 0)
-        {
-            ClickNextActiveCharacter();
-        }
-        OnNaviUnitClick(units[currPlayerTurn][activeCharacterIndex].gameObject);
     }
 
 	#endregion
@@ -198,8 +272,19 @@ public class GameController : TMNController
 		else if (state == State.Init)
 		{
 			state = State.Running;
-			
             SpawnUnits();
+            SpawnEnemyUnits();
+
+            OnNaviUnitClick(units[PlayerManager._instance._playerSide - 1][activeCharacterIndex].GetComponent<Character>().gameObject);
+            if (PlayerManager._instance._playerSide == 1)
+            {
+                CombatMenu.FindObjectOfType<CombatMenu>().characterChosen = true;
+            }
+            else
+            {
+                CombatMenu.FindObjectOfType<CombatMenu>().characterChosen = false;
+            }
+
 			allowInput = true;
 		}
 	}
@@ -235,6 +320,7 @@ public class GameController : TMNController
 
 		base.OnTileNodeClick(go);
 		TileNode node = go.GetComponent<TileNode>();
+
 		if (selectedUnit != null && node.IsVisible)
 		{
 			prevNode = selectedUnit.node; // needed if unit is gonna move
@@ -313,11 +399,11 @@ public class GameController : TMNController
 		if (useTurns)
 		{
 			// is active player's unit that was clicked on?
-			if (unit.playerSide == (currPlayerTurn + 1))
+			if (unit.playerSide == (PlayerManager._instance._playerSide))
 			{
                 CombatMenu.FindObjectOfType<CombatMenu>().go = unit.gameObject;
                 CombatMenu.FindObjectOfType<CombatMenu>().characterChosen = true;
-
+                CombatMenu.FindObjectOfType<CombatMenu>().itemEnabled = false;
                 selectedUnit = go.GetComponent<Character>();
 
 				// move selector to the clicked unit to indicate it's selection
@@ -330,7 +416,7 @@ public class GameController : TMNController
                 }
 
 				// show how far this unit can attack at, if unit did not attack yet this turn
-				if (!selectedUnit.didAttack)
+				if (!selectedUnit.didAttack && attackAllowed)
 				{
                     if (attackAllowed)
 					    attackRangeMarker.Show(selectedUnit.transform.position, selectedUnit.attackRange);
@@ -342,6 +428,9 @@ public class GameController : TMNController
 			{
 				if (selectedUnit.Attack(unit))
 				{
+                    Debug.Log(selectedUnit._name + " a attaqué " +  unit._name);
+                    GameObject.Find("DamageIndicator").transform.position = unit.transform.position;
+                    unit.ReceiveDamage(30);
 					allowInput = false;
 					attackRangeMarker.HideAll();
 				}
@@ -490,7 +579,7 @@ public class GameController : TMNController
 				this.OnNaviUnitClick(unit.gameObject);
 			// }
 		}
-        if(CharacterTurnDone(unit.GetComponent<Character>()))
+        if(unit.GetComponent<Character>().TurnDone())
         {
             ClickNextActiveCharacter();
         }
@@ -498,4 +587,6 @@ public class GameController : TMNController
 
 	#endregion
 	// ====================================================================================================================
+
+
 }

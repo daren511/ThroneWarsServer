@@ -60,7 +60,7 @@ public class MainMenu_GUI : MonoBehaviour
             {
                 for (int i = 0; i < 4; ++i)
                 {
-                    Debug.Log(PlayerManager._instance._characters[i]._characterClass._className + " de niveau " + PlayerManager._instance._characters[i]._characterClass._classLevel);
+                    Debug.Log(PlayerManager._instance._chosenTeam[i]._characterClass._className + " de niveau " + PlayerManager._instance._chosenTeam[i]._characterClass._classLevel);
                 }
             }
             if (GUI.Button(_quitButton, "Quitter"))

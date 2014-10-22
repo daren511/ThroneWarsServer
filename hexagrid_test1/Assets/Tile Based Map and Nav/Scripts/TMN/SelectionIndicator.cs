@@ -45,6 +45,8 @@ public class SelectionIndicator : MonoBehaviour
 	public void Show(Vector3 pos)
 	{
 		this.transform.position = pos + offset;
+
+            
 #if	UNITY_3_0_0 || UNITY_3_0 || UNITY_3_1 || UNITY_3_2 || UNITY_3_3 || UNITY_3_4 || UNITY_3_5
 		this.gameObject.SetActiveRecursively(true);
 #else

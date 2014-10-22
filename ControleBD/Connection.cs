@@ -27,7 +27,7 @@ namespace ControleBD
             {
                 string Dsource = "(DESCRIPTION="
                + "(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)"
-               + "(HOST=172.17.104.127)(PORT=1521)))"
+               + "(HOST=mercure.clg.qc.ca)(PORT=1521)))"
                + "(CONNECT_DATA=(SERVICE_NAME=ORCL)))";
 
                 String ChaineConnexion = "Data Source=" + Dsource

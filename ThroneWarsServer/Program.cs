@@ -13,7 +13,8 @@ namespace ThroneWarsServer
     {
         static void Main(string[] args)
         {
-            Console.WriteLine(Email.sendMail("charles@thronewars.ca","TESTING LE CHARLES","CECI EST UN TEST").ToString());
+            //Console.WriteLine(Email.sendMail("charles@thronewars.ca","TESTING LE CHARLES","CECI EST UN TEST").ToString());
+            Console.WriteLine(Controle.insertplayer("TEST", "TEST", "TEST"));
             Console.ReadKey();
         }
     }

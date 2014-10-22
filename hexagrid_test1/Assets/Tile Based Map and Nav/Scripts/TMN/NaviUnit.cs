@@ -56,7 +56,7 @@ public class NaviUnit : MonoBehaviour
 	// callbacks for when unit completed a task
 	// eventCode 1 = movement to node completed
 	public delegate void UnitEventDelegate(NaviUnit unit, int eventCode);
-	protected UnitEventDelegate onUnitEvent = null;
+	public UnitEventDelegate onUnitEvent = null;
 
 	protected bool isMoving = false;					// unit is moving
 	protected bool isDelayed = false;					// will be true if unit is waiting for another to move outa the way while isMoving is true
@@ -79,7 +79,7 @@ public class NaviUnit : MonoBehaviour
 	public static NaviUnit SpawnUnit(GameObject unitFab, MapNav mapnav, TileNode node)
 	{
 		GameObject go = (GameObject)GameObject.Instantiate(unitFab);
-		go.transform.position = node.transform.position;
+        go.transform.position = node.transform.position;
 		NaviUnit unit = go.GetComponent<NaviUnit>();
 		unit.mapnav = mapnav;
 		unit._tr = go.transform;
@@ -419,7 +419,7 @@ public class NaviUnit : MonoBehaviour
 			}
 			else
 			{
-				iTweenOpt["position"] = followPath[followIdx].transform.position;
+				iTweenOpt["position"] = followPath[followIdx].transform.position + new Vector3(0, 1, 0);
 				iTween.MoveTo(this.gameObject, iTweenOpt);
 			}
 
@@ -462,7 +462,7 @@ public class NaviUnit : MonoBehaviour
 		if (Physics.Raycast(pos, -Vector3.up, out hit, 50f, adjustmentLayerMask))
 		{
 			pos.y -= hit.distance;
-			_tr.position = pos;
+			_tr.position = pos ;
 
 			if (adjustNormals)
 			{
