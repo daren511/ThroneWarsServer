@@ -17,6 +17,8 @@ namespace SiteWebThroneWars
 
         protected void UsernameRecovery(object sender, EventArgs e)
         {
+            // Verif Textbox pas vide
+
             string courriel = TB_Email.Text;
             // Valider que le email est legit
             bool legitEmail = IsEmail(courriel);
@@ -24,7 +26,9 @@ namespace SiteWebThroneWars
             // Si legit envoyer mess with username
             if (legitEmail)
             {
+                // Verif si courriel existe dans la bd
 
+                // Aller chercher le username correspondant au courriel + envoie par email
             }
         }
 

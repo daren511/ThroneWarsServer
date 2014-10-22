@@ -7,6 +7,7 @@ using System.Web.UI.WebControls;
 using System.Text.RegularExpressions;
 using ControleBD;
 using System.Globalization;
+using Emails;
 
 
 namespace SiteWebThroneWars
@@ -19,52 +20,75 @@ namespace SiteWebThroneWars
         }
         protected void inscriptionJoueur_Click(object sender, EventArgs e)
         {
-            string user = username.Text;
-            string pass = password.Text;
-            string courriel = email.Text;
-
-            // Verifier si username est dispo
-            // Si le nom est legit avec le server aka pas deja pris
-
-            // Verifier si email est legit ou non vide
-            // a verifier si marche
-            bool legitEmail = IsEmail(courriel);
-
             //Variable string text pour les different string du messagebox Erreur / Success
             string message = "";
+            bool userexiste = true;
+            bool emailexiste = true;
+            // Verif si all textbox sont pas vide
+            bool ok = VerifChamps();
+            if (ok)
+            {
+                // Variable des textbox
+                string user = username.Text;
+                string pass = password.Text;
+                string courriel = email.Text;
 
-            
-            
+                // Verifier si username est dispo
+                userexiste = Controle.UsernameExiste(user);
+                
+                // Verifier si email est legit ou non vide
+                bool legitEmail = IsEmail(courriel);
+                
+                // Verifier si Courriel est dispo
+                if (legitEmail)
+                    emailexiste = Controle.CourrielExiste(courriel);
+
+
                 // Verifier si mot de passe = confirmation && Email == confirmation && Email legit
-                if (password.Text == cpassword.Text && email.Text == cemail.Text && legitEmail)
+                if (password.Text == cpassword.Text && email.Text == cemail.Text && legitEmail && !userexiste && !emailexiste)
                 {
 
                     // Inserer dans oracle
                     Controle.insertplayer(user, pass, courriel);
 
                     // Message de confirmation
-                    message = "L'inscription à reussie";
-                    ClientScript.RegisterStartupScript(this.GetType(), "myalert", "alert('" + message + "');", true);  
+                    message = "L'inscription à réussie, veuillez visiter votre courriel pour confirmer votre compte";
+                    ClientScript.RegisterStartupScript(this.GetType(), "myalert", "alert('" + message + "');", true);
 
                     // Send email de confirmation
+                    Email.sendMail(courriel, Email.SujetInscription, Email.bodyConfirmation);
                 }
                 else
                 {
                     // Message d'erreur
                     if (password.Text != cpassword.Text)
+                    {
                         message = "Les mots de passe ne sont pas compatibles";
-                    if (email.Text == cemail.Text)
+                        PasswordLB.ForeColor = System.Drawing.Color.Red;
+                        CPasswordLB.ForeColor = System.Drawing.Color.Red;
+
+                    }
+
+                    if (email.Text != cemail.Text)
+                    {
                         message = "Les courriels ne sont pas compatibles";
+                        EmailLB.ForeColor = System.Drawing.Color.Red;
+                        CEmailLB.ForeColor = System.Drawing.Color.Red;
+                    }
                     if (!legitEmail)
+                    {
                         message = "Le format du courriel n'est pas valide";
+                        EmailLB.ForeColor = System.Drawing.Color.Red;
+                    }
 
                     // À vérifier si sa marche
-                    ClientScript.RegisterStartupScript(this.GetType(), "myalert", "alert('" + message + "');", true);  
+                    ClientScript.RegisterStartupScript(this.GetType(), "myalert", "alert('" + message + "');", true);
                 }
-                
+            }
 
-                
-            
+
+
+
         }
         public const string MatchEmailPattern =
             @"^(([\w-]+\.)+[\w-]+|([a-zA-Z]{1}|[\w-]{2,}))@"
@@ -85,6 +109,16 @@ namespace SiteWebThroneWars
         {
             if (email != null) return Regex.IsMatch(email, MatchEmailPattern);
             else return false;
+        }
+        protected bool VerifChamps()
+        {
+            bool Valide = false;
+            if (!string.IsNullOrWhiteSpace(username.Text) || !string.IsNullOrWhiteSpace(password.Text) || !string.IsNullOrWhiteSpace(cpassword.Text) ||
+                !string.IsNullOrWhiteSpace(email.Text) || !string.IsNullOrWhiteSpace(cemail.Text))
+            {
+                Valide = true;
+            }
+            return Valide;
         }
     }
 }

@@ -65,6 +65,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="ChangePassword.aspx" />
     <Content Include="ConfirmAccount.aspx" />
     <Content Include="Connexion.aspx" />
     <Content Include="FinDec.css" />
@@ -82,10 +83,17 @@
     <Content Include="Inscription.aspx" />
     <Content Include="Media.aspx" />
     <Content Include="Page Principale.aspx" />
-    <Content Include="Stats2.aspx" />
+    <Content Include="Recherche.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ChangePassword.aspx.cs">
+      <DependentUpon>ChangePassword.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ChangePassword.aspx.designer.cs">
+      <DependentUpon>ChangePassword.aspx</DependentUpon>
+    </Compile>
     <Compile Include="ConfirmAccount.aspx.cs">
       <DependentUpon>ConfirmAccount.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -136,18 +144,22 @@
       <DependentUpon>Page Principale.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Stats2.aspx.cs">
-      <DependentUpon>Stats2.aspx</DependentUpon>
+    <Compile Include="Recherche.aspx.cs">
+      <DependentUpon>Recherche.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Stats2.aspx.designer.cs">
-      <DependentUpon>Stats2.aspx</DependentUpon>
+    <Compile Include="Recherche.aspx.designer.cs">
+      <DependentUpon>Recherche.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ControleBD\ControleBD.csproj">
       <Project>{4edee1ef-7c68-46fd-ada8-3834f82ac21f}</Project>
       <Name>ControleBD</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Emails\Emails.csproj">
+      <Project>{356048cc-271e-4dd5-bba7-da109e00abd0}</Project>
+      <Name>Emails</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

@@ -10,7 +10,16 @@
 namespace SiteWebThroneWars {
     
     
-    public partial class Inscription {
+    public partial class ChangePassword {
+        
+        /// <summary>
+        /// Contrôle form1.
+        /// </summary>
+        /// <remarks>
+        /// Champ généré automatiquement.
+        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
         
         /// <summary>
         /// Contrôle usernameLB.
@@ -31,75 +40,66 @@ namespace SiteWebThroneWars {
         protected global::System.Web.UI.WebControls.TextBox username;
         
         /// <summary>
-        /// Contrôle PasswordLB.
+        /// Contrôle OldPass.
         /// </summary>
         /// <remarks>
         /// Champ généré automatiquement.
         /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label PasswordLB;
+        protected global::System.Web.UI.WebControls.Label OldPass;
         
         /// <summary>
-        /// Contrôle password.
+        /// Contrôle apassword.
         /// </summary>
         /// <remarks>
         /// Champ généré automatiquement.
         /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox password;
+        protected global::System.Web.UI.WebControls.TextBox apassword;
         
         /// <summary>
-        /// Contrôle CPasswordLB.
+        /// Contrôle NewPass.
         /// </summary>
         /// <remarks>
         /// Champ généré automatiquement.
         /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label CPasswordLB;
+        protected global::System.Web.UI.WebControls.Label NewPass;
         
         /// <summary>
-        /// Contrôle cpassword.
+        /// Contrôle npassword.
         /// </summary>
         /// <remarks>
         /// Champ généré automatiquement.
         /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox cpassword;
+        protected global::System.Web.UI.WebControls.TextBox npassword;
         
         /// <summary>
-        /// Contrôle EmailLB.
+        /// Contrôle cNewPass.
         /// </summary>
         /// <remarks>
         /// Champ généré automatiquement.
         /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label EmailLB;
+        protected global::System.Web.UI.WebControls.Label cNewPass;
         
         /// <summary>
-        /// Contrôle email.
+        /// Contrôle ncpassword.
         /// </summary>
         /// <remarks>
         /// Champ généré automatiquement.
         /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox email;
+        protected global::System.Web.UI.WebControls.TextBox ncpassword;
         
         /// <summary>
-        /// Contrôle CEmailLB.
+        /// Contrôle Button_Valider.
         /// </summary>
         /// <remarks>
         /// Champ généré automatiquement.
         /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label CEmailLB;
-        
-        /// <summary>
-        /// Contrôle cemail.
-        /// </summary>
-        /// <remarks>
-        /// Champ généré automatiquement.
-        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox cemail;
+        protected global::System.Web.UI.WebControls.Button Button_Valider;
     }
 }

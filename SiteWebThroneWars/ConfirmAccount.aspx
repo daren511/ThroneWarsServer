@@ -6,7 +6,7 @@
 <head runat="server">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link rel="stylesheet" type="text/css" href="FinDec.css" />
-    <title></title>
+    <title>Throne Wars -Projet FinDec - Confirmer son compte</title>
 </head>
 <body>
     <form id="form1" runat="server">
@@ -21,7 +21,7 @@
                     <li><a href="Page Principale.aspx">Accueil</a></li>
                     <li><a href="Inscription.aspx">Inscription</a></li>
                     <li><a href="Connexion.aspx">Connexion</a></li>
-                    <li><a href="Stats2.aspx">Recherche Joueur</a></li>
+                    <li><a href="Recherche.aspx">Recherche Joueur</a></li>
                     <li><a href="Media.aspx">Média</a></li>
                 </li>
             </ul>

@@ -19,8 +19,12 @@ namespace SiteWebThroneWars
         }
         protected void PasswordRecovery(object sender, EventArgs e)
         {
+            // Verif si textbox sont pas null
+
+
             string username = TB_Username.Text;
 
+            //Verif si username existe dans la BD
             bool ok = Controle.PasswordRecovery(username);
             if (ok)
             {

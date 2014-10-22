@@ -9,6 +9,7 @@
 <link rel="stylesheet" type="text/css" href="FinDec.css"/>
 </head>
 <body>
+    <form runat="server" action="Inscription.aspx" autocomplete="on">
 		<div class="Entete">
 			<img src="./Images/Logo_Grand.png" style="max-height:100%; max-width:100%;"/> <!-- A checker les dimensions ou plus grosse image -->
 		</div>
@@ -20,31 +21,28 @@
  					<li><a href="Page Principale.aspx">Accueil</a></li>
  					<li><a href="Inscription.aspx">Inscription</a></li>
                     <li><a href="Connexion.aspx">Connexion</a></li>
-				 	<li><a href="Stats2.aspx">Recherche Joueur</a></li>
+				 	<li><a href="Recherche.aspx">Recherche Joueur</a></li>
 				 	<li><a href="Media.aspx">Média</a></li>
 				 </li>
 			</ul>
 		</div>
 		<div class="Inscription">
-		<form runat="server" action="Inscription.aspx" autocomplete="on">
-  			<label>Nom d'utilisateur</label>
+  			<asp:label id="usernameLB" runat="server">Nom d'utilisateur</asp:label>
                 <asp:Textbox ID="username" TextMode="SingleLine" runat="server"/><br/>
-  			<label>Mot de passe</label>
+  			<asp:label id="PasswordLB" runat="server">Nom d'utilisateur</asp:label>
                 <asp:TextBox id="password" TextMode="password" runat="server"/><br/>
-  			<label>Confirmer mot de passe</label>
+  			<asp:label id="CPasswordLB" runat="server">Nom d'utilisateur</asp:label>
                 <asp:TextBox id="cpassword" TextMode="password" runat="server"/><br />
-            <label>Courriel</label>
+            <asp:label id="EmailLB" runat="server">Nom d'utilisateur</asp:label>
                 <asp:Textbox ID="email" TextMode="SingleLine" runat="server"/><br/>
-  			<label>Confirmer courriel</label>
+  			<asp:label id="CEmailLB" runat="server">Nom d'utilisateur</asp:label>
                 <asp:Textbox ID="cemail" TextMode="SingleLine" runat="server"/><br/>
             
             
             <asp:Button Text="Valider" onClick="inscriptionJoueur_Click" runat="server"/>
-		</form>
-          
-			<a href="ForgotPass.aspx">Mot de passe oublié?</a>
-            <a href="ForgetUsername.aspx">Nom d'utilisateur oublié?</a>
+		
 		</div>
+        </form>
 </body>
 </html>
 
