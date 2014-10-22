@@ -5,17 +5,46 @@ using System.Text;
 using System.Threading.Tasks;
 using ControleBD;
 using Emails;
+using System.Net.Sockets;
+using System.Net;
 
 
 namespace ThroneWarsServer
 {
     class Program
     {
+        const int PORT = 50052;
+        static List<Joueur> v = new List<Joueur>();
+        static Socket sckserver;
+        static Socket sck1;
+
+        public static bool SocketConnected(Socket s)
+        {
+            return !(s.Poll(1000, SelectMode.SelectRead) && s.Available == 0);
+        }
         static void Main(string[] args)
         {
-            Console.WriteLine(Email.sendMail("charles@thronewars.ca","TESTING LE CHARLES","CECI EST UN TEST").ToString());
-            Console.ReadKey();
+            sckserver = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            sckserver.Bind(new IPEndPoint(0, PORT));
+            sckserver.Listen(0);
+            Console.WriteLine("Serveur en attente de connexion");
+            while (true)
+            {
+                if (sck1 == null)
+                {
+                    sck1 = sckserver.Accept();
+                }
+
+
+                if (SocketConnected(sck1))
+                {
+                    //new Partie(sck1).T.Start();
+
+                    Console.WriteLine("Joueur connecté : " + (sck1.RemoteEndPoint as IPEndPoint).Address);
+                    sck1 = null;
+                }
+            }
+
         }
     }
-
 }

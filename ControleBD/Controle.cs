@@ -104,7 +104,7 @@ namespace ControleBD
 
         //-------------------------------------INSERT / UPDATE / DELETE PLAYER-------------------------------------------
 
-        public static bool insertplayer(string username, string email, string password)
+        public static bool insertPlayer(string username, string email, string password)
         {
             OracleConnection conn = Connection.GetInstance().conn;
 
