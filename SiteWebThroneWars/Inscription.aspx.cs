@@ -49,7 +49,7 @@ namespace SiteWebThroneWars
                 {
 
                     // Inserer dans oracle
-                    Controle.insertplayer(user, pass, courriel);
+                    Controle.insertPlayer(user, pass, courriel);
 
                     // Message de confirmation
                     message = "L'inscription à réussie, veuillez visiter votre courriel pour confirmer votre compte";
