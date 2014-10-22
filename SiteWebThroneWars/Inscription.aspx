@@ -27,18 +27,16 @@
 			</ul>
 		</div>
 		<div class="Inscription">
-  			<asp:label id="usernameLB" runat="server">Nom d'utilisateur</asp:label>
+  			<asp:label id="usernameLB" runat="server">Nom d'utilisateur</asp:label><br/>
                 <asp:Textbox ID="username" TextMode="SingleLine" runat="server"/><br/>
-  			<asp:label id="PasswordLB" runat="server">Nom d'utilisateur</asp:label>
+  			<asp:label id="PasswordLB" runat="server">Mot de Passe</asp:label><br/>
                 <asp:TextBox id="password" TextMode="password" runat="server"/><br/>
-  			<asp:label id="CPasswordLB" runat="server">Nom d'utilisateur</asp:label>
+  			<asp:label id="CPasswordLB" runat="server">Confirmer Mot de Passe</asp:label><br/>
                 <asp:TextBox id="cpassword" TextMode="password" runat="server"/><br />
-            <asp:label id="EmailLB" runat="server">Nom d'utilisateur</asp:label>
+            <asp:label id="EmailLB" runat="server">Courriel</asp:label><br/>
                 <asp:Textbox ID="email" TextMode="SingleLine" runat="server"/><br/>
-  			<asp:label id="CEmailLB" runat="server">Nom d'utilisateur</asp:label>
-                <asp:Textbox ID="cemail" TextMode="SingleLine" runat="server"/><br/>
-            
-            
+  			<asp:label id="CEmailLB" runat="server">Confirmer Courriel</asp:label><br/>
+                <asp:Textbox ID="cemail" TextMode="SingleLine" runat="server"/><br/><br />
             <asp:Button Text="Valider" onClick="inscriptionJoueur_Click" runat="server"/>
 		
 		</div>

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using ControleBD;
 
 namespace SiteWebThroneWars
 {
@@ -16,8 +17,20 @@ namespace SiteWebThroneWars
 
         protected void Rechercher_Click(object sender, EventArgs e)
         {
-            // Chercher le username dans la bd, rammene la position leaderboard + stats joueur 
-            Leaderboard_Croissant();
+            
+
+            //Textbox pas null
+            bool ok = VerifChamps();
+            if(ok)
+            { 
+            string user = TB_UsernameSearch.Text;
+            //Username existant?
+            bool userExiste = Controle.UsernameExiste(user);
+            //Ramener la position du username dans le leaderboard
+
+
+            //Ramener stats
+        }
         }
 
         private void Leaderboard_Croissant()
@@ -41,10 +54,17 @@ namespace SiteWebThroneWars
                 tdUsername.Text = "Hcfranck";
                 tdVictoires.Text = "9001";
                 tdDefaites.Text = "1";
-                
-
-
             }
+        }
+
+        protected bool VerifChamps()
+        {
+            bool Valide = false;
+            if (!string.IsNullOrWhiteSpace(TB_UsernameSearch.Text))
+            {
+                Valide = true;
+            }
+            return Valide;
         }
     }
 }
