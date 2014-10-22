@@ -5,6 +5,7 @@ using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using ControleBD;
 
 namespace SiteWebThroneWars
 {
@@ -18,17 +19,22 @@ namespace SiteWebThroneWars
         protected void UsernameRecovery(object sender, EventArgs e)
         {
             // Verif Textbox pas vide
-
+            bool verifOk = VerifChamps();
+            bool legitEmail=false;
             string courriel = TB_Email.Text;
             // Valider que le email est legit
-            bool legitEmail = IsEmail(courriel);
-
-            // Si legit envoyer mess with username
+            if (verifOk)
+                legitEmail = IsEmail(courriel);
             if (legitEmail)
             {
                 // Verif si courriel existe dans la bd
+                bool courrielExiste = Controle.CourrielExiste(courriel);
 
                 // Aller chercher le username correspondant au courriel + envoie par email
+                // Fonction pas fini - UsernameRecovery
+                bool recoveryOk = Controle.UsernameRecovery(courriel);
+                if (recoveryOk)
+                    ; //message box receovery reussie aller vers le email
             }
         }
 
@@ -51,6 +57,16 @@ namespace SiteWebThroneWars
         {
             if (email != null) return Regex.IsMatch(email, MatchEmailPattern);
             else return false;
+        }
+
+        protected bool VerifChamps()
+        {
+            bool Valide = false;
+            if (!string.IsNullOrWhiteSpace(TB_Email.Text))
+            {
+                Valide = true;
+            }
+            return Valide;
         }
     }
 }

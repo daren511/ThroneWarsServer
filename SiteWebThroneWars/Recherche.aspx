@@ -29,7 +29,7 @@
 
     <form id="form1" runat="server">
         <div class="FormRecherche">
-            <label>Nom d'utilisateur</label>
+            <label>Nom d'utilisateur</label><br />
             <asp:TextBox ID="TB_UsernameSearch" TextMode="SingleLine" runat="server" /><br />
             <asp:Button Text="Rechercher" runat="server" OnClick="Rechercher_Click" />
         </div>
@@ -45,13 +45,13 @@
         </div>
         <div class="Stats">
             <asp:Label runat="server">Nom utilisateur</asp:Label>
-            <input type="text" name="Username" disabled="disabled" />
+            <input type="text" id="TB_username" disabled="disabled" />
             <asp:Label runat="server">XP</asp:Label>
-            <input type="text" name="XP" disabled="disabled" /><br />
+            <input type="text" id="TB_XP" disabled="disabled" /><br />
             <br />
             <br />
             <label>Personnage 1</label>
-            <input type="text" name="Player1" disabled="disabled" />
+            <asp:input type="text" name="Player1" disabled="disabled" />
             <label>Niveau</label>
             <input type="number" name="LVPlayer1" disabled="disabled" /><br />
             <label>Personnage 2</label>

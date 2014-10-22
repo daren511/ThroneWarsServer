@@ -680,10 +680,10 @@ namespace ControleBD
                 }
                 objRead.Close();
 
-                // Checker si le username existe ou non
+                
                 if (result != null)
                 {
-                    //Dehastage le password, envoie un email au courriel correspondant du username
+                   //Reset password
 
                 }
                 return true;
@@ -700,7 +700,7 @@ namespace ControleBD
         {
             OracleConnection conn = Connection.GetInstance().conn;
 
-            string sqlSelect = "select email from joueurs where email = :email";
+            string sqlSelect = "select username from joueurs where email = :email";
             string result = "";
             try
             {
@@ -714,7 +714,6 @@ namespace ControleBD
                 }
                 objRead.Close();
 
-                // Checker si le username existe ou non
                 if (result != null)
                 {
                     //envoie un email au courriel correspondant du username
@@ -737,9 +736,11 @@ namespace ControleBD
         public static bool UsernameExiste(string username)
         {
             OracleConnection conn = Connection.GetInstance().conn;
-            string sqlSelect = "select Username from joueurs where JID = :username";
+            string sqlSelect = "select * from joueurs where username = :username";
             string result = "";
-           
+            bool userexiste = false;
+            try
+            {
                 OracleCommand oraSelect = new OracleCommand(sqlSelect, conn);
                 oraSelect.CommandType = CommandType.Text;
 
@@ -747,12 +748,20 @@ namespace ControleBD
                 while (objRead.Read())
                 {
                     result = objRead.GetString(0);
+
                 }
                 objRead.Close();
                 if (result == null)
-                    return false;
+                    userexiste=false;
                 else
-                    return true;
+                    userexiste = true;
+            }     
+            catch (OracleException ex)
+            {
+                Erreur.ErrorMessage(ex);
+            }
+            return userexiste;
+            
         }
         /// <summary>
         /// Retourne true si le courriel existe false dans le cas contraire
@@ -817,6 +826,69 @@ namespace ControleBD
             else
                 return correspondant;
         }
+        /// <summary>
+        /// Changer le mot de passe d'un joueur
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="PassHash"></param>
+        /// <returns></returns>
+        public static bool UpdatePassword(string username,string PassHash)
+        {
+            OracleConnection conn = Connection.GetInstance().conn;
+
+            string sqlconfirmation = "update joueurs set HASH_KEY =:PassHash where Username=:username";
+
+            try
+            {
+                OracleCommand oraUpdate = new OracleCommand(sqlconfirmation, conn);
+
+                OracleParameter OraParamPassHash = new OracleParameter(":HASH_KEY", OracleDbType.Char, 75);
+                OracleParameter OraParamUsername = new OracleParameter(":Username", OracleDbType.Varchar2,32);
+
+                OraParamPassHash.Value = PassHash;
+                OraParamUsername.Value = username;
+
+                oraUpdate.Parameters.Add(OraParamPassHash);
+                oraUpdate.Parameters.Add(OraParamUsername);
+
+                oraUpdate.ExecuteNonQuery();
+
+                return true;
+            }
+            catch (OracleException ex)
+            {
+                Erreur.ErrorMessage(ex);
+                return false;
+            }
+        }
+        /// <summary>
+        /// Retourne les stats des personnages du username en paramètre
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns></returns>
+        public static string[] ReturnStats(string username)
+        {
+            string[] Stats = null;
+
+            OracleConnection conn = Connection.GetInstance().conn;
+            string sqlSelect = "select Username from joueurs where JID = :username";
+            string result = "";
+
+            OracleCommand oraSelect = new OracleCommand(sqlSelect, conn);
+            oraSelect.CommandType = CommandType.Text;
+
+            OracleDataReader objRead = oraSelect.ExecuteReader();
+            while (objRead.Read())
+            {
+                result = objRead.GetString(0);
+            }
+            objRead.Close();
+
+
+
+            return Stats;
+        }
+
 
 
     }

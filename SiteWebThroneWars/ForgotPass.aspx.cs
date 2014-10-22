@@ -19,20 +19,30 @@ namespace SiteWebThroneWars
         }
         protected void PasswordRecovery(object sender, EventArgs e)
         {
-            // Verif si textbox sont pas null
-
-
             string username = TB_Username.Text;
+            // Verif si textbox sont pas null
+            bool ok = VerifChamps();
 
             //Verif si username existe dans la BD
-            bool ok = Controle.PasswordRecovery(username);
-            if (ok)
+            bool UserExiste = Controle.UsernameExiste(username);
+            if (UserExiste)
             {
+                // Si recovery reussie
+                bool RecoveryReussi = Controle.PasswordRecovery(username);
 
+                // what to do after ?
             }
-            else
-                Response.Redirect("Forgotpass.aspx");
              
         }
+        protected bool VerifChamps()
+        {
+            bool Valide = false;
+            if (!string.IsNullOrWhiteSpace(TB_Username.Text))
+            {
+                Valide = true;
+            }
+            return Valide;
+        }
+
     }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using ControleBD;
 
 namespace SiteWebThroneWars
 {
@@ -17,6 +18,10 @@ namespace SiteWebThroneWars
         protected void ChangePassword_Click(object sender, EventArgs e)
         {
             bool ChampsValide = VerifChamps();
+            string user = username.Text;
+            string oldpass = apassword.Text;
+            string newPass = npassword.Text;
+            string confirmNewPass = ncpassword.Text;
             if (ChampsValide)
             {
                 if (apassword == npassword || npassword != ncpassword)
@@ -25,13 +30,22 @@ namespace SiteWebThroneWars
                     OldPass.ForeColor = System.Drawing.Color.Red;
                     NewPass.ForeColor = System.Drawing.Color.Red;
                     cNewPass.ForeColor = System.Drawing.Color.Red;
+                    //Messagebox erreur?
                 }
                 else
                 {
-                    //Chercher le username et son password correspondant 
-                    // Verif si le text d'ancien mot de passe est correspondant a celui dans la BD
-                    // Crypter le nouveau mot de passe et envoyer
-                    // Messagebox changement réussi
+                    //Chercher le username et son l'ancien password correspond
+                    bool UserPassOk = Controle.UserPassCorrespondant(user, oldpass);
+                    if (UserPassOk)
+                    {
+                        // Crypter le nouveau mot de passe et envoyer
+                        string passHash = Controle.HashPassword(newPass, null, System.Security.Cryptography.SHA256.Create());
+
+                        //Changer le password du user avec le nouveau password hashé
+                        bool ChangeOk = Controle.UpdatePassword(user, passHash);
+
+                        // Messagebox changement réussi
+                    }
                 }
             }
 
