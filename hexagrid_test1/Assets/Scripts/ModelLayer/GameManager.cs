@@ -11,7 +11,8 @@ public class GameManager : MonoBehaviour
     public List<int> _playerPositions = new List<int>();
     public List<int> _enemyPositions = new List<int>();
 
-
+    public Character[] _enemyTeam { get; set; }
+    public int _enemySide;
     private static GameManager instance = null;
     public static GameManager _instance
     {
@@ -29,6 +30,7 @@ public class GameManager : MonoBehaviour
     void Awake()
     {
         DontDestroyOnLoad(this);
+        _enemyTeam = new Character[4];
         instance = this;
     }
 }

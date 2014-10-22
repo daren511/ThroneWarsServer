@@ -51,7 +51,7 @@
      <Compile Include="Assets\Scripts\CharacterManager\CharacterMovement.cs" />
      <Compile Include="Assets\Scripts\CharacterManager\SpriteMovement.cs" />
      <Compile Include="Assets\Scripts\Combat\CombatMenu.cs" />
-     <Compile Include="Assets\Scripts\Combat\UserInterfaceGraphics.cs" />
+     <Compile Include="Assets\Scripts\Combat\DamageIndicator.cs" />
      <Compile Include="Assets\Scripts\Connection.cs" />
      <Compile Include="Assets\Scripts\GUIs\Log_GUI.cs" />
      <Compile Include="Assets\Scripts\GUIs\MainMenu_GUI.cs" />
@@ -66,7 +66,7 @@
      <Compile Include="Assets\Scripts\ModelLayer\Inventory\EquipableItem.cs" />
      <Compile Include="Assets\Scripts\ModelLayer\Inventory\Item.cs" />
      <Compile Include="Assets\Scripts\ModelLayer\Inventory\PlayerInventory.cs" />
-     <Compile Include="Assets\Scripts\ModelLayer\Inventory\UseableItem.cs" />
+     <Compile Include="Assets\Scripts\ModelLayer\Inventory\Potion.cs" />
      <Compile Include="Assets\Scripts\ModelLayer\PlayerManager.cs" />
      <Compile Include="Assets\Scripts\ModelLayer\Point.cs" />
      <Compile Include="Assets\Scripts\Pathfinding\Path.cs" />

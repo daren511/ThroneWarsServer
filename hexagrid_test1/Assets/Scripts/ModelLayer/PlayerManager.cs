@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 /*
  * PlayerManager
  * par Charles Hunter-Roy, 2014
@@ -7,8 +8,10 @@ using System.Collections;
  * */
 public class PlayerManager : MonoBehaviour
 {
-    public Character[] _characters { get; set; }
+    public Character[] _chosenTeam { get; set; }
     public PlayerInventory _playerInventory;
+    public List<Character> _characters = new List<Character>();
+    public int _playerSide;
 
     //singleton
     private static PlayerManager instance = null;
@@ -29,6 +32,6 @@ public class PlayerManager : MonoBehaviour
     {
         DontDestroyOnLoad(this);
         instance = this;
-        _characters = new Character[4];
+        _chosenTeam = new Character[4];
     }
 }
