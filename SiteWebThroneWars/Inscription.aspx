@@ -7,9 +7,31 @@
 <title>Throne Wars -Projet FinDec - Inscription</title>
 <meta charset="utf-8"/> 
 <link rel="stylesheet" type="text/css" href="FinDec.css"/>
+<link rel="stylesheet" type="text/css" href="/sweet-alert.css"/>
+ <script src="/sweet-alert.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+
 </head>
 <body>
     <form runat="server" action="Inscription.aspx" autocomplete="on">
+        <script type="text/javascript">
+            /*
+            $(document).ready(function () {
+                MessageBoxReussi();
+            });
+            */
+            function MessageBoxReussi() {
+                $(document).ready(function () {
+                    swal({ title: "Bravo! ", text: "Votre inscription est réussie, veuillez consulter votre courriel pour confirmer votre compte ", type: "success", confirmButtonText: "Ok" });
+                });
+            }
+            function MessageBoxErreur(textadaptatif) {
+                $(document).ready(function () {
+                    swal({ title: "Échec! ", text: textadaptatif, type: "error", confirmButtonText: "I'm sad" });
+                });
+            }
+        </script>
 		<div class="Entete">
 			<img src="./Images/Logo_Grand.png" style="max-height:100%; max-width:100%;"/> <!-- A checker les dimensions ou plus grosse image -->
 		</div>
