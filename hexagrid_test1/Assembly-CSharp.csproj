@@ -182,6 +182,9 @@
  <Reference Include="NGUI">
  <HintPath>C:/Users/Administrateur/Documents/GitHub/ThroneWarsServer/hexagrid_test1/Assets/ThirdParty/NGUI/DLLs/NGUI.dll</HintPath>
  </Reference>
+ <Reference Include="ControleBD">
+ <HintPath>C:/Users/Administrateur/Documents/GitHub/ThroneWarsServer/hexagrid_test1/Assets/DLL/ControleBD.dll</HintPath>
+ </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

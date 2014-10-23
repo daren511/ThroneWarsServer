@@ -51,6 +51,8 @@ public class CombatMenu : MonoBehaviour
 
     private Vector2 scrollViewVector = Vector2.zero;
 
+
+    private bool clicked = false;
     // Use this for initialization
     void Start()
     {
@@ -60,7 +62,10 @@ public class CombatMenu : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if(clicked)
+        {
+            GameController.FindObjectOfType<GameController>().allowInput = true;
+        }
     }
     void InitializeStats()
     {
@@ -82,8 +87,6 @@ public class CombatMenu : MonoBehaviour
     void OnGUI()
     {
         DisplayCharacterStats();
-        //GameController.FindObjectOfType<GameController>().allowInput = false;
-
         InitializeStats();
 
         if (characterChosen)
@@ -133,13 +136,14 @@ public class CombatMenu : MonoBehaviour
 
         GUI.Box(_menuContainer, "");
 
-        GUI.enabled = go.GetComponent<Character>().currMoves > 0;
+        GUI.enabled = !go.GetComponent<Character>().didMove;
         if (GUI.Button(new Rect(_menuContainer.x, _menuContainer.y, 100, 20), "Déplacer"))
         {
             GameController.FindObjectOfType<GameController>().movementAllowed = true;
             GameController.FindObjectOfType<GameController>().attackAllowed = false;
             //GameController.FindObjectOfType<GameController>().FakeUnitClick(go);
-            GameController.FindObjectOfType<GameController>().allowInput = true;
+            GameController.FindObjectOfType<GameController>().SendMessage("FakeUnitClick", go);
+            clicked = true;
         }
 
         GUI.enabled = !go.GetComponent<Character>().didAttack;
@@ -147,8 +151,10 @@ public class CombatMenu : MonoBehaviour
         {
             GameController.FindObjectOfType<GameController>().attackAllowed = true;
             GameController.FindObjectOfType<GameController>().movementAllowed = false;
-            //GameController.FindObjectOfType<GameController>().FakeUnitClick(go);
-            GameController.FindObjectOfType<GameController>().allowInput = true;
+            GameController.FindObjectOfType<GameController>().FakeUnitClick(go);
+            //GameController.FindObjectOfType<GameController>().allowInput = true;
+            clicked = true;
+
         }
 
         GUI.enabled = !go.GetComponent<Character>().didAttack;

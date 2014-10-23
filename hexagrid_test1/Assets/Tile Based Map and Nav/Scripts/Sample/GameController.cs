@@ -102,6 +102,20 @@ public class GameController : TMNController
 
 		}
 	}
+
+    //todo: trouver une façon intelligente de placer les personnages en formation prédeterminé par le joueur sur la carte
+    private TileNode CalculateStartingPosition()
+    {
+        if(PlayerManager._instance._playerSide == 1)
+        {
+
+        }
+        else
+        {
+
+        }
+        return map[0];
+    }
     private void SpawnUnits()
     {
         for (int i = 0; i < PlayerManager._instance._chosenTeam.Length; ++i)
@@ -141,6 +155,7 @@ public class GameController : TMNController
             unit._characterClass = PlayerManager._instance._chosenTeam[i]._characterClass.GetCharacterClass();
             unit._characterInventory = PlayerManager._instance._chosenTeam[i]._characterInventory;
             unit.Init(OnUnitEvent);
+            unit.playerSide = PlayerManager._instance._playerSide;
             unit.name = "unit-" + i;
             units[unit.playerSide - 1].Add(unit);
         }
@@ -192,7 +207,8 @@ public class GameController : TMNController
             unit._characterInventory = GameManager._instance._enemyTeam[i]._characterInventory;
             unit.Init(OnUnitEvent);
             unit.name = "enemy-" + i;
-            units[unit.playerSide + 1].Add(unit);
+            unit.playerSide = GameManager._instance._enemySide;
+            units[unit.playerSide - 1].Add(unit);
         }
     }
     private bool PlayerTurnDone()
@@ -224,7 +240,7 @@ public class GameController : TMNController
                 activeCharacterIndex++;
             }
             if (units[PlayerManager._instance._playerSide - 1][activeCharacterIndex].didAttack &&
-                units[PlayerManager._instance._playerSide - 1][activeCharacterIndex].currMoves == 0)
+                units[PlayerManager._instance._playerSide - 1][activeCharacterIndex].didMove)
             {
                 done++;
             }
@@ -342,7 +358,7 @@ public class GameController : TMNController
 				// hide the attack range indicator
 				//if (combatOn) 
                     attackRangeMarker.HideAll();
-
+                    selectedUnit.didMove = true;
 				// camera should follow the unit that is moving
 				camMover.Follow(selectedUnit.transform);               
 			}
@@ -403,10 +419,13 @@ public class GameController : TMNController
 		if (useTurns)
 		{
 			// is active player's unit that was clicked on?
-			if (unit.playerSide == (PlayerManager._instance._playerSide))
+			if (unit.playerSide == (PlayerManager._instance._playerSide) )
 			{
                 CombatMenu.FindObjectOfType<CombatMenu>().go = unit.gameObject;
-                CombatMenu.FindObjectOfType<CombatMenu>().characterChosen = true;
+
+                if(PlayerManager._instance._playerSide == currPlayerTurn)
+                    CombatMenu.FindObjectOfType<CombatMenu>().characterChosen = true;
+
                 CombatMenu.FindObjectOfType<CombatMenu>().itemEnabled = false;
                 selectedUnit = go.GetComponent<Character>();
 

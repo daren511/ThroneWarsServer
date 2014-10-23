@@ -102,6 +102,9 @@
  <Reference Include="UnityEditor.Graphs">
  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEditor.Graphs.dll</HintPath>
  </Reference>
+ <Reference Include="ControleBD">
+ <HintPath>C:/Users/Administrateur/Documents/GitHub/ThroneWarsServer/hexagrid_test1/Assets/DLL/ControleBD.dll</HintPath>
+ </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Assembly-CSharp-vs.csproj">

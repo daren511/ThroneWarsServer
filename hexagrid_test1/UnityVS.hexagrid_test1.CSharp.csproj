@@ -46,6 +46,9 @@
       <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml.Linq" />
+    <Reference Include="ControleBD">
+      <HintPath>Assets\DLL\ControleBD.dll</HintPath>
+    </Reference>
     <Reference Include="NGUI">
       <HintPath>Assets\ThirdParty\NGUI\DLLs\NGUI.dll</HintPath>
     </Reference>
@@ -184,6 +187,7 @@
     <None Include="Assets\ThirdParty\NGUI\Resources\Shaders\Unlit - Transparent Colored.shader" />
     <None Include="Assets\Tile Based Map and Nav\Documentation\readme.txt" />
     <None Include="Assets\Water\Sources\Shaders\FX-Water Simple.shader" />
+    <None Include="Assets\DLL\ControleBD.dll" />
     <None Include="Assets\ThirdParty\NGUI\DLLs\NGUI.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2013\UnityVS.CSharp.targets" />

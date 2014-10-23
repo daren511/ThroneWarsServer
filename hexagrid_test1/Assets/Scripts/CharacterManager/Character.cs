@@ -92,6 +92,7 @@ public class Character : NaviUnit
     public int currMoves = 0; // how many moves this unit has left
 
     public bool didAttack { get; set; }
+    public bool didMove { get; set; }
 
 
     #endregion
@@ -123,7 +124,6 @@ public class Character : NaviUnit
         this._currPhysDefense = pdef;
         this._currMagicAttack = matk;
         this._currMagicDefense = mdef;
-
     }
 
     public override void Start()
@@ -150,6 +150,7 @@ public class Character : NaviUnit
     {
         currMoves = _moves;
         didAttack = false;
+        didMove = false;
     }
 
     /// <summary>Check if target can be attacked by this unit</summary>
@@ -274,6 +275,7 @@ public class Character : NaviUnit
         //todo:augmenter la défense de n points jusqu'au prochain tour
 
         currMoves = 0;
+        didMove = true;
         didAttack = true;
     }
     /// <summary>
@@ -282,7 +284,7 @@ public class Character : NaviUnit
     /// <returns>Si le personnage a fini son tour</returns>
     public bool TurnDone()
     {
-        return currMoves == 0 && didAttack;
+        return didMove && didAttack;
     }
     #endregion
     // ====================================================================================================================

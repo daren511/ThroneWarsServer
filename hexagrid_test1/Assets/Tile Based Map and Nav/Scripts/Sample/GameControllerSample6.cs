@@ -20,6 +20,7 @@ public class GameControllerSample6 : MonoBehaviour
     public GameObject[] enemyFabs = new GameObject[4];				// unit prefabs
     public MapNav map;			// the mapnav
     public LayerMask tilesLayer;// layer the tiles are on
+    public static string scene;
 
     private int placed = 0;
     List<GameObject> table = new List<GameObject>();
@@ -52,7 +53,8 @@ public class GameControllerSample6 : MonoBehaviour
 
         foreach (TileNode n in map.nodes)
         {
-            n.collider.enabled = true;
+            if(n)
+                n.collider.enabled = true;
         }
         map.ShowAllTileNodes(true);
     }
@@ -72,7 +74,8 @@ public class GameControllerSample6 : MonoBehaviour
             }
             GameController.unitsFabs = unitFabs;
             GameController.enemyFabs = enemyFabs;
-            Application.LoadLevel("test2");
+
+            Application.LoadLevel(scene);
         }
 
     }
@@ -85,7 +88,7 @@ public class GameControllerSample6 : MonoBehaviour
         // about TILE clicks, so pass mask to check against layer for tiles only
         Ray ray = rayCam.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, 1500f, tilesLayer))
+        if (Physics.Raycast(ray, out hit, 100f, tilesLayer))
         {
             // a tile gameobject was clicked on
             if (placed < PlayerManager._instance._chosenTeam.Length)
