@@ -736,7 +736,7 @@ namespace ControleBD
         public static bool UsernameExiste(string username)
         {
             OracleConnection conn = Connection.GetInstance().conn;
-            string sqlSelect = "select * from joueurs where username = :username";
+            string sqlSelect = "select username from joueurs where username = :username";
             string result = "";
             bool userexiste = false;
             try

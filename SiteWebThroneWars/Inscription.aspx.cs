@@ -8,6 +8,7 @@ using System.Text.RegularExpressions;
 using ControleBD;
 using System.Globalization;
 using Emails;
+using System.Text;
 
 
 namespace SiteWebThroneWars
@@ -20,10 +21,8 @@ namespace SiteWebThroneWars
         }
         protected void inscriptionJoueur_Click(object sender, EventArgs e)
         {
-            //Variable string text pour les different string du messagebox Erreur / Success
-            string message = "";
-            bool userexiste = true;
-            bool emailexiste = true;
+            // Variable de texte a envoyer dans les sweetalert
+            string text = "";
             // Verif si all textbox sont pas vide
             bool ok = VerifChamps();
             if (ok)
@@ -33,62 +32,62 @@ namespace SiteWebThroneWars
                 string pass = password.Text;
                 string courriel = email.Text;
 
-                // Verifier si username est dispo
-                userexiste = Controle.UsernameExiste(user);
-                
                 // Verifier si email est legit ou non vide
                 bool legitEmail = IsEmail(courriel);
-                
-                // Verifier si Courriel est dispo
-                if (legitEmail)
-                    emailexiste = Controle.CourrielExiste(courriel);
 
 
                 // Verifier si mot de passe = confirmation && Email == confirmation && Email legit
-                if (password.Text == cpassword.Text && email.Text == cemail.Text && legitEmail && !userexiste && !emailexiste)
+                if (password.Text == cpassword.Text && email.Text == cemail.Text && legitEmail)
                 {
-
+                    bool InsReussi = false;
                     // Inserer dans oracle
-                    Controle.insertPlayer(user, pass, courriel);
+                    InsReussi = Controle.insertPlayer(user, pass, courriel);
 
-                    // Message de confirmation
-                    message = "L'inscription à réussie, veuillez visiter votre courriel pour confirmer votre compte";
-                    ClientScript.RegisterStartupScript(this.GetType(), "myalert", "alert('" + message + "');", true);
+                    if (InsReussi)
+                    {
+                        // Message de confirmation
+                        ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>MessageBoxReussi();</script>", false);
 
-                    // Send email de confirmation
-                    Email.sendMail(courriel, Email.SujetInscription, Email.bodyConfirmation);
+                        // Send email de confirmation
+                        Email.sendMail(courriel, Email.SujetInscription, Email.bodyConfirmation);
+
+                        ViderTB();
+
+                    }
+                    else
+                    {
+                        ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>MessageBoxErreur();</script>", false);
+                        ViderTB();
+                    }
                 }
+                // Something happen
                 else
                 {
+                    text = "Une erreur à été trouvée";
                     // Message d'erreur
                     if (password.Text != cpassword.Text)
                     {
-                        message = "Les mots de passe ne sont pas compatibles";
+                        text += " ,vos mots de passe ne concordent pas";
                         PasswordLB.ForeColor = System.Drawing.Color.Red;
                         CPasswordLB.ForeColor = System.Drawing.Color.Red;
-
                     }
-
                     if (email.Text != cemail.Text)
                     {
-                        message = "Les courriels ne sont pas compatibles";
+                        text += " ainsi que vos courriels";
                         EmailLB.ForeColor = System.Drawing.Color.Red;
                         CEmailLB.ForeColor = System.Drawing.Color.Red;
                     }
                     if (!legitEmail)
                     {
-                        message = "Le format du courriel n'est pas valide";
+                        text += " et le format de celui-ci n'est pas valide";
                         EmailLB.ForeColor = System.Drawing.Color.Red;
+                        CEmailLB.ForeColor = System.Drawing.Color.Red;
                     }
+                    text += ".";
+                    ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>MessageBoxErreur(\"" + text + "\");</script>", false);
 
-                    // À vérifier si sa marche
-                    ClientScript.RegisterStartupScript(this.GetType(), "myalert", "alert('" + message + "');", true);
                 }
             }
-
-
-
-
         }
         public const string MatchEmailPattern =
             @"^(([\w-]+\.)+[\w-]+|([a-zA-Z]{1}|[\w-]{2,}))@"
@@ -119,6 +118,14 @@ namespace SiteWebThroneWars
                 Valide = true;
             }
             return Valide;
+        }
+        protected void ViderTB()
+        {
+            username.Text = "";
+            password.Text = "";
+            cpassword.Text = "";
+            email.Text = "";
+            cemail.Text = "";
         }
     }
 }
