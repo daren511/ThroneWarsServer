@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters;
 using System.Net.Sockets;
@@ -11,14 +10,23 @@ using System.Net.Sockets;
 namespace ControleBD
 {
     [Serializable]
-    class Joueur
+    public class Joueur
     {
         [NonSerialized]
         Socket Socket;
-        [Serializable]
-        int position;
+        //[Serializable]
+        //List<>
+        public int position { get; private set; }
 
-        List<>
+        public Joueur(Socket sck, int position)
+        {
+            this.Socket = sck;
+            this.position = position;
+        }
 
+        public bool isAlive()
+        {
+            return !(Socket.Poll(1000, SelectMode.SelectRead) && Socket.Available == 0);
+        }
     }
 }
