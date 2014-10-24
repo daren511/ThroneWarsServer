@@ -27,9 +27,6 @@ namespace SiteWebThroneWars
                 legitEmail = IsEmail(courriel);
             if (legitEmail)
             {
-                // Verif si courriel existe dans la bd
-                bool courrielExiste = Controle.CourrielExiste(courriel);
-
                 // Aller chercher le username correspondant au courriel + envoie par email
                 // Fonction pas fini - UsernameRecovery
                 bool recoveryOk = Controle.UsernameRecovery(courriel);

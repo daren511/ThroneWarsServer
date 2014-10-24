@@ -24,8 +24,6 @@ namespace SiteWebThroneWars
             if(ok)
             { 
             string user = TB_UsernameSearch.Text;
-            //Username existant?
-            bool userExiste = Controle.UsernameExiste(user);
             //Ramener la position du username dans le leaderboard
 
 

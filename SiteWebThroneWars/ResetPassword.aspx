@@ -30,7 +30,7 @@
             <asp:TextBox ID="TB_NewPassord" TextMode="SingleLine" runat="server" /><br />
             <label>Confirmer mot de passe</label><br />
             <asp:TextBox ID="TB_ConfirmPass" TextMode="SingleLine" runat="server" /><br />
-            <asp:Button Text="Valider" runat="server" OnClick="Rechercher_Click" />
+            <asp:Button Text="Valider" runat="server" OnClick="ResetPass_Click" />
         </div>
     </form>
 </body>
