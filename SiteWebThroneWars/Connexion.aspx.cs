@@ -16,13 +16,14 @@ namespace SiteWebThroneWars
         }
         protected void Connexion_Click(object sender, EventArgs e)
         {
+            //String pour le sweetalert
+            string text = "";
             // Textbox non null
             bool ok = VerifChamps();
-            
-            // bool si User existe && si le user et le password sont correspondant dans la bd
-            bool userexiste = false;
+
+            // Si le user et le password sont correspondant dans la bd
             bool userPassCorrespondant = false;
-            
+
             // if Text box pas null
             if (ok)
             {
@@ -30,33 +31,28 @@ namespace SiteWebThroneWars
                 string user = username.Text;
                 string pass = password.Text;
 
-                //Vérif si Username existe dans la BD
-                userexiste = Controle.UsernameExiste(user);
-                if (userexiste)
+                //Vérif si Username et Password sont correspondant
+                userPassCorrespondant = Controle.UserPassCorrespondant(user, pass);
+                if (userPassCorrespondant)
                 {
+                    //Si oui > Ramener la position du leaderboard
 
-                    //Vérif si Username et Password sont correspondant
-                    userPassCorrespondant = Controle.UserPassCorrespondant(user,pass);
-                    if(userPassCorrespondant)
-                    {
-                        //Si oui > Ramener la position du leaderboard
-
-                        // XP and Perso and Niveau
-                    }
-                    else
-                    {
-                      //Si non -> Erreur
-
-                    }
+                    // XP and Perso and Niveau
                 }
                 else
                 {
-                    // Erreur le username n'existe pas LB + Messagebox
+                    //Si non -> Erreur
+                    text = "Le nom d'utilisateur et le mot de passe ne correspond pas";
+                    //Textbox vide erreur
+                    ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>MessageBoxErreur(\"" + text + "\");</script>", false);
+
                 }
             }
             else
             {
-                // Mettre en rouge les LB plus message d'erreur que something goes wrong
+                text = "Vous devez remplir tout les champs requis";
+                //Textbox vide erreur
+                ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>MessageBoxErreur(\"" + text + "\");</script>", false);
             }
         }
 
