@@ -39,17 +39,17 @@
     </div>
 
         <div class="Inscription">
-            <asp:Label ID="usernameLB" runat="server">Nom d'utilisateur</asp:Label>
+            <asp:Label ID="usernameLB" runat="server">Nom d'utilisateur</asp:Label><br />
             <asp:TextBox ID="username" TextMode="SingleLine" runat="server" /><br />
-            <asp:Label ID="passwordLB" runat="server">Mot de Passe</asp:Label>
-            <asp:TextBox ID="password" TextMode="password" runat="server" /><br />
+            <asp:Label ID="passwordLB" runat="server">Mot de Passe</asp:Label><br />
+            <asp:TextBox ID="password" TextMode="password" runat="server" /><br /><br />
             <asp:Button Text="Se connecter" OnClick="Connexion_Click" runat="server" /><br />
             <a href="ForgotPass.aspx">Mot de passe oublié?</a><br />
             <a href="ForgetUsername.aspx">Nom d'utilisateur oublié?</a><br />
             <a href="ChangePassword.aspx">Changer son mot de passe</a>
         </div>
         <div class="Leaderboard">
-            <asp:Table ID="table" runat="server" GridLines="Both">
+            <asp:Table ID="tableLeaderbord" runat="server" GridLines="Both">
                 <asp:TableHeaderRow runat="server" ForeColor="Red">
                     <asp:TableHeaderCell>Position</asp:TableHeaderCell>
                     <asp:TableHeaderCell>Nom d'utilisateur</asp:TableHeaderCell>
@@ -60,28 +60,14 @@
         </div>
 
         <div class="Stats">
-            <asp:Label runat="server">Nom utilisateur</asp:Label>
-            <input type="text" name="Username" disabled="disabled" />
-            <asp:Label runat="server">XP</asp:Label>
-            <input type="text" name="XP" disabled="disabled" /><br />
-            <br />
-            <br />
-            <label>Personnage 1</label>
-            <input type="text" name="Player1" disabled="disabled" />
-            <label>Niveau</label>
-            <input type="number" name="LVPlayer1" disabled="disabled" /><br />
-            <label>Personnage 2</label>
-            <input type="text" name="Player2" disabled="disabled" />
-            <label>Niveau</label>
-            <input type="number" name="LVPlayer2" disabled="disabled" /><br />
-            <label>Personnage 3</label>
-            <input type="text" name="Player3" disabled="disabled" />
-            <label>Niveau</label>
-            <input type="number" name="LVPlayer3" disabled="disabled" /><br />
-            <label>Personnage 4</label>
-            <input type="text" name="Player4" disabled="disabled" />
-            <label>Niveau</label>
-            <input type="number" name="LVPlayer4" disabled="disabled" /><br />
+            <asp:Table ID="tableStats" runat="server" GridLines="Both">
+                <asp:TableHeaderRow runat="server" ForeColor="Red">
+                    <asp:TableHeaderCell># Personnage</asp:TableHeaderCell>
+                    <asp:TableHeaderCell>Niveaux</asp:TableHeaderCell>
+                    <asp:TableHeaderCell>XP</asp:TableHeaderCell>
+                    <asp:TableHeaderCell>Classe</asp:TableHeaderCell>
+                </asp:TableHeaderRow>
+            </asp:Table>
         </div>
     </form>
 </body>

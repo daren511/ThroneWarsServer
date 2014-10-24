@@ -5,6 +5,7 @@ using System.Security.Cryptography;
 using System.Globalization;
 using Oracle.DataAccess.Client;
 using System.Data;
+using Emails;
 
 namespace ControleBD
 {
@@ -664,8 +665,9 @@ namespace ControleBD
         {
             OracleConnection conn = Connection.GetInstance().conn;
 
-            string sqlSelect = "select username from joueurs where username = :username";
+            string sqlSelect = "select username,email from joueurs where username = :username";
             string result = "";
+            string resultemail = "";
             try
             {
                 OracleCommand oraSelect = new OracleCommand(sqlSelect, conn);
@@ -675,14 +677,20 @@ namespace ControleBD
                 while (objRead.Read())
                 {
                     result = objRead.GetString(0);
+                    resultemail = objRead.GetString(1);
                 }
                 objRead.Close();
+                
 
                 
                 if (result != null)
                 {
+                    string UserHash = Controle.HashPassword(result, null, System.Security.Cryptography.SHA256.Create());
+                    string Subject = "Changement de mot de passe -Throne Wars";
+                    string BodyResetPass = "Pour changer votre mot de passe, veuillez visiter"+
+                                            " ce lien et suivre les indications www.thronewars.com/ResetPassword?"+UserHash;
                    //Reset password
-
+                   //Emails.sendMail(resultemail,Subject,BodyResetPass);
                 }
                 return true;
 
@@ -725,66 +733,6 @@ namespace ControleBD
                 Erreur.ErrorMessage(ex);
                 return false;
             }
-        }
-        /// <summary>
-        /// Retourne true si le username existe false dans le cas contraire
-        /// </summary>
-        /// <param name="username"></param>
-        /// <returns></returns>
-        public static bool UsernameExiste(string username)
-        {
-            OracleConnection conn = Connection.GetInstance().conn;
-            string sqlSelect = "select username from joueurs where username = :username";
-            string result = "";
-            bool userexiste = false;
-            try
-            {
-                OracleCommand oraSelect = new OracleCommand(sqlSelect, conn);
-                oraSelect.CommandType = CommandType.Text;
-
-                OracleDataReader objRead = oraSelect.ExecuteReader();
-                while (objRead.Read())
-                {
-                    result = objRead.GetString(0);
-
-                }
-                objRead.Close();
-                if (result == null)
-                    userexiste=false;
-                else
-                    userexiste = true;
-            }     
-            catch (OracleException ex)
-            {
-                Erreur.ErrorMessage(ex);
-            }
-            return userexiste;
-            
-        }
-        /// <summary>
-        /// Retourne true si le courriel existe false dans le cas contraire
-        /// </summary>
-        /// <param name="email"></param>
-        /// <returns></returns>
-        public static bool CourrielExiste(string email)
-        {
-            OracleConnection conn = Connection.GetInstance().conn;
-            string sqlSelect = "select email from joueurs where email = :email";
-            string result = "";
-
-            OracleCommand oraSelect = new OracleCommand(sqlSelect, conn);
-            oraSelect.CommandType = CommandType.Text;
-
-            OracleDataReader objRead = oraSelect.ExecuteReader();
-            while (objRead.Read())
-            {
-                result = objRead.GetString(0);
-            }
-            objRead.Close();
-            if (result == null)
-                return false;
-            else
-                return true;
         }
         /// <summary>
         /// Retourne true quand le user et le password sont correspondant , retourne false sinon

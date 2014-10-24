@@ -10,6 +10,7 @@
 
 </head>
 <body>
+    <form id="form1" runat="server">
     <div class="Entete">
         <img src="./Images/Logo_Grand.png" style="max-height: 100%; max-width: 100%;" />
     </div>
@@ -26,8 +27,6 @@
             </li>
         </ul>
     </div>
-
-    <form id="form1" runat="server">
         <div class="FormRecherche">
             <label>Nom d'utilisateur</label><br />
             <asp:TextBox ID="TB_UsernameSearch" TextMode="SingleLine" runat="server" /><br />
@@ -44,28 +43,14 @@
             </asp:Table>
         </div>
         <div class="Stats">
-            <asp:Label runat="server">Nom utilisateur</asp:Label>
-            <input type="text" id="TB_username" disabled="disabled" />
-            <asp:Label runat="server">XP</asp:Label>
-            <input type="text" id="TB_XP" disabled="disabled" /><br />
-            <br />
-            <br />
-            <label>Personnage 1</label>
-            <asp:input type="text" name="Player1" disabled="disabled" />
-            <label>Niveau</label>
-            <input type="number" name="LVPlayer1" disabled="disabled" /><br />
-            <label>Personnage 2</label>
-            <input type="text" name="Player2" disabled="disabled" />
-            <label>Niveau</label>
-            <input type="number" name="LVPlayer2" disabled="disabled" /><br />
-            <label>Personnage 3</label>
-            <input type="text" name="Player3" disabled="disabled" />
-            <label>Niveau</label>
-            <input type="number" name="LVPlayer3" disabled="disabled" /><br />
-            <label>Personnage 4</label>
-            <input type="text" name="Player4" disabled="disabled" />
-            <label>Niveau</label>
-            <input type="number" name="LVPlayer4" disabled="disabled" /><br />
+            <asp:Table ID="tableStats" runat="server" GridLines="Both">
+                <asp:TableHeaderRow runat="server" ForeColor="Red">
+                    <asp:TableHeaderCell># Personnage</asp:TableHeaderCell>
+                    <asp:TableHeaderCell>Niveaux</asp:TableHeaderCell>
+                    <asp:TableHeaderCell>XP</asp:TableHeaderCell>
+                    <asp:TableHeaderCell>Classe</asp:TableHeaderCell>
+                </asp:TableHeaderRow>
+            </asp:Table>
         </div>
 
 
