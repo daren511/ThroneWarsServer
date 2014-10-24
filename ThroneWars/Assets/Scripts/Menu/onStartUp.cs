@@ -199,6 +199,8 @@ public class onStartUp : MonoBehaviour
             //ici traiter l'inventaire du personnage
             PlayerManager._instance._characters.Add(Character.CreateCharacter(perso.Nom, charClass, perso.Level, perso.Xp, perso.Moves, perso.Range,
                 perso.Health, perso.Magic, null, perso.PhysAtk, perso.PhysDef, perso.MagicAtk, perso.MagicDef));
+
+            
         }
 
 

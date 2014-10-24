@@ -48,6 +48,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ControleBD\ControleBD.csproj">
+      <Project>{93432e1c-1d64-4bd3-9c08-e1a5b260b6b9}</Project>
+      <Name>ControleBD</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Emails\Emails.csproj">
       <Project>{356048cc-271e-4dd5-bba7-da109e00abd0}</Project>
       <Name>Emails</Name>
