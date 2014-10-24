@@ -1,27 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters;
 using System.Net.Sockets;
 
-
 namespace ControleBD
 {
     [Serializable]
-    public class Joueur
+    public class Joueur 
     {
         [NonSerialized]
         Socket Socket;
-        //[Serializable]
-        //List<>
-        public int position { get; private set; }
+
+        public List<Personnages> Persos = new List<Personnages>();
+        public int Position { get; private set; }
 
         public Joueur(Socket sck, int position)
         {
             this.Socket = sck;
-            this.position = position;
+            this.Position = position;
         }
 
         public bool isAlive()
