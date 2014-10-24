@@ -14,7 +14,7 @@
     <ProjectTypeGuids>{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
+    <TargetFrameworkProfile>Unity Full v3.5</TargetFrameworkProfile>
     <CompilerResponseFile>
     </CompilerResponseFile>
   </PropertyGroup>
@@ -49,7 +49,10 @@
     </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="ControleBD">
-      <HintPath>Assets\DLL\ControleBD.dll</HintPath>
+      <HintPath>Assets\Assemblies\ControleBD.dll</HintPath>
+    </Reference>
+    <Reference Include="Oracle.DataAccess">
+      <HintPath>Assets\Plugins\Oracle.DataAccess.dll</HintPath>
     </Reference>
     <Reference Include="NGUI">
       <HintPath>Assets\ThirdParty\NGUI\DLLs\NGUI.dll</HintPath>
@@ -189,7 +192,7 @@
     <None Include="Assets\ThirdParty\NGUI\Resources\Shaders\Unlit - Transparent Colored.shader" />
     <None Include="Assets\Tile Based Map and Nav\Documentation\readme.txt" />
     <None Include="Assets\Water\Sources\Shaders\FX-Water Simple.shader" />
-    <None Include="Assets\DLL\ControleBD.dll" />
+    <None Include="Assets\Assemblies\ControleBD.dll" />
     <None Include="Assets\ThirdParty\NGUI\DLLs\NGUI.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2013\UnityVS.CSharp.targets" />

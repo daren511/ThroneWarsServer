@@ -50,7 +50,10 @@
       <HintPath>Library\UnityAssemblies\UnityEditor.Graphs.dll</HintPath>
     </Reference>
     <Reference Include="ControleBD">
-      <HintPath>Assets\DLL\ControleBD.dll</HintPath>
+      <HintPath>Assets\Assemblies\ControleBD.dll</HintPath>
+    </Reference>
+    <Reference Include="Oracle.DataAccess">
+      <HintPath>Assets\Plugins\Oracle.DataAccess.dll</HintPath>
     </Reference>
     <Reference Include="NGUI_Editor">
       <HintPath>Assets\ThirdParty\NGUI\DLLs\Editor\NGUI_Editor.dll</HintPath>

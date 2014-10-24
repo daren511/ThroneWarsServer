@@ -5,6 +5,8 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 using System.Text;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.IO;
 using ControleBD;
 
 /// <summary>
@@ -135,7 +137,7 @@ public class onStartUp : MonoBehaviour
     {
         // Connect the user to the server
         sck = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-        localEndPoint = new IPEndPoint(IPAddress.Parse(ip), port);
+        localEndPoint = new IPEndPoint(Dns.GetHostAddresses(ip)[0], port);
         sck.Connect(localEndPoint);
     }
     private bool CheckPasswordUser()
@@ -155,9 +157,8 @@ public class onStartUp : MonoBehaviour
         }        
         return formatted.ToString() == "True";
     }
-    private void GetPlayerInfo()
+    private Joueur GetJoueur()
     {
-
         byte[] buffer;
         buffer = new byte[sck.SendBufferSize];
         int bytesRead = sck.Receive(buffer);
@@ -167,7 +168,17 @@ public class onStartUp : MonoBehaviour
         {
             formatted[i] = buffer[i];
         }
-        
+        Joueur joueur = null;
+        BinaryFormatter receive = new BinaryFormatter();
+        using (var recstream = new MemoryStream(formatted))
+        {
+            joueur = receive.Deserialize(recstream) as Joueur;
+        }
+        return joueur;
+    }
+    private void GetPlayerInfo()
+    {
+        Joueur joueur = GetJoueur();
 
         CharacterInventory characterInvent = new CharacterInventory();
         PlayerInventory playerInvent = null;
@@ -177,6 +188,20 @@ public class onStartUp : MonoBehaviour
 
         GameManager._instance._enemySide = 2;
         PlayerManager._instance._playerSide = 1;
+
+        Personnages perso;
+        string charClass;
+
+        for (int i = 0; i < joueur.Persos.Count; ++i)
+        {
+            perso = joueur.Persos[i];
+            charClass = GetCharacterClass(perso.ClassId);
+            //ici traiter l'inventaire du personnage
+            PlayerManager._instance._characters.Add(Character.CreateCharacter(perso.Nom, charClass, perso.Level, perso.Xp, perso.Moves, perso.Range,
+                perso.Health, perso.Magic, null, perso.PhysAtk, perso.PhysDef, perso.MagicAtk, perso.MagicDef));
+        }
+
+
         //infos venant du serveur
 
         /*
@@ -203,12 +228,32 @@ public class onStartUp : MonoBehaviour
         PlayerManager._instance._characters.Add(Character.CreateCharacter("Mr Poire", "Prêtre", 1, 2, 1, 60, 40, characterInvent, 10, 10, 10, 10));
 
         //quand on choisit un personnage qui participera à la partie
-        PlayerManager._instance._chosenTeam[0] = Character.CreateCharacter("Bartoc", "Guerrier", 2, 3, 1, 100, 10, characterInvent, 20, 10, 0, 10);
+        PlayerManager._instance._chosenTeam[0] = PlayerManager._instance._characters[0]; //Character.CreateCharacter("Bartoc", "Guerrier", 2, 3, 1, 100, 10, characterInvent, 20, 10, 0, 10);
         PlayerManager._instance._chosenTeam[1] = Character.CreateCharacter("Kodak", "Mage", 1, 3, 1, 50, 50, characterInvent, 10, 10, 10, 10);
         PlayerManager._instance._chosenTeam[2] = Character.CreateCharacter("Bubulle", "Archer", 1, 5, 3, 100, 10, characterInvent, 10, 10, 10, 10);
         PlayerManager._instance._chosenTeam[3] = Character.CreateCharacter("Mr Poire", "Prêtre", 1, 3, 1, 60, 40, characterInvent, 10, 10, 10, 10);
 
 
         PlayerManager._instance._playerInventory = playerInvent;
+    }
+    private string GetCharacterClass(int id)
+    {
+        string classe = "";
+        switch(id)
+        {
+            case 1:
+                classe = "";
+                break;
+            case 2:
+                classe = "";
+                break;
+            case 3:
+                classe = "";
+                break;
+            case 4:
+                classe = "";
+                break;
+        }
+        return classe;
     }
 }

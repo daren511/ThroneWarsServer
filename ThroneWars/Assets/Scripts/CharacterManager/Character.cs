@@ -33,6 +33,32 @@ public class Character : NaviUnit
 
         return thisObj;
     }
+    public static Character CreateCharacter(string charName, string className, int level, int xp, int move, int range, int hp, int mp, 
+        CharacterInventory invent, int patk, int pdef, int matk, int mdef)
+    {
+        var thisObj = CharOBJ.AddComponent<Character>();
+
+        //calls Start() on the object and initializes it.
+        thisObj._name = charName;
+
+        thisObj._characterClass = new CharacterClass(className, level, xp);
+        thisObj._moves = move;
+        thisObj.attackRange = range;
+
+        thisObj._maxHealth = hp;
+        thisObj._currHealth = hp;
+
+        thisObj._maxMagic = mp;
+        thisObj._currMagic = mp;
+
+        thisObj._characterInventory = invent;
+        thisObj._physAttack = patk;
+        thisObj._physDefense = pdef;
+        thisObj._magicAttack = matk;
+        thisObj._magicDefense = mdef;
+
+        return thisObj;
+    }
 
     // ====================================================================================================================
     #region inspector properties
@@ -73,7 +99,6 @@ public class Character : NaviUnit
     public int _currPhysDefense;//{ get;  set; }
     public int _currMagicAttack;// { get;  set; }
     public int _currMagicDefense;// { get;  set; }
-
 
     public bool _isAlive = true;
     public string _name;
