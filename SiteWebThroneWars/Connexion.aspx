@@ -6,9 +6,20 @@
 <head runat="server">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link rel="stylesheet" type="text/css" href="FinDec.css" />
+    <link rel="stylesheet" type="text/css" href="/sweet-alert.css" />
+    <script src="/sweet-alert.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <title></title>
 </head>
 <body>
+   <form runat="server" action="Inscription.aspx" autocomplete="on">
+    <script type="text/javascript">
+        function MessageBoxErreur(textadaptatif) {
+            $(document).ready(function () {
+                swal({ title: "Échec! ", text: textadaptatif, type: "error", confirmButtonText: "I'm sad" });
+            });
+        }
+        </script>
     <div class="Entete">
         <img src="./Images/Logo_Grand.png" style="max-height: 100%; max-width: 100%;" />
         <!-- A checker les dimensions ou plus grosse image -->
@@ -26,11 +37,11 @@
             </li>
         </ul>
     </div>
-    <form id="form1" runat="server">
+
         <div class="Inscription">
-            <asp:label id="usernameLB" runat="server">Nom d'utilisateur</asp:label>
+            <asp:Label ID="usernameLB" runat="server">Nom d'utilisateur</asp:Label>
             <asp:TextBox ID="username" TextMode="SingleLine" runat="server" /><br />
-            <asp:label id="passwordLB" runat="server">Mot de Passe</asp:label>
+            <asp:Label ID="passwordLB" runat="server">Mot de Passe</asp:Label>
             <asp:TextBox ID="password" TextMode="password" runat="server" /><br />
             <asp:Button Text="Se connecter" OnClick="Connexion_Click" runat="server" /><br />
             <a href="ForgotPass.aspx">Mot de passe oublié?</a><br />

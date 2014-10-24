@@ -7,6 +7,7 @@ using System.Web.UI.WebControls;
 using ControleBD;
 using System.Globalization;
 using System.Text.RegularExpressions;
+using Emails;
 
 namespace SiteWebThroneWars
 {
@@ -19,19 +20,23 @@ namespace SiteWebThroneWars
         }
         protected void PasswordRecovery(object sender, EventArgs e)
         {
+            string text = "";
             string username = TB_Username.Text;
             // Verif si textbox sont pas null
             bool ok = VerifChamps();
-
-            //Verif si username existe dans la BD
-            bool UserExiste = Controle.UsernameExiste(username);
-            if (UserExiste)
+            if (ok)
             {
                 // Si recovery reussie
                 bool RecoveryReussi = Controle.PasswordRecovery(username);
 
-                // what to do after ?
+                // 
+
+                //Email.sendMail()
             }
+            else
+            text = "Vous devez remplir tout les champs requis";
+            ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>MessageBoxErreur(\"" + text + "\");</script>", false);
+            ViderTB();
              
         }
         protected bool VerifChamps()
@@ -42,6 +47,10 @@ namespace SiteWebThroneWars
                 Valide = true;
             }
             return Valide;
+        }
+        protected void ViderTB()
+        {
+            TB_Username.Text = "";
         }
 
     }

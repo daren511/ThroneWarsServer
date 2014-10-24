@@ -7,8 +7,19 @@
 <title>Throne Wars -Projet FinDec - Forgot Password</title>
 <meta charset="utf-8"/> 
 <link rel="stylesheet" type="text/css" href="FinDec.css"/>
+<link rel="stylesheet" type="text/css" href="/sweet-alert.css"/>
+<script src="/sweet-alert.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 </head>
 	<body>
+     <form runat="server" action="ForgotPass.aspx" autocomplete="on">
+        <script type="text/javascript">
+            function MessageBoxErreur(textadaptatif) {
+                $(document).ready(function () {
+                    swal({ title: "Échec! ", text: textadaptatif, type: "error", confirmButtonText: "I'm sad" });
+                });
+            }
+        </script>
 		<div class="Entete">
 			<img src="./Images/Logo_Grand.png" style="max-height:100%; max-width:100%;"/> <!-- A checker les dimensions ou plus grosse image -->
 		</div>
@@ -25,9 +36,10 @@
 				 </li>
 			</ul>
 		</div>
-        <form runat="server" action="ForgotPass.aspx" autocomplete="on">
+
 		<div class="FormForgot">
-  			Nom d'utilisateur: <asp:Textbox ID="TB_Username" TextMode="SingleLine" runat="server"/><br/><br/>
+  			<asp:label id="usernameLB" runat="server">Nom d'utilisateur</asp:label><br/> 
+            <asp:Textbox ID="TB_Username" TextMode="SingleLine" runat="server"/><br/><br/>
   			<asp:Button Text="Envoyer" runat="server" onclick="PasswordRecovery" />
   		</div>
         </form>

@@ -67,7 +67,7 @@ namespace SiteWebThroneWars
                     // Message d'erreur
                     if (password.Text != cpassword.Text)
                     {
-                        text += " ,vos mots de passe ne concordent pas";
+                        text += ", vos mots de passe ne concordent pas";
                         PasswordLB.ForeColor = System.Drawing.Color.Red;
                         CPasswordLB.ForeColor = System.Drawing.Color.Red;
                     }
@@ -85,9 +85,13 @@ namespace SiteWebThroneWars
                     }
                     text += ".";
                     ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>MessageBoxErreur(\"" + text + "\");</script>", false);
-
+                    ViderTB();
                 }
             }
+            //Message erreur si un des champs requis est vide
+            text = "Vous devez remplir tout les champs requis";
+            ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>MessageBoxErreur(\"" + text + "\");</script>", false);
+            ViderTB();
         }
         public const string MatchEmailPattern =
             @"^(([\w-]+\.)+[\w-]+|([a-zA-Z]{1}|[\w-]{2,}))@"
