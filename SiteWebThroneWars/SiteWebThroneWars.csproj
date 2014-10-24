@@ -84,6 +84,7 @@
     <Content Include="Media.aspx" />
     <Content Include="Page Principale.aspx" />
     <Content Include="Recherche.aspx" />
+    <Content Include="ResetPassword.aspx" />
     <Content Include="sweet-alert.css" />
     <Content Include="sweet-alert.js" />
     <Content Include="sweet-alert.min.js" />
@@ -153,6 +154,13 @@
     </Compile>
     <Compile Include="Recherche.aspx.designer.cs">
       <DependentUpon>Recherche.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ResetPassword.aspx.cs">
+      <DependentUpon>ResetPassword.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ResetPassword.aspx.designer.cs">
+      <DependentUpon>ResetPassword.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

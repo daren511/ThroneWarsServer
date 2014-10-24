@@ -10,7 +10,7 @@
 namespace SiteWebThroneWars {
     
     
-    public partial class Stats2 {
+    public partial class ResetPassword {
         
         /// <summary>
         /// Contrôle form1.
@@ -22,30 +22,21 @@ namespace SiteWebThroneWars {
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
         
         /// <summary>
-        /// Contrôle TB_UsernameSearch.
+        /// Contrôle TB_NewPassord.
         /// </summary>
         /// <remarks>
         /// Champ généré automatiquement.
         /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TB_UsernameSearch;
+        protected global::System.Web.UI.WebControls.TextBox TB_NewPassord;
         
         /// <summary>
-        /// Contrôle table.
+        /// Contrôle TB_ConfirmPass.
         /// </summary>
         /// <remarks>
         /// Champ généré automatiquement.
         /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Table table;
-        
-        /// <summary>
-        /// Contrôle tableStats.
-        /// </summary>
-        /// <remarks>
-        /// Champ généré automatiquement.
-        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Table tableStats;
+        protected global::System.Web.UI.WebControls.TextBox TB_ConfirmPass;
     }
 }
