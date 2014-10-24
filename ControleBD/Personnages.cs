@@ -19,6 +19,7 @@ namespace ControleBD
         public int MagicDef { get; private set; }
         public int Moves { get; private set; }
         public int Range { get; private set; }
-        //public AttaqueSpeciale[] { get; private set; }
+
+        public List<AttaqueSpeciale> Attaques = new List<AttaqueSpeciale>();
     }
 }
