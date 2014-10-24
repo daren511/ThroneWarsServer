@@ -6,8 +6,11 @@ using System.Net;
 
 namespace ControleBD
 {
-    class AttaqueSpeciale
+    public class AttaqueSpeciale
     {
-       
+       AttaqueSpeciale()
+       {
+
+       }
     }
 }
