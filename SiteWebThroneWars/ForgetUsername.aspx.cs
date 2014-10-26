@@ -18,6 +18,7 @@ namespace SiteWebThroneWars
 
         protected void UsernameRecovery(object sender, EventArgs e)
         {
+            string text = "";
             // Verif Textbox pas vide
             bool verifOk = VerifChamps();
             bool legitEmail=false;
@@ -25,13 +26,23 @@ namespace SiteWebThroneWars
             // Valider que le email est legit
             if (verifOk)
                 legitEmail = IsEmail(courriel);
+            else
+            {
+                text = "Le champs doit ne pas être vide";
+                ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>MessageBoxErreur(\"" + text + "\");</script>", false);
+            }
             if (legitEmail)
             {
                 // Aller chercher le username correspondant au courriel + envoie par email
                 // Fonction pas fini - UsernameRecovery
                 bool recoveryOk = Controle.UsernameRecovery(courriel);
                 if (recoveryOk)
-                    ; //message box receovery reussie aller vers le email
+                    ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>MessageBoxReussi();</script>", false);
+            }
+            else
+            {
+                text = "Le format du courriel n'est pas valide";
+                ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>MessageBoxErreur(\"" + text + "\");</script>", false);
             }
         }
 

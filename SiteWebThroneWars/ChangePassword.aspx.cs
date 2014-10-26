@@ -17,6 +17,7 @@ namespace SiteWebThroneWars
 
         protected void ChangePassword_Click(object sender, EventArgs e)
         {
+            string text = "";
             bool ChampsValide = VerifChamps();
             string user = username.Text;
             string oldpass = apassword.Text;
@@ -26,11 +27,14 @@ namespace SiteWebThroneWars
             {
                 if (apassword == npassword || npassword != ncpassword)
                 {
+                    // Redirect avant ??
+                    text = "L'ancien mot de pass et le nouveau sont les mêmes ou le nouveau et la confirmation ne correspondent pas";
                     //Verif si forecolor is the right thing
                     OldPass.ForeColor = System.Drawing.Color.Red;
                     NewPass.ForeColor = System.Drawing.Color.Red;
                     cNewPass.ForeColor = System.Drawing.Color.Red;
                     //Messagebox erreur?
+                    ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>MessageBoxErreur(\"" + text + "\");</script>", false);
                 }
                 else
                 {
@@ -45,6 +49,7 @@ namespace SiteWebThroneWars
                         bool ChangeOk = Controle.UpdatePassword(user, passHash);
 
                         // Messagebox changement réussi
+                        ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>MessageBoxReussi();</script>", false);
                     }
                 }
             }

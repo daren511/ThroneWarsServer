@@ -1,7 +1,6 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="ChangePassword.aspx.cs" Inherits="SiteWebThroneWars.ChangePassword" %>
 
 <!DOCTYPE html>
-
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
@@ -10,6 +9,18 @@
 </head>
 <body>
     <form id="form1" runat="server">
+    <script type="text/javascript">
+        function MessageBoxReussi() {
+            $(document).ready(function () {
+                swal({ title: "Bravo! ", text: "Votre mot de passe à été changé avec succès", type: "success", confirmButtonText: "Ok" });
+            });
+        }
+        function MessageBoxErreur(textadaptatif) {
+            $(document).ready(function () {
+                swal({ title: "Échec! ", text: textadaptatif, type: "error", confirmButtonText: "I'm sad" });
+            });
+        }
+    </script>
         <div class="Entete">
             <img src="./Images/Logo_Grand.png" style="max-height: 100%; max-width: 100%;" />
         </div>
@@ -18,7 +29,7 @@
         <div class="Table">
             <ul id="menu-bar">
                 <li class="active">
-                    <li><a href="Page Principale.aspx">Accueil</a></li>
+                    <li><a href="default.aspx">Accueil</a></li>
                     <li><a href="Inscription.aspx">Inscription</a></li>
                     <li><a href="Connexion.aspx">Connexion</a></li>
                     <li><a href="Recherche.aspx">Recherche Joueur</a></li>

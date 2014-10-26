@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Web;
+using System.Linq;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -11,7 +11,11 @@ namespace SiteWebThroneWars
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            string urlHash = Request.QueryString["user"];
+        }
+        protected void ResetPass_Click(object sender, EventArgs e)
+        { 
+            
         }
     }
 }
