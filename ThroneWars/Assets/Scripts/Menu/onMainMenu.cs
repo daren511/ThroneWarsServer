@@ -11,14 +11,20 @@ public class onMainMenu : MonoBehaviour
     GUIStyle mapStyle;
     private bool hasUpdatedGui = false;
     private bool[] tabMap = { false };
-    private static string[] tabTeam;
-    private static string[] tabCharac;
-    private static string[] tabInvent;  // For the player inventory
-    private static string[] tabItem;    // For the character inventory
+    //private static string[] tabTeam;
+    //private static string[] tabCharac;
+    //private static string[] tabInvent;  // For the player inventory
+    //private static string[] tabItem;    // For the character inventory
     private static int selectedTeam;
     private static int selectedCharac;
     private static int selectedInvent;
     private static int selectedItem;
+
+    private static List<string> tabTeam = new List<string>();
+    private static List<string> tabCharac = new List<string>();
+    private static List<string> tabInvent = new List<string>();
+    private static List<string> tabItem = new List<string>();
+
     // Colors
     public static Color primaryColor;
     public static Color secondaryColor;
@@ -48,6 +54,17 @@ public class onMainMenu : MonoBehaviour
     private static Rect rectStats = new Rect((Screen.width - wS) / 2, 3, wS, hS);
 
 
+    private int remainingPosition = PlayerManager._instance._chosenTeam.Length;
+    private int chosenCharacters = 0;
+    void Start()
+    {
+        remainingPosition = PlayerManager._instance._chosenTeam.Length;
+        ShowAllCharacters();
+        ShowPlayerInventory();
+        //ChooseBidonCharacters();
+    }
+
+
     void OnGUI()
     {
         hasUpdatedGui = onMenuLoad.updateGUI(hasUpdatedGui, primaryColor, secondaryColor);
@@ -68,14 +85,13 @@ public class onMainMenu : MonoBehaviour
     void doTeamWindow(int windowID)
     {
         GUILayout.Space(25);
-        selectedTeam = GUILayout.SelectionGrid(selectedTeam, tabTeam, 1);
+        selectedTeam = GUILayout.SelectionGrid(selectedTeam, tabTeam.ToArray(), 1);
     }
 
     void doCharacWindow(int windowID)
     {
         GUILayout.Space(25);
-        selectedCharac = GUILayout.SelectionGrid(selectedCharac, tabCharac, 1);
-        
+        selectedCharac = GUILayout.SelectionGrid(selectedCharac, tabCharac.ToArray(), 1);
     }
 
     void doPlayWindow(int windowID)
@@ -86,6 +102,7 @@ public class onMainMenu : MonoBehaviour
         GUILayout.FlexibleSpace();
         GUILayout.EndHorizontal();
 
+        GUI.enabled = chosenCharacters == PlayerManager._instance._chosenTeam.Length;
         if (GUILayout.Button("Jouer"))
         {
             // Go to the place character screen
@@ -97,17 +114,107 @@ public class onMainMenu : MonoBehaviour
     void doInventWindow(int windowID)
     {
         GUILayout.Space(25);
-        selectedInvent = GUILayout.SelectionGrid(selectedInvent, tabInvent, 8);
+        selectedInvent = GUILayout.SelectionGrid(selectedInvent, tabInvent.ToArray(), 8);
     }
 
     void doItemWindow(int windowID)
     {
         GUILayout.Space(25);
-        selectedItem = GUILayout.SelectionGrid(selectedItem, tabItem, 8);
+        selectedItem = GUILayout.SelectionGrid(selectedItem, tabItem.ToArray(), 8);
     }
-
+        
     void doStatsWindow(int windowID)
     {
         GUILayout.Space(25);
+        GUILayout.BeginArea(new Rect(rectStats.xMin, rectStats.yMin + rectStats.height - 40, rectStats.width, 30));
+        GUILayout.BeginHorizontal();
+        GUI.enabled = remainingPosition > 0;
+        if (GUILayout.Button("Ajouter", GUILayout.Height(30), GUILayout.Width(200)))
+        {
+            SelectCharacter(selectedCharac);
+        }
+        GUI.enabled = chosenCharacters > 0;
+        if(GUILayout.Button("Retirer", GUILayout.Height(30), GUILayout.Width(200)))
+        {
+            UnselectCharacter(selectedTeam);
+        }
+        GUILayout.EndHorizontal();
+        GUILayout.EndArea();
+    }
+
+    void SelectCharacter(int pos)
+    {
+        string name = tabCharac[selectedCharac].Remove(tabCharac[selectedCharac].LastIndexOf(','));
+        int indexOfChar = PlayerManager._instance._characters.IndexOf(PlayerManager._instance._characters.Find(x => x._name == name));
+        PlayerManager._instance._chosenTeam[chosenCharacters] = PlayerManager._instance._characters[indexOfChar];
+        tabCharac.RemoveAt(pos);
+        remainingPosition--;
+        chosenCharacters++;
+        ShowSelectedCharacters();
+    }
+    void UnselectCharacter(int pos)
+    {
+        tabCharac.Add(tabTeam[pos]);
+        tabTeam.RemoveAt(pos);
+        remainingPosition++;
+        chosenCharacters--;
+
+        string name = tabTeam[selectedTeam].Remove(tabTeam[selectedTeam].LastIndexOf(','));
+        int indexOfChar = PlayerManager._instance._characters.IndexOf(PlayerManager._instance._characters.Find(x => x._name == name));
+        PlayerManager._instance._chosenTeam[indexOfChar] = null;
+    }
+    void ShowAllCharacters()
+    {
+        tabCharac.Clear();
+        Character c;
+        for (int i = 0; i < PlayerManager._instance._characters.Count; ++i)
+        {
+            c = PlayerManager._instance._characters[i];
+            tabCharac.Add(c._name.ToString()  + ", " + c._characterClass._className + " de niveau " + c._characterClass._classLevel);
+        }
+    }
+    private void ShowSelectedCharacters()
+    {
+        tabTeam.Clear();
+        Character c;
+        for (int i = 0; i < PlayerManager._instance._chosenTeam.Length; ++i)
+        {
+            c = PlayerManager._instance._chosenTeam[i];
+            if(c != null)
+                tabTeam.Add(c._name.ToString() + ", " + c._characterClass._className + " de niveau " + c._characterClass._classLevel);
+        }
+    }
+    private void ShowPlayerInventory()
+    {
+        tabInvent.Clear();
+        EquipableItem item;
+        for(int i = 0; i < PlayerManager._instance._playerInventory._equips.Count; ++i)
+        {
+            item = PlayerManager._instance._playerInventory._equips[i];
+            tabInvent.Add(item._itemName + " : " + item._itemDescription);
+        }
+    }
+    private void ShowChosenCharacterInventory()
+    {
+        tabItem.Clear();
+        string name = tabCharac[selectedCharac].Remove(tabCharac[selectedCharac].LastIndexOf(','));
+        Character c = PlayerManager._instance._characters.Find(x => x._name == name);
+        EquipableItem item;
+        for (int i = 0; i < c._characterInventory._invent.Count; ++i)
+        {
+            item = PlayerManager._instance._characters[i]._characterInventory._invent[i];
+            tabItem.Add(item._itemName + " : " + item._itemDescription);
+        }
+    }
+    void ChooseBidonCharacters()
+    {
+        GameManager._instance._enemySide = 2;
+        PlayerManager._instance._playerSide = 1;
+
+        //quand on choisit un personnage qui participera à la partie
+        PlayerManager._instance._chosenTeam[0] = PlayerManager._instance._characters[0];
+        PlayerManager._instance._chosenTeam[1] = PlayerManager._instance._characters[1];
+        PlayerManager._instance._chosenTeam[2] = PlayerManager._instance._characters[2];
+        PlayerManager._instance._chosenTeam[3] = PlayerManager._instance._characters[3];
     }
 }

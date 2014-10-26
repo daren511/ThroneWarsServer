@@ -145,7 +145,6 @@ public class GameController : TMNController
             {
                 if (unitFab.CanStandOn(map[i], true))
                 {
-                    //node = map[ GameManager._instance._playerPositions[i] + map.Length/4];
                     node = map[map.Length / GameManager._instance._playerPositions[i]];
                 }
             }
