@@ -9,6 +9,19 @@
 <link rel="stylesheet" type="text/css" href="FinDec.css"/>
 </head>
 	<body>
+        <form runat="server" action="ForgotUsername.aspx" autocomplete="on">
+        <script type="text/javascript">
+            function MessageBoxReussi() {
+                $(document).ready(function () {
+                    swal({ title: "Bravo! ", text: "Veuillez visiter votre courriel pour récupérer votre nom de compte", type: "success", confirmButtonText: "Ok" });
+                });
+            }
+            function MessageBoxErreur(textadaptatif) {
+                $(document).ready(function () {
+                    swal({ title: "Échec! ", text: textadaptatif, type: "error", confirmButtonText: "I'm sad" });
+                });
+            }
+        </script>
 		<div class="Entete">
 			<img src="./Images/Logo_Grand.png" style="max-height:100%; max-width:100%;"/> <!-- A checker les dimensions ou plus grosse image -->
 		</div>
@@ -17,7 +30,7 @@
 		<div class="Table">
 			<ul id="menu-bar">
  				<li class="active">
- 					<li><a href="Page Principale.aspx">Accueil</a></li>
+ 					<li><a href="default.aspx">Accueil</a></li>
  					<li><a href="Inscription.aspx">Inscription</a></li>
                     <li><a href="Connexion.aspx">Connexion</a></li>
 				 	<li><a href="Recherche.aspx">Recherche Joueur</a></li>
@@ -25,7 +38,7 @@
 				 </li>
 			</ul>
 		</div>
-        <form runat="server" action="ForgotUsername.aspx" autocomplete="on">
+        
 		<div class="FormForgot">
   			Courriel: <asp:Textbox ID="TB_Email" TextMode="Email" runat="server"/><br/><br/>
   			<asp:Button Text="Envoyer" runat="server" onclick="UsernameRecovery" />

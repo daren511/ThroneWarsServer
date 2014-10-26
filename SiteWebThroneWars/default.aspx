@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Page Principale.aspx.cs" Inherits="SiteWebThroneWars.Page_Principale" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="default.aspx.cs" Inherits="SiteWebThroneWars.Page_Principale" %>
 
 <!DOCTYPE html>
 
@@ -6,7 +6,7 @@
 
 
 <head runat="server">
-<title>Throne Wars -Projet FinDec - Page Principale</title>
+<title>Throne Wars -Projet FinDe<a href="default.aspx">default.aspx</a>c - Page Principale</title>
 <meta charset="utf-8"/> 
 <link rel="stylesheet" type="text/css" href="FinDec.css"/>
 </head>
@@ -20,7 +20,7 @@
 			<div class="Table">
 			<ul id="menu-bar">
  				<li class="active">
- 					<li><a href="Page Principale.aspx">Accueil</a></li>
+ 					<li><a href="default.aspx">Accueil</a></li>
  					<li><a href="Inscription.aspx">Inscription</a></li>
                     <li><a href="Connexion.aspx">Connexion</a></li>
 				 	<li><a href="Recherche.aspx">Recherche Joueur</a></li>

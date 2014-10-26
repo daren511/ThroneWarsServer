@@ -688,9 +688,9 @@ namespace ControleBD
                     string UserHash = Controle.HashPassword(result, null, System.Security.Cryptography.SHA256.Create());
                     string Subject = "Changement de mot de passe -Throne Wars";
                     string BodyResetPass = "Pour changer votre mot de passe, veuillez visiter"+
-                                            " ce lien et suivre les indications www.thronewars.com/ResetPassword?"+UserHash;
+                                            " ce lien et suivre les indications www.thronewars.com/ResetPassword?user="+UserHash;
                    //Reset password
-                   //Emails.sendMail(resultemail,Subject,BodyResetPass);
+                   Email.sendMail(resultemail,Subject,BodyResetPass);
                 }
                 return true;
 
@@ -834,8 +834,5 @@ namespace ControleBD
 
             return Stats;
         }
-
-
-
     }
 }
