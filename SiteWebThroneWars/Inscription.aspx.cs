@@ -41,7 +41,14 @@ namespace SiteWebThroneWars
                 {
                     bool InsReussi = false;
                     // Inserer dans oracle
-                    InsReussi = Controle.insertPlayer(user, pass, courriel);
+                    try
+                    {
+                        InsReussi = Controle.insertPlayer(user, pass, courriel);
+                    }
+                    catch 
+                    {
+
+                    }
 
                     if (InsReussi)
                     {
