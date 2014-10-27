@@ -43,7 +43,7 @@ namespace SiteWebThroneWars
                     // Inserer dans oracle
                     try
                     {
-                        InsReussi = Controle.insertPlayer(user, pass, courriel);
+                        InsReussi = Controle.insertPlayer(user,courriel,pass);
                     }
                     catch 
                     {
