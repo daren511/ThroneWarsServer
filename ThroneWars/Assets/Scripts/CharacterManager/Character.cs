@@ -223,7 +223,7 @@ public class Character : NaviUnit
     /// <param name="dmg"> Le nombre de dégâts reçus, provient du serveur</param>
     public void ReceiveDamage(int dmg)
     {
-        GameObject.Find("DamageIndicator").SendMessage("ShowDamage", dmg);
+        GameObject.Find("StatusIndicator").GetComponent<StatusIndicator>().Show(dmg, "Damage");
         if (_isAlive)
         {
             if (_currHealth - dmg < 0)
@@ -243,7 +243,7 @@ public class Character : NaviUnit
     }
     public void ReceiveGold(int amt)
     {
-
+        
     }
     public void UseSpecialAttack()
     {
@@ -256,46 +256,63 @@ public class Character : NaviUnit
     /// sont ajoutés à celles du personnage</param>
     public void UsePotion(Potion pot)
     {
-        if (_currHealth + pot._lifeRestore > _maxHealth)
+        if(pot._lifeRestore > 0)
         {
-            _currHealth = _maxHealth;
+            if (_currHealth + pot._lifeRestore > _maxHealth)
+            {
+                _currHealth = _maxHealth;
+            }
+            else
+            {
+                _currHealth += pot._lifeRestore;
+            }
+            GameObject.Find("StatusIndicator").GetComponent<StatusIndicator>().Show(pot._lifeRestore, "Health");
         }
-        else
+
+        if(pot._bonusPhysAtk > 0)
         {
-            _currHealth += pot._lifeRestore;
+            if (_currPhysAttack + pot._bonusPhysAtk < 0)
+            {
+                _currPhysAttack = 0;
+            }
+            else
+            {
+                _currPhysAttack += pot._bonusPhysAtk;
+            }
         }
-        if(_currPhysAttack + pot._bonusPhysAtk < 0)
+        if(pot._bonusPhysDef > 0)
         {
-            _currPhysAttack = 0;
+            if (_currPhysDefense + pot._bonusPhysDef < 0)
+            {
+                _currPhysDefense = 0;
+            }
+            else
+            {
+                _currPhysDefense += pot._bonusPhysDef;
+            }
         }
-        else
+        if(pot._bonusMagicAtk > 0)
         {
-            _currPhysAttack += pot._bonusPhysAtk;
+            if (_currMagicAttack + pot._bonusMagicAtk < 0)
+            {
+                _currMagicAttack = 0;
+            }
+            else
+            {
+                _currMagicAttack += pot._bonusMagicAtk;
+            }
         }
-        if (_currPhysDefense + pot._bonusPhysDef < 0)
+        if(pot._bonusMagicDef > 0)
         {
-            _currPhysDefense = 0;
-        }
-        else
-        {
-            _currPhysDefense += pot._bonusPhysDef;
-        }
-        if (_currMagicAttack + pot._bonusMagicAtk < 0)
-        {
-            _currMagicAttack = 0;
-        }
-        else
-        {
-            _currMagicAttack += pot._bonusMagicAtk;
-        }
-        if (_currMagicDefense + pot._bonusMagicDef < 0)
-        {
-            _currMagicDefense = 0;
-        }
-        else
-        {
-            _currMagicDefense += pot._bonusMagicDef;
-        }        
+            if (_currMagicDefense + pot._bonusMagicDef < 0)
+            {
+                _currMagicDefense = 0;
+            }
+            else
+            {
+                _currMagicDefense += pot._bonusMagicDef;
+            } 
+        }       
     }
     /// <summary>
     /// Augmente la défense de n points jusqu'au prochain tour

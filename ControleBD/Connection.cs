@@ -24,8 +24,8 @@ namespace ControleBD
             {
                 string Dsource = "(DESCRIPTION="
                + "(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)"
-               + "(HOST=mercure.clg.qc.ca)(PORT=1521)))"
-               + "(CONNECT_DATA=(SERVICE_NAME=ORCL.clg.qc.ca)))";
+               + "(HOST=bd.thronewars.ca)(PORT=1521)))"
+               + "(CONNECT_DATA=(SERVICE_NAME=ORCL)))";
 
                 String ChaineConnexion = "Data Source=" + Dsource
                 + ";User Id=THRONE; Password =Warst";
