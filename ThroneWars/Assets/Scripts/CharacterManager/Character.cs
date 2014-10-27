@@ -236,7 +236,12 @@ public class Character : NaviUnit
             }
         }
     }
-    private void ShowDamage()
+
+    public void ReceiveExperience(int xp)
+    {
+        _characterClass._exp += xp;
+    }
+    public void ReceiveGold(int amt)
     {
 
     }

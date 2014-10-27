@@ -105,24 +105,28 @@ public class onStartUp : MonoBehaviour
                 onMainMenu.primaryColor = primaryColor;
                 onMainMenu.secondaryColor = secondaryColor;
 
-                ConnectToServer();
+                //ConnectToServer();
                 bool validInfos = true;
 
-                if (sck.Connected)
-                {
-                    //on vérifie les infos entrées par le joueur(usager, mot de passe)
-                    validInfos = CheckPasswordUser();
+                ////à titre de tests
+                GetBidonPlayer();
+                Application.LoadLevel("MainMenu");
 
-                    if (validInfos)
-                    {
-                        GetPlayerInfo();
-                        Application.LoadLevel("MainMenu");
-                    }
-                    else
-                    {
-                        //modifier l'interface: le mot de passe ou usager n'est pas bon
-                    }
-                }
+                //if (sck.Connected)
+                //{
+                //    //on vérifie les infos entrées par le joueur(usager, mot de passe)
+                //    validInfos = CheckPasswordUser();
+
+                //    if (validInfos)
+                //    {
+                //        GetPlayerInfo();
+                //        Application.LoadLevel("MainMenu");
+                //    }
+                //    else
+                //    {
+                //        //modifier l'interface: le mot de passe ou usager n'est pas bon
+                //    }
+                //}
             }
             catch (SocketException ex)   // The user can't connect to the server
             {
@@ -154,7 +158,7 @@ public class onStartUp : MonoBehaviour
         for (int i = 0; i < bytesRead; i++)
         {
             formatted[i] = buffer[i];
-        }        
+        }
         return formatted.ToString() == "True";
     }
     private Joueur GetJoueur()
@@ -179,15 +183,10 @@ public class onStartUp : MonoBehaviour
     private void GetPlayerInfo()
     {
         Joueur joueur = GetJoueur();
-
-        CharacterInventory characterInvent = new CharacterInventory();
         PlayerInventory playerInvent = null;
         List<Potion> list = new List<Potion>();
         Potion uItem;
         EquipableItem eItem;
-
-        GameManager._instance._enemySide = 2;
-        PlayerManager._instance._playerSide = 1;
 
         Personnages perso;
         string charClass;
@@ -197,18 +196,34 @@ public class onStartUp : MonoBehaviour
             perso = joueur.Persos[i];
             charClass = GetCharacterClass(perso.ClassId);
             //ici traiter l'inventaire du personnage
-            PlayerManager._instance._characters.Add(Character.CreateCharacter(perso.Nom, charClass, perso.Level, perso.Xp, perso.Moves, perso.Range,
-                perso.Health, perso.Magic, null, perso.PhysAtk, perso.PhysDef, perso.MagicAtk, perso.MagicDef));
+            CharacterInventory characterInvent = GetCharacterInventory(i);
 
-            
+            PlayerManager._instance._characters.Add(Character.CreateCharacter(perso.Nom, charClass, perso.Level, perso.Xp, perso.Moves, 
+                perso.Range, perso.Health, perso.Magic, characterInvent, perso.PhysAtk, perso.PhysDef, perso.MagicAtk, perso.MagicDef));
+
         }
+        PlayerManager._instance._playerInventory = playerInvent;
+    }
+    private CharacterInventory GetCharacterInventory(int pos)
+    {
+        CharacterInventory characterInvent = new CharacterInventory();
 
+        for (int i = 0; i < PlayerManager._instance._characters[i]._characterInventory._invent.Count; ++i)
+        {
+            characterInvent._invent.Add(PlayerManager._instance._characters[i]._characterInventory._invent[i]);
+        }
+        return characterInvent;
+    }
+    private void GetBidonPlayer()
+    {
+        CharacterInventory characterInvent = new CharacterInventory();
+        PlayerInventory playerInvent = null;
+        List<Potion> list = new List<Potion>();
+        Potion uItem;
+        EquipableItem eItem;
 
-        //infos venant du serveur
-
-        /*
-         *  CES LIGNES SERVENT AUX TESTS, LES VALEURS SONT BIDONS, ET PROVIENDRONT DE LA BD LORSQUE PRÊT
-         * */
+        GameManager._instance._enemySide = 1;
+        PlayerManager._instance._playerSide = 2;
 
         //on génère l'inventaire du joueur, peut être mis dans la DLL commune au serveur, pour recevoir l'inventaire complet plutôt
         //que de le génèrer du côté client
@@ -222,38 +237,38 @@ public class onStartUp : MonoBehaviour
         playerInvent = new PlayerInventory(list);
         eItem = new EquipableItem(1, "Guerrier", "Épée de fer", "Une simple épée en fer", "WATK", 10, "Weapon", 1);
         characterInvent._invent.Add(eItem);
+        playerInvent._equips.Add(eItem);
 
         //tout les personnages du joueur, pour le menu prinçipal
         PlayerManager._instance._characters.Add(Character.CreateCharacter("Bartoc", "Guerrier", 2, 3, 2, 100, 10, characterInvent, 20, 10, 0, 10));
         PlayerManager._instance._characters.Add(Character.CreateCharacter("Kodak", "Mage", 1, 2, 1, 50, 50, characterInvent, 10, 10, 10, 10));
         PlayerManager._instance._characters.Add(Character.CreateCharacter("Bubulle", "Archer", 1, 4, 10, 100, 10, characterInvent, 10, 10, 10, 10));
-        PlayerManager._instance._characters.Add(Character.CreateCharacter("Mr Poire", "Prêtre", 1, 2, 1, 60, 40, characterInvent, 10, 10, 10, 10));
-
-        //quand on choisit un personnage qui participera à la partie
-        PlayerManager._instance._chosenTeam[0] = PlayerManager._instance._characters[0]; //Character.CreateCharacter("Bartoc", "Guerrier", 2, 3, 1, 100, 10, characterInvent, 20, 10, 0, 10);
-        PlayerManager._instance._chosenTeam[1] = Character.CreateCharacter("Kodak", "Mage", 1, 3, 1, 50, 50, characterInvent, 10, 10, 10, 10);
-        PlayerManager._instance._chosenTeam[2] = Character.CreateCharacter("Bubulle", "Archer", 1, 5, 3, 100, 10, characterInvent, 10, 10, 10, 10);
-        PlayerManager._instance._chosenTeam[3] = Character.CreateCharacter("Mr Poire", "Prêtre", 1, 3, 1, 60, 40, characterInvent, 10, 10, 10, 10);
+        PlayerManager._instance._characters.Add(Character.CreateCharacter("Mme Poire", "Prêtre", 1, 2, 1, 60, 40, characterInvent, 10, 10, 10, 10));
+        PlayerManager._instance._characters.Add(Character.CreateCharacter("Poire", "Archer", 1, 2, 1, 60, 40, characterInvent, 10, 10, 10, 10));
+        PlayerManager._instance._characters.Add(Character.CreateCharacter("Patate", "Mage", 1, 2, 1, 60, 40, characterInvent, 10, 10, 10, 10));
+        PlayerManager._instance._characters.Add(Character.CreateCharacter("Bobbychou", "Mage", 1, 2, 1, 60, 40, characterInvent, 10, 10, 10, 10));
+        PlayerManager._instance._characters.Add(Character.CreateCharacter("Mr Poire", "Guerrier", 1, 2, 1, 60, 40, characterInvent, 10, 10, 10, 10));
 
 
         PlayerManager._instance._playerInventory = playerInvent;
     }
+
     private string GetCharacterClass(int id)
     {
         string classe = "";
-        switch(id)
+        switch (id)
         {
             case 1:
-                classe = "";
+                classe = "Guerrier";
                 break;
             case 2:
-                classe = "";
+                classe = "Archer";
                 break;
             case 3:
-                classe = "";
+                classe = "Mage";
                 break;
             case 4:
-                classe = "";
+                classe = "Prêtre";
                 break;
         }
         return classe;
