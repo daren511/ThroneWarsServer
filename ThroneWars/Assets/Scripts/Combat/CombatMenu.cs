@@ -29,7 +29,6 @@ public class CombatMenu : MonoBehaviour
     public bool characterChosen = false;
     public bool showItems = false;
 
-    public bool attackEnabled = true;
     public bool moveEnabled = true;
     public bool itemEnabled = true;
 
@@ -51,8 +50,6 @@ public class CombatMenu : MonoBehaviour
 
     private Vector2 scrollViewVector = Vector2.zero;
 
-
-    private bool clicked = false;
     // Use this for initialization
     void Start()
     {
@@ -62,10 +59,6 @@ public class CombatMenu : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(clicked)
-        {
-            GameController.FindObjectOfType<GameController>().allowInput = true;
-        }
     }
     void InitializeStats()
     {
@@ -132,7 +125,9 @@ public class CombatMenu : MonoBehaviour
     }
     void DisplayCombatCommands()
     {
-        _menuContainer = new Rect(Screen.width / 2 + 10, Screen.height / 2 + 30, 100, 80);
+        Vector3 pos = go.GetComponent<Character>().transform.position;
+        pos = Camera.main.WorldToScreenPoint(pos);
+        _menuContainer = new Rect(pos.x, pos.y, 100, 80);
 
         GUI.Box(_menuContainer, "");
 
@@ -141,9 +136,7 @@ public class CombatMenu : MonoBehaviour
         {
             GameController.FindObjectOfType<GameController>().movementAllowed = true;
             GameController.FindObjectOfType<GameController>().attackAllowed = false;
-            //GameController.FindObjectOfType<GameController>().FakeUnitClick(go);
-            GameController.FindObjectOfType<GameController>().SendMessage("FakeUnitClick", go);
-            clicked = true;
+            StartCoroutine(AllowMovement());
         }
 
         GUI.enabled = !go.GetComponent<Character>().didAttack;
@@ -151,10 +144,7 @@ public class CombatMenu : MonoBehaviour
         {
             GameController.FindObjectOfType<GameController>().attackAllowed = true;
             GameController.FindObjectOfType<GameController>().movementAllowed = false;
-            GameController.FindObjectOfType<GameController>().FakeUnitClick(go);
-            //GameController.FindObjectOfType<GameController>().allowInput = true;
-            clicked = true;
-
+            StartCoroutine(AllowAttack());
         }
 
         GUI.enabled = !go.GetComponent<Character>().didAttack;
@@ -171,6 +161,19 @@ public class CombatMenu : MonoBehaviour
             go.GetComponent<Character>().Defend();
             GameController.FindObjectOfType<GameController>().ClickNextActiveCharacter();
         }
+    }
+    IEnumerator AllowMovement()
+    {
+        go.GetComponent<Character>().node.ShowNeighbours(go.GetComponent<Character>().currMoves, go.GetComponent<Character>().tileLevel, true, true);
+        yield return new WaitForSeconds(0.05f);
+        GameController.FindObjectOfType<GameController>().allowInput = true;
+    }
+    IEnumerator AllowAttack()
+    {
+        GameController.FindObjectOfType<GameController>().attackRangeMarker.Show(
+            go.GetComponent<Character>().transform.position, go.GetComponent<Character>().attackRange);
+        yield return new WaitForSeconds(0.05f);
+        GameController.FindObjectOfType<GameController>().allowInput = true;
     }
     void DisplayItemMenu()
     {
@@ -216,6 +219,7 @@ public class CombatMenu : MonoBehaviour
                 if (GUI.Button(button, content))
                 {
                     //utiliser l'item
+                    GameObject.Find("StatusIndicator").transform.position = go.GetComponent<Character>().transform.position;
                     go.GetComponent<Character>().UsePotion(playerItem);
                     go.GetComponent<Character>().didAttack = true;
                     playerItem._quantity--;
