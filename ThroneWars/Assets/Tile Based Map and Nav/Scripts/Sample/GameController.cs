@@ -145,7 +145,8 @@ public class GameController : TMNController
             {
                 if (unitFab.CanStandOn(map[i], true))
                 {
-                    node = map[map.Length / GameManager._instance._playerPositions[i]];
+                    node = map[(((GameManager._instance._playerPositions[i] % 5 + 1)) * 24) + 280];
+                    //node = map[(((GameManager._instance._playerPositions[i] % 5 + 1)) * 27) + 145];
                 }
             }
             
@@ -210,6 +211,57 @@ public class GameController : TMNController
             units[unit.playerSide - 1].Add(unit);
         }
     }
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="atker">L'unité qui attaque</param>
+    /// <param name="defender">L'unité qui recoit les dégâts</param>
+    /// <param name="magic">Si on doit se servir des attaques et défenses magiques</param>
+    /// <returns></returns>
+    private int CalculateDamage(Character atker, Character defender, bool magic)
+    {
+        int total = 1;
+        if(magic)
+        {
+            total = atker._currMagicAttack - defender._currMagicDefense > 0 ? atker._currMagicAttack - defender._currMagicDefense : 1; 
+        }
+        else
+        {
+            total = atker._currPhysAttack - defender._currPhysDefense > 0 ? atker._currPhysAttack - defender._currPhysDefense : 1;
+        }
+        total += Random.Range(atker._characterClass._classLevel, atker._characterClass._classLevel * 2);
+        return total;
+    }
+    /// <summary>
+    /// Calcule l'expérience gagné par le personnage
+    /// </summary>
+    /// <param name="atker">Le personnage qui attaque</param>
+    /// <param name="defender">Le personnage qui défend</param>
+    /// <param name="dmg">Les dégâts infligés</param>
+    /// <param name="atkLvl">Le niveau de l'attaque (1 pour une attaque ordinaire)</param>
+    /// <returns></returns>
+    private int CalculateExperience(Character atker, Character defender, int dmg, int atkLvl = 1)
+    {
+        int exp = ((dmg * atkLvl) * defender._characterClass._classLevel) / atker._characterClass._classLevel;
+        //L'attaquant a vaincu l'adversaire, il gagne 10% d'expérience supplémentaire
+        if(defender._currHealth == 0)
+        {
+            exp += int.Parse((exp * 0.1f).ToString());
+        }
+        //pour rajouter une touche aléatoire
+        exp += Random.Range(atker._characterClass._classLevel, atker._characterClass._classLevel * 2);
+        return exp;
+    }
+    private int CalculateMoneyGain()
+    {
+        int gain = 0;
+
+        return gain;
+    }
+    private void DoCombat()
+    {
+
+    }
     private bool PlayerTurnDone()
     {
         bool done = true;
@@ -223,6 +275,7 @@ public class GameController : TMNController
         }
         return done;
     }
+
     public void ClickNextActiveCharacter()
     {
         int done = 0;
@@ -300,7 +353,6 @@ public class GameController : TMNController
                 CombatMenu.FindObjectOfType<CombatMenu>().characterChosen = false;
             }
 
-			allowInput = true;
 		}
 	}
 
@@ -328,10 +380,6 @@ public class GameController : TMNController
 
 	protected override void OnTileNodeClick(GameObject go)
 	{
-        movementAllowed = true;
-        CombatMenu.FindObjectOfType<CombatMenu>().moveEnabled = true;
-        attackAllowed = true;
-        CombatMenu.FindObjectOfType<CombatMenu>().attackEnabled = true;
 
 		base.OnTileNodeClick(go);
 		TileNode node = go.GetComponent<TileNode>();
@@ -407,6 +455,8 @@ public class GameController : TMNController
 	{
 		base.OnNaviUnitClick(go);
         attackRangeMarker.HideAll();
+        map.ShowAllTileNodes(false);
+        
 
         Character unit = go.GetComponent<Character>();        
 
@@ -432,29 +482,35 @@ public class GameController : TMNController
 				selectionMarker.Show(go.transform);
 
 				// show the nodes that this unit can move to
-                if(movementAllowed)
-                {
-                    selectedUnit.node.ShowNeighbours(selectedUnit.currMoves, selectedUnit.tileLevel, true, true);
-                }
+                //if(movementAllowed)
+                //{
+                //    selectedUnit.node.ShowNeighbours(selectedUnit.currMoves, selectedUnit.tileLevel, true, true);
+                //}
 
-				// show how far this unit can attack at, if unit did not attack yet this turn
-				if (!selectedUnit.didAttack)
-				{
-                    if (attackAllowed)
-                        attackRangeMarker.Show(selectedUnit.transform.position, selectedUnit.attackRange);
-                    else
-                        attackRangeMarker.HideAll();
-				}
+                //// show how far this unit can attack at, if unit did not attack yet this turn
+                //if (!selectedUnit.didAttack)
+                //{
+                //    if (attackAllowed)
+                //        attackRangeMarker.Show(selectedUnit.transform.position, selectedUnit.attackRange);
+                //    else
+                //        attackRangeMarker.HideAll();
+                //}
 			}
 
 			// else, not active player's unit but his opponent's unit that was clicked on
-			else if (selectedUnit!=null && combatOn)
+			else if (selectedUnit != null && combatOn)
 			{
 				if (selectedUnit.Attack(unit))
 				{
-                    Debug.Log(selectedUnit._name + " a attaqué " +  unit._name);
-                    GameObject.Find("DamageIndicator").transform.position = unit.transform.position;
-                    unit.ReceiveDamage(30);
+                    int dmg = CalculateDamage(selectedUnit, unit, false);
+                    int exp = CalculateExperience(selectedUnit, unit, dmg);
+                    int gold = CalculateMoneyGain();
+                    Debug.Log(selectedUnit._name + "  attaque " +  unit._name + ", et inflige " + dmg.ToString() + " de dégâts!");
+                    Debug.Log(selectedUnit._name + " gagne " + exp.ToString() + " d'expérience.");
+                    Debug.Log("Vous gagnez " + gold + " d'or.");
+                    GameObject.Find("StatusIndicator").transform.position = unit.transform.position;
+                    unit.ReceiveDamage(dmg);
+                    selectedUnit.ReceiveExperience(exp);
 					allowInput = false;
 					attackRangeMarker.HideAll();
 				}
@@ -597,9 +653,6 @@ public class GameController : TMNController
 
             //if (!useTurns)
             //{
-                attackAllowed = false;
-                CombatMenu.FindObjectOfType<CombatMenu>().attackEnabled = false;
-
 				this.OnNaviUnitClick(unit.gameObject);
 			// }
 		}

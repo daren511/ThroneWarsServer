@@ -12,6 +12,7 @@ public class PlayerManager : MonoBehaviour
     public PlayerInventory _playerInventory;
     public List<Character> _characters = new List<Character>();
     public int _playerSide;
+    public int _gold;
 
     //singleton
     private static PlayerManager instance = null;

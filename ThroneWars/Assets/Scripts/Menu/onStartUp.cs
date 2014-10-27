@@ -19,6 +19,8 @@ public class onStartUp : MonoBehaviour
     private string userValue = "";
     private string pwdvalue = "";
     private bool canConnect = true;
+    private bool validInfos = true;
+
     private GUIStyle lblError = new GUIStyle();
     // Connection
     private static Socket sck;
@@ -80,6 +82,8 @@ public class onStartUp : MonoBehaviour
         lblError.normal.textColor = Color.red;
         if (!canConnect)
             GUILayout.Label("Erreur dans la connexion au serveur", lblError);
+        else if(!validInfos)
+            GUILayout.Label("Usager/Mot de passe invalide!", lblError);
         else
             GUILayout.Label("");
         GUILayout.FlexibleSpace();
@@ -106,7 +110,6 @@ public class onStartUp : MonoBehaviour
                 onMainMenu.secondaryColor = secondaryColor;
 
                 //ConnectToServer();
-                bool validInfos = true;
 
                 ////à titre de tests
                 GetBidonPlayer();
@@ -149,9 +152,19 @@ public class onStartUp : MonoBehaviour
         byte[] data = Encoding.ASCII.GetBytes(userValue + " " + Controle.HashPassword(pwdvalue, null, System.Security.Cryptography.SHA256.Create()));
         sck.Send(data); //on envoie les infos du joueur au serveur        
 
+        int count = sck.SendBufferSize;
         byte[] buffer;
-        buffer = new byte[sck.SendBufferSize];
-        int bytesRead = sck.Receive(buffer);
+        buffer = new byte[count];
+        int bytesRead = 1024;
+
+        sck.BeginReceive(buffer, 0, count, SocketFlags.None, (asyncResult) =>
+        {
+            bytesRead = sck.EndReceive(asyncResult);
+            if (bytesRead == 0)
+            {
+                // disconnected.
+            }
+        }, null);
 
         //on lit au socket pour un vrai ou faux
         byte[] formatted = new byte[bytesRead];
@@ -163,9 +176,19 @@ public class onStartUp : MonoBehaviour
     }
     private Joueur GetJoueur()
     {
+        int count = sck.SendBufferSize;
         byte[] buffer;
-        buffer = new byte[sck.SendBufferSize];
-        int bytesRead = sck.Receive(buffer);
+        buffer = new byte[count];
+        int bytesRead = 1024;
+
+        sck.BeginReceive(buffer, 0, count, SocketFlags.None, (asyncResult) =>
+        {
+            bytesRead = sck.EndReceive(asyncResult);
+            if (bytesRead == 0)
+            {
+                // disconnected.
+            }
+        }, null);
 
         byte[] formatted = new byte[bytesRead];
         for (int i = 0; i < bytesRead; i++)
@@ -222,14 +245,13 @@ public class onStartUp : MonoBehaviour
         Potion uItem;
         EquipableItem eItem;
 
-        GameManager._instance._enemySide = 1;
-        PlayerManager._instance._playerSide = 2;
+
 
         //on génère l'inventaire du joueur, peut être mis dans la DLL commune au serveur, pour recevoir l'inventaire complet plutôt
         //que de le génèrer du côté client
         uItem = new Potion(1, "", "Potion de soins", "Guérit de 20 points de vie", 0, 10, 0, 0, 0, 0, 20);
         list.Add(uItem);
-        uItem = new Potion(2, "", "Potion d'attaque", "Augmente les capacités physiques", 3, 5, 10, 0, 0, 0, 0);
+        uItem = new Potion(1, "", "Potion d'attaque", "Augmente les capacités physiques", 3, 5, 10, 0, 0, 0, 0);
         list.Add(uItem);
 
         //on crée l'inventaire de chaque personnage, encore içi, peut être mis dans la DLL commune au serveur, pour reçevoir les infos
