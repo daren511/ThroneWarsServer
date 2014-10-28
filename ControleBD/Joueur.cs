@@ -11,11 +11,11 @@ namespace ControleBD
     public class Joueur 
     {
         [NonSerialized]
-        Socket Socket;
+        public Socket Socket;
 
         public List<Personnages> Persos = new List<Personnages>();
         public int Position { get; private set; }
-
+        public bool isConnected = false;
         public Joueur(Socket sck, int position)
         {
             this.Socket = sck;

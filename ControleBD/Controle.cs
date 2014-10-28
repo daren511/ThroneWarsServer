@@ -742,35 +742,34 @@ namespace ControleBD
         /// <returns></returns>
         public static bool UserPassCorrespondant(string user,string password)
         {
-            // Variable pour le password Hashé
-            string passHash = password;
-            bool correspondant = false;
-            // Hash le password passé en parametre
-            passHash = Controle.HashPassword(password, null, System.Security.Cryptography.SHA256.Create());
-
-            OracleConnection conn = Connection.GetInstance().conn;
-            string sqlSelect = "select Username,Hash_Key from joueurs where username = :user and Hash_key = :passHash";
-            string resultUser = "";
-            string resultHash = "";
-
-            OracleCommand oraSelect = new OracleCommand(sqlSelect, conn);
-            oraSelect.CommandType = CommandType.Text;
-
-            OracleDataReader objRead = oraSelect.ExecuteReader();
-            while (objRead.Read())
+            try
             {
-                resultUser = objRead.GetString(0);
-                resultHash = objRead.GetString(1);
+                OracleConnection conn = Connection.GetInstance().conn;
+                string sqlSelect = "select count(*) from joueurs where USERNAME = :USERNAME and HASH_KEY = :HASH_KEY";
 
+                
+                OracleCommand oraSelect = conn.CreateCommand();
+                oraSelect.CommandText = sqlSelect;
+                OracleParameter OraParamUsername = new OracleParameter(":USERNAME", OracleDbType.Varchar2, 32);
+                OracleParameter OraParamPassHash = new OracleParameter(":HASH_KEY", OracleDbType.Char, 75);
+                OraParamUsername.Value = user;
+                OraParamPassHash.Value = password;
+
+                oraSelect.Parameters.Add(OraParamUsername);
+                oraSelect.Parameters.Add(OraParamPassHash);
+
+                using (OracleDataReader objRead = oraSelect.ExecuteReader())
+                {
+                    objRead.Read();
+                    return objRead.GetInt32(0) == 1;
+                }
             }
-            objRead.Close();
-            if (resultUser != null && resultHash != null)
+            catch (OracleException ora)
             {
-                correspondant = true;
-                return correspondant;
+                Console.WriteLine(ora.Message.ToString());
             }
-            else
-                return correspondant;
+            return false;
+            
         }
         /// <summary>
         /// Changer le mot de passe d'un joueur
