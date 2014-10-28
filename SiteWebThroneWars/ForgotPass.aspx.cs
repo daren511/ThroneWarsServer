@@ -34,7 +34,7 @@ namespace SiteWebThroneWars
                     string userHash = Controle.Phrase.Chiffrer(username);
 
                     //Email
-                    Email.sendMail()
+                    //Email.sendMail();
                 }
                 else
                 {

@@ -835,7 +835,7 @@ namespace ControleBD
         }
         public class Phrase
         {
-            static int increment;
+            static int increment = 2;
 
             public Phrase(int inc = 2)
             {
@@ -853,7 +853,7 @@ namespace ControleBD
             }
             public static string Dechiffrer(string valeur)
             {
-                string mot = "";
+                string mot = valeur;
 
                 for (int i = 0; i < valeur.Length; ++i)
                 {
