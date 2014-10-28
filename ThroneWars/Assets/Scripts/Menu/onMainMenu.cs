@@ -128,6 +128,7 @@ public class onMainMenu : MonoBehaviour
         GUILayout.Space(25);
         GUILayout.BeginArea(new Rect(rectStats.xMin, rectStats.yMin + rectStats.height - 40, rectStats.width, 30));
         GUILayout.BeginHorizontal();
+
         GUI.enabled = remainingPosition > 0;
         if (GUILayout.Button("Ajouter", GUILayout.Height(30), GUILayout.Width(200)))
         {
