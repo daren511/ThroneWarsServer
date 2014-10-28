@@ -15,7 +15,39 @@ namespace ControleBD
     {
         private static int SaltValueSize = 16;
 
-        
+
+
+
+        public class Phrase
+        {
+            int increment;
+
+            public Phrase(int inc = 2)
+            {
+                increment = inc;
+            }
+            public string Chiffrer(string valeur)
+            {
+                string mot = "";
+
+                for (int i = 0; i < valeur.Length; ++i)
+                {
+                    mot += Char.ConvertFromUtf32(valeur[i] + increment);
+                }
+                return mot;
+            }
+            public string Dechiffrer(string valeur)
+            {
+                string mot = "";
+
+                for (int i = 0; i < valeur.Length; ++i)
+                {
+                    mot += Char.ConvertFromUtf32(valeur[i] - increment);
+                }
+                return mot;
+            }
+        }
+
 
         public static bool deletePerso(int GUID)
         {
@@ -660,7 +692,7 @@ namespace ControleBD
         }
 
         //-----------------------------------------  FONCTIONS SITE WEB ---------------------------------------------
-        
+
         public static bool PasswordRecovery(string username)
         {
             OracleConnection conn = Connection.GetInstance().conn;
@@ -680,17 +712,17 @@ namespace ControleBD
                     resultemail = objRead.GetString(1);
                 }
                 objRead.Close();
-                
 
-                
+
+
                 if (result != null)
                 {
                     string UserHash = Controle.HashPassword(result, null, System.Security.Cryptography.SHA256.Create());
                     string Subject = "Changement de mot de passe -Throne Wars";
-                    string BodyResetPass = "Pour changer votre mot de passe, veuillez visiter"+
-                                            " ce lien et suivre les indications www.thronewars.com/ResetPassword?user="+UserHash;
-                   //Reset password
-                   Email.sendMail(resultemail,Subject,BodyResetPass);
+                    string BodyResetPass = "Pour changer votre mot de passe, veuillez visiter" +
+                                            " ce lien et suivre les indications www.thronewars.com/ResetPassword?user=" + UserHash;
+                    //Reset password
+                    Email.sendMail(resultemail, Subject, BodyResetPass);
                 }
                 return true;
 
@@ -740,14 +772,14 @@ namespace ControleBD
         /// <param name="user"></param>
         /// <param name="password"></param>
         /// <returns></returns>
-        public static bool UserPassCorrespondant(string user,string password)
+        public static bool UserPassCorrespondant(string user, string password)
         {
             try
             {
                 OracleConnection conn = Connection.GetInstance().conn;
                 string sqlSelect = "select count(*) from joueurs where USERNAME = :USERNAME and HASH_KEY = :HASH_KEY";
 
-                
+
                 OracleCommand oraSelect = conn.CreateCommand();
                 oraSelect.CommandText = sqlSelect;
                 OracleParameter OraParamUsername = new OracleParameter(":USERNAME", OracleDbType.Varchar2, 32);
@@ -769,7 +801,7 @@ namespace ControleBD
                 Console.WriteLine(ora.Message.ToString());
             }
             return false;
-            
+
         }
         /// <summary>
         /// Changer le mot de passe d'un joueur
@@ -777,7 +809,7 @@ namespace ControleBD
         /// <param name="username"></param>
         /// <param name="PassHash"></param>
         /// <returns></returns>
-        public static bool UpdatePassword(string username,string PassHash)
+        public static bool UpdatePassword(string username, string PassHash)
         {
             OracleConnection conn = Connection.GetInstance().conn;
 
@@ -788,7 +820,7 @@ namespace ControleBD
                 OracleCommand oraUpdate = new OracleCommand(sqlconfirmation, conn);
 
                 OracleParameter OraParamPassHash = new OracleParameter(":HASH_KEY", OracleDbType.Char, 75);
-                OracleParameter OraParamUsername = new OracleParameter(":Username", OracleDbType.Varchar2,32);
+                OracleParameter OraParamUsername = new OracleParameter(":Username", OracleDbType.Varchar2, 32);
 
                 OraParamPassHash.Value = PassHash;
                 OraParamUsername.Value = username;

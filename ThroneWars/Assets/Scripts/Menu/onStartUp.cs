@@ -124,7 +124,7 @@ public class onStartUp : MonoBehaviour
 
                     if (validInfos)
                     {
-                        GetPlayerInfo();
+                        //GetPlayerInfo();
                         Application.LoadLevel("MainMenu");
                     }
                     else
@@ -171,12 +171,12 @@ public class onStartUp : MonoBehaviour
         //}, null);
 
         //on lit au socket pour un vrai ou faux
-        byte[] formatted = new byte[bytesRead];
-        for (int i = 0; i < bytesRead; i++)
+        byte[] formatted = new byte[count];
+        for (int i = 0; i < count; i++)
         {
             formatted[i] = buffer[i];
         }
-        return formatted.ToString() == "True";
+        return formatted.ToString() == "true";
     }
     private Joueur GetJoueur()
     {
