@@ -16,8 +16,13 @@ namespace SiteWebThroneWars
             bool RecoveryOK = false;
             string URL = HttpContext.Current.Request.Url.AbsoluteUri;
             Uri myUri = new Uri(URL);
-            string userHash = HttpUtility.ParseQueryString(myUri.Query).Get("User");
-            RecoveryOK = Controle.confirmAccount(userHash);
+            string userSplit = HttpUtility.ParseQueryString(myUri.Query).Get("User");
+            RecoveryOK = Controle.confirmAccount(userSplit);
+
+            text = "URL="+URL+"-------"+"Usersplit"+userSplit;
+            ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>MessageBoxErreur(\"" + text + "\");</script>", false);
+
+            /*
             if(RecoveryOK)
                 ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>MessageBoxReussi();</script>", false);
             else
@@ -25,6 +30,8 @@ namespace SiteWebThroneWars
                 text = "Quelque chose s'est passé , votre confirmation à échoué";
                 ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>MessageBoxErreur(\"" + text + "\");</script>", false);
             }
+             * */
+            
           
         }
     }
