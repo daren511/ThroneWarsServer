@@ -23,6 +23,8 @@ namespace SiteWebThroneWars
         {
             // Variable de texte a envoyer dans les sweetalert
             string text = "";
+            // Si user est plus que 4 characteres
+            bool userOK = false;
             // Verif si all textbox sont pas vide
             bool ok = VerifChamps();
             if (ok)
@@ -32,23 +34,27 @@ namespace SiteWebThroneWars
                 string pass = password.Text;
                 string courriel = email.Text;
 
+                // Vérifie si le nombre de charactere du username est respecté 
+                if (user.Length > 4)
+                    userOK = true;
+                else
+                {
+                    text = "Le nombre de charactères du nom d'utilisateur minimum est de 4 . Veuillez entrer un nom d'utilisateur valide";
+                    ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>MessageBoxErreur(\"" + text + "\");</script>", false);
+                    ViderTB();
+                }
+                
                 // Verifier si email est legit ou non vide
                 bool legitEmail = IsEmail(courriel);
 
 
                 // Verifier si mot de passe = confirmation && Email == confirmation && Email legit
-                if (password.Text == cpassword.Text && email.Text == cemail.Text && legitEmail)
+                if (password.Text == cpassword.Text && email.Text == cemail.Text && legitEmail && userOK)
                 {
                     bool InsReussi = false;
                     // Inserer dans oracle
-                    try
-                    {
-                        InsReussi = Controle.insertPlayer(user,courriel,pass);
-                    }
-                    catch 
-                    {
-
-                    }
+                    InsReussi = Controle.insertPlayer(user,courriel,pass);
+                   
 
                     if (InsReussi)
                     {
@@ -57,9 +63,13 @@ namespace SiteWebThroneWars
 
                         // Send email de confirmation
                         Email.sendMail(courriel, Email.SujetInscription, Email.bodyConfirmation);
-
+                        // Vide les TB
                         ViderTB();
-
+                        //Remet la couleur noir au label
+                        PasswordLB.ForeColor = System.Drawing.Color.Black;
+                        CPasswordLB.ForeColor = System.Drawing.Color.Black;
+                        EmailLB.ForeColor = System.Drawing.Color.Black;
+                        CEmailLB.ForeColor = System.Drawing.Color.Black;
                     }
                     else
                     {

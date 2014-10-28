@@ -258,9 +258,22 @@ public class GameController : TMNController
 
         return gain;
     }
-    private void DoCombat()
+    private void DoCombat(Character atker, Character defender)
     {
-
+        if (atker.Attack(defender))
+        {
+            int dmg = CalculateDamage(selectedUnit, defender, false);
+            int exp = CalculateExperience(selectedUnit, defender, dmg);
+            int gold = CalculateMoneyGain();
+            Debug.Log(selectedUnit._name + "  attaque " + defender._name + ", et inflige " + dmg.ToString() + " de dégâts!");
+            Debug.Log(selectedUnit._name + " gagne " + exp.ToString() + " d'expérience.");
+            Debug.Log("Vous gagnez " + gold + " d'or.");
+            GameObject.Find("StatusIndicator").transform.position = defender.transform.position;
+            defender.ReceiveDamage(dmg);
+            selectedUnit.ReceiveExperience(exp);
+            allowInput = false;
+            attackRangeMarker.HideAll();
+        }
     }
     private bool PlayerTurnDone()
     {

@@ -82,6 +82,10 @@ public class StatusIndicator : MonoBehaviour {
                 textColor = new Color(0.54f, 0.124f, 0.9f);
                 indic = "-" + amt + "";
                 break;
+            case "Exp":
+                break;
+            case "Gold":
+                break;
         }
 
         return indic;
