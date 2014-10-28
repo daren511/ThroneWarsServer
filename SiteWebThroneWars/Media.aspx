@@ -28,8 +28,13 @@
 		</div>
 			<div class="Photos">
 				<h1>Photos</h1>
-				<img src="./Images/1.jpg" width="300" height="300" ></br>
-				<img src="./Images/2.jpg" width="300" height="300" >
+                <p>Écran de connexion</p>
+                <img src="./Images/LogIn.png" width="300" height="300"/ ><br/>
+                <p>Déplacer ses joueurs</p>
+				<img src="./Images/MoveOption.png" width="300" height="300"/ ><br/>
+                <p>Attaquer un joueur</p>
+				<img src="./Images/AttackOption.png" width="300" height="300"/ >
+                <img src="./Images/Attacking.png" width="300" height="300"/ >
 			</div>
 			
 			<div class="Videos">
