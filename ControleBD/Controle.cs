@@ -685,9 +685,6 @@ namespace ControleBD
                     resultemail = objRead.GetString(1);
                 }
                 objRead.Close();
-
-
-
                 if (result != null)
                 {
                     string UserHash = Controle.Phrase.Chiffrer(username);
@@ -695,7 +692,6 @@ namespace ControleBD
                     Email.sendMail(resultemail, Email.SubjectResetPass, Email.BodyResetPass+UserHash);
                 }
                 return true;
-
             }
             catch (OracleException ex)
             {

@@ -50,7 +50,7 @@
             <asp:TextBox ID="password" TextMode="password" runat="server" /><br /><br />
             <asp:Button Text="Se connecter" OnClick="Connexion_Click" runat="server" /><br />
             <a href="ForgotPass.aspx">Mot de passe oublié?</a><br />
-            <a href="ForgetUsername.aspx">Nom d'utilisateur oublié?</a><br />
+            <a href="ForgotUsername.aspx">Nom d'utilisateur oublié?</a><br />
             <a href="ChangePassword.aspx">Changer son mot de passe</a>
         </div>
         <div class="Leaderboard">
