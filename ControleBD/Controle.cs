@@ -14,41 +14,7 @@ namespace ControleBD
     public class Controle
     {
         private static int SaltValueSize = 16;
-
-
-
-
-        public class Phrase
-        {
-            int increment;
-
-            public Phrase(int inc = 2)
-            {
-                increment = inc;
-            }
-            public string Chiffrer(string valeur)
-            {
-                string mot = "";
-
-                for (int i = 0; i < valeur.Length; ++i)
-                {
-                    mot += Char.ConvertFromUtf32(valeur[i] + increment);
-                }
-                return mot;
-            }
-            public string Dechiffrer(string valeur)
-            {
-                string mot = "";
-
-                for (int i = 0; i < valeur.Length; ++i)
-                {
-                    mot += Char.ConvertFromUtf32(valeur[i] - increment);
-                }
-                return mot;
-            }
-        }
-
-
+        
         public static bool deletePerso(int GUID)
         {
             OracleConnection conn = Connection.GetInstance().conn;
@@ -70,24 +36,26 @@ namespace ControleBD
 
 
 
-        public static bool confirmAccount(int jid)
+        public static bool confirmAccount(string userHash)
         {
             OracleConnection conn = Connection.GetInstance().conn;
 
-            string sqlconfirmation = "update joueurs set CONFIRMED=:CONFIRMED where jid=:jid";
+            string userNonHash = Controle.Phrase.Dechiffrer(userHash);
+
+            string sqlconfirmation = "update joueurs set CONFIRMED=:CONFIRMED where username=:userNonHash";
 
             try
             {
                 OracleCommand oraUpdate = new OracleCommand(sqlconfirmation, conn);
 
                 OracleParameter OraParamConfirmed = new OracleParameter(":CONFIRMED", OracleDbType.Char, 1);
-                OracleParameter OraParamJid = new OracleParameter(":jid", OracleDbType.Int32);
+                OracleParameter OraParamUsername = new OracleParameter(":userNonHash", OracleDbType.Varchar2, 32);
 
                 OraParamConfirmed.Value = 'T';
-                OraParamJid.Value = jid;
+                OraParamUsername.Value = userNonHash;
 
                 oraUpdate.Parameters.Add(OraParamConfirmed);
-                oraUpdate.Parameters.Add(OraParamJid);
+                oraUpdate.Parameters.Add(OraParamUsername);
 
                 oraUpdate.ExecuteNonQuery();
 
@@ -864,6 +832,35 @@ namespace ControleBD
 
 
             return Stats;
+        }
+        public class Phrase
+        {
+            static int increment;
+
+            public Phrase(int inc = 2)
+            {
+                increment = inc;
+            }
+            public static string Chiffrer(string valeur)
+            {
+                string mot = "";
+
+                for (int i = 0; i < valeur.Length; ++i)
+                {
+                    mot += Char.ConvertFromUtf32(valeur[i] + increment);
+                }
+                return mot;
+            }
+            public static string Dechiffrer(string valeur)
+            {
+                string mot = "";
+
+                for (int i = 0; i < valeur.Length; ++i)
+                {
+                    mot += Char.ConvertFromUtf32(valeur[i] - increment);
+                }
+                return mot;
+            }
         }
     }
 }

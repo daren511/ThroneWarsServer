@@ -61,8 +61,10 @@ namespace SiteWebThroneWars
                         // Message de confirmation
                         ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>MessageBoxReussi();</script>", false);
 
+                        //Hash le username pour le courriel de confirmation
+                        string userHash = Controle.Phrase.Chiffrer(user);
                         // Send email de confirmation
-                        Email.sendMail(courriel, Email.SujetInscription, Email.bodyConfirmation);
+                        Email.sendMail(courriel, Email.SujetInscription, Email.BodyConfirmation+userHash);
                         // Vide les TB
                         ViderTB();
                         //Remet la couleur noir au label
@@ -73,7 +75,7 @@ namespace SiteWebThroneWars
                     }
                     else
                     {
-                        text = "Quelque chose avec inscription à échoué";
+                        text = "Votre courriel ou votre nom d'uilisateur est déja utilisé";
                         ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>MessageBoxErreur(\"" + text + "\");</script>", false);
                         ViderTB();
                     }

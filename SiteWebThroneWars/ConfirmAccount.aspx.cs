@@ -12,9 +12,19 @@ namespace SiteWebThroneWars
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            // Passer a JID le numero de joueur de l'account que l'ont veux
-            //int JID = 0; 
-            //Controle.confirmAccount(JID);
+            string text = "";
+            bool RecoveryOK = false;
+            string URL = HttpContext.Current.Request.Url.AbsoluteUri;
+            Uri myUri = new Uri(URL);
+            string userHash = HttpUtility.ParseQueryString(myUri.Query).Get("User");
+            RecoveryOK = Controle.confirmAccount(userHash);
+            if(RecoveryOK)
+                ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>MessageBoxReussi();</script>", false);
+            else
+            {
+                text = "Quelque chose s'est passé , votre confirmation à échoué";
+                ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>MessageBoxErreur(\"" + text + "\");</script>", false);
+            }
         }
     }
 }

@@ -22,21 +22,33 @@ namespace SiteWebThroneWars
         {
             string text = "";
             string username = TB_Username.Text;
+            bool RecoveryOk = false;
             // Verif si textbox sont pas null
             bool ok = VerifChamps();
             if (ok)
             {
-                // Si recovery reussie
-                bool RecoveryReussi = Controle.PasswordRecovery(username);
+                RecoveryOk = Controle.PasswordRecovery(username);
+                if (RecoveryOk)
+                {
+                    // Hash le username
+                    string userHash = Controle.Phrase.Chiffrer(username);
 
-                // 
-
-                //Email.sendMail()
+                    //Email
+                    Email.sendMail()
+                }
+                else
+                {
+                    text = "Le nom d'utilisateur est inexistant";
+                    ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>MessageBoxErreur(\"" + text + "\");</script>", false);
+                    ViderTB();
+                }
             }
             else
-            text = "Vous devez remplir tout les champs requis";
-            ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>MessageBoxErreur(\"" + text + "\");</script>", false);
-            ViderTB();
+            {
+                text = "Vous devez remplir tout les champs requis";
+                ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>MessageBoxErreur(\"" + text + "\");</script>", false);
+                ViderTB();
+            }
              
         }
         protected bool VerifChamps()

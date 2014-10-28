@@ -7,6 +7,9 @@
 <title>Throne Wars -Projet FinDec - Forgot Username</title>
 <meta charset="utf-8"/> 
 <link rel="stylesheet" type="text/css" href="FinDec.css"/>
+<link rel="stylesheet" type="text/css" href="/sweet-alert.css"/>
+<script src="/sweet-alert.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 </head>
 	<body>
         <form runat="server" action="ForgotUsername.aspx" autocomplete="on">
