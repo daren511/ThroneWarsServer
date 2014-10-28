@@ -117,7 +117,7 @@ public class onStartUp : MonoBehaviour
 
                 //if (sck.Connected)
                 //{
-                //    //on vérifie les infos entrées par le joueur(usager, mot de passe)
+                //   // on vérifie les infos entrées par le joueur(usager, mot de passe)
                 //    validInfos = CheckPasswordUser();
 
                 //    if (validInfos)
@@ -149,7 +149,7 @@ public class onStartUp : MonoBehaviour
     }
     private bool CheckPasswordUser()
     {
-        byte[] data = Encoding.ASCII.GetBytes(userValue + " " + Controle.HashPassword(pwdvalue, null, System.Security.Cryptography.SHA256.Create()));
+        byte[] data = Encoding.ASCII.GetBytes(userValue + "▓" + Controle.HashPassword(pwdvalue, null, System.Security.Cryptography.SHA256.Create()));
         sck.Send(data); //on envoie les infos du joueur au serveur        
 
         int count = sck.SendBufferSize;
