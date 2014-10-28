@@ -20,7 +20,7 @@ public class onStartUp : MonoBehaviour
     private string pwdvalue = "";
     private bool canConnect = true;
     private bool validInfos = true;
-
+    private bool confirmed = true;
     private GUIStyle lblError = new GUIStyle();
     // Connection
     private static Socket sck;
@@ -82,6 +82,8 @@ public class onStartUp : MonoBehaviour
         lblError.normal.textColor = Color.red;
         if (!canConnect)
             GUILayout.Label("Erreur dans la connexion au serveur", lblError);
+        else if(!confirmed)
+            GUILayout.Label("Votre compte n'est pas confirmé", lblError);
         else if(!validInfos)
             GUILayout.Label("Usager/Mot de passe invalide!", lblError);
         else
@@ -109,27 +111,27 @@ public class onStartUp : MonoBehaviour
                 onMainMenu.primaryColor = primaryColor;
                 onMainMenu.secondaryColor = secondaryColor;
 
-                //ConnectToServer();
+                ConnectToServer();
 
                 ////à titre de tests
-                GetBidonPlayer();
-                Application.LoadLevel("MainMenu");
+                //GetBidonPlayer();
+                //Application.LoadLevel("MainMenu");
 
-                //if (sck.Connected)
-                //{
-                //   // on vérifie les infos entrées par le joueur(usager, mot de passe)
-                //    validInfos = CheckPasswordUser();
+                if (sck.Connected)
+                {
+                    // on vérifie les infos entrées par le joueur(usager, mot de passe)
+                    validInfos = CheckPasswordUser();
 
-                //    if (validInfos)
-                //    {
-                //        GetPlayerInfo();
-                //        Application.LoadLevel("MainMenu");
-                //    }
-                //    else
-                //    {
-                //        //modifier l'interface: le mot de passe ou usager n'est pas bon
-                //    }
-                //}
+                    if (validInfos)
+                    {
+                        GetPlayerInfo();
+                        Application.LoadLevel("MainMenu");
+                    }
+                    else
+                    {
+                        //modifier l'interface: le mot de passe ou usager n'est pas bon
+                    }
+                }
             }
             catch (SocketException ex)   // The user can't connect to the server
             {
@@ -149,7 +151,7 @@ public class onStartUp : MonoBehaviour
     }
     private bool CheckPasswordUser()
     {
-        byte[] data = Encoding.ASCII.GetBytes(userValue + "▓" + Controle.HashPassword(pwdvalue, null, System.Security.Cryptography.SHA256.Create()));
+        byte[] data = Encoding.ASCII.GetBytes(userValue + "?" + Controle.HashPassword(pwdvalue, null, System.Security.Cryptography.SHA256.Create()));
         sck.Send(data); //on envoie les infos du joueur au serveur        
 
         int count = sck.SendBufferSize;
@@ -157,14 +159,16 @@ public class onStartUp : MonoBehaviour
         buffer = new byte[count];
         int bytesRead = 1024;
 
-        sck.BeginReceive(buffer, 0, count, SocketFlags.None, (asyncResult) =>
-        {
-            bytesRead = sck.EndReceive(asyncResult);
-            if (bytesRead == 0)
-            {
-                // disconnected.
-            }
-        }, null);
+        sck.Receive(buffer);
+
+        //sck.BeginReceive(buffer, 0, count, SocketFlags.None, (asyncResult) =>
+        //{
+        //    bytesRead = sck.EndReceive(asyncResult);
+        //    if (bytesRead == 0)
+        //    {
+        //        // disconnected.
+        //    }
+        //}, null);
 
         //on lit au socket pour un vrai ou faux
         byte[] formatted = new byte[bytesRead];
@@ -180,15 +184,16 @@ public class onStartUp : MonoBehaviour
         byte[] buffer;
         buffer = new byte[count];
         int bytesRead = 1024;
+        sck.Receive(buffer);
 
-        sck.BeginReceive(buffer, 0, count, SocketFlags.None, (asyncResult) =>
-        {
-            bytesRead = sck.EndReceive(asyncResult);
-            if (bytesRead == 0)
-            {
-                // disconnected.
-            }
-        }, null);
+        //sck.BeginReceive(buffer, 0, count, SocketFlags.None, (asyncResult) =>
+        //{
+        //    bytesRead = sck.EndReceive(asyncResult);
+        //    if (bytesRead == 0)
+        //    {
+        //        // disconnected.
+        //    }
+        //}, null);
 
         byte[] formatted = new byte[bytesRead];
         for (int i = 0; i < bytesRead; i++)
