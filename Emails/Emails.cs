@@ -13,6 +13,12 @@ namespace Emails
         public static string SujetForgetPass = "Récupération de mot de passe - Throne Wars";
         public static string BodyForgetPass = "Veuillez réinitialiser votre mot de passe à partir de cette page" +
                                         "www.thronewars.ca:8080/confirmaccount?User=";
+        public static string SujetForgetUser = "Répupération de nom d'utilisateur -Throne Wars";
+        public static string BodyForgetUser = "Voici votre nom d'utilisateur :";
+        public static string SubjectResetPass = "Changement de mot de passe -Throne Wars";
+        public static string BodyResetPass = "Pour changer votre mot de passe, veuillez visiter" +
+                                " ce lien et suivre les indications www.thronewars.com/ResetPassword?User=";
+
         public static bool sendMail(string email,string subject,string message)
         {
             try

@@ -686,11 +686,8 @@ namespace ControleBD
                 if (result != null)
                 {
                     string UserHash = Controle.HashPassword(result, null, System.Security.Cryptography.SHA256.Create());
-                    string Subject = "Changement de mot de passe -Throne Wars";
-                    string BodyResetPass = "Pour changer votre mot de passe, veuillez visiter" +
-                                            " ce lien et suivre les indications www.thronewars.com/ResetPassword?user=" + UserHash;
                     //Reset password
-                    Email.sendMail(resultemail, Subject, BodyResetPass);
+                    Email.sendMail(resultemail, Email.SubjectResetPass, Email.BodyResetPass+UserHash);
                 }
                 return true;
 
@@ -723,10 +720,9 @@ namespace ControleBD
                 if (result != null)
                 {
                     //envoie un email au courriel correspondant du username
-
+                    Email.sendMail(email, Email.SujetForgetUser, Email.BodyForgetUser + result);  
                 }
                 return true;
-
             }
             catch (OracleException ex)
             {
@@ -832,6 +828,38 @@ namespace ControleBD
 
 
             return Stats;
+        }
+
+        public static bool ResetPassword(string userHash,string passHash)
+        {
+            OracleConnection conn = Connection.GetInstance().conn;
+
+            string userNonHash = Controle.Phrase.Dechiffrer(userHash);
+
+            string sqlconfirmation = "update joueurs set Hash_KEY=:passHash where username=:userNonHash";
+
+            try
+            {
+                OracleCommand oraUpdate = new OracleCommand(sqlconfirmation, conn);
+
+                OracleParameter OraParamHashKey = new OracleParameter(":passHash", OracleDbType.Char, 1);
+                OracleParameter OraParamUsername = new OracleParameter(":userNonHash", OracleDbType.Varchar2, 32);
+
+                OraParamHashKey.Value = passHash;
+                OraParamUsername.Value = userNonHash;
+
+                oraUpdate.Parameters.Add(OraParamHashKey);
+                oraUpdate.Parameters.Add(OraParamUsername);
+
+                oraUpdate.ExecuteNonQuery();
+
+                return true;
+            }
+            catch (OracleException ex)
+            {
+                Erreur.ErrorMessage(ex);
+                return false;
+            }
         }
         public class Phrase
         {

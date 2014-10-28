@@ -54,7 +54,6 @@
                     <asp:TableHeaderCell>Position</asp:TableHeaderCell>
                     <asp:TableHeaderCell>Nom d'utilisateur</asp:TableHeaderCell>
                     <asp:TableHeaderCell>Victoires</asp:TableHeaderCell>
-                    <asp:TableHeaderCell>Défaites</asp:TableHeaderCell>
                 </asp:TableHeaderRow>
             </asp:Table>
         </div>

@@ -38,6 +38,11 @@ namespace SiteWebThroneWars
                 bool recoveryOk = Controle.UsernameRecovery(courriel);
                 if (recoveryOk)
                     ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>MessageBoxReussi();</script>", false);
+                else
+                {
+                    text = "Votre courriel n'est pas dans notre système";
+                    ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>MessageBoxErreur(\"" + text + "\");</script>", false);
+                }
             }
             else
             {

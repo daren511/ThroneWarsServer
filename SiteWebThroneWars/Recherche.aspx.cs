@@ -17,13 +17,14 @@ namespace SiteWebThroneWars
 
         protected void Rechercher_Click(object sender, EventArgs e)
         {
-            
-
             //Textbox pas null
             bool ok = VerifChamps();
             if(ok)
             { 
             string user = TB_UsernameSearch.Text;
+            string userHash = Controle.Phrase.Chiffrer(user);
+
+            Response.Redirect("www.thronewars.ca:8080/Recherche?User="+userHash);
             //Ramener la position du username dans le leaderboard
 
 
@@ -43,15 +44,10 @@ namespace SiteWebThroneWars
                 TableCell tdPosition = new TableCell();
                 TableCell tdUsername = new TableCell();
                 TableCell tdVictoires = new TableCell();
-                TableCell tdDefaites = new TableCell();
                 tr.Cells.Add(tdPosition);
                 tr.Cells.Add(tdUsername);
                 tr.Cells.Add(tdVictoires);
-                tr.Cells.Add(tdDefaites);
                 tdPosition.Text = i.ToString();
-                tdUsername.Text = "Hcfranck";
-                tdVictoires.Text = "9001";
-                tdDefaites.Text = "1";
             }
         }
 
