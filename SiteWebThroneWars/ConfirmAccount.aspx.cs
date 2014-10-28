@@ -11,7 +11,7 @@ namespace SiteWebThroneWars
     public partial class ConfirmAccount : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
-        {
+        {/*
             string text = "";
             bool RecoveryOK = false;
             string URL = HttpContext.Current.Request.Url.AbsoluteUri;
@@ -25,6 +25,7 @@ namespace SiteWebThroneWars
                 text = "Quelque chose s'est passé , votre confirmation à échoué";
                 ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>MessageBoxErreur(\"" + text + "\");</script>", false);
             }
+          * */
         }
     }
 }
