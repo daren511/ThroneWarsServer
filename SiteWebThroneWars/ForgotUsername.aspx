@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="ForgetUsername.aspx.cs" Inherits="SiteWebThroneWars.ForgetUsername" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="ForgotUsername.aspx.cs" Inherits="SiteWebThroneWars.ForgetUsername" %>
 
 <!DOCTYPE html>
 
@@ -44,7 +44,7 @@
         
 		<div class="FormForgot">
   			Courriel: <asp:Textbox ID="TB_Email" TextMode="Email" runat="server"/><br/><br/>
-  			<asp:Button Text="Envoyer" runat="server" onclick="UsernameRecovery" />
+  			<asp:Button Text="Envoyer" runat="server" onclick="UsernameRecovery_Click" />
   		</div>
         </form>
   	</body>

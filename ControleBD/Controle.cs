@@ -670,8 +670,13 @@ namespace ControleBD
             string resultemail = "";
             try
             {
-                OracleCommand oraSelect = new OracleCommand(sqlSelect, conn);
-                oraSelect.CommandType = CommandType.Text;
+
+                OracleCommand oraSelect = conn.CreateCommand();
+                oraSelect.CommandText = sqlSelect;
+                OracleParameter OraParamUsername = new OracleParameter(":USERNAME", OracleDbType.Varchar2, 32);
+                OraParamUsername.Value = username;
+
+                oraSelect.Parameters.Add(OraParamUsername);
 
                 OracleDataReader objRead = oraSelect.ExecuteReader();
                 while (objRead.Read())
@@ -680,17 +685,13 @@ namespace ControleBD
                     resultemail = objRead.GetString(1);
                 }
                 objRead.Close();
-
-
-
                 if (result != null)
                 {
-                    string UserHash = Controle.HashPassword(result, null, System.Security.Cryptography.SHA256.Create());
+                    string UserHash = Controle.Phrase.Chiffrer(username);
                     //Reset password
                     Email.sendMail(resultemail, Email.SubjectResetPass, Email.BodyResetPass+UserHash);
                 }
                 return true;
-
             }
             catch (OracleException ex)
             {
@@ -707,8 +708,12 @@ namespace ControleBD
             string result = "";
             try
             {
-                OracleCommand oraSelect = new OracleCommand(sqlSelect, conn);
-                oraSelect.CommandType = CommandType.Text;
+                OracleCommand oraSelect = conn.CreateCommand();
+                oraSelect.CommandText = sqlSelect;
+                OracleParameter OraParamEmail = new OracleParameter(":Email", OracleDbType.Varchar2, 32);
+                OraParamEmail.Value = email;
+
+                oraSelect.Parameters.Add(OraParamEmail);
 
                 OracleDataReader objRead = oraSelect.ExecuteReader();
                 while (objRead.Read())
@@ -741,15 +746,16 @@ namespace ControleBD
             try
             {
                 OracleConnection conn = Connection.GetInstance().conn;
-                string sqlSelect = "select count(*) from joueurs where USERNAME = :USERNAME and HASH_KEY = :HASH_KEY";
+                string passHash = Controle.HashPassword(password, null, System.Security.Cryptography.SHA256.Create());
+                string sqlSelect = "select count(*) from joueurs where USERNAME = :USERNAME and HASH_KEY = :passHash";
 
 
                 OracleCommand oraSelect = conn.CreateCommand();
                 oraSelect.CommandText = sqlSelect;
                 OracleParameter OraParamUsername = new OracleParameter(":USERNAME", OracleDbType.Varchar2, 32);
-                OracleParameter OraParamPassHash = new OracleParameter(":HASH_KEY", OracleDbType.Char, 75);
+                OracleParameter OraParamPassHash = new OracleParameter(":passHash", OracleDbType.Char, 75);
                 OraParamUsername.Value = user;
-                OraParamPassHash.Value = password;
+                OraParamPassHash.Value = passHash;
 
                 oraSelect.Parameters.Add(OraParamUsername);
                 oraSelect.Parameters.Add(OraParamPassHash);
@@ -784,7 +790,7 @@ namespace ControleBD
                 OracleCommand oraUpdate = new OracleCommand(sqlconfirmation, conn);
 
                 OracleParameter OraParamPassHash = new OracleParameter(":HASH_KEY", OracleDbType.Char, 75);
-                OracleParameter OraParamUsername = new OracleParameter(":Username", OracleDbType.Varchar2, 32);
+                OracleParameter OraParamUsername = new OracleParameter(":username", OracleDbType.Varchar2, 32);
 
                 OraParamPassHash.Value = PassHash;
                 OraParamUsername.Value = username;
@@ -881,7 +887,7 @@ namespace ControleBD
             }
             public static string Dechiffrer(string valeur)
             {
-                string mot = valeur;
+                string mot = "";
 
                 for (int i = 0; i < valeur.Length; ++i)
                 {
@@ -890,5 +896,7 @@ namespace ControleBD
                 return mot;
             }
         }
+
+
     }
 }

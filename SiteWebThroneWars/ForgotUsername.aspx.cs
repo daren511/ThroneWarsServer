@@ -16,7 +16,7 @@ namespace SiteWebThroneWars
 
         }
 
-        protected void UsernameRecovery(object sender, EventArgs e)
+        protected void UsernameRecovery_Click(object sender, EventArgs e)
         {
             string text = "";
             // Verif Textbox pas vide
@@ -31,7 +31,7 @@ namespace SiteWebThroneWars
                 text = "Le champs doit ne pas être vide";
                 ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>MessageBoxErreur(\"" + text + "\");</script>", false);
             }
-            if (legitEmail)
+            if (legitEmail && verifOk)
             {
                 // Aller chercher le username correspondant au courriel + envoie par email
                 // Fonction pas fini - UsernameRecovery
