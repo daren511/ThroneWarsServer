@@ -14,7 +14,7 @@ namespace ControleBD
     public class Controle
     {
         private static int SaltValueSize = 16;
-        
+
         public static bool deletePerso(int GUID)
         {
             OracleConnection conn = Connection.GetInstance().conn;
@@ -689,7 +689,7 @@ namespace ControleBD
                 {
                     string UserHash = Controle.Phrase.Chiffrer(username);
                     //Reset password
-                    Email.sendMail(resultemail, Email.SubjectResetPass, Email.BodyResetPass+UserHash);
+                    Email.sendMail(resultemail, Email.SubjectResetPass, Email.BodyResetPass + UserHash);
                 }
                 return true;
             }
@@ -725,7 +725,7 @@ namespace ControleBD
                 if (result != null)
                 {
                     //envoie un email au courriel correspondant du username
-                    Email.sendMail(email, Email.SujetForgetUser, Email.BodyForgetUser + result);  
+                    Email.sendMail(email, Email.SujetForgetUser, Email.BodyForgetUser + result);
                 }
                 return true;
             }
@@ -813,30 +813,69 @@ namespace ControleBD
         /// </summary>
         /// <param name="username"></param>
         /// <returns></returns>
-        public static string[] ReturnStats(string username)
+        public static DataSet ReturnStats(int JID)
         {
-            string[] Stats = null;
+            DataSet DSStats = new DataSet();
+            OracleDataAdapter oraDataAdapStats = new OracleDataAdapter();
 
             OracleConnection conn = Connection.GetInstance().conn;
-            string sqlSelect = "select Username from joueurs where JID = :username";
-            string result = "";
+            string sqlSelect = "select NOM,LEVEL,XP from Personnages  where JID = :JID";
+            //string result = "";
 
-            OracleCommand oraSelect = new OracleCommand(sqlSelect, conn);
-            oraSelect.CommandType = CommandType.Text;
+            OracleCommand oraSelect = conn.CreateCommand();
+            oraSelect.CommandText = sqlSelect;
 
+            if (DSStats.Tables.Contains("StatsJoueur"))
+            {
+                DSStats.Tables["StatsJoueur"].Clear();
+            }
+            oraDataAdapStats.Fill(DSStats, "StatsJoueur");
+            oraDataAdapStats.Dispose();
+            /*
             OracleDataReader objRead = oraSelect.ExecuteReader();
             while (objRead.Read())
             {
                 result = objRead.GetString(0);
             }
             objRead.Close();
+             * */
 
 
 
-            return Stats;
+            return DSStats;
         }
 
-        public static bool ResetPassword(string userHash,string passHash)
+
+        public static int GetJID(string username)
+        {
+            int JID = 0;
+            try
+            {
+                OracleConnection conn = Connection.GetInstance().conn;
+                string sqlSelect = "select JID from joueurs where USERNAME = :username";
+
+                OracleCommand oraSelect = new OracleCommand(sqlSelect, conn);
+                oraSelect.CommandType = CommandType.Text;
+                OracleParameter OraParamUsername = new OracleParameter(":USERNAME", OracleDbType.Varchar2, 32);
+
+                OraParamUsername.Value = username;
+                oraSelect.Parameters.Add(OraParamUsername);
+
+                OracleDataReader objRead = oraSelect.ExecuteReader();
+                while (objRead.Read())
+                {
+                    JID = objRead.GetInt32(0);
+                }
+                objRead.Close();
+            }
+            catch (OracleException ora)
+            {
+                Console.WriteLine(ora.Message.ToString());
+            }
+            return JID;
+        }
+
+        public static bool ResetPassword(string userHash, string passHash)
         {
             OracleConnection conn = Connection.GetInstance().conn;
 
@@ -848,7 +887,7 @@ namespace ControleBD
             {
                 OracleCommand oraUpdate = new OracleCommand(sqlconfirmation, conn);
 
-                OracleParameter OraParamHashKey = new OracleParameter(":passHash", OracleDbType.Char, 1);
+                OracleParameter OraParamHashKey = new OracleParameter(":passHash", OracleDbType.Char, 75);
                 OracleParameter OraParamUsername = new OracleParameter(":userNonHash", OracleDbType.Varchar2, 32);
 
                 OraParamHashKey.Value = passHash;
