@@ -33,12 +33,14 @@
 					<div class="Description">
 					<h1>Description</h1>
 					<p>
-						Jeu de stratégie tour-à-tour, pour 2 joueurs. 
-                        Chaque joueur commence avec 4 personnages qu’il peut faire évoluer après chaque combats, 
-                        avec de l’expérience acquise par ennemi vaincu et ils peuvent aussi utiliser le magasin du jeu 
-                        pour acheter de l’équipement. Chacun des personnages du joueur possèdent des habilités/classes différentes 
-                        (magicien, guerrier, archer, prêtre, etc). Le but de la partie est de vaincre tous les personnages de 
-                        l’adversaire.
+						Throne Wars est un jeu de stratégie fantastique tour-par-tour impliquant 2 joueurs opposés dont le but 
+                        est d’éliminer tous les personnages du joueur adverse. 
+                        Une équipe est composée de 4 personnages pouvant être membre d’une des classes suivantes : 
+                        Guerrier, Archer, Magicien et Prêtre. 
+                        Chaque classe possède des habiletés et statistiques différentes. 
+                        Les personnages possèdent leur propre inventaire et ceux-ci peuvent évoluer de niveau au fil des 
+                        parties pour ainsi débloquer de nouvelles habiletés. 
+                        Les joueurs possèdent, eux aussi, un inventaire et peuvent affecter des items à leurs personnages pour les préparer avant la partie.
                     </p>
                         <br />
                     <p style="text-align:center">
@@ -60,7 +62,7 @@
 								<a href="mailto:Francis@thronewars.ca" target="_top">Francis Côté</a><br />
 									<img src="./Images/Tattoo.jpg" width="200" height="200"/><br /><br />
 								<a href="mailto:Charles@thronewars.ca" target="_top">Charles Hunter-Roy</a><br />
-									<img src="./Images/Charles.jpg" width="200" height="200" /><br /><br />
+									<img src="./Images/Charles1.jpg" width="200" height="200" /><br /><br />
 								<a href="mailto:Alexis@thronewars.ca" target="_top">Alexis Lalonde</a><br />
 									<img src="./Images/Alexis2.jpg" width="200" height="200" /><br /><br />
 							</div>						

@@ -27,7 +27,6 @@ namespace ThroneWarsServer
                 if (!Joueur.isConnected && Joueur.isAlive())
                 {
                     string Login = recevoirLogin();
-                    Joueur.
                     bool reponse = Controle.UserPassCorrespondant(Login.Split(Splitter)[0], Login.Split(Splitter)[1]);
                     if (reponse) 
                     {

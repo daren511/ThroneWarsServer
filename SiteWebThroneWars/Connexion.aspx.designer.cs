@@ -58,12 +58,12 @@ namespace SiteWebThroneWars {
         protected global::System.Web.UI.WebControls.Table tableLeaderbord;
         
         /// <summary>
-        /// Contrôle tableStats.
+        /// Contrôle GV_Stats.
         /// </summary>
         /// <remarks>
         /// Champ généré automatiquement.
         /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Table tableStats;
+        protected global::System.Web.UI.WebControls.GridView GV_Stats;
     }
 }
