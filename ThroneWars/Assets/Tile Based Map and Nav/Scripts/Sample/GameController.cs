@@ -6,6 +6,7 @@
 
 using UnityEngine;
 using System.Collections.Generic;
+using System.Collections;
 
 public class GameController : TMNController 
 {
@@ -42,7 +43,7 @@ public class GameController : TMNController
 	// ====================================================================================================================
 	#region vars
 
-	private enum State : byte { Init=0, Running, DontRun }
+    private enum State : byte { Init = 0, Running, DontRun }
 	private State state = State.Init;
 
     private Character selectedUnit = null;	// currently selected unit
@@ -56,7 +57,7 @@ public class GameController : TMNController
 		new List<Character>()	// player 2's units
 	};
 
-	public int currPlayerTurn  { get; set; }		// which player's turn it is, only if useTurns = true;
+    public int currPlayerTurn { get; set; }		// which player's turn it is, only if useTurns = true;
 
 	#endregion
 	// ====================================================================================================================
@@ -106,7 +107,7 @@ public class GameController : TMNController
     //todo: trouver une façon intelligente de placer les personnages en formation prédeterminé par le joueur sur la carte
     private TileNode CalculateStartingPosition()
     {
-        if(PlayerManager._instance._playerSide == 1)
+        if (PlayerManager._instance._playerSide == 1)
         {
 
         }
@@ -126,7 +127,8 @@ public class GameController : TMNController
 
             unitFab._name = PlayerManager._instance._chosenTeam[i]._name;
             unitFab._maxHealth = PlayerManager._instance._chosenTeam[i]._maxHealth;
-            unitFab._currHealth = PlayerManager._instance._chosenTeam[i]._currHealth;
+            unitFab._currHealth = PlayerManager._instance._chosenTeam[i]._currHealth - 20;
+            unitFab._isAlive = unitFab._currHealth > 0;
             unitFab._maxMagic = PlayerManager._instance._chosenTeam[i]._maxMagic;
             unitFab._currMagic = PlayerManager._instance._chosenTeam[i]._currMagic;
 
@@ -146,7 +148,6 @@ public class GameController : TMNController
                 if (unitFab.CanStandOn(map[i], true))
                 {
                     node = map[(((GameManager._instance._playerPositions[i] % 5 + 1)) * 24) + 280];
-                    //node = map[(((GameManager._instance._playerPositions[i] % 5 + 1)) * 27) + 145];
                 }
             }
             
@@ -178,7 +179,8 @@ public class GameController : TMNController
 
             unitFab._name = GameManager._instance._enemyTeam[i]._name;
             unitFab._maxHealth = GameManager._instance._enemyTeam[i]._maxHealth;
-            unitFab._currHealth = GameManager._instance._enemyTeam[i]._currHealth;
+            unitFab._currHealth = 1;//GameManager._instance._enemyTeam[i]._currHealth;
+            unitFab._isAlive = unitFab._currHealth > 0;
             unitFab._maxMagic = GameManager._instance._enemyTeam[i]._maxMagic;
             unitFab._currMagic = GameManager._instance._enemyTeam[i]._currMagic;
 
@@ -217,11 +219,11 @@ public class GameController : TMNController
     /// <param name="atker">L'unité qui attaque</param>
     /// <param name="defender">L'unité qui recoit les dégâts</param>
     /// <param name="magic">Si on doit se servir des attaques et défenses magiques</param>
-    /// <returns></returns>
+    /// <returns>Le nombre de dégâts</returns>
     private int CalculateDamage(Character atker, Character defender, bool magic)
     {
         int total = 1;
-        if(magic)
+        if (magic)
         {
             total = atker._currMagicAttack - defender._currMagicDefense > 0 ? atker._currMagicAttack - defender._currMagicDefense : 1; 
         }
@@ -244,7 +246,7 @@ public class GameController : TMNController
     {
         int exp = ((dmg * atkLvl) * defender._characterClass._classLevel) / atker._characterClass._classLevel;
         //L'attaquant a vaincu l'adversaire, il gagne 10% d'expérience supplémentaire
-        if(defender._currHealth == 0)
+        if (defender._currHealth == 0)
         {
             exp += int.Parse((exp * 0.1f).ToString());
         }
@@ -252,10 +254,14 @@ public class GameController : TMNController
         exp += Random.Range(atker._characterClass._classLevel, atker._characterClass._classLevel * 2);
         return exp;
     }
-    private int CalculateMoneyGain()
+    private int CalculateMoneyGain(Character atker, Character defender, int dmg, int atkLvl = 1)
     {
-        int gain = 0;
-
+        int gain = dmg * atkLvl * defender._characterClass._classLevel + atker._characterClass._classLevel;
+        // L'attaquant a vaincu l'adversaire, il gagne 25% d'argents supplémentaire
+        if (defender._currHealth == 0)
+        {
+            gain += int.Parse((gain * 0.25f).ToString());
+        }
         return gain;
     }
     private void DoCombat(Character atker, Character defender)
@@ -264,16 +270,27 @@ public class GameController : TMNController
         {
             int dmg = CalculateDamage(selectedUnit, defender, false);
             int exp = CalculateExperience(selectedUnit, defender, dmg);
-            int gold = CalculateMoneyGain();
+            int gold = CalculateMoneyGain(selectedUnit, defender, dmg);
             Debug.Log(selectedUnit._name + "  attaque " + defender._name + ", et inflige " + dmg.ToString() + " de dégâts!");
             Debug.Log(selectedUnit._name + " gagne " + exp.ToString() + " d'expérience.");
             Debug.Log("Vous gagnez " + gold + " d'or.");
             GameObject.Find("StatusIndicator").transform.position = defender.transform.position;
             defender.ReceiveDamage(dmg);
             selectedUnit.ReceiveExperience(exp);
+            selectedUnit.ReceiveGold(gold);
             allowInput = false;
             attackRangeMarker.HideAll();
         }
+    }
+    public int CountAliveCharacters(Character[] tab)
+    {
+        int alive = 0;
+        for (int i = 0; i < tab.Length; ++i)
+        {
+            if (tab[i]._isAlive)
+                alive++;
+        }
+        return alive;
     }
     private bool PlayerTurnDone()
     {
@@ -288,15 +305,34 @@ public class GameController : TMNController
         }
         return done;
     }
+    /// <summary>
+    /// Vérifie le nombre de personnages vivant dans chacune des deux équipes   
+    /// </summary>
+    /// <returns>Le numéro du joueur (1 ou 2)</returns>
+    private int CheckGameOver()
+    {        
+        int gameOver = 0;
 
+        if(CountAliveCharacters(units[PlayerManager._instance._playerSide - 1].ToArray()) == 0)
+        {
+            gameOver = GameManager._instance._enemySide;
+        }
+        else if (CountAliveCharacters(units[GameManager._instance._enemySide - 1].ToArray()) == 0)
+        {
+            gameOver = PlayerManager._instance._playerSide;
+        }
+
+        return gameOver;
+
+    }
     public void ClickNextActiveCharacter()
     {
         int done = 0;
         bool stillActive = false;
 
-        while(done < PlayerManager._instance._chosenTeam.Length && !stillActive)
+        while (done < PlayerManager._instance._chosenTeam.Length && !stillActive)
         {
-            if(activeCharacterIndex == PlayerManager._instance._chosenTeam.Length - 1)
+            if (activeCharacterIndex == PlayerManager._instance._chosenTeam.Length - 1)
             {
                 activeCharacterIndex = 0;
             }
@@ -305,7 +341,8 @@ public class GameController : TMNController
                 activeCharacterIndex++;
             }
             if (units[PlayerManager._instance._playerSide - 1][activeCharacterIndex].didAttack &&
-                units[PlayerManager._instance._playerSide - 1][activeCharacterIndex].didMove)
+                units[PlayerManager._instance._playerSide - 1][activeCharacterIndex].didMove ||
+                !units[PlayerManager._instance._playerSide - 1][activeCharacterIndex]._isAlive)
             {
                 done++;
             }
@@ -314,9 +351,16 @@ public class GameController : TMNController
                 stillActive = true;
             }
         }
-        if (done == PlayerManager._instance._chosenTeam.Length && PlayerManager._instance._playerSide == currPlayerTurn)
+        if (done == PlayerManager._instance._chosenTeam.Length && PlayerManager._instance._playerSide == currPlayerTurn + 1)
         {
             //tour du joueur terminer
+            Debug.Log("Tour terminé!");
+
+            //TEMPORAIRE POUR TESTS/BETA, ON RECOMMENCE LE TOUR DU JOUEUR UNIQUE
+            foreach (Character u in units[currPlayerTurn])
+            {
+                u.Reset();
+            }
         }
         OnNaviUnitClick(units[PlayerManager._instance._playerSide - 1][activeCharacterIndex].gameObject);
         if (PlayerManager._instance._playerSide - 1 == currPlayerTurn)
@@ -396,6 +440,7 @@ public class GameController : TMNController
 
 		base.OnTileNodeClick(go);
 		TileNode node = go.GetComponent<TileNode>();
+        allowInput = true;
 
 		if (selectedUnit != null && node.IsVisible)
 		{
@@ -406,7 +451,7 @@ public class GameController : TMNController
                 //selectedUnit._lookDirection =  selectedUnit._lookDirection.normalized;
 
 				// dont want the player clicking around while a unit is moving
-				allowInput = false;
+                //allowInput = true;
 
 				// hide the node markers when unit is moving. Note that the unit is allready linked with
 				// the destination node by now. So use the cached node ref
@@ -466,12 +511,14 @@ public class GameController : TMNController
 
 	protected override void OnNaviUnitClick(GameObject go)
 	{
+        Character unit = go.GetComponent<Character>();
+        if (unit._isAlive)
+        {
 		base.OnNaviUnitClick(go);
         attackRangeMarker.HideAll();
         map.ShowAllTileNodes(false);
         
 
-        Character unit = go.GetComponent<Character>();        
 
 		// jump camera to the unit that was clicked on
 		camMover.Follow(go.transform);
@@ -481,11 +528,11 @@ public class GameController : TMNController
 		if (useTurns)
 		{
 			// is active player's unit that was clicked on?
-			if (unit.playerSide == (PlayerManager._instance._playerSide) )
+                if (unit.playerSide == (PlayerManager._instance._playerSide))
 			{
                 CombatMenu.FindObjectOfType<CombatMenu>().go = unit.gameObject;
 
-                if(PlayerManager._instance._playerSide == currPlayerTurn)
+                    if (PlayerManager._instance._playerSide == currPlayerTurn)
                     CombatMenu.FindObjectOfType<CombatMenu>().characterChosen = true;
 
                 CombatMenu.FindObjectOfType<CombatMenu>().itemEnabled = false;
@@ -511,21 +558,24 @@ public class GameController : TMNController
 			}
 
 			// else, not active player's unit but his opponent's unit that was clicked on
-			else if (selectedUnit != null && combatOn)
+                else if (selectedUnit != null && combatOn && unit._isAlive)
 			{
 				if (selectedUnit.Attack(unit))
 				{
                     int dmg = CalculateDamage(selectedUnit, unit, false);
                     int exp = CalculateExperience(selectedUnit, unit, dmg);
-                    int gold = CalculateMoneyGain();
+                    int gold = CalculateMoneyGain(selectedUnit, unit, dmg);
                     Debug.Log(selectedUnit._name + "  attaque " +  unit._name + ", et inflige " + dmg.ToString() + " de dégâts!");
                     Debug.Log(selectedUnit._name + " gagne " + exp.ToString() + " d'expérience.");
                     Debug.Log("Vous gagnez " + gold + " d'or.");
                     GameObject.Find("StatusIndicator").transform.position = unit.transform.position;
                     unit.ReceiveDamage(dmg);
                     selectedUnit.ReceiveExperience(exp);
+                    selectedUnit.ReceiveGold(gold);
 					allowInput = false;
 					attackRangeMarker.HideAll();
+                        StartCoroutine(WaitForAttack());
+                        CombatMenu.FindObjectOfType<CombatMenu>().winner = CheckGameOver();
 				}
 			}
 		}
@@ -572,7 +622,17 @@ public class GameController : TMNController
         //    }
         //}
 	}
+        else
+        {
+            //TODO: traiter le revive ici
+        }
+    }
 
+    IEnumerator WaitForAttack()
+    {
+        yield return new WaitForSeconds(1.5f);
+        ClickNextActiveCharacter();
+    }
 	protected override void OnClearNaviUnitSelection(GameObject clickedAnotherUnit)
 	{
 		base.OnClearNaviUnitSelection(clickedAnotherUnit);
@@ -669,7 +729,7 @@ public class GameController : TMNController
 				this.OnNaviUnitClick(unit.gameObject);
 			// }
 		}
-        if(unit.GetComponent<Character>().TurnDone())
+        if (unit.GetComponent<Character>().TurnDone())
         {
             ClickNextActiveCharacter();
         }

@@ -25,11 +25,6 @@ public class onMainMenu : MonoBehaviour
     private static List<string> tabInvent = new List<string>();
     private static List<string> tabItem = new List<string>();
 
-    // Colors
-    public static Color primaryColor;
-    public static Color secondaryColor;
-    // Background
-    public static Texture background;
     // Team window
     private static float wT = 190.0f;
     private static float hT = Screen.height - 145;
@@ -60,15 +55,15 @@ public class onMainMenu : MonoBehaviour
     {
         remainingPosition = PlayerManager._instance._chosenTeam.Length;
         ShowAllCharacters();
+        ShowSelectedCharacters();
         ShowPlayerInventory();
-        //ChooseBidonCharacters();
     }
 
 
     void OnGUI()
     {
-        hasUpdatedGui = onMenuLoad.updateGUI(hasUpdatedGui, primaryColor, secondaryColor);
-        onMenuLoad.createBackground(background);
+        hasUpdatedGui = ResourceManager.GetInstance.UpdateGUI(hasUpdatedGui);
+        ResourceManager.GetInstance.CreateBackground();
 
         onMenuLoad.createDeleteWindow();
         onMenuLoad.createQuitWindow();
@@ -206,16 +201,5 @@ public class onMainMenu : MonoBehaviour
             item = PlayerManager._instance._characters[i]._characterInventory._invent[i];
             tabItem.Add(item._itemName + " : " + item._itemDescription);
         }
-    }
-    void ChooseBidonCharacters()
-    {
-        GameManager._instance._enemySide = 2;
-        PlayerManager._instance._playerSide = 1;
-
-        //quand on choisit un personnage qui participera à la partie
-        PlayerManager._instance._chosenTeam[0] = PlayerManager._instance._characters[0];
-        PlayerManager._instance._chosenTeam[1] = PlayerManager._instance._characters[1];
-        PlayerManager._instance._chosenTeam[2] = PlayerManager._instance._characters[2];
-        PlayerManager._instance._chosenTeam[3] = PlayerManager._instance._characters[3];
     }
 }
