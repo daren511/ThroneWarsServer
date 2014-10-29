@@ -252,10 +252,14 @@ public class GameController : TMNController
         exp += Random.Range(atker._characterClass._classLevel, atker._characterClass._classLevel * 2);
         return exp;
     }
-    private int CalculateMoneyGain()
+    private int CalculateMoneyGain(Character atker, Character defender, int dmg, int atkLvl = 1)
     {
-        int gain = 0;
-
+        int gain = dmg * atkLvl * defender._characterClass._classLevel + atker._characterClass._classLevel;
+        // L'attaquant a vaincu l'adversaire, il gagne 25% d'argents supplémentaire
+        if (defender._currHealth == 0)
+        {
+            gain += int.Parse((gain * 0.25f).ToString());
+        }
         return gain;
     }
     private void DoCombat(Character atker, Character defender)
@@ -264,13 +268,14 @@ public class GameController : TMNController
         {
             int dmg = CalculateDamage(selectedUnit, defender, false);
             int exp = CalculateExperience(selectedUnit, defender, dmg);
-            int gold = CalculateMoneyGain();
+            int gold = CalculateMoneyGain(selectedUnit, defender, dmg);
             Debug.Log(selectedUnit._name + "  attaque " + defender._name + ", et inflige " + dmg.ToString() + " de dégâts!");
             Debug.Log(selectedUnit._name + " gagne " + exp.ToString() + " d'expérience.");
             Debug.Log("Vous gagnez " + gold + " d'or.");
             GameObject.Find("StatusIndicator").transform.position = defender.transform.position;
             defender.ReceiveDamage(dmg);
             selectedUnit.ReceiveExperience(exp);
+            selectedUnit.ReceiveGold(gold);
             allowInput = false;
             attackRangeMarker.HideAll();
         }
@@ -517,13 +522,14 @@ public class GameController : TMNController
 				{
                     int dmg = CalculateDamage(selectedUnit, unit, false);
                     int exp = CalculateExperience(selectedUnit, unit, dmg);
-                    int gold = CalculateMoneyGain();
+                    int gold = CalculateMoneyGain(selectedUnit, unit, dmg);
                     Debug.Log(selectedUnit._name + "  attaque " +  unit._name + ", et inflige " + dmg.ToString() + " de dégâts!");
                     Debug.Log(selectedUnit._name + " gagne " + exp.ToString() + " d'expérience.");
                     Debug.Log("Vous gagnez " + gold + " d'or.");
                     GameObject.Find("StatusIndicator").transform.position = unit.transform.position;
                     unit.ReceiveDamage(dmg);
                     selectedUnit.ReceiveExperience(exp);
+                    selectedUnit.ReceiveGold(gold);
 					allowInput = false;
 					attackRangeMarker.HideAll();
 				}

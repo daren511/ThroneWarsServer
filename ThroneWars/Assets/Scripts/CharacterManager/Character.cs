@@ -235,20 +235,32 @@ public class Character : NaviUnit
                 _currHealth -= dmg;
             }
         }
+        else
+            isDying();
+    }
+
+    public void isDying()
+    {
+        this.GetComponent<Billboard>().DyingAnimation();
     }
 
     public void ReceiveExperience(int xp)
     {
+        GameObject.Find("StatusIndicator").GetComponent<StatusIndicator>().Show(xp, "Exp");
         _characterClass._exp += xp;
     }
+
     public void ReceiveGold(int amt)
     {
-        
+        GameObject.Find("StatusIndicator").GetComponent<StatusIndicator>().Show(amt, "Gold");
+        PlayerManager._instance._gold += amt;
     }
+
     public void UseSpecialAttack()
     {
 
     }
+
     /// <summary>
     /// 
     /// </summary>

@@ -25,11 +25,6 @@ public class onMainMenu : MonoBehaviour
     private static List<string> tabInvent = new List<string>();
     private static List<string> tabItem = new List<string>();
 
-    // Colors
-    public static Color primaryColor;
-    public static Color secondaryColor;
-    // Background
-    public static Texture background;
     // Team window
     private static float wT = 190.0f;
     private static float hT = Screen.height - 145;
@@ -67,8 +62,8 @@ public class onMainMenu : MonoBehaviour
 
     void OnGUI()
     {
-        hasUpdatedGui = onMenuLoad.updateGUI(hasUpdatedGui, primaryColor, secondaryColor);
-        onMenuLoad.createBackground(background);
+        hasUpdatedGui = ResourceManager.GetInstance.UpdateGUI(hasUpdatedGui);
+        ResourceManager.GetInstance.CreateBackground();
 
         onMenuLoad.createDeleteWindow();
         onMenuLoad.createQuitWindow();

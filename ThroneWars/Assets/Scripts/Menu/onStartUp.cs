@@ -30,9 +30,6 @@ public class onStartUp : MonoBehaviour
     // Login window
     private static float wL = 430.0f;
     private static float hL = 210.0f;
-    // Colors
-    public Color primaryColor;
-    public Color secondaryColor;
     // Window rectangles
     public Texture background;
     public Texture logo;
@@ -41,9 +38,9 @@ public class onStartUp : MonoBehaviour
 
     void OnGUI()
     {
-        hasUpdatedGui = onMenuLoad.updateGUI(hasUpdatedGui, primaryColor, secondaryColor);
-        onMenuLoad.createBackground(background);
-        onMenuLoad.createLogo(logo);
+        hasUpdatedGui = ResourceManager.GetInstance.UpdateGUI(hasUpdatedGui);
+        ResourceManager.GetInstance.CreateBackground();
+        ResourceManager.GetInstance.CreateLogo();
 
         onMenuLoad.createQuitWindow();
         GUILayout.Window(2, rectLogin, doLoginWindow, "Login");   // Draw the login window
@@ -105,17 +102,11 @@ public class onStartUp : MonoBehaviour
         {
             try
             {
-
-                // So the main menu can have the same colors has the login screen
-                onMainMenu.background = background;
-                onMainMenu.primaryColor = primaryColor;
-                onMainMenu.secondaryColor = secondaryColor;
-
-                ConnectToServer();
+                //ConnectToServer();
 
                 ////à titre de tests
-                //GetBidonPlayer();
-                //Application.LoadLevel("MainMenu");
+                GetBidonPlayer();
+                Application.LoadLevel("MainMenu");
 
                 if (sck.Connected)
                 {
