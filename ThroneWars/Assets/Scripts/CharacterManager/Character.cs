@@ -100,7 +100,7 @@ public class Character : NaviUnit
     public int _currMagicAttack;// { get;  set; }
     public int _currMagicDefense;// { get;  set; }
 
-    public bool _isAlive = true;
+    public bool _isAlive { get { return _currHealth > 0; } set { } }
     public string _name;
 
     public bool _isCasting = false;
@@ -195,7 +195,7 @@ public class Character : NaviUnit
         if (!CanAttack(target)) return false;
 
         didAttack = true;
-
+        didMove = true;
         // turn to face target
         Vector3 direction = target.transform.position - transform.position; direction.y = 0f;
         transform.rotation = Quaternion.LookRotation(direction);

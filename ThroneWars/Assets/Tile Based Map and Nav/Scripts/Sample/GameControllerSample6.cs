@@ -233,8 +233,6 @@ public class GameControllerSample6 : MonoBehaviour
 
     private void InitializeEnemyUnits()
     {
-
-
         //BIDON, À MODIFIER AVEC LES INFOS DU SERVEUR
 
         GameManager._instance._enemySide = 2;

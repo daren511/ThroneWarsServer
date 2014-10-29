@@ -8,6 +8,8 @@ using System.Collections.Generic;
  * */
 public class PlayerManager : MonoBehaviour
 {
+    private const int MAX_TEAM_LENGTH = 4;
+
     public Character[] _chosenTeam { get; set; }
     public PlayerInventory _playerInventory;
     public List<Character> _characters = new List<Character>();
@@ -33,6 +35,6 @@ public class PlayerManager : MonoBehaviour
     {
         DontDestroyOnLoad(this);
         instance = this;
-        _chosenTeam = new Character[4];
+        _chosenTeam = new Character[MAX_TEAM_LENGTH];
     }
 }

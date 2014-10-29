@@ -25,7 +25,7 @@ public class onStartUp : MonoBehaviour
     // Connection
     private static Socket sck;
     private static IPEndPoint localEndPoint;
-    private static string ip = "thronewars.ca";
+    private static string ip = "bd.thronewars.ca";
     private static int port = 50052;
     // Login window
     private static float wL = 430.0f;
@@ -111,19 +111,15 @@ public class onStartUp : MonoBehaviour
                 if (sck.Connected)
                 {
                     // on vérifie les infos entrées par le joueur(usager, mot de passe)
-                    validInfos = CheckPasswordUser();
+                    CheckPasswordUser();
 
                     if (validInfos)
                     {
                         //GetPlayerInfo();
                         Application.LoadLevel("MainMenu");
                     }
-                    else
-                    {
-                        //modifier l'interface: le mot de passe ou usager n'est pas bon
                     }
                 }
-            }
             catch (SocketException ex)   // The user can't connect to the server
             {
                 Debug.Log(ex.Message.ToString());
@@ -140,26 +136,16 @@ public class onStartUp : MonoBehaviour
         localEndPoint = new IPEndPoint(Dns.GetHostAddresses(ip)[0], port);
         sck.Connect(localEndPoint);
     }
-    private bool CheckPasswordUser()
+    private void CheckPasswordUser()
     {
         byte[] data = Encoding.ASCII.GetBytes(userValue + "?" + Controle.HashPassword(pwdvalue, null, System.Security.Cryptography.SHA256.Create()));
         sck.Send(data); //on envoie les infos du joueur au serveur        
 
-        int count = sck.SendBufferSize;
+        int count = sck.ReceiveBufferSize;
         byte[] buffer;
         buffer = new byte[count];
-        int bytesRead = 1024;
 
         sck.Receive(buffer);
-
-        //sck.BeginReceive(buffer, 0, count, SocketFlags.None, (asyncResult) =>
-        //{
-        //    bytesRead = sck.EndReceive(asyncResult);
-        //    if (bytesRead == 0)
-        //    {
-        //        // disconnected.
-        //    }
-        //}, null);
 
         //on lit au socket pour un vrai ou faux
         byte[] formatted = new byte[count];
@@ -167,27 +153,19 @@ public class onStartUp : MonoBehaviour
         {
             formatted[i] = buffer[i];
         }
-        return formatted.ToString() == "true";
+        string ans = Encoding.ASCII.GetString(formatted).ToString();
+        validInfos = ans.Split(' ')[0].Contains("True");
+        //confirmed = ans.Split(' ')[1].Contains("True");
     }
     private Joueur GetJoueur()
     {
-        int count = sck.SendBufferSize;
+        int count = sck.ReceiveBufferSize;
         byte[] buffer;
         buffer = new byte[count];
-        int bytesRead = 1024;
         sck.Receive(buffer);
 
-        //sck.BeginReceive(buffer, 0, count, SocketFlags.None, (asyncResult) =>
-        //{
-        //    bytesRead = sck.EndReceive(asyncResult);
-        //    if (bytesRead == 0)
-        //    {
-        //        // disconnected.
-        //    }
-        //}, null);
-
-        byte[] formatted = new byte[bytesRead];
-        for (int i = 0; i < bytesRead; i++)
+        byte[] formatted = new byte[count];
+        for (int i = 0; i < count; i++)
         {
             formatted[i] = buffer[i];
         }
@@ -233,7 +211,7 @@ public class onStartUp : MonoBehaviour
         }
         return characterInvent;
     }
-    private void GetBidonPlayer()
+    public static void GetBidonPlayer()
     {
         CharacterInventory characterInvent = new CharacterInventory();
         PlayerInventory playerInvent = null;

@@ -55,8 +55,8 @@ public class onMainMenu : MonoBehaviour
     {
         remainingPosition = PlayerManager._instance._chosenTeam.Length;
         ShowAllCharacters();
+        ShowSelectedCharacters();
         ShowPlayerInventory();
-        //ChooseBidonCharacters();
     }
 
 
@@ -201,16 +201,5 @@ public class onMainMenu : MonoBehaviour
             item = PlayerManager._instance._characters[i]._characterInventory._invent[i];
             tabItem.Add(item._itemName + " : " + item._itemDescription);
         }
-    }
-    void ChooseBidonCharacters()
-    {
-        GameManager._instance._enemySide = 2;
-        PlayerManager._instance._playerSide = 1;
-
-        //quand on choisit un personnage qui participera à la partie
-        PlayerManager._instance._chosenTeam[0] = PlayerManager._instance._characters[0];
-        PlayerManager._instance._chosenTeam[1] = PlayerManager._instance._characters[1];
-        PlayerManager._instance._chosenTeam[2] = PlayerManager._instance._characters[2];
-        PlayerManager._instance._chosenTeam[3] = PlayerManager._instance._characters[3];
     }
 }
