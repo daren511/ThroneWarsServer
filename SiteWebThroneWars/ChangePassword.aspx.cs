@@ -25,7 +25,7 @@ namespace SiteWebThroneWars
             string confirmNewPass = ncpassword.Text;
             if (ok)
             {
-                if (apassword.Text == npassword.Text || npassword.Text != ncpassword.Text)
+                if (oldpass == newPass || newPass != confirmNewPass)
                 {
                     // Redirect avant ??
                     text = "L'ancien mot de pass et le nouveau sont les mêmes ou le nouveau et la confirmation ne correspondent pas";
@@ -38,19 +38,27 @@ namespace SiteWebThroneWars
                 }
                 else
                 {
-                    // Crypter le nouveau mot de passe et envoyer
-                    string passHash = Controle.HashPassword(newPass, null, System.Security.Cryptography.SHA256.Create());
-
-                    //Changer le password du user avec le nouveau password hashé
-                    bool ChangeOk = Controle.UpdatePassword(user, passHash);
-                    if (ChangeOk)
-                        // Messagebox changement réussi
-                        ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>MessageBoxReussi();</script>", false);
-                    else
+                    string oldpassHash = Controle.HashPassword(oldpass, null, System.Security.Cryptography.SHA256.Create());
+                    bool Correspondant = Controle.UserPassCorrespondant(user, oldpassHash);
+                    if (Correspondant)
                     {
-                        text = "Le changement à échoué";
-                        ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>MessageBoxErreur(\"" + text + "\");</script>", false);
+                        // Crypter le nouveau mot de passe et envoyer
+                        string newpassHash = Controle.HashPassword(newPass, null, System.Security.Cryptography.SHA256.Create());
+
+                        //Changer le password du user avec le nouveau password hashé
+                        bool ChangeOk = Controle.UpdatePassword(user, newpassHash);
+                        if (ChangeOk)
+                        {
+                            // Messagebox changement réussi
+                            ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>MessageBoxReussi();</script>", false);
+                        }
+                        else
+                        {
+                            text = "Le changement à échoué";
+                            ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>MessageBoxErreur(\"" + text + "\");</script>", false);
+                        }
                     }
+
                 }
             }
         }
