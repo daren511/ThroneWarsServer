@@ -27,8 +27,13 @@ public class Billboard : MonoBehaviour
         faceCamera.eulerAngles = euler;
         transform.rotation = faceCamera;
 
-        if(!isDead)
+        if (!isDead)
             PlayAnimations(oppositeCamera);
+        else
+        {
+            anim.Play("IsDead"); 
+            //anim.
+        }
     }
     public void AttackAnimation()
     {
@@ -58,8 +63,14 @@ public class Billboard : MonoBehaviour
     public void DyingAnimation()
     {
         isDead = true;
-        anim.CrossFade("IsDying",1f);
+        anim.CrossFade("IsDying", 1f);
         anim.CrossFade("IsDead", 1f);
+    }
+    IEnumerator PlayDead()
+    {
+        //anim.CrossFade("IsDying", 1f);
+        anim.CrossFade("IsDead", 3f);
+        yield return new WaitForSeconds(0.1f);
     }
 
     private void PlayAnimations(Vector3 camera)
