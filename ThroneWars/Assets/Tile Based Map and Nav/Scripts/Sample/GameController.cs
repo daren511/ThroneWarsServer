@@ -280,6 +280,8 @@ public class GameController : TMNController
             selectedUnit.ReceiveGold(gold);
             allowInput = false;
             attackRangeMarker.HideAll();
+            StartCoroutine(WaitForAttack());
+            CombatMenu.FindObjectOfType<CombatMenu>().winner = CheckGameOver();
         }
     }
     public int CountAliveCharacters(Character[] tab)
@@ -560,23 +562,7 @@ public class GameController : TMNController
 			// else, not active player's unit but his opponent's unit that was clicked on
                 else if (selectedUnit != null && combatOn && unit._isAlive)
 			{
-				if (selectedUnit.Attack(unit))
-				{
-                    int dmg = CalculateDamage(selectedUnit, unit, false);
-                    int exp = CalculateExperience(selectedUnit, unit, dmg);
-                    int gold = CalculateMoneyGain(selectedUnit, unit, dmg);
-                    Debug.Log(selectedUnit._name + "  attaque " +  unit._name + ", et inflige " + dmg.ToString() + " de dégâts!");
-                    Debug.Log(selectedUnit._name + " gagne " + exp.ToString() + " d'expérience.");
-                    Debug.Log("Vous gagnez " + gold + " d'or.");
-                    GameObject.Find("StatusIndicator").transform.position = unit.transform.position;
-                    unit.ReceiveDamage(dmg);
-                    selectedUnit.ReceiveExperience(exp);
-                    selectedUnit.ReceiveGold(gold);
-					allowInput = false;
-					attackRangeMarker.HideAll();
-                        StartCoroutine(WaitForAttack());
-                        CombatMenu.FindObjectOfType<CombatMenu>().winner = CheckGameOver();
-				}
+                DoCombat(selectedUnit, unit);
 			}
 		}
 
