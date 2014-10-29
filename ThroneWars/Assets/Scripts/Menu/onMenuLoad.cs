@@ -23,36 +23,8 @@ public class onMenuLoad : MonoBehaviour
     private static float wD = 305.0f;
     private static float hD = 110.0f;
     private static Rect rectDelete = new Rect((Screen.width - wD) / 2, (Screen.height - hD) / 2, wD, hD);
-    // Logo
-    private static float wL = 1000.0f;
-    private static float hL = 2000.0f;
-    private static Rect rectLogo = new Rect((Screen.width - wL) / 2, 5, wL, hL);
 
 
-    public static bool updateGUI(bool hasUpdatedGui, Color primaryColor, Color secondaryColor)
-    {
-        if (!hasUpdatedGui)
-        {
-            ColoredGUISkin.Instance.UpdateGuiColors(primaryColor, secondaryColor);
-            hasUpdatedGui = true;
-        }
-        GUI.skin = ColoredGUISkin.Skin;
-        return hasUpdatedGui;
-    }
-
-    public static void createBackground(Texture t)
-    {
-        GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), t);   // Draw the background image
-    }
-
-    public static void createLogo(Texture t)
-    {
-        GUILayout.BeginHorizontal();
-        GUILayout.FlexibleSpace();
-        GUI.Box(rectLogo, t, GUIStyle.none);
-        GUILayout.FlexibleSpace();
-        GUILayout.EndHorizontal();
-    }
 
     public static void createQuitWindow()
     {
