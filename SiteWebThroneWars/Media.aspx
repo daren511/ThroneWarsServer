@@ -35,16 +35,10 @@
             </ul>
         </div>
         <div class="Photos">
-            <ul>
-                <li>
-                    <img src="./Images/LogIn.png" width="300" height="300" /></li>
-                <li>
-                    <img src="./Images/MoveOption.png" width="300" height="300" /></li>
-                <li>
-                    <img src="./Images/AttackOption.png" width="300" height="300" /></li>
-                <li>
-                    <img src="./Images/Attacking.png" width="300" height="300" /></li>
-            </ul>
+            <img src="./Images/LogIn.png" width="300" height="300" />
+            <img src="./Images/MoveOption.png" width="300" height="300" />
+            <img src="./Images/AttackOption.png" width="300" height="300" />
+            <img src="./Images/Attacking.png" width="300" height="300" />
         </div>
 
 

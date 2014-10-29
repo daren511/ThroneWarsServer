@@ -117,6 +117,13 @@ public class NaviUnit : MonoBehaviour
 		}
 	}
 
+    public static void RemoveUnit(GameObject unitFab, TileNode targetNode)
+    {
+        if (targetNode != null)
+            targetNode.units.RemoveAt(0);
+        Destroy(GameObject.Find(unitFab.name));
+    }
+
 	/// <summary>
 	/// checks if unit can stand on the target node
 	/// </summary>
