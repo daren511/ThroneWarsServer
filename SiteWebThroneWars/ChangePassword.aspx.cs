@@ -18,12 +18,12 @@ namespace SiteWebThroneWars
         protected void ChangePassword_Click(object sender, EventArgs e)
         {
             string text = "";
-            bool ChampsValide = VerifChamps();
+            bool ok = VerifChamps();
             string user = username.Text;
             string oldpass = apassword.Text;
             string newPass = npassword.Text;
             string confirmNewPass = ncpassword.Text;
-            if (ChampsValide)
+            if (ok)
             {
                 if (apassword == npassword || npassword != ncpassword)
                 {
@@ -38,22 +38,21 @@ namespace SiteWebThroneWars
                 }
                 else
                 {
-                    //Chercher le username et son l'ancien password correspond
-                    bool UserPassOk = Controle.UserPassCorrespondant(user, oldpass);
-                    if (UserPassOk)
-                    {
-                        // Crypter le nouveau mot de passe et envoyer
-                        string passHash = Controle.HashPassword(newPass, null, System.Security.Cryptography.SHA256.Create());
+                    // Crypter le nouveau mot de passe et envoyer
+                    string passHash = Controle.HashPassword(newPass, null, System.Security.Cryptography.SHA256.Create());
 
-                        //Changer le password du user avec le nouveau password hashé
-                        bool ChangeOk = Controle.UpdatePassword(user, passHash);
-
+                    //Changer le password du user avec le nouveau password hashé
+                    bool ChangeOk = Controle.UpdatePassword(user, passHash);
+                    if (ChangeOk)
                         // Messagebox changement réussi
                         ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>MessageBoxReussi();</script>", false);
+                    else
+                    {
+                        text = "Le changement à échoué";
+                        ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>MessageBoxErreur(\"" + text + "\");</script>", false);
                     }
                 }
             }
-
         }
         protected bool VerifChamps()
         {
@@ -64,7 +63,5 @@ namespace SiteWebThroneWars
             }
             return Valide;
         }
-
-
     }
 }

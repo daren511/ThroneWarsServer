@@ -13,7 +13,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>SiteWebThroneWars</RootNamespace>
     <AssemblyName>SiteWebThroneWars</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
@@ -60,7 +60,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\PublishProfiles\Throne.pubxml" />
-    <Content Include="unslider.min.js" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -73,7 +72,7 @@
     <Content Include="ConfirmAccount.aspx" />
     <Content Include="Connexion.aspx" />
     <Content Include="FinDec.css" />
-    <Content Include="ForgetUsername.aspx" />
+    <Content Include="ForgotUsername.aspx" />
     <Content Include="ForgotPass.aspx" />
     <Content Include="Images\1.jpg" />
     <Content Include="Images\2.jpg" />
@@ -122,12 +121,12 @@
     <Compile Include="Connexion.aspx.designer.cs">
       <DependentUpon>Connexion.aspx</DependentUpon>
     </Compile>
-    <Compile Include="ForgetUsername.aspx.cs">
-      <DependentUpon>ForgetUsername.aspx</DependentUpon>
+    <Compile Include="ForgotUsername.aspx.cs">
+      <DependentUpon>ForgotUsername.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="ForgetUsername.aspx.designer.cs">
-      <DependentUpon>ForgetUsername.aspx</DependentUpon>
+    <Compile Include="ForgotUsername.aspx.designer.cs">
+      <DependentUpon>ForgotUsername.aspx</DependentUpon>
     </Compile>
     <Compile Include="ForgotPass.aspx.cs">
       <DependentUpon>ForgotPass.aspx</DependentUpon>

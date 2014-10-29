@@ -30,11 +30,8 @@ namespace SiteWebThroneWars
                 RecoveryOk = Controle.PasswordRecovery(username);
                 if (RecoveryOk)
                 {
-                    // Hash le username
-                    string userHash = Controle.Phrase.Chiffrer(username);
-
-                    //Email
-                    Email.sendMail()
+                    ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>MessageBoxReussi();</script>", false);
+                    ViderTB();
                 }
                 else
                 {
