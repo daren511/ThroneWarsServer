@@ -11,20 +11,16 @@ public class onMainMenu : MonoBehaviour
     GUIStyle mapStyle;
     private bool hasUpdatedGui = false;
     private bool[] tabMap = { false };
-    //private static string[] tabTeam;
-    //private static string[] tabCharac;
-    //private static string[] tabInvent;  // For the player inventory
-    //private static string[] tabItem;    // For the character inventory
     private static int selectedTeam;
     private static int selectedCharac;
-    private static int selectedInvent;
-    private static int selectedItem;
-
+    private static int selectedInvent;  // For the player inventory
+    private static int selectedItem;    // For the character inventory
+    private static Vector2 scrollPos;
+    // Lists
     private static List<string> tabTeam = new List<string>();
     private static List<string> tabCharac = new List<string>();
     private static List<string> tabInvent = new List<string>();
     private static List<string> tabItem = new List<string>();
-
     // Team window
     private static float wT = 190.0f;
     private static float hT = Screen.height - 145;
@@ -35,18 +31,18 @@ public class onMainMenu : MonoBehaviour
     private static Rect rectCharac = new Rect(10, 10, wC, hC);
     // Play window
     private static float wP = Screen.width - wT - wC - 20;
-    private static float hP = Screen.height - hC - 30;
+    private static float hP = Screen.height - hC - 25;
     private static Rect rectPlay = new Rect((Screen.width - wP) / 2, Screen.height - hP - 10, wP, hP);
     // Inventory window  (player)
     private static float wI = wP / 2;
     private static float hI = (Screen.height - hP) / 2;
-    private static Rect rectInvent = new Rect((Screen.width - wI) / 1.335f, (Screen.height - hI) / 1.455f, wI, hI);
-    // Item window  (character)
-    private static Rect rectItem = new Rect((Screen.width - wI) / 4, (Screen.height - hI) / 1.455f, wI, hI);
+    private static Rect rectInvent = new Rect((Screen.width - wI) / 1.37f, (Screen.height - hI) / 1.455f, wI, hI);
     // Character stats window
     private static float wS = wP;
     private static float hS = hI - 10;
     private static Rect rectStats = new Rect((Screen.width - wS) / 2, 3, wS, hS);
+    // Item window  (character)
+    private static Rect rectItem = new Rect((Screen.width - wS) / 2, (Screen.height - hI) / 1.455f, wS / 2, hI);
 
 
     private int remainingPosition = PlayerManager._instance._chosenTeam.Length;
@@ -56,7 +52,7 @@ public class onMainMenu : MonoBehaviour
         remainingPosition = PlayerManager._instance._chosenTeam.Length;
         ShowAllCharacters();
         ShowSelectedCharacters();
-        ShowPlayerInventory();
+        //ShowPlayerInventory();
     }
 
 
@@ -97,7 +93,7 @@ public class onMainMenu : MonoBehaviour
         GUILayout.FlexibleSpace();
         GUILayout.EndHorizontal();
 
-        GUI.enabled = chosenCharacters == PlayerManager._instance._chosenTeam.Length;
+        GUI.enabled = chosenCharacters == PlayerManager._instance._chosenTeam.Length && tabMap[0];
         if (GUILayout.Button("Jouer"))
         {
             // Go to the place character screen
@@ -109,28 +105,29 @@ public class onMainMenu : MonoBehaviour
     void doInventWindow(int windowID)
     {
         GUILayout.Space(25);
-        selectedInvent = GUILayout.SelectionGrid(selectedInvent, tabInvent.ToArray(), 8);
+        scrollPos = GUILayout.BeginScrollView(scrollPos, ColoredGUISkin.Skin.verticalScrollbar, GUIStyle.none);
+        selectedInvent = GUILayout.SelectionGrid(selectedInvent, tabInvent.ToArray(), 1);
+        GUILayout.EndScrollView();
     }
 
     void doItemWindow(int windowID)
     {
         GUILayout.Space(25);
-        selectedItem = GUILayout.SelectionGrid(selectedItem, tabItem.ToArray(), 8);
+        selectedItem = GUILayout.SelectionGrid(selectedItem, tabItem.ToArray(), 1);
     }
         
     void doStatsWindow(int windowID)
     {
         GUILayout.Space(25);
-        GUILayout.BeginArea(new Rect(rectStats.xMin, rectStats.yMin + rectStats.height - 40, rectStats.width, 30));
+        GUILayout.BeginArea(new Rect(rectStats.xMax / 6, rectStats.yMin + rectStats.height - 44, rectStats.width, 30));
         GUILayout.BeginHorizontal();
-
         GUI.enabled = remainingPosition > 0;
-        if (GUILayout.Button("Ajouter", GUILayout.Height(30), GUILayout.Width(200)))
+        if (GUILayout.Button("Ajouter", GUILayout.Height(35), GUILayout.Width(200)))
         {
             SelectCharacter(selectedCharac);
         }
         GUI.enabled = chosenCharacters > 0;
-        if(GUILayout.Button("Retirer", GUILayout.Height(30), GUILayout.Width(200)))
+        if(GUILayout.Button("Retirer", GUILayout.Height(35), GUILayout.Width(200)))
         {
             UnselectCharacter(selectedTeam);
         }
@@ -140,7 +137,7 @@ public class onMainMenu : MonoBehaviour
 
     void SelectCharacter(int pos)
     {
-        string name = tabCharac[selectedCharac].Remove(tabCharac[selectedCharac].LastIndexOf(','));
+        string name = tabCharac[selectedCharac];
         int indexOfChar = PlayerManager._instance._characters.IndexOf(PlayerManager._instance._characters.Find(x => x._name == name));
         PlayerManager._instance._chosenTeam[chosenCharacters] = PlayerManager._instance._characters[indexOfChar];
         tabCharac.RemoveAt(pos);
@@ -155,7 +152,7 @@ public class onMainMenu : MonoBehaviour
         remainingPosition++;
         chosenCharacters--;
 
-        string name = tabTeam[selectedTeam].Remove(tabTeam[selectedTeam].LastIndexOf(','));
+        string name = tabTeam[selectedTeam];
         int indexOfChar = PlayerManager._instance._characters.IndexOf(PlayerManager._instance._characters.Find(x => x._name == name));
         PlayerManager._instance._chosenTeam[indexOfChar] = null;
     }
@@ -166,7 +163,7 @@ public class onMainMenu : MonoBehaviour
         for (int i = 0; i < PlayerManager._instance._characters.Count; ++i)
         {
             c = PlayerManager._instance._characters[i];
-            tabCharac.Add(c._name.ToString()  + ", " + c._characterClass._className + " de niveau " + c._characterClass._classLevel);
+            tabCharac.Add(c._name.ToString());
         }
     }
     private void ShowSelectedCharacters()
@@ -177,7 +174,7 @@ public class onMainMenu : MonoBehaviour
         {
             c = PlayerManager._instance._chosenTeam[i];
             if(c != null)
-                tabTeam.Add(c._name.ToString() + ", " + c._characterClass._className + " de niveau " + c._characterClass._classLevel);
+                tabTeam.Add(c._name.ToString());
         }
     }
     private void ShowPlayerInventory()
@@ -187,7 +184,7 @@ public class onMainMenu : MonoBehaviour
         for(int i = 0; i < PlayerManager._instance._playerInventory._equips.Count; ++i)
         {
             item = PlayerManager._instance._playerInventory._equips[i];
-            tabInvent.Add(item._itemName + " : " + item._itemDescription);
+            tabInvent.Add(item._itemName);
         }
     }
     private void ShowChosenCharacterInventory()
@@ -199,7 +196,7 @@ public class onMainMenu : MonoBehaviour
         for (int i = 0; i < c._characterInventory._invent.Count; ++i)
         {
             item = PlayerManager._instance._characters[i]._characterInventory._invent[i];
-            tabItem.Add(item._itemName + " : " + item._itemDescription);
+            tabItem.Add(item._itemName);
         }
     }
 }

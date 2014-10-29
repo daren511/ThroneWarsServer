@@ -6,7 +6,8 @@ using System.Collections;
  * By Alexis Lalonde, 2014
  * A singleton that contains the colors and styles of the menus
  */
-public class ResourceManager : MonoBehaviour {
+public class ResourceManager : MonoBehaviour
+{
     //---------- VARIABLES ----------//
     // Color
     private Color _primaryColor = new Color(0.0f, 0.579f, 1.0f, 1.0f);
@@ -14,8 +15,8 @@ public class ResourceManager : MonoBehaviour {
     // Background & Logo
     private Texture _background = Resources.Load("Menu/Background", typeof(Texture)) as Texture;
     private Texture _logo = Resources.Load("Menu/Logo", typeof(Texture)) as Texture;
-    private static float wL = 1000.0f;
-    private static float hL = 2000.0f;
+    private static float wL = Screen.width - 20;
+    private static float hL = 1900.0f;
     private static Rect rectLogo = new Rect((Screen.width - wL) / 2, 5, wL, hL);
     // Instance
     private static ResourceManager _instance = null;
