@@ -29,6 +29,9 @@ public class CombatMenu : MonoBehaviour
     public bool characterChosen = false;
     public bool showItems = false;
 
+    public int winner = 0;
+    public bool gameOver = false;
+
     public bool moveEnabled = true;
     public bool itemEnabled = true;
 
@@ -59,6 +62,7 @@ public class CombatMenu : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        gameOver = winner > 0;
     }
     void InitializeStats()
     {
@@ -79,16 +83,23 @@ public class CombatMenu : MonoBehaviour
 
     void OnGUI()
     {
-        DisplayCharacterStats();
-        InitializeStats();
+        if(!gameOver)
+        {
+            DisplayCharacterStats();
+            InitializeStats();
 
-        if (characterChosen)
-        {
-            DisplayCombatCommands();
+            if (characterChosen)
+            {
+                DisplayCombatCommands();
+            }
+            if (showItems)
+            {
+                DisplayItemMenu();
+            }
         }
-        if (showItems)
+        else
         {
-            DisplayItemMenu();
+            DisplayEndResults();
         }
     }
 
@@ -134,16 +145,16 @@ public class CombatMenu : MonoBehaviour
         GUI.enabled = !go.GetComponent<Character>().didMove;
         if (GUI.Button(new Rect(_menuContainer.x, _menuContainer.y, 100, 20), "Déplacer"))
         {
-            GameController.FindObjectOfType<GameController>().movementAllowed = true;
-            GameController.FindObjectOfType<GameController>().attackAllowed = false;
+            GameController.FindObjectOfType<GameController>().allowInput = false;
+            GameController.FindObjectOfType<GameController>().attackRangeMarker.HideAll();
             StartCoroutine(AllowMovement());
         }
 
         GUI.enabled = !go.GetComponent<Character>().didAttack;
         if (GUI.Button(new Rect(_menuContainer.x, _menuContainer.y + 20, 100, 20), "Attaquer"))
         {
-            GameController.FindObjectOfType<GameController>().attackAllowed = true;
-            GameController.FindObjectOfType<GameController>().movementAllowed = false;
+            GameController.FindObjectOfType<GameController>().allowInput = false;
+            GameController.FindObjectOfType<GameController>().map.ShowAllTileNodes(false);
             StartCoroutine(AllowAttack());
         }
 
@@ -151,10 +162,8 @@ public class CombatMenu : MonoBehaviour
         if (GUI.Button(new Rect(_menuContainer.x, _menuContainer.y + 40, 100, 20), "Item"))
         {
             showItems = true;
-            GameController.FindObjectOfType<GameController>().movementAllowed = false;
-            GameController.FindObjectOfType<GameController>().attackAllowed = false;
         }
-        GUI.enabled = !go.GetComponent<Character>().didAttack || moveEnabled;
+        GUI.enabled = !go.GetComponent<Character>().didMove;
         if (GUI.Button(new Rect(_menuContainer.x, _menuContainer.y + 60, 100, 20), "Défendre"))
         {
             //augmente la défense et passer le tour du personnage
@@ -245,5 +254,32 @@ public class CombatMenu : MonoBehaviour
 
         //fin du menu déroulant
         GUI.EndScrollView();
+    }
+
+    void DisplayEndResults()
+    {
+        string msg = "";
+        if(winner == PlayerManager._instance._playerSide)
+        {
+            msg = "Vous avez gagné!";
+        }
+        else
+        {
+            msg = "Vous avez perdu!";
+        }
+
+        GUI.Box(new Rect(Screen.width * 0.3f, Screen.height * 0.3f, Screen.width/2, Screen.height/2), msg);
+        if (GUI.Button(new Rect(200 + (Screen.width * 0.3f), 100 + (Screen.height * 0.3f), 200, 100), "Retour au menu principal"))
+        {
+            PlayerManager._instance._characters.Clear();
+            Object[] allObjects = GameController.FindObjectsOfType(typeof(Character));
+
+            for (int i = 0; i < allObjects.Length; ++i)
+            {
+                Destroy(allObjects[i]);
+            }
+            onStartUp.GetBidonPlayer();
+            Application.LoadLevel("MainMenu");            
+        }
     }
 }
