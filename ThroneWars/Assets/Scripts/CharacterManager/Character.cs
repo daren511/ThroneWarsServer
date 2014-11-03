@@ -234,7 +234,7 @@ public class Character : NaviUnit
             {
                 _currHealth -= dmg;
             }
-            if(_currHealth <= 0)
+            if(_currHealth == 0)
                 isDying();
         }
         else
