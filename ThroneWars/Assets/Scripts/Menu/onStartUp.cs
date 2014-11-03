@@ -30,9 +30,6 @@ public class onStartUp : MonoBehaviour
     // Login window
     private static float wL = 430.0f;
     private static float hL = 210.0f;
-    // Window rectangles
-    public Texture background;
-    public Texture logo;
     private Rect rectLogin = new Rect((Screen.width - wL) / 2, (Screen.height - hL) / 2, wL, hL);
 
 
@@ -89,9 +86,7 @@ public class onStartUp : MonoBehaviour
         GUILayout.EndHorizontal();
 
         if (userValue.Trim() == "" || pwdvalue.Trim() == "")    // Enable or disable the button is username and password are empty
-        {
             GUI.enabled = false;
-        }
         else
             GUI.enabled = true;
 

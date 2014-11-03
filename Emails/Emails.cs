@@ -9,12 +9,12 @@ namespace Emails
     {
         public static string SujetInscription = "Confirmation compte Throne Wars";
         public static string BodyConfirmation = "Veuillez confirmer votre account lier à ce courriel." +
-            "Voici votre lien pour confirmer : www.thronewars.ca:8080/ConfirmAccount.aspx?User=";
+            "Voici votre lien pour confirmer : www.thronewars.ca/ConfirmAccount.aspx?User=";
         public static string SujetForgetUser = "Répupération de nom d'utilisateur -Throne Wars";
         public static string BodyForgetUser = "Voici votre nom d'utilisateur :";
         public static string SubjectResetPass = "Changement de mot de passe -Throne Wars";
         public static string BodyResetPass = "Pour changer votre mot de passe, veuillez visiter" +
-                                " ce lien et suivre les indications www.thronewars.com:8080/ResetPassword.aspx?User=";
+                                " ce lien et suivre les indications www.thronewars.com/ResetPassword.aspx?User=";
 
         public static bool sendMail(string email,string subject,string message)
         {

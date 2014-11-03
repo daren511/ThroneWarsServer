@@ -14,6 +14,8 @@ namespace ControleBD
         public Socket Socket;
 
         public List<Personnages> Persos = new List<Personnages>();
+        public string Username;
+        public int jid;
         public int Position { get; private set; }
         public bool isConnected = false;
         public Joueur(Socket sck, int position)

@@ -5,6 +5,9 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using ControleBD;
+using Oracle.DataAccess.Client;
+using System.Data;
+
 
 namespace SiteWebThroneWars
 {
@@ -18,6 +21,7 @@ namespace SiteWebThroneWars
         {
             //String pour le sweetalert
             string text = "";
+            DataSet DS = new DataSet();
             // Textbox non null
             bool ok = VerifChamps();
             bool Connecter = false;
@@ -34,18 +38,37 @@ namespace SiteWebThroneWars
                 if (Connecter)
                 {
                     ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>MessageBoxReussi();</script>", false);
+
+
+                    //Si oui > Ramener la position du leaderboard
+
+                    //Prend le JID
+                    int JID = Controle.GetJID(user);
+                    if (JID != 0)
+                    {
+                        /*
+                        // Return stats des persos dans un DataSet
+                        DS = Controle.ReturnStats(JID);
+                        GV_Stats.DataSource = DS;
+                        GV_Stats.DataBind();
+                         */
+                        
+                    }
+
+
+                    else
+                    {
+                        text = "JID Invalide ";
+                        //Textbox vide erreur
+                        ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>MessageBoxErreur(\"" + text + "\");</script>", false);
+                    }
                 }
                 else
                 {
-                    text = "Shit happens";
-                    //Textbox vide erreur
+                    text = "Le nom d'utilisateur et le mot de passe n'étaient pas correspondant";
+                    // Pas connecté
                     ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>MessageBoxErreur(\"" + text + "\");</script>", false);
                 }
-
-                //Vérif si Username et Password sont correspondant
-                //Si oui > Ramener la position du leaderboard
-
-                // XP and Perso and Niveau
             }
             else
             {
@@ -66,6 +89,7 @@ namespace SiteWebThroneWars
         }
     }
 }
+
 
 
 

@@ -10,6 +10,12 @@ namespace ControleBD
         public int Xp { get; private set; }
         List<Items> Item = new List<Items>();
 
+        public Personnages(string nom,int level,int classid)
+        {
+            this.Nom = nom;
+            this.Level = level;
+            this.ClassId = classid;
+        }
         public int ClassId { get; private set; }
         public int Health { get; private set; }
         public int Magic { get; private set; }
