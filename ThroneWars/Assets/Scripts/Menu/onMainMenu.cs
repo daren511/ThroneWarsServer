@@ -47,6 +47,17 @@ public class onMainMenu : MonoBehaviour
     private static float wS = wP;
     private static float hS = hI - 10;
     private static Rect rectStats = new Rect((Screen.width - wS) / 2, 3, wS, hS);
+    // Character stats icons
+    public  Texture2D _healthTexture;
+    public  Texture2D _magicTexture;
+    public  Texture2D _atkTexture;
+    public  Texture2D _defTexture;
+    public  Texture2D _matkTexture;
+    public  Texture2D _mdefTexture;
+
+    private string __spriteClass;
+    private Texture2D sprite1 = null;
+    private Texture2D sprite2 = null;
 
 
     private int remainingPosition = PlayerManager._instance._chosenTeam.Length;
@@ -57,6 +68,21 @@ public class onMainMenu : MonoBehaviour
         ShowAllCharacters();
         ShowSelectedCharacters();
         ShowPlayerInventory();
+
+        onMenuLoad.listStyle.normal.textColor = Color.white;
+        onMenuLoad.listStyle.onHover.background =
+        onMenuLoad.listStyle.hover.background = new Texture2D(2, 2);
+        onMenuLoad.listStyle.padding.left =
+        onMenuLoad.listStyle.padding.right =
+        onMenuLoad.listStyle.padding.top =
+        onMenuLoad.listStyle.padding.bottom = 4;
+
+        onMenuLoad.cb = new ComboBox(new Rect(onMenuLoad.rectCreate.xMin / 2 + 40, onMenuLoad.rectCreate.yMin + 10, 200, 30), onMenuLoad.contents[0],
+            onMenuLoad.contents, "button", "box", onMenuLoad.listStyle);
+
+        __spriteClass = PlayerManager._instance._characters[0]._characterClass._className;
+        sprite1 = GetSprite(__spriteClass, 1);
+        sprite2 = GetSprite(__spriteClass, 2);
     }
 
 
@@ -65,6 +91,7 @@ public class onMainMenu : MonoBehaviour
         hasUpdatedGui = ResourceManager.GetInstance.UpdateGUI(hasUpdatedGui);
         ResourceManager.GetInstance.CreateBackground();
 
+        onMenuLoad.createCreationWindow();
         onMenuLoad.createDeleteWindow();
         onMenuLoad.createQuitWindow();
         onMenuLoad.createMenuWindow(true);
@@ -120,6 +147,79 @@ public class onMainMenu : MonoBehaviour
         
     void doStatsWindow(int windowID)
     {
+        string name = tabCharac[selectedCharac].Remove(tabCharac[selectedCharac].LastIndexOf(','));
+        int indexOfChar = PlayerManager._instance._characters.IndexOf(PlayerManager._instance._characters.Find(x => x._name == name));
+        Character c = PlayerManager._instance._characters[indexOfChar];
+
+        if (__spriteClass != c._characterClass._className)
+        {
+            __spriteClass = c._characterClass._className;
+            sprite1 = GetSprite(c._characterClass._className, 1);
+            sprite2 = GetSprite(c._characterClass._className, 2);
+        }
+
+        GUILayout.BeginHorizontal();
+        GUILayout.BeginArea(new Rect(20f, 10f, 150, 150));
+        GUI.DrawTexture(new Rect(20f, 10f, 50, 50), sprite1, ScaleMode.StretchToFill, true, 0.0f);
+        GUILayout.EndArea();
+        GUILayout.BeginArea(new Rect(60f, 10f, 150, 150));
+        GUI.DrawTexture(new Rect(60f, 10f, 50, 50), sprite2, ScaleMode.StretchToFill, true, 0.0f);
+        GUILayout.EndArea();
+        GUILayout.EndHorizontal();
+
+
+        GUILayout.BeginVertical();
+        GUILayout.BeginArea(new Rect(30f, 80f, 200, 32));
+        GUILayout.Label(c._name + ", " + c._characterClass._className + " niveau " + c._characterClass._classLevel);
+        GUILayout.EndArea();
+        GUILayout.EndVertical();
+
+        GUILayout.BeginHorizontal();
+
+        GUILayout.BeginVertical();
+        GUI.DrawTexture(new Rect(325f, 20f, 32, 32), _healthTexture, ScaleMode.StretchToFill, true, 0.0f);
+        GUI.DrawTexture(new Rect(325f, 70f, 32, 32), _magicTexture, ScaleMode.StretchToFill, true, 0.0f);
+        GUILayout.EndVertical();
+        
+        GUILayout.BeginVertical();
+        GUILayout.BeginArea(new Rect(360f, 20f, 100, 32));
+        GUILayout.Label(": " + c._maxHealth);
+        GUILayout.EndArea();
+        GUILayout.BeginArea(new Rect(360f, 75f, 100, 32));
+        GUILayout.Label(": " + c._maxMagic);
+        GUILayout.EndArea();
+        GUILayout.EndVertical();
+
+        GUILayout.BeginVertical();
+        GUI.DrawTexture(new Rect(425f, 20f, 32, 32), _atkTexture, ScaleMode.StretchToFill, true, 0.0f);
+        GUI.DrawTexture(new Rect(425f, 70f, 32, 32), _defTexture, ScaleMode.StretchToFill, true, 0.0f);
+        GUILayout.EndHorizontal();
+
+        GUILayout.BeginVertical();
+        GUILayout.BeginArea(new Rect(460f, 20f, 100, 32));
+        GUILayout.Label(": " + c._physAttack);
+        GUILayout.EndArea();
+        GUILayout.BeginArea(new Rect(460f, 75f, 100, 32));
+        GUILayout.Label(": " + c._physDefense);
+        GUILayout.EndArea();
+        GUILayout.EndVertical();
+
+        GUILayout.BeginVertical();
+        GUI.DrawTexture(new Rect(525f, 20f, 32, 32), _matkTexture, ScaleMode.StretchToFill, true, 0.0f);
+        GUI.DrawTexture(new Rect(525f, 70f, 32, 32), _mdefTexture, ScaleMode.StretchToFill, true, 0.0f);
+        GUILayout.EndVertical();
+
+        GUILayout.BeginVertical();
+        GUILayout.BeginArea(new Rect(560f, 20f, 100, 32));
+        GUILayout.Label(": " + c._magicAttack);
+        GUILayout.EndArea();
+        GUILayout.BeginArea(new Rect(560f, 75f, 100, 32));
+        GUILayout.Label(": " + c._magicDefense);
+        GUILayout.EndArea();
+        GUILayout.EndVertical();
+
+        GUILayout.EndHorizontal();
+
         GUILayout.Space(25);
         GUILayout.BeginArea(new Rect(rectStats.xMin, rectStats.yMin + rectStats.height - 40, rectStats.width, 30));
         GUILayout.BeginHorizontal();
@@ -136,6 +236,27 @@ public class onMainMenu : MonoBehaviour
         }
         GUILayout.EndHorizontal();
         GUILayout.EndArea();
+    }
+
+    private Texture2D GetSprite(string characterClass, int spriteID)
+    {
+        string classPrefab = "";
+        switch (characterClass)
+        {
+            case "Guerrier":
+                classPrefab = "Textures/MenuSprites/MenuWarrior" + spriteID;
+                break;
+            case "Prêtre":
+                classPrefab = "Textures/MenuSprites/MenuPriest" + spriteID;
+                break;
+            case "Mage":
+                classPrefab = "Textures/MenuSprites/MenuMage" + spriteID;
+                break;
+            case "Archer":
+                classPrefab = "Textures/MenuSprites/MenuArcher" + spriteID;
+                break;
+        }
+        return Resources.Load(classPrefab, typeof(Texture2D)) as Texture2D;
     }
 
     void SelectCharacter(int pos)

@@ -79,10 +79,10 @@ public class onStartUp : MonoBehaviour
         lblError.normal.textColor = Color.red;
         if (!canConnect)
             GUILayout.Label("Erreur dans la connexion au serveur", lblError);
-        else if(!confirmed)
+        else if (!confirmed)
             GUILayout.Label("Votre compte n'est pas confirmé", lblError);
-        else if(!validInfos)
-            GUILayout.Label("Usager/Mot de passe invalide!", lblError);
+        else if (!validInfos)
+            GUILayout.Label("Usager/Mot de passe invalide", lblError);
         else
             GUILayout.Label("");
         GUILayout.FlexibleSpace();
@@ -110,6 +110,8 @@ public class onStartUp : MonoBehaviour
 
                 if (sck.Connected)
                 {
+
+
                     // on vérifie les infos entrées par le joueur(usager, mot de passe)
                     CheckPasswordUser();
 
@@ -118,8 +120,8 @@ public class onStartUp : MonoBehaviour
                         //GetPlayerInfo();
                         Application.LoadLevel("MainMenu");
                     }
-                    }
                 }
+            }
             catch (SocketException ex)   // The user can't connect to the server
             {
                 Debug.Log(ex.Message.ToString());
@@ -195,7 +197,7 @@ public class onStartUp : MonoBehaviour
             //ici traiter l'inventaire du personnage
             CharacterInventory characterInvent = GetCharacterInventory(i);
 
-            PlayerManager._instance._characters.Add(Character.CreateCharacter(perso.Nom, charClass, perso.Level, perso.Xp, perso.Moves, 
+            PlayerManager._instance._characters.Add(Character.CreateCharacter(perso.Nom, charClass, perso.Level, perso.Xp, perso.Moves,
                 perso.Range, perso.Health, perso.Magic, characterInvent, perso.PhysAtk, perso.PhysDef, perso.MagicAtk, perso.MagicDef));
 
         }

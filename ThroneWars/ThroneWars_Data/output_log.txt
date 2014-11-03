@@ -17,14 +17,49 @@ Platform assembly: C:\Users\Administrateur\Documents\GitHub\ThroneWarsServer\Thr
 Loading C:\Users\Administrateur\Documents\GitHub\ThroneWarsServer\ThroneWars\ThroneWars_Data\Managed\Oracle.DataAccess.dll into Unity Child Domain
 Platform assembly: C:\Users\Administrateur\Documents\GitHub\ThroneWarsServer\ThroneWars\ThroneWars_Data\Managed\NGUI.dll (this message is harmless)
 Loading C:\Users\Administrateur\Documents\GitHub\ThroneWarsServer\ThroneWars\ThroneWars_Data\Managed\NGUI.dll into Unity Child Domain
-- Completed reload, in  0.058 seconds
+- Completed reload, in  0.198 seconds
 desktop: 1680x1050 60Hz; virtual: 1680x1050 at 0,0
 <RI> Initializing input.
 <RI> Input initialized.
 Platform assembly: C:\Users\Administrateur\Documents\GitHub\ThroneWarsServer\ThroneWars\ThroneWars_Data\Managed\System.dll (this message is harmless)
 Platform assembly: C:\Users\Administrateur\Documents\GitHub\ThroneWarsServer\ThroneWars\ThroneWars_Data\Managed\System.Core.dll (this message is harmless)
-Profiler is only supported with Pro License
+NullReferenceException: Object reference not set to an instance of an object
+  at onStartUp.doLoginWindow (Int32 windowID) [0x00261] in C:\Users\Administrateur\Documents\GitHub\ThroneWarsServer\ThroneWars\Assets\Scripts\Menu\onStartUp.cs:120 
+  at UnityEngine.GUILayout+LayoutedWindow.DoWindow (Int32 windowID) [0x00076] in C:\BuildAgent\work\d63dfc6385190b60\artifacts\StandalonePlayerGenerated\GUILayout.cs:413 
+  at UnityEngine.GUI.CallWindowDelegate (UnityEngine.WindowFunction func, Int32 id, UnityEngine.GUISkin _skin, Int32 forceRect, Single width, Single height, UnityEngine.GUIStyle style) [0x0005c] in C:\BuildAgent\work\d63dfc6385190b60\artifacts\StandalonePlayerGenerated\GUI.cs:1402 
  
-(Filename: C:/BuildAgent/work/d63dfc6385190b60/Runtime/Profiler/ProfilerConnection.cpp Line: 218)
+(Filename: C Line: 0)
 
-Waiting for finish
+CompareBaseObjectsInternal can only be called from the main thread.
+Constructors and field initializers will be executed from the loading thread when loading a scene.
+Don't use this function in the constructor or field initializers, instead move initialization code to the Awake or Start function.
+ 
+(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineObject.cpp Line: 17)
+
+ArgumentException: CompareBaseObjectsInternal can only be called from the main thread.
+Constructors and field initializers will be executed from the loading thread when loading a scene.
+Don't use this function in the constructor or field initializers, instead move initialization code to the Awake or Start function.
+  at (wrapper managed-to-native) UnityEngine.Object:CompareBaseObjectsInternal (UnityEngine.Object,UnityEngine.Object)
+  at UnityEngine.Object.CompareBaseObjects (UnityEngine.Object lhs, UnityEngine.Object rhs) [0x00000] in C:\BuildAgent\work\d63dfc6385190b60\artifacts\StandalonePlayerGenerated\UnityEngineObject.cs:49 
+  at UnityEngine.Object.op_Equality (UnityEngine.Object x, UnityEngine.Object y) [0x00000] in C:\BuildAgent\work\d63dfc6385190b60\artifacts\StandalonePlayerGenerated\UnityEngineObject.cs:160 
+  at PlayerManager.get__instance () [0x00000] in C:\Users\Administrateur\Documents\GitHub\ThroneWarsServer\ThroneWars\Assets\Scripts\ModelLayer\PlayerManager.cs:25 
+  at onMainMenu..ctor () [0x00000] in <filename unknown>:0 
+ 
+(Filename: C Line: 0)
+
+UnloadTime: 0.426800 ms
+System memory in use before: 20.9 MB.
+Unloading 3 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
+System memory in use after: 20.8 MB.
+
+Unloading 3 unused Assets to reduce memory usage. Loaded Objects now: 293.
+Total: 1.403923 ms (FindLiveObjects: 0.031800 ms CreateObjectMapping: 0.033474 ms MarkObjects: 0.352821 ms  DeleteObjects: 0.018745 ms)
+
+UnloadTime: 0.368889 ms
+System memory in use before: 23.7 MB.
+Unloading 1 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
+System memory in use after: 21.1 MB.
+
+Unloading 22 unused Assets to reduce memory usage. Loaded Objects now: 310.
+Total: 1.625859 ms (FindLiveObjects: 0.023766 ms CreateObjectMapping: 0.037826 ms MarkObjects: 0.566389 ms  DeleteObjects: 0.079669 ms)
+

@@ -73,6 +73,7 @@
     <Compile Include="Assets\Scripts\Combat\CombatMenu.cs" />
     <Compile Include="Assets\Scripts\Combat\StatusIndicator.cs" />
     <Compile Include="Assets\Scripts\Connection.cs" />
+    <Compile Include="Assets\Scripts\GUIs\ComboBox.cs" />
     <Compile Include="Assets\Scripts\GUIs\Log_GUI.cs" />
     <Compile Include="Assets\Scripts\GUIs\MainMenu_GUI.cs" />
     <Compile Include="Assets\Scripts\Grid\GridManager.cs" />
