@@ -27,22 +27,18 @@ namespace ThroneWarsServer
                 if (!Joueur.isConnected && Joueur.isAlive())
                 {
                     string Login = recevoirLogin();
-                    Joueur.
-                    bool reponse = Controle.UserPassCorrespondant(Login.Split(Splitter)[0], Login.Split(Splitter)[1]);
+                    Joueur.Username = Login.Split(Splitter)[0];
+                    bool reponse = Controle.UserPassCorrespondant(Joueur.Username, Login.Split(Splitter)[1]);
                     if (reponse) 
                     {
                         envoyerReponse(reponse.ToString());
                         Joueur.isConnected = true; 
                     }
-                    else
-                    {
-          
-                        envoyerReponse(reponse.ToString());
-                    }
+                    else{ envoyerReponse(reponse.ToString()); }
                 }
                 if(Joueur.isConnected)
                 {
-
+                    Joueur.jid = Controle.getJID(Joueur.Username);
                 }
             }
             catch (OracleException e)

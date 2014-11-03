@@ -747,7 +747,7 @@ namespace ControleBD
             {
                 OracleConnection conn = Connection.GetInstance().conn;
                 string passHash = Controle.HashPassword(password, null, System.Security.Cryptography.SHA256.Create());
-                string sqlSelect = "select count(*) from joueurs where USERNAME = :USERNAME and HASH_KEY = :passHash";
+                string sqlSelect = "select count(*),JID from joueurs where USERNAME = :USERNAME and HASH_KEY = :passHash";
 
 
                 OracleCommand oraSelect = conn.CreateCommand();
@@ -763,7 +763,8 @@ namespace ControleBD
                 using (OracleDataReader objRead = oraSelect.ExecuteReader())
                 {
                     objRead.Read();
-                    return objRead.GetInt32(0) == 1;
+                        return objRead.GetInt32(0) == 1;
+                    
                 }
             }
             catch (OracleException ora)
@@ -836,6 +837,35 @@ namespace ControleBD
             return Stats;
         }
 
+        public static int getJID(string username)
+        {
+            OracleConnection conn = Connection.GetInstance().conn;
+
+            string sqlconfirmation = "select jid from joueurs where username=:username";
+
+            try
+            {
+                OracleCommand oraSelect = new OracleCommand(sqlconfirmation, conn);
+
+                OracleParameter OraParamUsername = new OracleParameter(":username", OracleDbType.Varchar2, 32);
+
+                OraParamUsername.Value = username;
+                oraSelect.Parameters.Add(OraParamUsername);
+
+                using (OracleDataReader objRead = oraSelect.ExecuteReader())
+                {
+                    if(objRead.Read())
+                    return objRead.GetInt32(0);
+                }
+
+            }
+            catch (OracleException ex)
+            {
+                Erreur.ErrorMessage(ex);
+            }
+            return 0;
+        }
+
         public static bool ResetPassword(string userHash,string passHash)
         {
             OracleConnection conn = Connection.GetInstance().conn;
@@ -867,6 +897,7 @@ namespace ControleBD
                 return false;
             }
         }
+
         public class Phrase
         {
             static int increment = 2;
