@@ -8,13 +8,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Oracle.DataAccess.Client;
+using ControleBD;
 
 namespace DeveloperApplication
 {
     public partial class FORM_Main : Form
     {
         //---------- VARIABLES ----------//
-        private OracleConnection conn;
 
 
         public FORM_Main()
@@ -24,31 +24,16 @@ namespace DeveloperApplication
 
         private void FORM_Main_Load(object sender, EventArgs e)
         {
-            Connexion();
-        }
-
-        private void Connexion()
-        {
-            string Dsource = "(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)"
-                            + "(HOST=bd.thronewars.ca)(PORT=1521)))"
-                            + "(CONNECT_DATA=(SERVICE_NAME=ORCL)))";
-
-            String ChaineConnexion = "Data Source=" + Dsource + ";User Id= Throne;Password =Warst";
-            conn.ConnectionString = ChaineConnexion;
-            try
-            {
-                conn.Open();
-            }
-            catch (OracleException ex)
-            {
-                MessageBox.Show(ex.Message.ToString());
-                Application.Exit();
-            }
+            ListerJoueurs();
         }
 
         private void ListerJoueurs()
         {
-
+            if (Controle.ListPlayers() != null)
+            {
+                BindingSource maSource = new BindingSource(Controle.ListPlayers(), "JOUEURS");
+                DGV_Joueurs.DataSource = maSource;
+            }
         }
     }
 }

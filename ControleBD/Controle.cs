@@ -967,5 +967,28 @@ namespace ControleBD
         }
 
 
+        //------------------------------ À ALEXIS ------------------------------//
+        public static DataSet ListPlayers()
+        {
+            OracleConnection conn = Connection.GetInstance().conn;
+            DataSet monDataSet = new DataSet();
+            string sql = "SELECT USERNAME FROM JOUEURS";
+
+            try
+            {
+                OracleDataAdapter oraSelect = new OracleDataAdapter(sql, conn);
+                if (monDataSet.Tables.Contains("JOUEURS"))
+                    monDataSet.Tables["JOUEURS"].Clear();
+
+                oraSelect.Fill(monDataSet, "JOUEURS");
+                oraSelect.Dispose();
+                return monDataSet;
+            }
+            catch (OracleException ex)
+            {
+                Erreur.ErrorMessage(ex);
+                return null;
+            }
+        }
     }
 }
