@@ -114,6 +114,12 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ControleBD\ControleBD.csproj">
+      <Project>{93432e1c-1d64-4bd3-9c08-e1a5b260b6b9}</Project>
+      <Name>ControleBD</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
