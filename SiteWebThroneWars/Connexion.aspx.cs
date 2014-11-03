@@ -43,7 +43,7 @@ namespace SiteWebThroneWars
                     //Si oui > Ramener la position du leaderboard
 
                     //Prend le JID
-                    int JID = Controle.GetJID(user);
+                    int JID = Controle.getJID(user);
                     if (JID != 0)
                     {
                         /*

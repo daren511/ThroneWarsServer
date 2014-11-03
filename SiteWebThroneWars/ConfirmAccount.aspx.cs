@@ -17,9 +17,11 @@ namespace SiteWebThroneWars
             Uri myUri = new Uri(URL);
             string userSplit = HttpUtility.ParseQueryString(myUri.Query).Get("User");
             RecoveryOK = Controle.confirmAccount(userSplit);
-            
-            if(RecoveryOK)
+
+            if (RecoveryOK)
+            {
                 ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>MessageBoxReussi();</script>", false);
+            }
             /*
              // Gestion d'erreur si deja Confirmed?
             else
