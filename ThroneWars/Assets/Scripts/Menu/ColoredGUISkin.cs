@@ -42,9 +42,15 @@ public class ColoredGUISkin : MonoBehaviour {
 		actualSkin.button.normal.background = UpdateGuiSkin(customSkin.button.normal.background, color);
 		actualSkin.button.hover.background = UpdateGuiSkin(customSkin.button.hover.background, color);
 		actualSkin.button.active.background = UpdateGuiSkin(customSkin.button.active.background, color);
+        actualSkin.button.onNormal.background = UpdateGuiSkin(customSkin.button.normal.background, color);
+        actualSkin.button.onHover.background = UpdateGuiSkin(customSkin.button.hover.background, color);
+        actualSkin.button.onActive.background = UpdateGuiSkin(customSkin.button.active.background, color);
 		actualSkin.button.normal.textColor = secondaryColor;
 		actualSkin.button.hover.textColor = secondaryColor;
 		actualSkin.button.active.textColor = secondaryColor;
+        actualSkin.button.onNormal.textColor = secondaryColor;
+        actualSkin.button.onHover.textColor = secondaryColor;
+        actualSkin.button.onActive.textColor = secondaryColor;
 		
 		// Window
 		actualSkin.window = new GUIStyle("window");
@@ -92,7 +98,7 @@ public class ColoredGUISkin : MonoBehaviour {
 		
 		// Label
 		actualSkin.label = new GUIStyle("label");
-		actualSkin.label.normal.textColor = color;
+		actualSkin.label.normal.textColor = Color.white;
 		
 		// Scroll bar
 		actualSkin.verticalScrollbar = new GUIStyle("verticalscrollbar");

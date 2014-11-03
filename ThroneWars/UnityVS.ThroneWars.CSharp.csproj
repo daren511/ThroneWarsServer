@@ -79,6 +79,7 @@
     <Compile Include="Assets\Scripts\Grid\Tile.cs" />
     <Compile Include="Assets\Scripts\Grid\TileBehaviour.cs" />
     <Compile Include="Assets\Scripts\Menu\ColoredGUISkin.cs" />
+    <Compile Include="Assets\Scripts\Menu\ResourceManager.cs" />
     <Compile Include="Assets\Scripts\Menu\ScrollBarButton.cs" />
     <Compile Include="Assets\Scripts\Menu\UITab.cs" />
     <Compile Include="Assets\Scripts\Menu\onMainMenu.cs" />

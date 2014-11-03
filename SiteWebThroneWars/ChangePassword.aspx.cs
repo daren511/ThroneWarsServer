@@ -25,7 +25,7 @@ namespace SiteWebThroneWars
             string confirmNewPass = ncpassword.Text;
             if (ok)
             {
-                if (apassword == npassword || npassword != ncpassword)
+                if (apassword.Text == npassword.Text || npassword.Text != ncpassword.Text)
                 {
                     // Redirect avant ??
                     text = "L'ancien mot de pass et le nouveau sont les mêmes ou le nouveau et la confirmation ne correspondent pas";

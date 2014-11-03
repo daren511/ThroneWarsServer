@@ -8,6 +8,8 @@ using System.Collections.Generic;
  * */
 public class GameManager : MonoBehaviour
 {
+    const int MAX_TEAM_LENGTH = 4;
+
     public List<int> _playerPositions = new List<int>();
     public List<int> _enemyPositions = new List<int>();
 
@@ -30,7 +32,7 @@ public class GameManager : MonoBehaviour
     void Awake()
     {
         DontDestroyOnLoad(this);
-        _enemyTeam = new Character[4];
+        _enemyTeam = new Character[MAX_TEAM_LENGTH];
         instance = this;
     }
 }

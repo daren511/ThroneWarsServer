@@ -64,14 +64,10 @@
         </div>
 
         <div class="Stats">
-            <asp:Table ID="tableStats" runat="server" GridLines="Both">
-                <asp:TableHeaderRow runat="server" ForeColor="Red">
-                    <asp:TableHeaderCell># Personnage</asp:TableHeaderCell>
-                    <asp:TableHeaderCell>Niveaux</asp:TableHeaderCell>
-                    <asp:TableHeaderCell>XP</asp:TableHeaderCell>
-                    <asp:TableHeaderCell>Classe</asp:TableHeaderCell>
-                </asp:TableHeaderRow>
-            </asp:Table>
+
+                 <asp:GridView runat="server" ID="GV_Stats">
+                     
+                 </asp:GridView>
         </div>
     </form>
 </body>
