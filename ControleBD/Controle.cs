@@ -14,7 +14,7 @@ namespace ControleBD
     public class Controle
     {
         private static int SaltValueSize = 16;
-
+        
         public static bool deletePerso(int GUID)
         {
             OracleConnection conn = Connection.GetInstance().conn;
@@ -725,7 +725,7 @@ namespace ControleBD
                 if (result != null)
                 {
                     //envoie un email au courriel correspondant du username
-                    Email.sendMail(email, Email.SujetForgetUser, Email.BodyForgetUser + result);
+                    Email.sendMail(email, Email.SujetForgetUser, Email.BodyForgetUser + result);  
                 }
                 return true;
             }
@@ -747,7 +747,7 @@ namespace ControleBD
             {
                 OracleConnection conn = Connection.GetInstance().conn;
                 string passHash = Controle.HashPassword(password, null, System.Security.Cryptography.SHA256.Create());
-                string sqlSelect = "select count(*) from joueurs where USERNAME = :USERNAME and HASH_KEY = :passHash";
+                string sqlSelect = "select count(*),JID from joueurs where USERNAME = :USERNAME and HASH_KEY = :passHash";
 
 
                 OracleCommand oraSelect = conn.CreateCommand();
@@ -875,7 +875,36 @@ namespace ControleBD
             return JID;
         }
 
-        public static bool ResetPassword(string userHash, string passHash)
+        public static int getJID(string username)
+        {
+            OracleConnection conn = Connection.GetInstance().conn;
+
+            string sqlconfirmation = "select jid from joueurs where username=:username";
+
+            try
+            {
+                OracleCommand oraSelect = new OracleCommand(sqlconfirmation, conn);
+
+                OracleParameter OraParamUsername = new OracleParameter(":username", OracleDbType.Varchar2, 32);
+
+                OraParamUsername.Value = username;
+                oraSelect.Parameters.Add(OraParamUsername);
+
+                using (OracleDataReader objRead = oraSelect.ExecuteReader())
+                {
+                    if(objRead.Read())
+                    return objRead.GetInt32(0);
+                }
+
+            }
+            catch (OracleException ex)
+            {
+                Erreur.ErrorMessage(ex);
+            }
+            return 0;
+        }
+
+        public static bool ResetPassword(string userHash,string passHash)
         {
             OracleConnection conn = Connection.GetInstance().conn;
 
@@ -906,6 +935,7 @@ namespace ControleBD
                 return false;
             }
         }
+
         public class Phrase
         {
             static int increment = 2;
