@@ -158,12 +158,20 @@ namespace SiteWebThroneWars
         }
         protected bool VerifChamps()
         {
-            bool Valide = false;
-            if (!string.IsNullOrWhiteSpace(username.Text) || !string.IsNullOrWhiteSpace(password.Text) || !string.IsNullOrWhiteSpace(cpassword.Text) ||
-                !string.IsNullOrWhiteSpace(email.Text) || !string.IsNullOrWhiteSpace(cemail.Text))
-            {
-                Valide = true;
-            }
+            bool Valide = true;
+            if (string.IsNullOrWhiteSpace(username.Text) || string.IsNullOrEmpty(username.Text))
+                Valide = false;
+            if (string.IsNullOrWhiteSpace(username.Text) || string.IsNullOrEmpty(username.Text))
+                Valide = false;
+            if (string.IsNullOrWhiteSpace(password.Text) || string.IsNullOrEmpty(password.Text))
+                Valide = false;
+            if (string.IsNullOrWhiteSpace(cpassword.Text) || string.IsNullOrEmpty(cpassword.Text))
+                Valide = false;
+            if (string.IsNullOrWhiteSpace(email.Text) || string.IsNullOrEmpty(email.Text))
+                Valide = false;
+            if (string.IsNullOrWhiteSpace(cemail.Text) || string.IsNullOrEmpty(cemail.Text))
+                Valide = false;
+
             return Valide;
         }
         protected void ViderTB()

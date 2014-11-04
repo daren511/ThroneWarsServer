@@ -16,7 +16,7 @@
         <script type="text/javascript">
             function MessageBoxReussi() {
                 $(document).ready(function () {
-                    swal({ title: "Bravo! ", text: "Votre confirmation de compte est réussie", type: "success", confirmButtonText: "Ok" });
+                    swal({ title: "Bravo! ", text: "Votre confirmation de compte est réussie", type: "success", confirmButtonText: "Ok" }, function () {response.Redirect("www.thronewars.ca");});
                 });
             }
             function MessageBoxErreur(textadaptatif) {

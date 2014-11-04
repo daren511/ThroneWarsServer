@@ -14,7 +14,7 @@ namespace Emails
         public static string BodyForgetUser = "Voici votre nom d'utilisateur :";
         public static string SubjectResetPass = "Changement de mot de passe -Throne Wars";
         public static string BodyResetPass = "Pour changer votre mot de passe, veuillez visiter" +
-                                " ce lien et suivre les indications www.thronewars.com/ResetPassword.aspx?User=";
+                                " ce lien et suivre les indications www.thronewars.ca/ResetPassword.aspx?User=";
 
         public static bool sendMail(string email,string subject,string message)
         {
