@@ -60,22 +60,33 @@
             // 
             // DGV_Joueurs
             // 
+            this.DGV_Joueurs.AllowUserToAddRows = false;
+            this.DGV_Joueurs.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.DGV_Joueurs.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.DGV_Joueurs.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DGV_Joueurs.Location = new System.Drawing.Point(13, 28);
+            this.DGV_Joueurs.MultiSelect = false;
             this.DGV_Joueurs.Name = "DGV_Joueurs";
             this.DGV_Joueurs.Size = new System.Drawing.Size(300, 233);
             this.DGV_Joueurs.TabIndex = 1;
+            this.DGV_Joueurs.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DGV_Joueurs_CellClick);
             // 
             // DGV_Personnages
             // 
+            this.DGV_Personnages.AllowUserToAddRows = false;
+            this.DGV_Personnages.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.DGV_Personnages.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.DGV_Personnages.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DGV_Personnages.Location = new System.Drawing.Point(350, 28);
+            this.DGV_Personnages.MultiSelect = false;
             this.DGV_Personnages.Name = "DGV_Personnages";
             this.DGV_Personnages.Size = new System.Drawing.Size(434, 233);
             this.DGV_Personnages.TabIndex = 2;
+            this.DGV_Personnages.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DGV_Personnages_CellClick);
             // 
             // BTN_CONS_Joueur
             // 
+            this.BTN_CONS_Joueur.Enabled = false;
             this.BTN_CONS_Joueur.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BTN_CONS_Joueur.Location = new System.Drawing.Point(13, 267);
             this.BTN_CONS_Joueur.Name = "BTN_CONS_Joueur";
@@ -86,6 +97,7 @@
             // 
             // BTN_SUPP_Joueur
             // 
+            this.BTN_SUPP_Joueur.Enabled = false;
             this.BTN_SUPP_Joueur.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BTN_SUPP_Joueur.Location = new System.Drawing.Point(165, 267);
             this.BTN_SUPP_Joueur.Name = "BTN_SUPP_Joueur";
@@ -106,6 +118,7 @@
             // 
             // BTN_CONS_Perso
             // 
+            this.BTN_CONS_Perso.Enabled = false;
             this.BTN_CONS_Perso.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BTN_CONS_Perso.Location = new System.Drawing.Point(497, 267);
             this.BTN_CONS_Perso.Name = "BTN_CONS_Perso";
@@ -116,6 +129,7 @@
             // 
             // BTN_SUPP_Perso
             // 
+            this.BTN_SUPP_Perso.Enabled = false;
             this.BTN_SUPP_Perso.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BTN_SUPP_Perso.Location = new System.Drawing.Point(643, 267);
             this.BTN_SUPP_Perso.Name = "BTN_SUPP_Perso";
