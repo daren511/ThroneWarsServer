@@ -991,28 +991,5 @@ namespace ControleBD
                 return null;
             }
         }
-
-        public static DataSet ListCharacters(int jid)
-        {
-            OracleConnection conn = Connection.GetInstance().conn;
-            DataSet monDataSet = new DataSet();
-            string sql = "SELECT GUID, NOM FROM PERSONNAGES WHERE JID = " + jid;
-
-            try
-            {
-                OracleDataAdapter oraSelect = new OracleDataAdapter(sql, conn);
-                if (monDataSet.Tables.Contains("PERSONNAGES"))
-                    monDataSet.Tables["PERSONNAGES"].Clear();
-
-                oraSelect.Fill(monDataSet, "PERSONNAGES");
-                oraSelect.Dispose();
-                return monDataSet;
-            }
-            catch (OracleException ex)
-            {
-                Erreur.ErrorMessage(ex);
-                return null;
-            }
-        }
     }
 }
