@@ -51,7 +51,7 @@ namespace ControleBD
                 OracleParameter OraParamConfirmed = new OracleParameter(":CONFIRMED", OracleDbType.Char, 1);
                 OracleParameter OraParamUsername = new OracleParameter(":userNonHash", OracleDbType.Varchar2, 32);
 
-                OraParamConfirmed.Value = 'T';
+                OraParamConfirmed.Value = '1';
                 OraParamUsername.Value = userNonHash;
 
                 oraUpdate.Parameters.Add(OraParamConfirmed);
@@ -710,7 +710,7 @@ namespace ControleBD
             {
                 OracleCommand oraSelect = conn.CreateCommand();
                 oraSelect.CommandText = sqlSelect;
-                OracleParameter OraParamEmail = new OracleParameter(":Email", OracleDbType.Varchar2, 32);
+                OracleParameter OraParamEmail = new OracleParameter(":email", OracleDbType.Varchar2, 32);
                 OraParamEmail.Value = email;
 
                 oraSelect.Parameters.Add(OraParamEmail);
@@ -843,36 +843,6 @@ namespace ControleBD
 
 
             return DSStats;
-        }
-
-
-        public static int GetJID(string username)
-        {
-            int JID = 0;
-            try
-            {
-                OracleConnection conn = Connection.GetInstance().conn;
-                string sqlSelect = "select JID from joueurs where USERNAME = :username";
-
-                OracleCommand oraSelect = new OracleCommand(sqlSelect, conn);
-                oraSelect.CommandType = CommandType.Text;
-                OracleParameter OraParamUsername = new OracleParameter(":USERNAME", OracleDbType.Varchar2, 32);
-
-                OraParamUsername.Value = username;
-                oraSelect.Parameters.Add(OraParamUsername);
-
-                OracleDataReader objRead = oraSelect.ExecuteReader();
-                while (objRead.Read())
-                {
-                    JID = objRead.GetInt32(0);
-                }
-                objRead.Close();
-            }
-            catch (OracleException ora)
-            {
-                Console.WriteLine(ora.Message.ToString());
-            }
-            return JID;
         }
 
         public static int getJID(string username)

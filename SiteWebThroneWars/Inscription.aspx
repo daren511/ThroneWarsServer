@@ -51,9 +51,9 @@
   			<asp:label id="CPasswordLB" runat="server">Confirmer Mot de Passe</asp:label><br/>
                 <asp:TextBox id="cpassword" TextMode="password" runat="server"/><br />
             <asp:label id="EmailLB" runat="server">Courriel</asp:label><br/>
-                <asp:Textbox ID="email" TextMode="SingleLine" runat="server"/><br/>
+                <asp:Textbox ID="email" TextMode="Email" runat="server"/><br/>
   			<asp:label id="CEmailLB" runat="server">Confirmer Courriel</asp:label><br/>
-                <asp:Textbox ID="cemail" TextMode="SingleLine" runat="server"/><br/><br />
+                <asp:Textbox ID="cemail" TextMode="Email" runat="server"/><br/><br />
             <asp:Button Text="Valider" onClick="inscriptionJoueur_Click" runat="server"/>
 		
 		</div>

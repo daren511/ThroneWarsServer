@@ -43,7 +43,7 @@ namespace SiteWebThroneWars
                     ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>MessageBoxErreur(\"" + text + "\");</script>", false);
                     ViderTB();
                 }
-                
+
                 // Verifier si email est legit ou non vide
                 bool legitEmail = IsEmail(courriel);
 
@@ -53,8 +53,8 @@ namespace SiteWebThroneWars
                 {
                     bool InsReussi = false;
                     // Inserer dans oracle
-                    InsReussi = Controle.insertPlayer(user,courriel,pass);
-                   
+                    InsReussi = Controle.insertPlayer(user, courriel, pass);
+
 
                     if (InsReussi)
                     {
@@ -64,7 +64,7 @@ namespace SiteWebThroneWars
                         //Hash le username pour le courriel de confirmation
                         string userHash = Controle.Phrase.Chiffrer(user);
                         // Send email de confirmation
-                        Email.sendMail(courriel, Email.SujetInscription, Email.BodyConfirmation+userHash);
+                        Email.sendMail(courriel, Email.SujetInscription, Email.BodyConfirmation + userHash);
                         // Vide les TB
                         ViderTB();
                         //Remet la couleur noir au label
@@ -93,15 +93,38 @@ namespace SiteWebThroneWars
                     }
                     if (email.Text != cemail.Text)
                     {
-                        text += " ainsi que vos courriels";
-                        EmailLB.ForeColor = System.Drawing.Color.Red;
-                        CEmailLB.ForeColor = System.Drawing.Color.Red;
+                        if (password.Text == cpassword.Text && legitEmail)
+                        {
+                            text += ", vos courriels ne concordent pas";
+                            EmailLB.ForeColor = System.Drawing.Color.Red;
+                            CEmailLB.ForeColor = System.Drawing.Color.Red;
+                            PasswordLB.ForeColor = System.Drawing.Color.Black;
+                            CPasswordLB.ForeColor = System.Drawing.Color.Black;
+                        }
+                        else
+                        {
+                            text += " ainsi que vos courriels";
+                            EmailLB.ForeColor = System.Drawing.Color.Red;
+                            CEmailLB.ForeColor = System.Drawing.Color.Red;
+                        }
                     }
                     if (!legitEmail)
                     {
-                        text += " et le format de celui-ci n'est pas valide";
-                        EmailLB.ForeColor = System.Drawing.Color.Red;
-                        CEmailLB.ForeColor = System.Drawing.Color.Red;
+                        if (password.Text == cpassword.Text && email.Text == cemail.Text)
+                        {
+                            text += ", le format du courriel est invalide";
+                            EmailLB.ForeColor = System.Drawing.Color.Red;
+                            CEmailLB.ForeColor = System.Drawing.Color.Red;
+                            PasswordLB.ForeColor = System.Drawing.Color.Black;
+                            CPasswordLB.ForeColor = System.Drawing.Color.Black;
+                        }
+                        else
+                        {
+                            text += " et le format de celui-ci n'est pas valide";
+                            EmailLB.ForeColor = System.Drawing.Color.Red;
+                            CEmailLB.ForeColor = System.Drawing.Color.Red;
+                        }
+
                     }
                     text += ".";
                     ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>MessageBoxErreur(\"" + text + "\");</script>", false);
@@ -135,12 +158,20 @@ namespace SiteWebThroneWars
         }
         protected bool VerifChamps()
         {
-            bool Valide = false;
-            if (!string.IsNullOrWhiteSpace(username.Text) || !string.IsNullOrWhiteSpace(password.Text) || !string.IsNullOrWhiteSpace(cpassword.Text) ||
-                !string.IsNullOrWhiteSpace(email.Text) || !string.IsNullOrWhiteSpace(cemail.Text))
-            {
-                Valide = true;
-            }
+            bool Valide = true;
+            if (string.IsNullOrWhiteSpace(username.Text) || string.IsNullOrEmpty(username.Text))
+                Valide = false;
+            if (string.IsNullOrWhiteSpace(username.Text) || string.IsNullOrEmpty(username.Text))
+                Valide = false;
+            if (string.IsNullOrWhiteSpace(password.Text) || string.IsNullOrEmpty(password.Text))
+                Valide = false;
+            if (string.IsNullOrWhiteSpace(cpassword.Text) || string.IsNullOrEmpty(cpassword.Text))
+                Valide = false;
+            if (string.IsNullOrWhiteSpace(email.Text) || string.IsNullOrEmpty(email.Text))
+                Valide = false;
+            if (string.IsNullOrWhiteSpace(cemail.Text) || string.IsNullOrEmpty(cemail.Text))
+                Valide = false;
+
             return Valide;
         }
         protected void ViderTB()

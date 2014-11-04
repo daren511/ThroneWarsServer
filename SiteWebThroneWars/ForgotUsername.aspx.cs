@@ -21,7 +21,7 @@ namespace SiteWebThroneWars
             string text = "";
             // Verif Textbox pas vide
             bool verifOk = VerifChamps();
-            bool legitEmail=false;
+            bool legitEmail = false;
             string courriel = TB_Email.Text;
             // Valider que le email est legit
             if (verifOk)
