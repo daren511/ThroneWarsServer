@@ -747,7 +747,7 @@ namespace ControleBD
             {
                 OracleConnection conn = Connection.GetInstance().conn;
                 string passHash = Controle.HashPassword(password, null, System.Security.Cryptography.SHA256.Create());
-                string sqlSelect = "select count(*),JID from joueurs where USERNAME = :USERNAME and HASH_KEY = :passHash";
+                string sqlSelect = "select count(*) from joueurs where USERNAME = :USERNAME and HASH_KEY = :passHash";
 
 
                 OracleCommand oraSelect = conn.CreateCommand();
