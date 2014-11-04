@@ -12,23 +12,28 @@ namespace SiteWebThroneWars
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            /*
+            string text = "";
             bool RecoveryOK = false;
             string URL = HttpContext.Current.Request.Url.AbsoluteUri;
             Uri myUri = new Uri(URL);
             string userSplit = HttpUtility.ParseQueryString(myUri.Query).Get("User");
             RecoveryOK = Controle.confirmAccount(userSplit);
-            
-            if(RecoveryOK)
+
+            if (RecoveryOK)
+            {
                 ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>MessageBoxReussi();</script>", false);
-            /*
-             // Gestion d'erreur si deja Confirmed?
+            }
             else
             {
                 text = "Quelque chose s'est passé , votre confirmation à échoué";
                 ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>MessageBoxErreur(\"" + text + "\");</script>", false);
             }
-             * */
-            
+             */
+            ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>MessageBoxReussi();</script>", false);
+            Response.Redirect("www.thronewars.ca");
         }
+        
+               
     }
 }
