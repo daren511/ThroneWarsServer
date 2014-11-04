@@ -831,14 +831,14 @@ namespace ControleBD
             }
             oraDataAdapStats.Fill(DSStats, "StatsJoueur");
             oraDataAdapStats.Dispose();
-            /*
-            OracleDataReader objRead = oraSelect.ExecuteReader();
-            while (objRead.Read())
+
+            using (OracleDataReader objRead = oraSelect.ExecuteReader())
             {
-                result = objRead.GetString(0);
+                while (objRead.Read())
+                {
+                    //result = objRead.GetString(0);
+                }
             }
-            objRead.Close();
-             * */
 
 
 
