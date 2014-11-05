@@ -23,6 +23,7 @@ namespace SiteWebThroneWars
             string oldpass = apassword.Text;
             string newPass = npassword.Text;
             string confirmNewPass = ncpassword.Text;
+            
             if (ok)
             {
                 if (oldpass == newPass || newPass != confirmNewPass)
@@ -64,11 +65,13 @@ namespace SiteWebThroneWars
         }
         protected bool VerifChamps()
         {
-            bool Valide = false;
-            if (!string.IsNullOrWhiteSpace(apassword.Text) || !string.IsNullOrWhiteSpace(npassword.Text) || !string.IsNullOrWhiteSpace(ncpassword.Text))
-            {
-                Valide = true;
-            }
+            bool Valide = true;
+            if (string.IsNullOrWhiteSpace(username.Text)  ||
+                string.IsNullOrWhiteSpace(apassword.Text) ||
+                string.IsNullOrWhiteSpace(npassword.Text) ||
+                string.IsNullOrWhiteSpace(ncpassword.Text))
+                Valide = false;
+            
             return Valide;
         }
     }

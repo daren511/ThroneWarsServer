@@ -657,6 +657,7 @@ namespace ControleBD
                         Random random = new Random();
                         int randomNumber = random.Next(1, 9);
                         string UserHash = Controle.Phrase.Chiffrer(username, randomNumber);
+                        UserHash += randomNumber;
                         //Reset password
                         Email.sendMail(resultemail, Email.SubjectResetPass, Email.BodyResetPass + UserHash);
                     }
@@ -953,12 +954,12 @@ namespace ControleBD
         {
             OracleConnection conn = Connection.GetInstance().conn;
 
-            string sqlSelect = "select count(*) from joueurs where username = :user";
+            string sqlSelect = "select count(*) from joueurs where username =:username";
             try
             {
                 OracleCommand oraSelect = conn.CreateCommand();
                 oraSelect.CommandText = sqlSelect;
-                OracleParameter OraParamUser = new OracleParameter(":user", OracleDbType.Varchar2, 32);
+                OracleParameter OraParamUser = new OracleParameter(":username", OracleDbType.Varchar2, 32);
                 OraParamUser.Value = user;
 
                 oraSelect.Parameters.Add(OraParamUser);
@@ -980,7 +981,7 @@ namespace ControleBD
         {
             OracleConnection conn = Connection.GetInstance().conn;
 
-            string sqlSelect = "select count(*) from joueurs where email = :courriel";
+            string sqlSelect = "select count(*) from joueurs where email =:courriel";
             try
             {
                 OracleCommand oraSelect = conn.CreateCommand();
