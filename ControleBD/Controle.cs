@@ -9,8 +9,6 @@ using Emails;
 
 namespace ControleBD
 {
-
-
     public class Controle
     {
         private static int SaltValueSize = 16;
@@ -749,34 +747,34 @@ namespace ControleBD
                 return false;
         }
         /// <summary>
+        /// FINAL
         /// Retourne true quand le user et le password sont correspondant , retourne false sinon
+        /// le mot de passe doit deja etre encrypter auparavant pour que la fonction puisse etre execute correctement 
         /// </summary>
         /// <param name="user"></param>
-        /// <param name="password"></param>
-        /// <returns></returns>
+        /// <param name="password">DEJA HASHER(pour eviter que le mot de passe passe en clair sur le reseau)</param>
+        /// <returns>en cas d'erreur la fonction retourne false, si la requete a fonctionner elle retourne true si le nom d'usager et le mot de passe sont correcte</returns>
         public static bool UserPassCorrespondant(string user, string password)
         {
             try
             {
                 OracleConnection conn = Connection.GetInstance().conn;
-                string passHash = Controle.HashPassword(password, null, System.Security.Cryptography.SHA256.Create());
-                string sqlSelect = "select count(*) from joueurs where USERNAME = :USERNAME and HASH_KEY = :passHash";
+                string sqlSelect = "select count(*) from joueurs where USERNAME = :USERNAME and HASH_KEY = :HASH_KEY";
 
 
                 OracleCommand oraSelect = conn.CreateCommand();
                 oraSelect.CommandText = sqlSelect;
                 OracleParameter OraParamUsername = new OracleParameter(":USERNAME", OracleDbType.Varchar2, 32);
-                OracleParameter OraParamPassHash = new OracleParameter(":passHash", OracleDbType.Char, 75);
+                OracleParameter OraParamPassHash = new OracleParameter(":HASH_KEY", OracleDbType.Char, 75);
                 OraParamUsername.Value = user;
-                OraParamPassHash.Value = passHash;
-
+                OraParamPassHash.Value = password;
                 oraSelect.Parameters.Add(OraParamUsername);
                 oraSelect.Parameters.Add(OraParamPassHash);
 
                 using (OracleDataReader objRead = oraSelect.ExecuteReader())
                 {
-                    objRead.Read();
-                    return objRead.GetInt32(0) == 1;
+                    objRead.Read();//positionnement a la premiere valeur a lire;
+                    return objRead.GetInt32(0) == 1;// si le count est 1 sa veut donc dire qu'il existe un enregistrement avec se nom d'usager et mot de passe
                 }
             }
             catch (OracleException ora)
@@ -824,40 +822,31 @@ namespace ControleBD
         /// <summary>
         /// Retourne les stats des personnages du username en paramètre
         /// </summary>
-        /// <param name="username"></param>
-        /// <returns></returns>
+        /// <param name="JID">Represente le numero du joueur</param>
+        /// <returns>un dataset contenant les informations des personnages</returns>
         public static DataSet ReturnStats(int JID)
         {
             DataSet DSStats = new DataSet();
-            OracleDataAdapter oraDataAdapStats = new OracleDataAdapter();
-
-            OracleConnection conn = Connection.GetInstance().conn;
-            string sqlSelect = "select NOM,LEVEL,XP from Personnages  where JID = :JID";
-            //string result = "";
-
-            OracleCommand oraSelect = conn.CreateCommand();
-            oraSelect.CommandText = sqlSelect;
-
-            if (DSStats.Tables.Contains("StatsJoueur"))
+            using (OracleDataAdapter oraDataAdapStats = new OracleDataAdapter())
             {
-                DSStats.Tables["StatsJoueur"].Clear();
-            }
-            oraDataAdapStats.Fill(DSStats, "StatsJoueur");
-            oraDataAdapStats.Dispose();
-            /*
-            OracleDataReader objRead = oraSelect.ExecuteReader();
-            while (objRead.Read())
-            {
-                result = objRead.GetString(0);
-            }
-            objRead.Close();
-             * */
+                OracleConnection conn = Connection.GetInstance().conn;
+                string sqlSelect = "select NOM,LEVEL,CID from Personnages  where JID = :JID";
+                oraDataAdapStats.SelectCommand = new OracleCommand(sqlSelect, conn);
 
+                OracleParameter OraParamJID = new OracleParameter(":JID", OracleDbType.Int32, 10);
+                OraParamJID.Value = JID;
 
+                oraDataAdapStats.SelectCommand.Parameters.Add(OraParamJID);
+                oraDataAdapStats.Fill(DSStats, "StatsJoueur");
+            }
 
             return DSStats;
         }
-
+        /// <summary>
+        /// cette fonction ramene le numero d'un joueur a l'aide du nom d'usager (puisqu'il est unique)
+        /// </summary>
+        /// <param name="username">nom d'usager du joueur</param>
+        /// <returns>le numero 'JID' du joueur correspondant au nom d'usager donnee en parametre si l'usager n'existe pas,on retourne 0</returns>
         public static int getJID(string username)
         {
             OracleConnection conn = Connection.GetInstance().conn;
@@ -1021,29 +1010,6 @@ namespace ControleBD
                     monDataSet.Tables["JOUEURS"].Clear();
 
                 oraSelect.Fill(monDataSet, "JOUEURS");
-                oraSelect.Dispose();
-                return monDataSet;
-            }
-            catch (OracleException ex)
-            {
-                Erreur.ErrorMessage(ex);
-                return null;
-            }
-        }
-
-        public static DataSet ListCharacters(int jid)
-        {
-            OracleConnection conn = Connection.GetInstance().conn;
-            DataSet monDataSet = new DataSet();
-            string sql = "SELECT GUID, NOM FROM PERSONNAGES WHERE JID = " + jid;
-
-            try
-            {
-                OracleDataAdapter oraSelect = new OracleDataAdapter(sql, conn);
-                if (monDataSet.Tables.Contains("PERSONNAGES"))
-                    monDataSet.Tables["PERSONNAGES"].Clear();
-
-                oraSelect.Fill(monDataSet, "PERSONNAGES");
                 oraSelect.Dispose();
                 return monDataSet;
             }

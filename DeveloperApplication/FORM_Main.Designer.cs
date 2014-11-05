@@ -28,8 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.MS_Menu = new System.Windows.Forms.MenuStrip();
-            this.TSMI_Fichier = new System.Windows.Forms.ToolStripMenuItem();
             this.DGV_Joueurs = new System.Windows.Forms.DataGridView();
             this.DGV_Personnages = new System.Windows.Forms.DataGridView();
             this.BTN_CONS_Joueur = new System.Windows.Forms.Button();
@@ -37,26 +35,9 @@
             this.BTN_AJT_Perso = new System.Windows.Forms.Button();
             this.BTN_CONS_Perso = new System.Windows.Forms.Button();
             this.BTN_SUPP_Perso = new System.Windows.Forms.Button();
-            this.MS_Menu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DGV_Joueurs)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.DGV_Personnages)).BeginInit();
             this.SuspendLayout();
-            // 
-            // MS_Menu
-            // 
-            this.MS_Menu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.TSMI_Fichier});
-            this.MS_Menu.Location = new System.Drawing.Point(0, 0);
-            this.MS_Menu.Name = "MS_Menu";
-            this.MS_Menu.Size = new System.Drawing.Size(800, 24);
-            this.MS_Menu.TabIndex = 0;
-            this.MS_Menu.Text = "menuStrip1";
-            // 
-            // TSMI_Fichier
-            // 
-            this.TSMI_Fichier.Name = "TSMI_Fichier";
-            this.TSMI_Fichier.Size = new System.Drawing.Size(54, 20);
-            this.TSMI_Fichier.Text = "Fichier";
             // 
             // DGV_Joueurs
             // 
@@ -64,10 +45,12 @@
             this.DGV_Joueurs.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.DGV_Joueurs.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.DGV_Joueurs.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.DGV_Joueurs.Location = new System.Drawing.Point(13, 28);
+            this.DGV_Joueurs.Location = new System.Drawing.Point(13, 12);
             this.DGV_Joueurs.MultiSelect = false;
             this.DGV_Joueurs.Name = "DGV_Joueurs";
-            this.DGV_Joueurs.Size = new System.Drawing.Size(300, 233);
+            this.DGV_Joueurs.ReadOnly = true;
+            this.DGV_Joueurs.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.DGV_Joueurs.Size = new System.Drawing.Size(300, 249);
             this.DGV_Joueurs.TabIndex = 1;
             this.DGV_Joueurs.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DGV_Joueurs_CellClick);
             // 
@@ -77,10 +60,12 @@
             this.DGV_Personnages.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.DGV_Personnages.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.DGV_Personnages.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.DGV_Personnages.Location = new System.Drawing.Point(350, 28);
+            this.DGV_Personnages.Location = new System.Drawing.Point(350, 12);
             this.DGV_Personnages.MultiSelect = false;
             this.DGV_Personnages.Name = "DGV_Personnages";
-            this.DGV_Personnages.Size = new System.Drawing.Size(434, 233);
+            this.DGV_Personnages.ReadOnly = true;
+            this.DGV_Personnages.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.DGV_Personnages.Size = new System.Drawing.Size(434, 249);
             this.DGV_Personnages.TabIndex = 2;
             this.DGV_Personnages.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DGV_Personnages_CellClick);
             // 
@@ -150,23 +135,17 @@
             this.Controls.Add(this.BTN_CONS_Joueur);
             this.Controls.Add(this.DGV_Personnages);
             this.Controls.Add(this.DGV_Joueurs);
-            this.Controls.Add(this.MS_Menu);
-            this.MainMenuStrip = this.MS_Menu;
             this.Name = "FORM_Main";
+            this.Text = "Throne Wars";
             this.Load += new System.EventHandler(this.FORM_Main_Load);
-            this.MS_Menu.ResumeLayout(false);
-            this.MS_Menu.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.DGV_Joueurs)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.DGV_Personnages)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
 
-        private System.Windows.Forms.MenuStrip MS_Menu;
-        private System.Windows.Forms.ToolStripMenuItem TSMI_Fichier;
         private System.Windows.Forms.DataGridView DGV_Joueurs;
         private System.Windows.Forms.DataGridView DGV_Personnages;
         private System.Windows.Forms.Button BTN_CONS_Joueur;
