@@ -94,13 +94,15 @@ div.Photos{
   -webkit-box-shadow: 31px 7px 32px 3px rgba(0,0,0,0.75);
   -moz-box-shadow: 31px 7px 32px 3px rgba(0,0,0,0.75);
   box-shadow: 31px 7px 32px 3px rgba(0,0,0,0.75);
-        
-    
+  
 }
-
-.Photos { position: relative; overflow: auto; }
-.Photos li { list-style: none; }
-.Photos ul li { float: left; }
+div.Photos img{
+    display: inline;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left:5%;
+    border:none;
+}
 div.Videos{
   background-color: #219ac2;
   border-radius: 50px 50px 50px 50px;
