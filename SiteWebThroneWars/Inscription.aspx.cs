@@ -62,7 +62,10 @@ namespace SiteWebThroneWars
                         ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>MessageBoxReussi();</script>", false);
 
                         //Hash le username pour le courriel de confirmation
-                        string userHash = Controle.Phrase.Chiffrer(user);
+                        Random random = new Random();
+                        int randomNumber = random.Next(1, 9);
+                        string userHash = Controle.Phrase.Chiffrer(user,randomNumber);
+                        userHash += randomNumber;
                         // Send email de confirmation
                         Email.sendMail(courriel, Email.SujetInscription, Email.BodyConfirmation + userHash);
                         // Vide les TB
