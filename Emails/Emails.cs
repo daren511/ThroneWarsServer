@@ -7,12 +7,12 @@ namespace Emails
 {
     public static class Email
     {
-        public static string SujetInscription = "Confirmation compte Throne Wars";
-        public static string BodyConfirmation = "Veuillez confirmer votre account lier à ce courriel." +
+        public static string SujetInscription = "Confirmation compte - Throne Wars";
+        public static string BodyConfirmation = "Veuillez confirmer votre compte lier à ce courriel." +
             "Voici votre lien pour confirmer : www.thronewars.ca/ConfirmAccount.aspx?User=";
-        public static string SujetForgetUser = "Répupération de nom d'utilisateur -Throne Wars";
-        public static string BodyForgetUser = "Voici votre nom d'utilisateur :";
-        public static string SubjectResetPass = "Changement de mot de passe -Throne Wars";
+        public static string SujetForgetUser = "Récupération de nom d'utilisateur - Throne Wars";
+        public static string BodyForgetUser = "Voici votre nom d'utilisateur : ";
+        public static string SubjectResetPass = "Changement de mot de passe - Throne Wars";
         public static string BodyResetPass = "Pour changer votre mot de passe, veuillez visiter" +
                                 " ce lien et suivre les indications www.thronewars.ca/ResetPassword.aspx?User=";
 
