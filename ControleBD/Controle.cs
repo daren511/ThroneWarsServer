@@ -844,6 +844,17 @@ namespace ControleBD
             return DSStats;
         }
         /// <summary>
+        /// Cette fonction retourne un dataset avec le leaderboard
+        /// </summary>
+        /// <param name="JID"></param>
+        /// <returns></returns>
+        public static DataSet ReturnLeaderboard(int JID)
+        {
+            DataSet DSLeaderboard = new DataSet();
+
+            return DSLeaderboard;
+        }
+        /// <summary>
         /// cette fonction ramene le numero d'un joueur a l'aide du nom d'usager (puisqu'il est unique)
         /// </summary>
         /// <param name="username">nom d'usager du joueur</param>
