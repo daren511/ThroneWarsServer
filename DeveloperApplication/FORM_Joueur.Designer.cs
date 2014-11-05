@@ -64,6 +64,7 @@
             // 
             // BTN_OK
             // 
+            this.BTN_OK.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.BTN_OK.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BTN_OK.Location = new System.Drawing.Point(363, 281);
             this.BTN_OK.Name = "BTN_OK";
@@ -84,6 +85,7 @@
             // 
             // BTN_Annuler
             // 
+            this.BTN_Annuler.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.BTN_Annuler.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BTN_Annuler.Location = new System.Drawing.Point(444, 281);
             this.BTN_Annuler.Name = "BTN_Annuler";
@@ -96,7 +98,7 @@
             // 
             this.TB_Username.Location = new System.Drawing.Point(63, 10);
             this.TB_Username.Name = "TB_Username";
-            this.TB_Username.Size = new System.Drawing.Size(201, 20);
+            this.TB_Username.Size = new System.Drawing.Size(170, 20);
             this.TB_Username.TabIndex = 12;
             // 
             // TB_Email
@@ -108,9 +110,10 @@
             // 
             // TB_PWD
             // 
-            this.TB_PWD.Location = new System.Drawing.Point(270, 11);
+            this.TB_PWD.Location = new System.Drawing.Point(239, 10);
             this.TB_PWD.Name = "TB_PWD";
-            this.TB_PWD.Size = new System.Drawing.Size(159, 20);
+            this.TB_PWD.ReadOnly = true;
+            this.TB_PWD.Size = new System.Drawing.Size(190, 20);
             this.TB_PWD.TabIndex = 14;
             // 
             // DTP_JoinDate
@@ -126,6 +129,7 @@
             this.TB_Argent.Name = "TB_Argent";
             this.TB_Argent.Size = new System.Drawing.Size(158, 20);
             this.TB_Argent.TabIndex = 16;
+            this.TB_Argent.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TB_Argent_KeyPress);
             // 
             // CHECK_Confirmed
             // 
@@ -140,8 +144,10 @@
             // 
             // FORM_Joueur
             // 
+            this.AcceptButton = this.BTN_OK;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.BTN_Annuler;
             this.ClientSize = new System.Drawing.Size(531, 317);
             this.Controls.Add(this.CHECK_Confirmed);
             this.Controls.Add(this.TB_Argent);
