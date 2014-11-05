@@ -33,6 +33,14 @@ namespace DeveloperApplication
             BindingSource maSource = new BindingSource(Controle.ListPlayers(), "JOUEURS");
             DGV_Joueurs.DataSource = maSource;
             DGV_Joueurs.Columns[0].Visible = false;
+
+            int nb = Int32.Parse(DGV_Joueurs.SelectedRows[0].Cells[0].Value.ToString());
+            //ListerPerso(Int32.Parse(DGV_Joueurs.SelectedRows[0].Cells[0].Value.ToString()));
+            if (!BTN_CONS_Joueur.Enabled && !BTN_SUPP_Joueur.Enabled)
+            {
+                BTN_CONS_Joueur.Enabled = true;
+                BTN_SUPP_Joueur.Enabled = true;
+            }
         }
 
         private void DGV_Joueurs_CellClick(object sender, DataGridViewCellEventArgs e)

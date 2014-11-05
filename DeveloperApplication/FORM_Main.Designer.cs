@@ -50,7 +50,7 @@
             this.DGV_Joueurs.Name = "DGV_Joueurs";
             this.DGV_Joueurs.ReadOnly = true;
             this.DGV_Joueurs.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.DGV_Joueurs.Size = new System.Drawing.Size(300, 249);
+            this.DGV_Joueurs.Size = new System.Drawing.Size(300, 183);
             this.DGV_Joueurs.TabIndex = 1;
             this.DGV_Joueurs.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DGV_Joueurs_CellClick);
             // 
@@ -65,7 +65,7 @@
             this.DGV_Personnages.Name = "DGV_Personnages";
             this.DGV_Personnages.ReadOnly = true;
             this.DGV_Personnages.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.DGV_Personnages.Size = new System.Drawing.Size(434, 249);
+            this.DGV_Personnages.Size = new System.Drawing.Size(434, 183);
             this.DGV_Personnages.TabIndex = 2;
             this.DGV_Personnages.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DGV_Personnages_CellClick);
             // 
@@ -73,7 +73,7 @@
             // 
             this.BTN_CONS_Joueur.Enabled = false;
             this.BTN_CONS_Joueur.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BTN_CONS_Joueur.Location = new System.Drawing.Point(13, 267);
+            this.BTN_CONS_Joueur.Location = new System.Drawing.Point(13, 201);
             this.BTN_CONS_Joueur.Name = "BTN_CONS_Joueur";
             this.BTN_CONS_Joueur.Size = new System.Drawing.Size(148, 23);
             this.BTN_CONS_Joueur.TabIndex = 4;
@@ -84,7 +84,7 @@
             // 
             this.BTN_SUPP_Joueur.Enabled = false;
             this.BTN_SUPP_Joueur.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BTN_SUPP_Joueur.Location = new System.Drawing.Point(165, 267);
+            this.BTN_SUPP_Joueur.Location = new System.Drawing.Point(165, 201);
             this.BTN_SUPP_Joueur.Name = "BTN_SUPP_Joueur";
             this.BTN_SUPP_Joueur.Size = new System.Drawing.Size(148, 23);
             this.BTN_SUPP_Joueur.TabIndex = 5;
@@ -94,7 +94,7 @@
             // BTN_AJT_Perso
             // 
             this.BTN_AJT_Perso.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BTN_AJT_Perso.Location = new System.Drawing.Point(350, 267);
+            this.BTN_AJT_Perso.Location = new System.Drawing.Point(350, 201);
             this.BTN_AJT_Perso.Name = "BTN_AJT_Perso";
             this.BTN_AJT_Perso.Size = new System.Drawing.Size(141, 23);
             this.BTN_AJT_Perso.TabIndex = 6;
@@ -105,7 +105,7 @@
             // 
             this.BTN_CONS_Perso.Enabled = false;
             this.BTN_CONS_Perso.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BTN_CONS_Perso.Location = new System.Drawing.Point(497, 267);
+            this.BTN_CONS_Perso.Location = new System.Drawing.Point(497, 201);
             this.BTN_CONS_Perso.Name = "BTN_CONS_Perso";
             this.BTN_CONS_Perso.Size = new System.Drawing.Size(141, 23);
             this.BTN_CONS_Perso.TabIndex = 7;
@@ -116,7 +116,7 @@
             // 
             this.BTN_SUPP_Perso.Enabled = false;
             this.BTN_SUPP_Perso.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BTN_SUPP_Perso.Location = new System.Drawing.Point(643, 267);
+            this.BTN_SUPP_Perso.Location = new System.Drawing.Point(643, 201);
             this.BTN_SUPP_Perso.Name = "BTN_SUPP_Perso";
             this.BTN_SUPP_Perso.Size = new System.Drawing.Size(141, 23);
             this.BTN_SUPP_Perso.TabIndex = 8;
@@ -127,7 +127,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 305);
+            this.ClientSize = new System.Drawing.Size(800, 237);
             this.Controls.Add(this.BTN_SUPP_Perso);
             this.Controls.Add(this.BTN_CONS_Perso);
             this.Controls.Add(this.BTN_AJT_Perso);
