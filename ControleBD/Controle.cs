@@ -817,7 +817,7 @@ namespace ControleBD
             using (OracleDataAdapter oraDataAdapStats = new OracleDataAdapter())
             {
                 OracleConnection conn = Connection.GetInstance().conn;
-                string sqlSelect = "select NOM,LEVEL,CID from Personnages  where JID = :JID";
+                string sqlSelect = "select NOM,'LEVEL',CID from Personnages where JID = :JID";
                 oraDataAdapStats.SelectCommand = new OracleCommand(sqlSelect, conn);
 
                 OracleParameter OraParamJID = new OracleParameter(":JID", OracleDbType.Int32, 10);

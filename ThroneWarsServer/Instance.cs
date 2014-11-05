@@ -7,6 +7,8 @@ using System.Threading;
 using ControleBD;
 using Oracle.DataAccess.Client;
 using System.Data;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.IO;
 
 namespace ThroneWarsServer
 {
@@ -55,7 +57,12 @@ namespace ThroneWarsServer
 
         private void envoyerDataSet(DataSet ds)
         {
-
+            BinaryFormatter b = new BinaryFormatter();
+            using (var stream = new MemoryStream())
+            {
+                b.Serialize(stream, ds);
+                Joueur.Socket.Send(stream.ToArray());
+            }
         } 
         private void envoyerReponse(string reponse)
         {
