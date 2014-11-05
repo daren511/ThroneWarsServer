@@ -37,7 +37,7 @@ namespace ThroneWarsServer
                     bool reponse = Controle.UserPassCorrespondant(Joueur.Username, Login.Split(Splitter)[1]);//verifie si les informations de login sont ok
                     if (reponse) 
                     {
-                        envoyerReponse(reponse.ToString());
+                        envoyerReponse(reponse.ToString() + Splitter + Controle.accountIsConfirmed(Joueur.Username).ToString());
                         Joueur.isConnected = true; 
                     }
                     else{ envoyerReponse(reponse.ToString()); }
@@ -45,7 +45,7 @@ namespace ThroneWarsServer
                 if(Joueur.isConnected)
                 {
                     Joueur.jid = Controle.getJID(Joueur.Username);
-                    
+                    envoyerDataSet(Controle.ReturnStats(Joueur.jid));                    
                 }
             }
             catch (Exception e)

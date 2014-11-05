@@ -785,6 +785,38 @@ namespace ControleBD
 
         }
         /// <summary>
+        /// Verifie si le compte est confirmee
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns>true si ok false sinon</returns>
+        public static bool accountIsConfirmed(string user)
+        {
+            try
+            {
+                OracleConnection conn = Connection.GetInstance().conn;
+                string sqlSelect = "select CONFIRMED from joueurs where USERNAME = :USERNAME";
+
+
+                OracleCommand oraSelect = conn.CreateCommand();
+                oraSelect.CommandText = sqlSelect;
+                OracleParameter OraParamUsername = new OracleParameter(":USERNAME", OracleDbType.Varchar2, 32);
+                OraParamUsername.Value = user;
+                oraSelect.Parameters.Add(OraParamUsername);
+
+                using (OracleDataReader objRead = oraSelect.ExecuteReader())
+                {
+                    objRead.Read();//positionnement a la premiere valeur a lire;
+                    return objRead.GetString(0) == "1";// si le char qui reviens est 1 sa veut donc dire que le nom d'usager est confirme 
+                }
+            }
+            catch (OracleException ora)
+            {
+                Console.WriteLine(ora.Message.ToString());
+            }
+            return false;
+
+        }
+        /// <summary>
         /// Changer le mot de passe d'un joueur
         /// </summary>
         /// <param name="username"></param>
