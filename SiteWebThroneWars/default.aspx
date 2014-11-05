@@ -6,7 +6,7 @@
 
 
 <head runat="server">
-<title>Throne Wars -Projet FinDe<a href="default.aspx">default.aspx</a>c - Page Principale</title>
+<title>Throne Wars -Projet FinDec - Page Principale</title>
 <meta charset="utf-8"/> 
 <link rel="stylesheet" type="text/css" href="FinDec.css"/>
 </head>

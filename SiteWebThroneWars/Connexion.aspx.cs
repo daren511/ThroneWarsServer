@@ -33,7 +33,8 @@ namespace SiteWebThroneWars
                 string user = username.Text;
                 string pass = password.Text;
 
-                Connecter = Controle.UserPassCorrespondant(user, pass);
+                string passHash = Controle.HashPassword(pass, null, System.Security.Cryptography.SHA256.Create());
+                Connecter = Controle.UserPassCorrespondant(user, passHash);
 
                 if (Connecter)
                 {
