@@ -22,7 +22,9 @@ namespace SiteWebThroneWars
             if(ok)
             { 
             string user = TB_UsernameSearch.Text;
-            string userHash = Controle.Phrase.Chiffrer(user);
+            Random random = new Random();
+            int randomNumber = random.Next(1, 9);
+            string userHash = Controle.Phrase.Chiffrer(user,randomNumber);
 
             Response.Redirect("www.thronewars.ca:8080/Recherche?User="+userHash);
             //Ramener la position du username dans le leaderboard

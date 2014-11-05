@@ -48,6 +48,8 @@
             this.DGV_Joueurs.Location = new System.Drawing.Point(13, 12);
             this.DGV_Joueurs.MultiSelect = false;
             this.DGV_Joueurs.Name = "DGV_Joueurs";
+            this.DGV_Joueurs.ReadOnly = true;
+            this.DGV_Joueurs.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.DGV_Joueurs.Size = new System.Drawing.Size(300, 249);
             this.DGV_Joueurs.TabIndex = 1;
             this.DGV_Joueurs.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DGV_Joueurs_CellClick);
@@ -61,6 +63,8 @@
             this.DGV_Personnages.Location = new System.Drawing.Point(350, 12);
             this.DGV_Personnages.MultiSelect = false;
             this.DGV_Personnages.Name = "DGV_Personnages";
+            this.DGV_Personnages.ReadOnly = true;
+            this.DGV_Personnages.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.DGV_Personnages.Size = new System.Drawing.Size(434, 249);
             this.DGV_Personnages.TabIndex = 2;
             this.DGV_Personnages.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DGV_Personnages_CellClick);
