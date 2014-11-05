@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Threading;
 using ControleBD;
 using Oracle.DataAccess.Client;
+using System.Data;
 
 namespace ThroneWarsServer
 {
@@ -19,7 +20,10 @@ namespace ThroneWarsServer
             Joueur = J;
             T = new Thread(new ThreadStart(Run));
         }
-
+        /// <summary>
+        /// Cette fonction est la fonction principale de la class instance c'est la fonction qui est appelée au moment ou 
+        /// le thread demmare.
+        /// </summary>
         public void Run()
         {
             try
@@ -28,7 +32,7 @@ namespace ThroneWarsServer
                 {
                     string Login = recevoirLogin();
                     Joueur.Username = Login.Split(Splitter)[0];
-                    bool reponse = Controle.UserPassCorrespondant(Joueur.Username, Login.Split(Splitter)[1]);
+                    bool reponse = Controle.UserPassCorrespondant(Joueur.Username, Login.Split(Splitter)[1]);//verifie si les informations de login sont ok
                     if (reponse) 
                     {
                         envoyerReponse(reponse.ToString());
@@ -39,15 +43,20 @@ namespace ThroneWarsServer
                 if(Joueur.isConnected)
                 {
                     Joueur.jid = Controle.getJID(Joueur.Username);
+                    
                 }
             }
-            catch (OracleException e)
+            catch (Exception e)
             {
-
+                Console.WriteLine(e.Message);
             }
-            this.T.Abort();
+            this.T.Abort();//arret du thread
         }
 
+        private void envoyerDataSet(DataSet ds)
+        {
+
+        } 
         private void envoyerReponse(string reponse)
         {
             byte[] data = Encoding.ASCII.GetBytes(reponse);
