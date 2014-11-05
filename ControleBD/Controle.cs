@@ -34,40 +34,6 @@ namespace ControleBD
             }
         }
 
-
-
-        public static bool confirmAccount(string userHash)
-        {
-            OracleConnection conn = Connection.GetInstance().conn;
-
-            string userNonHash = Controle.Phrase.Dechiffrer(userHash);
-
-            string sqlconfirmation = "update joueurs set CONFIRMED=:CONFIRMED where username=:userNonHash";
-
-            try
-            {
-                OracleCommand oraUpdate = new OracleCommand(sqlconfirmation, conn);
-
-                OracleParameter OraParamConfirmed = new OracleParameter(":CONFIRMED", OracleDbType.Char, 1);
-                OracleParameter OraParamUsername = new OracleParameter(":userNonHash", OracleDbType.Varchar2, 32);
-
-                OraParamConfirmed.Value = '1';
-                OraParamUsername.Value = userNonHash;
-
-                oraUpdate.Parameters.Add(OraParamConfirmed);
-                oraUpdate.Parameters.Add(OraParamUsername);
-
-                oraUpdate.ExecuteNonQuery();
-
-                return true;
-            }
-            catch (OracleException ex)
-            {
-                Erreur.ErrorMessage(ex);
-                return false;
-            }
-        }
-
         //-------------------------------------INSERT / UPDATE / DELETE PLAYER-------------------------------------------
 
         public static bool insertPlayer(string username, string email, string password)
@@ -668,29 +634,71 @@ namespace ControleBD
             string sqlSelect = "select username,email from joueurs where username = :username";
             string result = "";
             string resultemail = "";
+            bool userExiste = Controle.UserExiste(username);
+            if (userExiste)
+            {
+                try
+                {
+
+                    OracleCommand oraSelect = conn.CreateCommand();
+                    oraSelect.CommandText = sqlSelect;
+                    OracleParameter OraParamUsername = new OracleParameter(":USERNAME", OracleDbType.Varchar2, 32);
+                    OraParamUsername.Value = username;
+
+                    oraSelect.Parameters.Add(OraParamUsername);
+
+                    OracleDataReader objRead = oraSelect.ExecuteReader();
+                    while (objRead.Read())
+                    {
+                        result = objRead.GetString(0);
+                        resultemail = objRead.GetString(1);
+                    }
+                    objRead.Close();
+                    if (result != null && resultemail != null)
+                    {
+                        Random random = new Random();
+                        int randomNumber = random.Next(1, 9);
+                        string UserHash = Controle.Phrase.Chiffrer(username, randomNumber);
+                        //Reset password
+                        Email.sendMail(resultemail, Email.SubjectResetPass, Email.BodyResetPass + UserHash);
+                    }
+                    return true;
+                }
+                catch (OracleException ex)
+                {
+                    Erreur.ErrorMessage(ex);
+                    return false;
+                }
+            }
+            else
+                return false;
+        }
+
+        public static bool confirmAccount(string userHash)
+        {
+            OracleConnection conn = Connection.GetInstance().conn;
+            int encrypthint = Int32.Parse(userHash.Substring(userHash.Length - 1));
+            userHash = userHash.Substring(0, userHash.Length - 1);
+            string userNonHash = Controle.Phrase.Dechiffrer(userHash, encrypthint);
+
+
+            string sqlconfirmation = "update joueurs set CONFIRMED=:CONFIRMED where username=:userNonHash";
+
             try
             {
+                OracleCommand oraUpdate = new OracleCommand(sqlconfirmation, conn);
 
-                OracleCommand oraSelect = conn.CreateCommand();
-                oraSelect.CommandText = sqlSelect;
-                OracleParameter OraParamUsername = new OracleParameter(":USERNAME", OracleDbType.Varchar2, 32);
-                OraParamUsername.Value = username;
+                OracleParameter OraParamConfirmed = new OracleParameter(":CONFIRMED", OracleDbType.Char, 1);
+                OracleParameter OraParamUsername = new OracleParameter(":userNonHash", OracleDbType.Varchar2, 32);
 
-                oraSelect.Parameters.Add(OraParamUsername);
+                OraParamConfirmed.Value = '1';
+                OraParamUsername.Value = userNonHash;
 
-                OracleDataReader objRead = oraSelect.ExecuteReader();
-                while (objRead.Read())
-                {
-                    result = objRead.GetString(0);
-                    resultemail = objRead.GetString(1);
-                }
-                objRead.Close();
-                if (result != null)
-                {
-                    string UserHash = Controle.Phrase.Chiffrer(username);
-                    //Reset password
-                    Email.sendMail(resultemail, Email.SubjectResetPass, Email.BodyResetPass + UserHash);
-                }
+                oraUpdate.Parameters.Add(OraParamConfirmed);
+                oraUpdate.Parameters.Add(OraParamUsername);
+
+                oraUpdate.ExecuteNonQuery();
+
                 return true;
             }
             catch (OracleException ex)
@@ -703,37 +711,42 @@ namespace ControleBD
         public static bool UsernameRecovery(string email)
         {
             OracleConnection conn = Connection.GetInstance().conn;
-
-            string sqlSelect = "select username from joueurs where email = :email";
-            string result = "";
-            try
+            bool courrielExiste = Controle.CourrielExiste(email);
+            if (courrielExiste)
             {
-                OracleCommand oraSelect = conn.CreateCommand();
-                oraSelect.CommandText = sqlSelect;
-                OracleParameter OraParamEmail = new OracleParameter(":email", OracleDbType.Varchar2, 32);
-                OraParamEmail.Value = email;
-
-                oraSelect.Parameters.Add(OraParamEmail);
-
-                OracleDataReader objRead = oraSelect.ExecuteReader();
-                while (objRead.Read())
+                string sqlSelect = "select username from joueurs where email = :email";
+                string result = "";
+                try
                 {
-                    result = objRead.GetString(0);
-                }
-                objRead.Close();
+                    OracleCommand oraSelect = conn.CreateCommand();
+                    oraSelect.CommandText = sqlSelect;
+                    OracleParameter OraParamEmail = new OracleParameter(":email", OracleDbType.Varchar2, 32);
+                    OraParamEmail.Value = email;
 
-                if (result != null)
-                {
-                    //envoie un email au courriel correspondant du username
-                    Email.sendMail(email, Email.SujetForgetUser, Email.BodyForgetUser + result);  
+                    oraSelect.Parameters.Add(OraParamEmail);
+
+                    OracleDataReader objRead = oraSelect.ExecuteReader();
+                    while (objRead.Read())
+                    {
+                        result = objRead.GetString(0);
+                    }
+                    objRead.Close();
+
+                    if (result != null)
+                    {
+                        //envoie un email au courriel correspondant du username
+                        Email.sendMail(email, Email.SujetForgetUser, Email.BodyForgetUser + result);
+                    }
+                    return true;
                 }
-                return true;
+                catch (OracleException ex)
+                {
+                    Erreur.ErrorMessage(ex);
+                    return false;
+                }
             }
-            catch (OracleException ex)
-            {
-                Erreur.ErrorMessage(ex);
+            else
                 return false;
-            }
         }
         /// <summary>
         /// Retourne true quand le user et le password sont correspondant , retourne false sinon
@@ -878,7 +891,9 @@ namespace ControleBD
         {
             OracleConnection conn = Connection.GetInstance().conn;
 
-            string userNonHash = Controle.Phrase.Dechiffrer(userHash);
+            int encrypthint = Int32.Parse(userHash.Substring(userHash.Length - 1));
+            userHash = userHash.Substring(0, userHash.Length - 1);
+            string userNonHash = Controle.Phrase.Dechiffrer(userHash,encrypthint);
 
             string sqlconfirmation = "update joueurs set Hash_KEY=:passHash where username=:userNonHash";
 
@@ -908,13 +923,11 @@ namespace ControleBD
 
         public class Phrase
         {
-            static int increment = 2;
-
-            public Phrase(int inc = 2)
+            public Phrase()
             {
-                increment = inc;
+              
             }
-            public static string Chiffrer(string valeur)
+            public static string Chiffrer(string valeur,int increment = 2)
             {
                 string mot = "";
 
@@ -924,7 +937,7 @@ namespace ControleBD
                 }
                 return mot;
             }
-            public static string Dechiffrer(string valeur)
+            public static string Dechiffrer(string valeur, int increment = 2)
             {
                 string mot = "";
 
@@ -935,6 +948,62 @@ namespace ControleBD
                 return mot;
             }
         }
+
+        public static bool UserExiste(string user)
+        {
+            OracleConnection conn = Connection.GetInstance().conn;
+
+            string sqlSelect = "select count(*) from joueurs where username = :user";
+            try
+            {
+                OracleCommand oraSelect = conn.CreateCommand();
+                oraSelect.CommandText = sqlSelect;
+                OracleParameter OraParamUser = new OracleParameter(":user", OracleDbType.Varchar2, 32);
+                OraParamUser.Value = user;
+
+                oraSelect.Parameters.Add(OraParamUser);
+
+                using (OracleDataReader objRead = oraSelect.ExecuteReader())
+                {
+                    objRead.Read();
+                    return objRead.GetInt32(0) == 1;
+                }
+            }
+            catch (OracleException ex)
+            {
+                Erreur.ErrorMessage(ex);
+                return false;
+            }
+        }
+
+        public static bool CourrielExiste(string courriel)
+        {
+            OracleConnection conn = Connection.GetInstance().conn;
+
+            string sqlSelect = "select count(*) from joueurs where email = :courriel";
+            try
+            {
+                OracleCommand oraSelect = conn.CreateCommand();
+                oraSelect.CommandText = sqlSelect;
+                OracleParameter OraParamEmail = new OracleParameter(":courriel", OracleDbType.Varchar2,255);
+                OraParamEmail.Value = courriel;
+
+                oraSelect.Parameters.Add(OraParamEmail);
+
+                using (OracleDataReader objRead = oraSelect.ExecuteReader())
+                {
+                    objRead.Read();
+                    return objRead.GetInt32(0) == 1;
+                }
+                
+            }
+            catch (OracleException ex)
+            {
+                Erreur.ErrorMessage(ex);
+                return false;
+            }
+        }
+        
 
 
         //------------------------------ À ALEXIS ------------------------------//
