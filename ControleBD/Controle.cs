@@ -657,6 +657,7 @@ namespace ControleBD
                         Random random = new Random();
                         int randomNumber = random.Next(1, 9);
                         string UserHash = Controle.Phrase.Chiffrer(username, randomNumber);
+                        UserHash += randomNumber;
                         //Reset password
                         Email.sendMail(resultemail, Email.SubjectResetPass, Email.BodyResetPass + UserHash);
                     }
