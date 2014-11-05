@@ -52,7 +52,7 @@ namespace SiteWebThroneWars
                         GV_Stats.DataSource = DS;
                         GV_Stats.DataBind();
                          */
-                        
+
                     }
 
 
@@ -75,17 +75,24 @@ namespace SiteWebThroneWars
                 text = "Vous devez remplir tout les champs requis";
                 //Textbox vide erreur
                 ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>MessageBoxErreur(\"" + text + "\");</script>", false);
+                ViderTB();
             }
 
         }
         protected bool VerifChamps()
         {
-            bool Valide = false;
-            if (!string.IsNullOrWhiteSpace(username.Text) || !string.IsNullOrWhiteSpace(password.Text))
-            {
-                Valide = true;
-            }
+            bool Valide = true;
+            if (string.IsNullOrWhiteSpace(username.Text))
+                Valide = false;
+            if (string.IsNullOrWhiteSpace(password.Text))
+                Valide = false;
+
             return Valide;
+        }
+        protected void ViderTB()
+        {
+            username.Text = "";
+            password.Text = "";
         }
     }
 }
