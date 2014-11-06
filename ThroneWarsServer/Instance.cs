@@ -7,6 +7,8 @@ using System.Threading;
 using ControleBD;
 using Oracle.DataAccess.Client;
 using System.Data;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.IO;
 
 namespace ThroneWarsServer
 {
@@ -35,7 +37,7 @@ namespace ThroneWarsServer
                     bool reponse = Controle.UserPassCorrespondant(Joueur.Username, Login.Split(Splitter)[1]);//verifie si les informations de login sont ok
                     if (reponse) 
                     {
-                        envoyerReponse(reponse.ToString());
+                        envoyerReponse(reponse.ToString() + Splitter + Controle.accountIsConfirmed(Joueur.Username).ToString());
                         Joueur.isConnected = true; 
                     }
                     else{ envoyerReponse(reponse.ToString()); }
@@ -43,7 +45,7 @@ namespace ThroneWarsServer
                 if(Joueur.isConnected)
                 {
                     Joueur.jid = Controle.getJID(Joueur.Username);
-                    
+                    envoyerDataSet(Controle.ReturnStats(Joueur.jid));                    
                 }
             }
             catch (Exception e)
@@ -55,7 +57,12 @@ namespace ThroneWarsServer
 
         private void envoyerDataSet(DataSet ds)
         {
-
+            BinaryFormatter b = new BinaryFormatter();
+            using (var stream = new MemoryStream())
+            {
+                b.Serialize(stream, ds);
+                Joueur.Socket.Send(stream.ToArray());
+            }
         } 
         private void envoyerReponse(string reponse)
         {

@@ -14,9 +14,6 @@ namespace DeveloperApplication
 {
     public partial class FORM_Main : Form
     {
-        //---------- VARIABLES ----------//
-
-
         public FORM_Main()
         {
             InitializeComponent();
@@ -25,42 +22,127 @@ namespace DeveloperApplication
         private void FORM_Main_Load(object sender, EventArgs e)
         {
             ListerJoueurs();
+            DGV_Joueurs.Columns[0].Visible = false;
+            DGV_Joueurs.Columns[2].Visible = false;
+            DGV_Joueurs.Columns[3].Visible = false;
+            DGV_Joueurs.Columns[4].Visible = false;
+            DGV_Joueurs.Columns[5].Visible = false;
+
+            DGV_Personnages.Columns[0].Visible = false;
+            DGV_Personnages.Columns[3].Visible = false;
+            DGV_Personnages.Columns[4].Visible = false;
         }
 
         //---------- JOUEURS ----------//
         private void ListerJoueurs()
         {
-            BindingSource maSource = new BindingSource(Controle.ListPlayers(), "JOUEURS");
+            BindingSource maSource = new BindingSource(Controle.ListPlayers(CHECK_CFM_Joueur.Checked), "JOUEURS");
             DGV_Joueurs.DataSource = maSource;
-            DGV_Joueurs.Columns[0].Visible = false;
-            DGV_Joueurs.CurrentCell = null;
+            ChangeBTNTextJ();
+
+            ListerPerso();
         }
 
         private void DGV_Joueurs_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            ListerPerso(Int32.Parse(DGV_Joueurs.SelectedRows[0].Cells[0].ToString()));
-            if (!BTN_CONS_Joueur.Enabled && !BTN_SUPP_Joueur.Enabled)
+            ChangeBTNTextJ();
+            ListerPerso();
+        }
+
+        private void BTN_CONS_Joueur_Click(object sender, EventArgs e)
+        {
+            FORM_Joueur FJ = new FORM_Joueur();
+            FJ.Text = DGV_Joueurs.SelectedRows[0].Cells[1].Value.ToString(); ;  // Titre
+            FJ.JID = Int32.Parse(DGV_Joueurs.SelectedRows[0].Cells[0].Value.ToString()); ;
+            FJ.USERNAME = DGV_Joueurs.SelectedRows[0].Cells[1].Value.ToString(); ;
+            FJ.EMAIL = DGV_Joueurs.SelectedRows[0].Cells[2].Value.ToString(); ;
+            FJ.PASSWORD = DGV_Joueurs.SelectedRows[0].Cells[3].Value.ToString(); ;
+            FJ.JOINDATE = DateTime.Parse(DGV_Joueurs.SelectedRows[0].Cells[4].Value.ToString()); ;
+            FJ.MONEY = Int32.Parse(DGV_Joueurs.SelectedRows[0].Cells[5].Value.ToString()); ;
+            FJ.CONFIRMED = DGV_Joueurs.SelectedRows[0].Cells[6].Value.ToString();
+
+            if (FJ.ShowDialog() == DialogResult.OK)
             {
-                BTN_CONS_Joueur.Enabled = true;
-                BTN_SUPP_Joueur.Enabled = true;
+                if (Controle.UpdateJoueur(FJ.JID, FJ.USERNAME, FJ.EMAIL, FJ.PASSWORD, FJ.JOINDATE, FJ.MONEY, FJ.CONFIRMED))
+                    ListerJoueurs();
             }
         }
 
-        //---------- PERSONNAGES ----------//
-        private void ListerPerso(int jid)
+        private void BTN_DESAC_Joueur_Click(object sender, EventArgs e)
         {
-            BindingSource maSource = new BindingSource(Controle.ReturnStats(jid), "PERSONNAGES");
+            string confirmer = "";
+            if (DGV_Joueurs.SelectedRows[0].Cells[6].Value.ToString() == "1")
+                confirmer = "0";
+            else
+                confirmer = "1";
+            if (Controle.UpdateStateJoueur(Int32.Parse(DGV_Joueurs.SelectedRows[0].Cells[0].Value.ToString()), confirmer))
+                ListerJoueurs();
+        }
+
+        private void CHECK_CFM_Joueur_CheckedChanged(object sender, EventArgs e)
+        {
+            ListerJoueurs();
+        }
+
+        private void ChangeBTNTextJ()
+        {
+            if (DGV_Joueurs.SelectedRows[0].Cells[6].Value.ToString() == "1")
+                BTN_DESAC_Joueur.Text = "Désactiver";
+            else
+                BTN_DESAC_Joueur.Text = "Activer";
+        }
+
+        //---------- PERSONNAGES ----------//
+        private void ListerPerso()
+        {
+            BindingSource maSource = new BindingSource(
+                Controle.ReturnStats(
+                    Int32.Parse(DGV_Joueurs.SelectedRows[0].Cells[0].Value.ToString()), true, CHECK_CFM_Perso.Checked), "StatsJoueur");
             DGV_Personnages.DataSource = maSource;
-            DGV_Personnages.CurrentCell = null;
+            if (DGV_Personnages.Rows.Count > 0)
+            {
+                BTN_CONS_Perso.Enabled = true;
+                BTN_DESAC_Perso.Enabled = true;
+            }
+            else
+            {
+                BTN_CONS_Perso.Enabled = false;
+                BTN_DESAC_Perso.Enabled = false;
+            }
+            ChangeBTNTextP();
         }
 
         private void DGV_Personnages_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (!BTN_CONS_Perso.Enabled && !BTN_SUPP_Perso.Enabled)
-            {
-                BTN_CONS_Perso.Enabled = true;
-                BTN_SUPP_Perso.Enabled = true;
-            }
+            ChangeBTNTextP();
+        }
+
+        private void BTN_AJT_Perso_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void BTN_CONS_Perso_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void BTN_DESAC_Perso_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void CHECK_CFM_Perso_CheckedChanged(object sender, EventArgs e)
+        {
+            ListerPerso();
+        }
+
+        private void ChangeBTNTextP()
+        {
+            if (DGV_Joueurs.SelectedRows[0].Cells[6].Value.ToString() == "1")
+                BTN_DESAC_Perso.Text = "Désactiver";
+            else
+                BTN_DESAC_Perso.Text = "Activer";
         }
     }
 }
