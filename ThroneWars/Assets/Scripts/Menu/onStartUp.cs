@@ -199,20 +199,17 @@ public class onStartUp : MonoBehaviour
         DataSet data = new DataSet();
         try
         {
-            int count = sck.ReceiveBufferSize;
-            byte[] buffer;
-            buffer = new byte[count];
-            sck.Receive(buffer);
+            byte[] buffer = new byte[sck.SendBufferSize];
+            int bytesRead = sck.Receive(buffer);
+            byte[] formatted = new byte[bytesRead];
 
-            byte[] formatted = new byte[count];
-            for (int i = 0; i < count; i++)
+            for (int i = 0; i < bytesRead; i++)
             {
                 formatted[i] = buffer[i];
             }
             BinaryFormatter receive = new BinaryFormatter();           
             using (var recstream = new MemoryStream(formatted))
             {
-                recstream.Seek(0, SeekOrigin.Begin);
                 data = receive.Deserialize(recstream) as DataSet;
             }
         }
