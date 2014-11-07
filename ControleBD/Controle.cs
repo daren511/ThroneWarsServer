@@ -1110,5 +1110,35 @@ namespace ControleBD
                 return false;
             }
         }
+
+        public static bool UpdateStatePerso(int guid, string actif)
+        {
+            OracleConnection conn = Connection.GetInstance().conn;
+
+            string sqlconfirmation = "UPDATE PERSONNAGES SET ISACTIVE =:Actif WHERE GUID =:guid";
+
+            try
+            {
+                OracleCommand oraUpdate = new OracleCommand(sqlconfirmation, conn);
+
+                OracleParameter OraParamActif = new OracleParameter(":Actif", OracleDbType.Char);
+                OracleParameter OraParamGUID = new OracleParameter(":guid", OracleDbType.Int32, 10);
+
+                OraParamActif.Value = actif;
+                OraParamGUID.Value = guid;
+
+                oraUpdate.Parameters.Add(OraParamActif);
+                oraUpdate.Parameters.Add(OraParamGUID);
+
+                oraUpdate.ExecuteNonQuery();
+
+                return true;
+            }
+            catch (OracleException ex)
+            {
+                Erreur.ErrorMessage(ex);
+                return false;
+            }
+        }
     }
 }
