@@ -7,13 +7,19 @@ using System.Threading;
 using System.Text;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
+using System.Data;
 using ControleBD;
+using System;
+using System.Runtime.Serialization;
 
 /// <summary>
 /// Initialize the login screen
 /// </summary>
 public class onStartUp : MonoBehaviour
 {
+
+    private const char SPLITTER = '?';
+
     //---------- VARIABLES
     private bool hasUpdatedGui = false;
     private string userValue = "";
@@ -32,7 +38,7 @@ public class onStartUp : MonoBehaviour
     private static float hL = 210.0f;
     private Rect rectLogin = new Rect((Screen.width - wL) / 2, (Screen.height - hL) / 2, wL, hL);
 
-
+    private DataSet playerData;
     void OnGUI()
     {
         hasUpdatedGui = ResourceManager.GetInstance.UpdateGUI(hasUpdatedGui);
@@ -76,10 +82,11 @@ public class onStartUp : MonoBehaviour
         lblError.normal.textColor = Color.red;
         if (!canConnect)
             GUILayout.Label("Erreur dans la connexion au serveur", lblError);
-        else if (!confirmed)
-            GUILayout.Label("Votre compte n'est pas confirmé", lblError);
         else if (!validInfos)
             GUILayout.Label("Usager/Mot de passe invalide", lblError);
+        else if (!confirmed)
+            GUILayout.Label("Votre compte n'est pas confirmé", lblError);
+
         else
             GUILayout.Label("");
         GUILayout.FlexibleSpace();
@@ -97,23 +104,34 @@ public class onStartUp : MonoBehaviour
         {
             try
             {
-                //ConnectToServer();
+                ConnectToServer();
 
                 ////à titre de tests
-                GetBidonPlayer();
-                Application.LoadLevel("MainMenu");
+                //GetBidonPlayer();
+                //Application.LoadLevel("MainMenu");
 
                 if (sck.Connected)
                 {
-
-
                     // on vérifie les infos entrées par le joueur(usager, mot de passe)
                     CheckPasswordUser();
 
-                    if (validInfos)
+                    if (validInfos && confirmed)
                     {
-                        //GetPlayerInfo();
-                        Application.LoadLevel("MainMenu");
+                        try
+                        {
+                            playerData = GetJoueurData();
+
+                            DataTable dt = playerData.Tables["StatsJoueur"];
+                            foreach (DataRow dr in dt.Rows)
+                            {
+                                Debug.Log(dr["Nom"].ToString());
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            Debug.Log(e);
+                        }
+                        //Application.LoadLevel("MainMenu");
                     }
                 }
             }
@@ -135,7 +153,7 @@ public class onStartUp : MonoBehaviour
     }
     private void CheckPasswordUser()
     {
-        byte[] data = Encoding.ASCII.GetBytes(userValue + "?" + Controle.HashPassword(pwdvalue, null, System.Security.Cryptography.SHA256.Create()));
+        byte[] data = Encoding.ASCII.GetBytes(userValue + SPLITTER + Controle.HashPassword(pwdvalue, null, System.Security.Cryptography.SHA256.Create()));
         sck.Send(data); //on envoie les infos du joueur au serveur        
 
         int count = sck.ReceiveBufferSize;
@@ -151,9 +169,10 @@ public class onStartUp : MonoBehaviour
             formatted[i] = buffer[i];
         }
         string ans = Encoding.ASCII.GetString(formatted).ToString();
-        validInfos = ans.Split(' ')[0].Contains("True");
-        //confirmed = ans.Split(' ')[1].Contains("True");
+        validInfos = ans.Split(SPLITTER)[0].Contains("True");
+        confirmed = ans.Split(SPLITTER)[1].Contains("True");
     }
+
     private Joueur GetJoueur()
     {
         int count = sck.ReceiveBufferSize;
@@ -173,6 +192,58 @@ public class onStartUp : MonoBehaviour
             joueur = receive.Deserialize(recstream) as Joueur;
         }
         return joueur;
+    }
+
+    private DataSet GetJoueurData()
+    {
+        DataSet data = new DataSet();
+        try
+        {
+            byte[] buffer = new byte[sck.SendBufferSize];
+            int bytesRead = sck.Receive(buffer);
+            byte[] formatted = new byte[bytesRead];
+
+            for (int i = 0; i < bytesRead; i++)
+            {
+                formatted[i] = buffer[i];
+            }
+            BinaryFormatter receive = new BinaryFormatter();           
+            using (var recstream = new MemoryStream(formatted))
+            {
+                data = receive.Deserialize(recstream) as DataSet;
+            }
+        }
+        catch (SerializationException e)
+        {
+            Debug.Log(e.Message);
+        }
+        return data;
+    }
+
+    private DataSet DeserializeByteArrayToDataSet(byte[] byteArrayData)
+    {
+        DataSet tempDataSet = new DataSet();
+        DataTable dt;
+        // Deserializing into datatable    
+        using (MemoryStream stream = new MemoryStream(byteArrayData))
+        {
+            BinaryFormatter bformatter = new BinaryFormatter();
+            dt = (DataTable)bformatter.Deserialize(stream);
+            if (dt != null)
+            {
+                foreach (DataRow row in dt.Rows)
+                {
+                    Debug.Log("----------------------");
+                    Debug.Log(row[0]);
+                    Debug.Log(row[1]);
+                    Debug.Log(row[2]);
+                    Debug.Log("----------------------");
+                }
+            }
+        }
+        // Adding DataTable into DataSet    
+        tempDataSet.Tables.Add(dt);
+        return tempDataSet;
     }
     private void GetPlayerInfo()
     {
