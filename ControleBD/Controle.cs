@@ -870,8 +870,7 @@ namespace ControleBD
                     sqlSelect = "select NOM,'LEVEL',CID from Personnages where JID = :JID";
                 else
                 {
-                    sqlSelect = "SELECT GUID, NOM, CNAME, XP, \"LEVEL\", ISACTIVE FROM PERSONNAGES P INNER JOIN CLASSES C " + 
-                        "ON P.CID = C.CID WHERE JID =:JID AND ISACTIVE = 1 ";
+                    sqlSelect = "SELECT GUID, NOM, CNAME, XP, \"LEVEL\", ISACTIVE FROM PERSONNAGES WHERE JID =:JID AND ISACTIVE = 1 ";
                     if (afficherTout)
                         sqlSelect += "OR ISACTIVE = 0 ";
                     sqlSelect += "ORDER BY GUID";
@@ -1079,13 +1078,13 @@ namespace ControleBD
             }
         }
 
-        public static DataSet ListItems(bool afficherTout, int JID)
+        public static DataSet ListItems(bool afficherTout, int jid)
         {
             OracleConnection conn = Connection.GetInstance().conn;
             DataSet monDataSet = new DataSet();
             string sql = "SELECT J.IID, NOM, CNAME, \"LEVEL\", WATK, WDEF, MATK, MDEF, QUANTITY, ISACTIVE FROM ITEMS I " + 
             "INNER JOIN CLASSES C ON I.CID = C.CID " + 
-            "INNER JOIN INVENTAIREJOUEUR J ON I.IID = J.IID WHERE JID=:id AND (ISACTIVE = 1 ";
+            "INNER JOIN INVENTAIREJOUEUR J ON I.IID = J.IID WHERE JID=:jid AND (ISACTIVE = 1 ";
             if (afficherTout)
                 sql += "OR ISACTIVE = 0 ";
             sql += ") ORDER BY IID";
@@ -1096,8 +1095,8 @@ namespace ControleBD
                 if (monDataSet.Tables.Contains("ITEMS"))
                     monDataSet.Tables["ITEMS"].Clear();
 
-                OracleParameter OraParamJID = new OracleParameter(":JID", OracleDbType.Int32, 10);
-                OraParamJID.Value = JID;
+                OracleParameter OraParamJID = new OracleParameter(":jid", OracleDbType.Int32, 10);
+                OraParamJID.Value = jid;
 
                 oraSelect.SelectCommand.Parameters.Add(OraParamJID);
                 oraSelect.Fill(monDataSet, "ITEMS");

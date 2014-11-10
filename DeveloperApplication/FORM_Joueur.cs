@@ -53,13 +53,7 @@ namespace DeveloperApplication
 
         public string CONFIRMED
         {
-            get
-            {
-                if (CHECK_Confirmed.Checked)
-                    return "1";
-                else
-                    return "0";
-            }
+            get { return CHECK_Confirmed.Checked ? "1" : "0"; }
             set { CHECK_Confirmed.Checked = Convert.ToBoolean(Int32.Parse(value)); }
         }
 
@@ -102,6 +96,27 @@ namespace DeveloperApplication
                 BTN_Consulter.Enabled = true;
             else
                 BTN_Consulter.Enabled = false;
+        }
+
+        private void BTN_Consulter_Click(object sender, EventArgs e)
+        {
+            FORM_Item FI = new FORM_Item();
+            FI.Text = DGV_Inventaire.SelectedRows[0].Cells[1].Value.ToString();
+            FI.IID = int.Parse(DGV_Inventaire.SelectedRows[0].Cells[0].Value.ToString());
+            FI.NOM = DGV_Inventaire.SelectedRows[0].Cells[1].Value.ToString();
+            FI.CLASSE = DGV_Inventaire.SelectedRows[0].Cells[2].Value.ToString();
+            FI.LEVEL = int.Parse(DGV_Inventaire.SelectedRows[0].Cells[3].Value.ToString());
+            FI.WATK = int.Parse(DGV_Inventaire.SelectedRows[0].Cells[4].Value.ToString());
+            FI.WDEF = int.Parse(DGV_Inventaire.SelectedRows[0].Cells[5].Value.ToString());
+            FI.MATK = int.Parse(DGV_Inventaire.SelectedRows[0].Cells[6].Value.ToString());
+            FI.MDEF = int.Parse(DGV_Inventaire.SelectedRows[0].Cells[7].Value.ToString());
+            FI.QUANTITE = int.Parse(DGV_Inventaire.SelectedRows[0].Cells[8].Value.ToString());
+            FI.ISACTIVE = DGV_Inventaire.SelectedRows[0].Cells[9].Value.ToString();
+
+            if(FI.ShowDialog() == DialogResult.OK)
+            {
+
+            }
         }
     }
 }

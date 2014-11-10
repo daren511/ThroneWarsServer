@@ -87,6 +87,7 @@
             this.BTN_Consulter.TabIndex = 10;
             this.BTN_Consulter.Text = "Consulter";
             this.BTN_Consulter.UseVisualStyleBackColor = true;
+            this.BTN_Consulter.Click += new System.EventHandler(this.BTN_Consulter_Click);
             // 
             // BTN_Annuler
             // 
@@ -178,6 +179,7 @@
             this.Controls.Add(this.DGV_Inventaire);
             this.Controls.Add(this.LBL_JID);
             this.Name = "FORM_Joueur";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Load += new System.EventHandler(this.FORM_Joueur_Load);
             ((System.ComponentModel.ISupportInitialize)(this.DGV_Inventaire)).EndInit();
             this.ResumeLayout(false);
