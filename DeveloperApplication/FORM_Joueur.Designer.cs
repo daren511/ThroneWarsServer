@@ -41,6 +41,7 @@
             this.TB_Argent = new System.Windows.Forms.TextBox();
             this.CHECK_Confirmed = new System.Windows.Forms.CheckBox();
             this.ToolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.CHECK_SHOW_Activated = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.DGV_Inventaire)).BeginInit();
             this.SuspendLayout();
             // 
@@ -56,9 +57,13 @@
             // 
             // DGV_Inventaire
             // 
+            this.DGV_Inventaire.AllowUserToAddRows = false;
+            this.DGV_Inventaire.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.DGV_Inventaire.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.DGV_Inventaire.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DGV_Inventaire.Location = new System.Drawing.Point(12, 63);
             this.DGV_Inventaire.Name = "DGV_Inventaire";
+            this.DGV_Inventaire.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.DGV_Inventaire.Size = new System.Drawing.Size(507, 213);
             this.DGV_Inventaire.TabIndex = 8;
             // 
@@ -76,7 +81,7 @@
             // BTN_Consulter
             // 
             this.BTN_Consulter.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BTN_Consulter.Location = new System.Drawing.Point(12, 282);
+            this.BTN_Consulter.Location = new System.Drawing.Point(12, 281);
             this.BTN_Consulter.Name = "BTN_Consulter";
             this.BTN_Consulter.Size = new System.Drawing.Size(176, 23);
             this.BTN_Consulter.TabIndex = 10;
@@ -142,6 +147,17 @@
             this.CHECK_Confirmed.Text = "Confirmé";
             this.CHECK_Confirmed.UseVisualStyleBackColor = true;
             // 
+            // CHECK_SHOW_Activated
+            // 
+            this.CHECK_SHOW_Activated.AutoSize = true;
+            this.CHECK_SHOW_Activated.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.CHECK_SHOW_Activated.Location = new System.Drawing.Point(204, 285);
+            this.CHECK_SHOW_Activated.Name = "CHECK_SHOW_Activated";
+            this.CHECK_SHOW_Activated.Size = new System.Drawing.Size(80, 17);
+            this.CHECK_SHOW_Activated.TabIndex = 18;
+            this.CHECK_SHOW_Activated.Text = "Afficher tout";
+            this.CHECK_SHOW_Activated.UseVisualStyleBackColor = true;
+            // 
             // FORM_Joueur
             // 
             this.AcceptButton = this.BTN_OK;
@@ -149,6 +165,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.BTN_Annuler;
             this.ClientSize = new System.Drawing.Size(531, 317);
+            this.Controls.Add(this.CHECK_SHOW_Activated);
             this.Controls.Add(this.CHECK_Confirmed);
             this.Controls.Add(this.TB_Argent);
             this.Controls.Add(this.DTP_JoinDate);
@@ -182,5 +199,6 @@
         private System.Windows.Forms.TextBox TB_Argent;
         private System.Windows.Forms.CheckBox CHECK_Confirmed;
         private System.Windows.Forms.ToolTip ToolTip;
+        private System.Windows.Forms.CheckBox CHECK_SHOW_Activated;
     }
 }

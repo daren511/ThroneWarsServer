@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Oracle.DataAccess.Client;
+using ControleBD;
 
 namespace DeveloperApplication
 {
@@ -74,12 +76,32 @@ namespace DeveloperApplication
             ToolTip.SetToolTip(TB_Email, "Email");
             ToolTip.SetToolTip(TB_Argent, "Argent");
             ToolTip.SetToolTip(DTP_JoinDate, "Date rejoint");
+
+            Lister_Items();
+            DGV_Inventaire.Columns[0].Visible = false;
+            DGV_Inventaire.Columns[2].Visible = false;
+            DGV_Inventaire.Columns[3].Visible = false;
+            DGV_Inventaire.Columns[4].Visible = false;
+            DGV_Inventaire.Columns[5].Visible = false;
+            DGV_Inventaire.Columns[6].Visible = false;
+            DGV_Inventaire.Columns[7].Visible = false;
         }
 
         private void TB_Argent_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
                 e.Handled = true;
+        }
+
+        private void Lister_Items()
+        {
+            BindingSource maSource = new BindingSource(Controle.ListItems(CHECK_SHOW_Activated.Checked, int.Parse(LBL_JID.Text)), "ITEMS");
+            DGV_Inventaire.DataSource = maSource;
+
+            if (DGV_Inventaire.Rows.Count > 0)
+                BTN_Consulter.Enabled = true;
+            else
+                BTN_Consulter.Enabled = false;
         }
     }
 }
