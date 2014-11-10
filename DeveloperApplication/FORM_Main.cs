@@ -30,7 +30,7 @@ namespace DeveloperApplication
 
             DGV_Personnages.Columns[0].Visible = false;
             DGV_Personnages.Columns[3].Visible = false;
-            DGV_Personnages.Columns[4].Visible = false;
+            //DGV_Personnages.Columns[4].Visible = false;
         }
 
         //---------- JOUEURS ----------//
