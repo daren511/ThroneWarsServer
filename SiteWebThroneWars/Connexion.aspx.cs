@@ -47,13 +47,14 @@ namespace SiteWebThroneWars
                     int JID = Controle.getJID(user);
                     if (JID != 0)
                     {
-                        /*
                         // Return stats des persos dans un DataSet
                         DS = Controle.ReturnStats(JID);
-                        GV_Stats.DataSource = DS;
-                        GV_Stats.DataBind();
-                         */
-
+                        if (DS != null)
+                        {
+                            GV_Stats.DataSource = DS;
+                            GV_Stats.DataBind();
+                        }
+                        
                     }
 
 
