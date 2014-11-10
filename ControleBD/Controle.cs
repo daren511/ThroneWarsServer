@@ -1110,6 +1110,52 @@ namespace ControleBD
             }
         }
 
+        //public static bool UpdateItem(int jid, int iid, string nom, string classe, int level, int watk, int wdef, int matk, int mdef, int qte, string actif)
+        //{
+        //    OracleConnection conn = Connection.GetInstance().conn;
+
+        //    string sqlconfirmation = "UPDATE ITEMS SET NOM =:nom, CID =:(SELECT CID FROM CLASSES WHERE CNAME =:classe), " + 
+        //        "LEVEL =:Level, WATK =:watk, WDEF =:wdef, MATK =:matk, MDEF =:mdef, ISACTIVE =:actif, " + 
+        //        "QUANTITY =:quantite FROM ITEMS I INNER JOIN J ON I.IID = J.IID WHERE J.JID =:jid AND I.IID =:iid";
+
+        //    try
+        //    {
+        //        OracleCommand oraUpdate = new OracleCommand(sqlconfirmation, conn);
+
+        //        OracleParameter OraParamUsername = new OracleParameter(":Username", OracleDbType.Varchar2, 32);
+        //        OracleParameter OraParamEmail = new OracleParameter(":Email", OracleDbType.Varchar2, 255);
+        //        OracleParameter OraParamPassword = new OracleParameter(":Password", OracleDbType.Varchar2, 75);
+        //        OracleParameter OraParamDateJoint = new OracleParameter(":DateJoint", OracleDbType.Date);
+        //        OracleParameter OraParamArgent = new OracleParameter(":Argent", OracleDbType.Int32, 20);
+        //        OracleParameter OraParamConfirmer = new OracleParameter(":Confirmer", OracleDbType.Char);
+        //        OracleParameter OraParamJID = new OracleParameter(":jid", OracleDbType.Int32, 10);
+
+        //        OraParamUsername.Value = nom;
+        //        OraParamEmail.Value = email;
+        //        OraParamPassword.Value = password;
+        //        OraParamDateJoint.Value = date.ToString("dd MMM yyyy");
+        //        OraParamArgent.Value = argent;
+        //        OraParamConfirmer.Value = confirmer;
+        //        OraParamJID.Value = jid;
+
+        //        oraUpdate.Parameters.Add(OraParamUsername);
+        //        oraUpdate.Parameters.Add(OraParamEmail);
+        //        oraUpdate.Parameters.Add(OraParamPassword);
+        //        oraUpdate.Parameters.Add(OraParamDateJoint);
+        //        oraUpdate.Parameters.Add(OraParamArgent);
+        //        oraUpdate.Parameters.Add(OraParamConfirmer);
+        //        oraUpdate.Parameters.Add(OraParamJID);
+
+        //        oraUpdate.ExecuteNonQuery();
+        //        return true;
+        //    }
+        //    catch (OracleException ex)
+        //    {
+        //        Erreur.ErrorMessage(ex);
+        //        return false;
+        //    }
+        //}
+
         public static bool UpdateJoueur(int jid, string nom, string email, string password, DateTime date, int argent, string confirmer)
         {
             OracleConnection conn = Connection.GetInstance().conn;
@@ -1146,7 +1192,6 @@ namespace ControleBD
                 oraUpdate.Parameters.Add(OraParamJID);
 
                 oraUpdate.ExecuteNonQuery();
-
                 return true;
             }
             catch (OracleException ex)
