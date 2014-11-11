@@ -54,19 +54,14 @@
             <a href="ChangePassword.aspx">Changer son mot de passe</a>
         </div>
         <div class="Leaderboard">
-            <asp:Table ID="tableLeaderbord" runat="server" GridLines="Both">
-                <asp:TableHeaderRow runat="server" ForeColor="Red">
-                    <asp:TableHeaderCell>Position</asp:TableHeaderCell>
-                    <asp:TableHeaderCell>Nom d'utilisateur</asp:TableHeaderCell>
-                    <asp:TableHeaderCell>Victoires</asp:TableHeaderCell>
-                </asp:TableHeaderRow>
-            </asp:Table>
+            <asp:GridView runat="server" ID="GV_Leaderboard" OnRowDataBound="GV_Leaderboard_OnRowDataBound">
+                
+            </asp:GridView>
         </div>
 
         <div class="Stats">
 
                  <asp:GridView runat="server" ID="GV_Stats">
-                     
                  </asp:GridView>
         </div>
     </form>

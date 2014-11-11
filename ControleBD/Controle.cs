@@ -12,7 +12,7 @@ namespace ControleBD
     public class Controle
     {
         private static int SaltValueSize = 16;
-
+        
         public static bool deletePerso(int GUID)
         {
             OracleConnection conn = Connection.GetInstance().conn;
@@ -49,7 +49,7 @@ namespace ControleBD
                 OracleParameter OraParamEmail = new OracleParameter(":EMAIL", OracleDbType.Varchar2, 40);
                 OracleParameter OraParamHashKey = new OracleParameter(":Hash_KEY", OracleDbType.Char, 75);  //Ajout
 
-                OraParaUsername.Value = username;
+                OraParaUsername.Value = username.ToLower();
                 OraParamEmail.Value = email;
                 OraParamHashKey.Value = Controle.HashPassword(password, null, System.Security.Cryptography.SHA256.Create());
 
@@ -641,7 +641,7 @@ namespace ControleBD
                     OracleCommand oraSelect = conn.CreateCommand();
                     oraSelect.CommandText = sqlSelect;
                     OracleParameter OraParamUsername = new OracleParameter(":USERNAME", OracleDbType.Varchar2, 32);
-                    OraParamUsername.Value = username;
+                    OraParamUsername.Value = username.ToLower();
 
                     oraSelect.Parameters.Add(OraParamUsername);
 
@@ -767,7 +767,7 @@ namespace ControleBD
                 oraSelect.CommandText = sqlSelect;
                 OracleParameter OraParamUsername = new OracleParameter(":USERNAME", OracleDbType.Varchar2, 32);
                 OracleParameter OraParamPassHash = new OracleParameter(":HASH_KEY", OracleDbType.Char, 75);
-                OraParamUsername.Value = user;
+                OraParamUsername.Value = user.ToLower();
                 OraParamPassHash.Value = password;
                 oraSelect.Parameters.Add(OraParamUsername);
                 oraSelect.Parameters.Add(OraParamPassHash);
@@ -837,7 +837,7 @@ namespace ControleBD
                 OracleParameter OraParamUsername = new OracleParameter(":username", OracleDbType.Varchar2, 32);
 
                 OraParamPassHash.Value = PassHash;
-                OraParamUsername.Value = username;
+                OraParamUsername.Value = username.ToLower();
 
                 oraUpdate.Parameters.Add(OraParamPassHash);
                 oraUpdate.Parameters.Add(OraParamUsername);
@@ -866,15 +866,14 @@ namespace ControleBD
             {
                 OracleConnection conn = Connection.GetInstance().conn;
                 string sqlSelect = "";
-                if (!app)
-                    sqlSelect = "select NOM,'LEVEL',CID from Personnages where JID = :JID";
+                if(!app)
+                    sqlSelect = "select NOM,\"LEVEL\",CID from Personnages where JID = :JID";
                 else
                 {
-                    sqlSelect = "SELECT GUID, NOM, CNAME, XP, \"LEVEL\", ISACTIVE FROM PERSONNAGES P INNER JOIN CLASSES C " +
-                        "ON P.CID = C.CID WHERE JID =:JID AND (ISACTIVE = 1";
+                    sqlSelect = "SELECT GUID, NOM, CNAME, XP, \"LEVEL\", ISACTIVE FROM PERSONNAGES WHERE JID =:JID AND ISACTIVE = 1 ";
                     if (afficherTout)
-                        sqlSelect += " OR ISACTIVE = 0";
-                    sqlSelect += ") ORDER BY GUID";
+                        sqlSelect += "OR ISACTIVE = 0 ";
+                    sqlSelect += "ORDER BY GUID";
                 }
                 oraDataAdapStats.SelectCommand = new OracleCommand(sqlSelect, conn);
 
@@ -887,16 +886,63 @@ namespace ControleBD
 
             return DSStats;
         }
+
+        public static DataSet ReturnStatsWEB(int JID)
+        {
+            DataSet DSStats = new DataSet();
+            using (OracleDataAdapter oraDataAdapStats = new OracleDataAdapter())
+            {
+                OracleConnection conn = Connection.GetInstance().conn;
+                string sqlSelect = "";
+                    sqlSelect = "select P.NOM,\"LEVEL\" as Niveau,CL.CNAME as Classe from Personnages P INNER JOIN CLASSES CL "+
+                "ON P.CID = CL.CID where JID = :JID";
+                
+                oraDataAdapStats.SelectCommand = new OracleCommand(sqlSelect, conn);
+
+                OracleParameter OraParamJID = new OracleParameter(":JID", OracleDbType.Int32, 10);
+                OraParamJID.Value = JID;
+
+                oraDataAdapStats.SelectCommand.Parameters.Add(OraParamJID);
+                oraDataAdapStats.Fill(DSStats, "StatsJoueur");
+            }
+            return DSStats;
+        }
+
+
         /// <summary>
         /// Cette fonction retourne un dataset avec le leaderboard
         /// </summary>
         /// <param name="JID"></param>
         /// <returns></returns>
-        public static DataSet ReturnLeaderboard(int JID)
+        public static DataSet ReturnLeaderboard(string username , bool Recherche = false)
         {
             DataSet DSLeaderboard = new DataSet();
+            using (OracleDataAdapter oraDataAdapStats = new OracleDataAdapter())
+            {
+                OracleConnection conn = Connection.GetInstance().conn;
+                string sqlSelect = "";
+                try
+                {
+                    if (Recherche)
+                        sqlSelect = "Select rownum as Position,username as Usager,victoires from VueClassement";
 
-            return DSLeaderboard;
+                    else
+                        sqlSelect = "select * from (select rownum as Position , username as Usager , victoires from vueclassement) where usager =:username";
+
+                    oraDataAdapStats.SelectCommand = new OracleCommand(sqlSelect, conn);
+
+                    OracleParameter OraParamUsername = new OracleParameter(":username", OracleDbType.Varchar2, 32);
+                    OraParamUsername.Value = username.ToLower();
+
+                    oraDataAdapStats.SelectCommand.Parameters.Add(OraParamUsername);
+                    oraDataAdapStats.Fill(DSLeaderboard, "Leaderboard");
+                }
+                catch (OracleException ex)
+                {
+                    Erreur.ErrorMessage(ex);
+                }
+                return DSLeaderboard;
+            }
         }
         /// <summary>
         /// cette fonction ramene le numero d'un joueur a l'aide du nom d'usager (puisqu'il est unique)
@@ -915,13 +961,13 @@ namespace ControleBD
 
                 OracleParameter OraParamUsername = new OracleParameter(":username", OracleDbType.Varchar2, 32);
 
-                OraParamUsername.Value = username;
+                OraParamUsername.Value = username.ToLower();
                 oraSelect.Parameters.Add(OraParamUsername);
 
                 using (OracleDataReader objRead = oraSelect.ExecuteReader())
                 {
-                    if (objRead.Read())
-                        return objRead.GetInt32(0);
+                    if(objRead.Read())
+                    return objRead.GetInt32(0);
                 }
 
             }
@@ -932,13 +978,13 @@ namespace ControleBD
             return 0;
         }
 
-        public static bool ResetPassword(string userHash, string passHash)
+        public static bool ResetPassword(string userHash,string passHash)
         {
             OracleConnection conn = Connection.GetInstance().conn;
 
             int encrypthint = Int32.Parse(userHash.Substring(userHash.Length - 1));
             userHash = userHash.Substring(0, userHash.Length - 1);
-            string userNonHash = Controle.Phrase.Dechiffrer(userHash, encrypthint);
+            string userNonHash = Controle.Phrase.Dechiffrer(userHash,encrypthint);
 
             string sqlconfirmation = "update joueurs set Hash_KEY=:passHash where username=:userNonHash";
 
@@ -970,9 +1016,9 @@ namespace ControleBD
         {
             public Phrase()
             {
-
+              
             }
-            public static string Chiffrer(string valeur, int increment = 2)
+            public static string Chiffrer(string valeur,int increment = 2)
             {
                 string mot = "";
 
@@ -1004,7 +1050,7 @@ namespace ControleBD
                 OracleCommand oraSelect = conn.CreateCommand();
                 oraSelect.CommandText = sqlSelect;
                 OracleParameter OraParamUser = new OracleParameter(":username", OracleDbType.Varchar2, 32);
-                OraParamUser.Value = user;
+                OraParamUser.Value = user.ToLower();
 
                 oraSelect.Parameters.Add(OraParamUser);
 
@@ -1030,7 +1076,7 @@ namespace ControleBD
             {
                 OracleCommand oraSelect = conn.CreateCommand();
                 oraSelect.CommandText = sqlSelect;
-                OracleParameter OraParamEmail = new OracleParameter(":courriel", OracleDbType.Varchar2, 255);
+                OracleParameter OraParamEmail = new OracleParameter(":courriel", OracleDbType.Varchar2,255);
                 OraParamEmail.Value = courriel;
 
                 oraSelect.Parameters.Add(OraParamEmail);
@@ -1040,7 +1086,7 @@ namespace ControleBD
                     objRead.Read();
                     return objRead.GetInt32(0) == 1;
                 }
-
+                
             }
             catch (OracleException ex)
             {
@@ -1048,7 +1094,7 @@ namespace ControleBD
                 return false;
             }
         }
-
+        
 
 
         //------------------------------ À ALEXIS ------------------------------//
@@ -1065,6 +1111,8 @@ namespace ControleBD
             try
             {
                 OracleDataAdapter oraSelect = new OracleDataAdapter(sql, conn);
+                if (monDataSet.Tables.Contains("JOUEURS"))
+                    monDataSet.Tables["JOUEURS"].Clear();
 
                 oraSelect.Fill(monDataSet, "JOUEURS");
                 oraSelect.Dispose();
@@ -1079,121 +1127,87 @@ namespace ControleBD
 
         public static DataSet ListItems(bool afficherTout, int jid)
         {
+            OracleConnection conn = Connection.GetInstance().conn;
             DataSet monDataSet = new DataSet();
-            using (OracleDataAdapter oraDataAdapItems = new OracleDataAdapter())
-            {
-                OracleConnection conn = Connection.GetInstance().conn;
-
-                string sql = "SELECT J.IID, NOM, CNAME, \"LEVEL\", WATK, WDEF, MATK, MDEF, QUANTITY, ISACTIVE " +
-                "FROM ITEMS I INNER JOIN CLASSES C ON I.CID = C.CID " +
-                "INNER JOIN INVENTAIREJOUEUR J ON I.IID = J.IID WHERE JID =:jid AND (ISACTIVE = 1";
-                if (afficherTout)
-                    sql += " OR ISACTIVE = 0";
-                sql += ") ORDER BY IID";
-
-                oraDataAdapItems.SelectCommand = new OracleCommand(sql, conn);
-
-                OracleParameter OraParamJID = new OracleParameter(":jid", OracleDbType.Int32, 10);
-                OraParamJID.Value = jid;
-
-                oraDataAdapItems.SelectCommand.Parameters.Add(OraParamJID);
-                oraDataAdapItems.Fill(monDataSet, "STATS");
-            }
-            return monDataSet;
-        }
-
-        public static bool UpdateQuantity(int jid, int iid, int qte)
-        {
-            OracleConnection conn = Connection.GetInstance().conn;
-
-            string sqlconfirmation = "UPDATE INVENTAIREJOUEUR SET QUANTITY =:quantite WHERE J.JID =:jid AND I.IID =:iid";
+            string sql = "SELECT J.IID, NOM, CNAME, \"LEVEL\", WATK, WDEF, MATK, MDEF, QUANTITY, ISACTIVE FROM ITEMS I " + 
+            "INNER JOIN CLASSES C ON I.CID = C.CID " + 
+            "INNER JOIN INVENTAIREJOUEUR J ON I.IID = J.IID WHERE JID=:jid AND (ISACTIVE = 1 ";
+            if (afficherTout)
+                sql += "OR ISACTIVE = 0 ";
+            sql += ") ORDER BY IID";
 
             try
             {
-                OracleCommand oraUpdate = new OracleCommand(sqlconfirmation, conn);
+                OracleDataAdapter oraSelect = new OracleDataAdapter(sql, conn);
+                if (monDataSet.Tables.Contains("ITEMS"))
+                    monDataSet.Tables["ITEMS"].Clear();
 
-                OracleParameter OraParamQTE = new OracleParameter(":quantite", OracleDbType.Int32, 2);
                 OracleParameter OraParamJID = new OracleParameter(":jid", OracleDbType.Int32, 10);
-                OracleParameter OraParamIID = new OracleParameter(":iid", OracleDbType.Int32, 10);
-
-                OraParamQTE.Value = qte;
                 OraParamJID.Value = jid;
-                OraParamIID.Value = iid;
 
-                oraUpdate.Parameters.Add(OraParamQTE);
-                oraUpdate.Parameters.Add(OraParamJID);
-                oraUpdate.Parameters.Add(OraParamIID);
-
-                oraUpdate.ExecuteNonQuery();
-                return true;
+                oraSelect.SelectCommand.Parameters.Add(OraParamJID);
+                oraSelect.Fill(monDataSet, "ITEMS");
+                oraSelect.Dispose();
+                return monDataSet;
             }
             catch (OracleException ex)
             {
                 Erreur.ErrorMessage(ex);
-                return false;
+                return null;
             }
         }
 
-        public static bool UpdateItem(int jid, int iid, string nom, string classe, int level, int watk, int wdef, int matk, int mdef, string actif)
-        {
-            OracleConnection conn = Connection.GetInstance().conn;
+        //public static bool UpdateItem(int jid, int iid, string nom, string classe, int level, int watk, int wdef, int matk, int mdef, int qte, string actif)
+        //{
+        //    OracleConnection conn = Connection.GetInstance().conn;
 
-            string sqlconfirmation = "UPDATE ITEMS SET NOM =:nom, CID =(SELECT CID FROM CLASSES WHERE CNAME =:classe), " +
-                "LEVEL =:level, WATK =:watk, WDEF =:wdef, MATK =:matk, MDEF =:mdef, ISACTIVE =:actif " +
-                "WHERE J.JID =:jid AND I.IID =:iid";
+        //    string sqlconfirmation = "UPDATE ITEMS SET NOM =:nom, CID =:(SELECT CID FROM CLASSES WHERE CNAME =:classe), " + 
+        //        "LEVEL =:Level, WATK =:watk, WDEF =:wdef, MATK =:matk, MDEF =:mdef, ISACTIVE =:actif, " + 
+        //        "QUANTITY =:quantite FROM ITEMS I INNER JOIN J ON I.IID = J.IID WHERE J.JID =:jid AND I.IID =:iid";
 
-            try
-            {
-                OracleCommand oraUpdate = new OracleCommand(sqlconfirmation, conn);
+        //    try
+        //    {
+        //        OracleCommand oraUpdate = new OracleCommand(sqlconfirmation, conn);
 
-                OracleParameter OraParamNom = new OracleParameter(":nom", OracleDbType.Varchar2, 40);
-                OracleParameter OraParamClasse = new OracleParameter(":classe", OracleDbType.Varchar2, 40);
-                OracleParameter OraParamLevel = new OracleParameter(":level", OracleDbType.Int32, 2);
-                OracleParameter OraParamWATK = new OracleParameter(":watk", OracleDbType.Int32, 4);
-                OracleParameter OraParamWDEF = new OracleParameter(":wdef", OracleDbType.Int32, 4);
-                OracleParameter OraParamMATK = new OracleParameter(":matk", OracleDbType.Int32, 4);
-                OracleParameter OraParamMDEF = new OracleParameter(":mdef", OracleDbType.Int32, 4);
-                OracleParameter OraParamActif = new OracleParameter(":actif", OracleDbType.Char, 1);
-                OracleParameter OraParamJID = new OracleParameter(":jid", OracleDbType.Int32, 10);
-                OracleParameter OraParamIID = new OracleParameter(":iid", OracleDbType.Int32, 10);
+        //        OracleParameter OraParamUsername = new OracleParameter(":Username", OracleDbType.Varchar2, 32);
+        //        OracleParameter OraParamEmail = new OracleParameter(":Email", OracleDbType.Varchar2, 255);
+        //        OracleParameter OraParamPassword = new OracleParameter(":Password", OracleDbType.Varchar2, 75);
+        //        OracleParameter OraParamDateJoint = new OracleParameter(":DateJoint", OracleDbType.Date);
+        //        OracleParameter OraParamArgent = new OracleParameter(":Argent", OracleDbType.Int32, 20);
+        //        OracleParameter OraParamConfirmer = new OracleParameter(":Confirmer", OracleDbType.Char);
+        //        OracleParameter OraParamJID = new OracleParameter(":jid", OracleDbType.Int32, 10);
 
-                OraParamNom.Value = nom;
-                OraParamClasse.Value = classe;
-                OraParamLevel.Value = level;
-                OraParamWATK.Value = watk;
-                OraParamWDEF.Value = wdef;
-                OraParamMATK.Value = matk;
-                OraParamMDEF.Value = mdef;
-                OraParamActif.Value = actif;
-                OraParamJID.Value = jid;
-                OraParamIID.Value = iid;
+        //        OraParamUsername.Value = nom;
+        //        OraParamEmail.Value = email;
+        //        OraParamPassword.Value = password;
+        //        OraParamDateJoint.Value = date.ToString("dd MMM yyyy");
+        //        OraParamArgent.Value = argent;
+        //        OraParamConfirmer.Value = confirmer;
+        //        OraParamJID.Value = jid;
 
-                oraUpdate.Parameters.Add(OraParamNom);
-                oraUpdate.Parameters.Add(OraParamClasse);
-                oraUpdate.Parameters.Add(OraParamLevel);
-                oraUpdate.Parameters.Add(OraParamWATK);
-                oraUpdate.Parameters.Add(OraParamWDEF);
-                oraUpdate.Parameters.Add(OraParamMATK);
-                oraUpdate.Parameters.Add(OraParamMDEF);
-                oraUpdate.Parameters.Add(OraParamActif);
-                oraUpdate.Parameters.Add(OraParamJID);
-                oraUpdate.Parameters.Add(OraParamIID);
+        //        oraUpdate.Parameters.Add(OraParamUsername);
+        //        oraUpdate.Parameters.Add(OraParamEmail);
+        //        oraUpdate.Parameters.Add(OraParamPassword);
+        //        oraUpdate.Parameters.Add(OraParamDateJoint);
+        //        oraUpdate.Parameters.Add(OraParamArgent);
+        //        oraUpdate.Parameters.Add(OraParamConfirmer);
+        //        oraUpdate.Parameters.Add(OraParamJID);
 
-                oraUpdate.ExecuteNonQuery();
-                return true;
-            }
-            catch (OracleException ex)
-            {
-                Erreur.ErrorMessage(ex);
-                return false;
-            }
-        }
+        //        oraUpdate.ExecuteNonQuery();
+        //        return true;
+        //    }
+        //    catch (OracleException ex)
+        //    {
+        //        Erreur.ErrorMessage(ex);
+        //        return false;
+        //    }
+        //}
 
         public static bool UpdateJoueur(int jid, string nom, string email, string password, DateTime date, int argent, string confirmer)
         {
             OracleConnection conn = Connection.GetInstance().conn;
 
-            string sqlconfirmation = "UPDATE JOUEURS SET USERNAME =:Username, EMAIL =:Email, HASH_KEY =:Password, " +
+            string sqlconfirmation = "UPDATE JOUEURS SET USERNAME =:Username, EMAIL =:Email, HASH_KEY =:Password, " + 
                 "JOINDATE =:DateJoint, MONEY =:Argent, CONFIRMED =:Confirmer WHERE JID =:jid";
 
             try
