@@ -921,24 +921,28 @@ namespace ControleBD
             {
                 OracleConnection conn = Connection.GetInstance().conn;
                 string sqlSelect = "";
-                
-                if(Recherche)
-                    sqlSelect = "Select rownum as Position,username as Usager,victoires from VueClassement";
+                try
+                {
+                    if (Recherche)
+                        sqlSelect = "Select rownum as Position,username as Usager,victoires from VueClassement";
 
-                else
-                    sqlSelect = "select * from (select rownum as Position , username as Usager , victoires from vueclassement) where username =:username";
+                    else
+                        sqlSelect = "select * from (select rownum as Position , username as Usager , victoires from vueclassement) where usager =:username";
 
-                oraDataAdapStats.SelectCommand = new OracleCommand(sqlSelect, conn);
+                    oraDataAdapStats.SelectCommand = new OracleCommand(sqlSelect, conn);
 
-                OracleParameter OraParamUsername = new OracleParameter(":username", OracleDbType.Varchar2, 32);
-                OraParamUsername.Value = username;
+                    OracleParameter OraParamUsername = new OracleParameter(":username", OracleDbType.Varchar2, 32);
+                    OraParamUsername.Value = username;
 
-                oraDataAdapStats.SelectCommand.Parameters.Add(OraParamUsername);
-                oraDataAdapStats.Fill(DSLeaderboard, "Leaderboard");
+                    oraDataAdapStats.SelectCommand.Parameters.Add(OraParamUsername);
+                    oraDataAdapStats.Fill(DSLeaderboard, "Leaderboard");
+                }
+                catch (OracleException ex)
+                {
+                    Erreur.ErrorMessage(ex);
+                }
+                return DSLeaderboard;
             }
-            return DSLeaderboard;
-
-            return DSLeaderboard;
         }
         /// <summary>
         /// cette fonction ramene le numero d'un joueur a l'aide du nom d'usager (puisqu'il est unique)
