@@ -31,7 +31,7 @@ namespace SiteWebThroneWars
             {
 
                 //Variable des textbox
-                string user = username.Text.ToLower();
+                string user = username.Text;
                 string pass = password.Text;
 
                 string passHash = Controle.HashPassword(pass, null, System.Security.Cryptography.SHA256.Create());
@@ -111,7 +111,7 @@ namespace SiteWebThroneWars
             if (e.Row.RowType == DataControlRowType.DataRow)
              {
         // do your stuffs here, for example if column risk is your third column:
-                if (e.Row.Cells[1].Text == username.Text)
+                if (e.Row.Cells[1].Text == username.Text.ToLower())
                 {
                     e.Row.BackColor = System.Drawing.Color.Red;
                 }

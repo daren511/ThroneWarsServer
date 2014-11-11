@@ -26,7 +26,7 @@ namespace SiteWebThroneWars
             if (ok)
             {
                 
-                string user = TB_UsernameSearch.Text.ToLower();
+                string user = TB_UsernameSearch.Text;
                 bool UserExiste = Controle.UserExiste(user);
                 //Prend le JID
                 int JID = Controle.getJID(user);
