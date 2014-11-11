@@ -767,7 +767,7 @@ namespace ControleBD
                 oraSelect.CommandText = sqlSelect;
                 OracleParameter OraParamUsername = new OracleParameter(":USERNAME", OracleDbType.Varchar2, 32);
                 OracleParameter OraParamPassHash = new OracleParameter(":HASH_KEY", OracleDbType.Char, 75);
-                OraParamUsername.Value = user;
+                OraParamUsername.Value = user.ToLower();
                 OraParamPassHash.Value = password;
                 oraSelect.Parameters.Add(OraParamUsername);
                 oraSelect.Parameters.Add(OraParamPassHash);
@@ -837,7 +837,7 @@ namespace ControleBD
                 OracleParameter OraParamUsername = new OracleParameter(":username", OracleDbType.Varchar2, 32);
 
                 OraParamPassHash.Value = PassHash;
-                OraParamUsername.Value = username;
+                OraParamUsername.Value = username.ToLower();
 
                 oraUpdate.Parameters.Add(OraParamPassHash);
                 oraUpdate.Parameters.Add(OraParamUsername);
