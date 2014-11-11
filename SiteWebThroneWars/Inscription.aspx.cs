@@ -30,9 +30,9 @@ namespace SiteWebThroneWars
             if (ok)
             {
                 // Variable des textbox
-                string user = username.Text;
+                string user = username.Text.ToLower();
                 string pass = password.Text;
-                string courriel = email.Text;
+                string courriel = email.Text.ToLower();
 
                 // Vérifie si le nombre de charactere du username est respecté 
                 if (user.Length > 4)

@@ -31,7 +31,7 @@ namespace SiteWebThroneWars
             {
 
                 //Variable des textbox
-                string user = username.Text;
+                string user = username.Text.ToLower();
                 string pass = password.Text;
 
                 string passHash = Controle.HashPassword(pass, null, System.Security.Cryptography.SHA256.Create());

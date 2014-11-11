@@ -26,7 +26,7 @@ namespace SiteWebThroneWars
             if (ok)
             {
                 
-                string user = TB_UsernameSearch.Text;
+                string user = TB_UsernameSearch.Text.ToLower();
                 bool UserExiste = Controle.UserExiste(user);
                 //Prend le JID
                 int JID = Controle.getJID(user);
@@ -95,7 +95,7 @@ namespace SiteWebThroneWars
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
                 // do your stuffs here, for example if column risk is your third column:
-                if (e.Row.Cells[1].Text == TB_UsernameSearch.Text)
+                if (e.Row.Cells[1].Text == TB_UsernameSearch.Text.ToLower())
                 {
                     e.Row.BackColor = System.Drawing.Color.Red;
                 }
