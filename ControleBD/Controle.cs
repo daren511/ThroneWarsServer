@@ -867,7 +867,7 @@ namespace ControleBD
                 OracleConnection conn = Connection.GetInstance().conn;
                 string sqlSelect = "";
                 if(!app)
-                    sqlSelect = "select NOM,'LEVEL',CID from Personnages where JID = :JID";
+                    sqlSelect = "select NOM,\"LEVEL\",CID from Personnages where JID = :JID";
                 else
                 {
                     sqlSelect = "SELECT GUID, NOM, CNAME, XP, \"LEVEL\", ISACTIVE FROM PERSONNAGES P INNER JOIN CLASSES C " + 
@@ -887,14 +887,57 @@ namespace ControleBD
 
             return DSStats;
         }
+
+        public static DataSet ReturnStatsWEB(int JID)
+        {
+            DataSet DSStats = new DataSet();
+            using (OracleDataAdapter oraDataAdapStats = new OracleDataAdapter())
+            {
+                OracleConnection conn = Connection.GetInstance().conn;
+                string sqlSelect = "";
+                    sqlSelect = "select P.NOM,\"LEVEL\" as Niveau,CL.CNAME as Classe from Personnages P INNER JOIN CLASSES CL "+
+                "ON P.CID = CL.CID where JID = :JID";
+                
+                oraDataAdapStats.SelectCommand = new OracleCommand(sqlSelect, conn);
+
+                OracleParameter OraParamJID = new OracleParameter(":JID", OracleDbType.Int32, 10);
+                OraParamJID.Value = JID;
+
+                oraDataAdapStats.SelectCommand.Parameters.Add(OraParamJID);
+                oraDataAdapStats.Fill(DSStats, "StatsJoueur");
+            }
+            return DSStats;
+        }
+
+
         /// <summary>
         /// Cette fonction retourne un dataset avec le leaderboard
         /// </summary>
         /// <param name="JID"></param>
         /// <returns></returns>
-        public static DataSet ReturnLeaderboard(int JID)
+        public static DataSet ReturnLeaderboard(string username , bool Recherche = false)
         {
             DataSet DSLeaderboard = new DataSet();
+            using (OracleDataAdapter oraDataAdapStats = new OracleDataAdapter())
+            {
+                OracleConnection conn = Connection.GetInstance().conn;
+                string sqlSelect = "";
+                
+                if(Recherche)
+                    sqlSelect = "Select rownum as Position,username as Usager,victoires from VueClassement";
+
+                else
+                    sqlSelect = "select * from (select rownum as Position , username as Usager , victoires from vueclassement) where username =:username";
+
+                oraDataAdapStats.SelectCommand = new OracleCommand(sqlSelect, conn);
+
+                OracleParameter OraParamUsername = new OracleParameter(":username", OracleDbType.Varchar2, 32);
+                OraParamUsername.Value = username;
+
+                oraDataAdapStats.SelectCommand.Parameters.Add(OraParamUsername);
+                oraDataAdapStats.Fill(DSLeaderboard, "Leaderboard");
+            }
+            return DSLeaderboard;
 
             return DSLeaderboard;
         }
