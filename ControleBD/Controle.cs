@@ -941,8 +941,8 @@ namespace ControleBD
                 {
                     Erreur.ErrorMessage(ex);
                 }
-                return DSLeaderboard;
-            }
+            return DSLeaderboard;
+        }
         }
         /// <summary>
         /// cette fonction ramene le numero d'un joueur a l'aide du nom d'usager (puisqu'il est unique)
