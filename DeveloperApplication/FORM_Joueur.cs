@@ -89,7 +89,7 @@ namespace DeveloperApplication
 
         private void Lister_Items()
         {
-            BindingSource maSource = new BindingSource(Controle.ListItems(CHECK_SHOW_Activated.Checked, int.Parse(LBL_JID.Text)), "ITEMS");
+            BindingSource maSource = new BindingSource(Controle.ListItems(CHECK_SHOW_Activated.Checked, JID), "STATS");
             DGV_Inventaire.DataSource = maSource;
 
             if (DGV_Inventaire.Rows.Count > 0)
@@ -115,7 +115,8 @@ namespace DeveloperApplication
 
             if(FI.ShowDialog() == DialogResult.OK)
             {
-
+                if (Controle.UpdateQuantity(JID, FI.IID, FI.QUANTITE))
+                    Lister_Items();
             }
         }
     }
