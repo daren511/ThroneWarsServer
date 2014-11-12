@@ -6,6 +6,7 @@ using System.Net;
 
 namespace ControleBD
 {
+    [Serializable]
     public class AttaqueSpeciale
     {
        AttaqueSpeciale()

@@ -45,7 +45,13 @@ namespace ThroneWarsServer
                 if(Joueur.isConnected)
                 {
                     Joueur.jid = Controle.getJID(Joueur.Username);
-                    envoyerListe(traiterDataSet(Controle.ReturnStats(Joueur.jid)));
+
+                    DataSet ds = Controle.ReturnStats(Joueur.jid);
+
+                    List<string> list = traiterDataSet(ds);
+                    envoyerListe(list);
+
+                    envoyerPersonnage(list[0]);
                     
                 }
             }
@@ -71,6 +77,16 @@ namespace ThroneWarsServer
             using (var stream = new MemoryStream())
             {
                 b.Serialize(stream, ds);
+                Joueur.Socket.Send(stream.ToArray());
+            }
+        }
+        private void envoyerPersonnage(string nom)
+        {
+            Personnages p = Controle.ReturnPersonnage(nom);
+            BinaryFormatter b = new BinaryFormatter();
+            using (var stream = new MemoryStream())
+            {
+                b.Serialize(stream, p);
                 Joueur.Socket.Send(stream.ToArray());
             }
         } 

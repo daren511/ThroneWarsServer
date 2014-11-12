@@ -119,19 +119,17 @@ public class onStartUp : MonoBehaviour
                     {
                         try
                         {
-                            playerData = GetJoueurData();
+                            List<string> charNames = GetJoueur();
+                            onMainMenu.tabCharac = charNames;
 
-                            DataTable dt = playerData.Tables["StatsJoueur"];
-                            foreach (DataRow dr in dt.Rows)
-                            {
-                                Debug.Log(dr["Nom"].ToString());
-                            }
+                            Personnages p = GetPersonnage();
+
+                            Application.LoadLevel("MainMenu");
                         }
                         catch (Exception e)
                         {
                             Debug.Log(e);
                         }
-                        //Application.LoadLevel("MainMenu");
                     }
                 }
             }
@@ -173,7 +171,7 @@ public class onStartUp : MonoBehaviour
         confirmed = ans.Split(SPLITTER)[1].Contains("True");
     }
 
-    private Joueur GetJoueur()
+    private List<string> GetJoueur()
     {
         int count = sck.ReceiveBufferSize;
         byte[] buffer;
@@ -185,90 +183,62 @@ public class onStartUp : MonoBehaviour
         {
             formatted[i] = buffer[i];
         }
-        Joueur joueur = null;
+        List<string> joueur = null;
         BinaryFormatter receive = new BinaryFormatter();
         using (var recstream = new MemoryStream(formatted))
         {
-            joueur = receive.Deserialize(recstream) as Joueur;
+            joueur = receive.Deserialize(recstream) as List<string>;
         }
         return joueur;
     }
 
-    private DataSet GetJoueurData()
+    private Personnages GetPersonnage()
     {
-        DataSet data = new DataSet();
-        try
-        {
-            byte[] buffer = new byte[sck.SendBufferSize];
-            int bytesRead = sck.Receive(buffer);
-            byte[] formatted = new byte[bytesRead];
+        int count = sck.ReceiveBufferSize;
+        byte[] buffer;
+        buffer = new byte[count];
+        sck.Receive(buffer);
 
-            for (int i = 0; i < bytesRead; i++)
-            {
-                formatted[i] = buffer[i];
-            }
-            BinaryFormatter receive = new BinaryFormatter();           
-            using (var recstream = new MemoryStream(formatted))
-            {
-                data = receive.Deserialize(recstream) as DataSet;
-            }
-        }
-        catch (SerializationException e)
+        byte[] formatted = new byte[count];
+        for (int i = 0; i < count; i++)
         {
-            Debug.Log(e.Message);
+            formatted[i] = buffer[i];
         }
-        return data;
+        Personnages perso = new Personnages();
+        BinaryFormatter receive = new BinaryFormatter();
+        Debug.Log(typeof(Personnages).IsSerializable);
+        using (var recstream = new MemoryStream(formatted))
+        {
+            perso = receive.Deserialize(recstream) as Personnages;
+        }
+        return perso;
     }
 
-    private DataSet DeserializeByteArrayToDataSet(byte[] byteArrayData)
-    {
-        DataSet tempDataSet = new DataSet();
-        DataTable dt;
-        // Deserializing into datatable    
-        using (MemoryStream stream = new MemoryStream(byteArrayData))
-        {
-            BinaryFormatter bformatter = new BinaryFormatter();
-            dt = (DataTable)bformatter.Deserialize(stream);
-            if (dt != null)
-            {
-                foreach (DataRow row in dt.Rows)
-                {
-                    Debug.Log("----------------------");
-                    Debug.Log(row[0]);
-                    Debug.Log(row[1]);
-                    Debug.Log(row[2]);
-                    Debug.Log("----------------------");
-                }
-            }
-        }
-        // Adding DataTable into DataSet    
-        tempDataSet.Tables.Add(dt);
-        return tempDataSet;
-    }
-    private void GetPlayerInfo()
-    {
-        Joueur joueur = GetJoueur();
-        PlayerInventory playerInvent = null;
-        List<Potion> list = new List<Potion>();
-        Potion uItem;
-        EquipableItem eItem;
 
-        Personnages perso;
-        string charClass;
+    //private void GetPlayerInfo()
+    //{
+    //    Joueur joueur = GetJoueur();
+    //    PlayerInventory playerInvent = null;
+    //    List<Potion> list = new List<Potion>();
+    //    Potion uItem;
+    //    EquipableItem eItem;
 
-        for (int i = 0; i < joueur.Persos.Count; ++i)
-        {
-            perso = joueur.Persos[i];
-            charClass = GetCharacterClass(perso.ClassId);
-            //ici traiter l'inventaire du personnage
-            CharacterInventory characterInvent = GetCharacterInventory(i);
+    //    Personnages perso;
+    //    string charClass;
 
-            PlayerManager._instance._characters.Add(Character.CreateCharacter(perso.Nom, charClass, perso.Level, perso.Xp, perso.Moves,
-                perso.Range, perso.Health, perso.Magic, characterInvent, perso.PhysAtk, perso.PhysDef, perso.MagicAtk, perso.MagicDef));
+    //    for (int i = 0; i < joueur.Persos.Count; ++i)
+    //    {
+    //        perso = joueur.Persos[i];
+    //        charClass = GetCharacterClass(perso.ClassId);
+    //        //ici traiter l'inventaire du personnage
+    //        CharacterInventory characterInvent = GetCharacterInventory(i);
 
-        }
-        PlayerManager._instance._playerInventory = playerInvent;
-    }
+    //        PlayerManager._instance._characters.Add(Character.CreateCharacter(perso.Nom, charClass, perso.Level, perso.Xp, perso.Moves,
+    //            perso.Range, perso.Health, perso.Magic, characterInvent, perso.PhysAtk, perso.PhysDef, perso.MagicAtk, perso.MagicDef));
+
+    //    }
+    //    PlayerManager._instance._playerInventory = playerInvent;
+    //}
     private CharacterInventory GetCharacterInventory(int pos)
     {
         CharacterInventory characterInvent = new CharacterInventory();
