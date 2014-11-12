@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Recherche.aspx.cs" Inherits="SiteWebThroneWars.Stats2" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Recherche.aspx.cs" Inherits="SiteWebThroneWars.Stats2" EnableEventValidation="false" %>
 
 <!DOCTYPE html>
 
@@ -8,9 +8,9 @@
     <title>Throne Wars -Projet FinDec - Stats</title>
     <link rel="stylesheet" type="text/css" href="FinDec.css" />
     <link rel="stylesheet" type="text/css" href="/sweet-alert.css" />
+    <link rel="shortcut icon" href="/Images/Icon.png" />
     <script src="/sweet-alert.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-
 </head>
 <body>
     <form id="form1" runat="server">
@@ -37,18 +37,20 @@
                 <li><a href="default.aspx">Accueil</a></li>
                 <li><a href="Inscription.aspx">Inscription</a></li>
                 <li><a href="Connexion.aspx">Connexion</a></li>
-                <li><a href="Recherche.aspx">Recherche Joueur</a></li>
+                <li><a href="Recherche.aspx">Classement</a></li>
                 <li><a href="Media.aspx">Média</a></li>
             </li>
         </ul>
     </div>
         <div class="FormRecherche">
             <label>Nom d'utilisateur</label><br />
-            <asp:TextBox ID="TB_UsernameSearch" TextMode="SingleLine" runat="server" /><br />
+            <asp:TextBox ID="TB_UsernameSearch" TextMode="SingleLine" runat="server" /><br/><br />
             <asp:Button Text="Rechercher" runat="server" OnClick="Rechercher_Click" />
         </div>
         <div class="Leaderboard">
-            <asp:GridView runat="server" ID="GV_Leaderboard" OnRowDataBound="GV_Leaderboard_OnRowDataBound">     
+            <asp:GridView runat="server" ID="GV_Leaderboard" OnRowDataBound="GV_Leaderboard_OnRowDataBound"  
+                AutoPostBack="true" OnSelectedIndexChanged="GV_Leaderboard_SelectedIndexChanged"
+                AllowPaging ="true" OnPageIndexChanging = "GV_Leaderboard_PageIndexChanging" PageSize = "5">     
             </asp:GridView>
         </div>
 

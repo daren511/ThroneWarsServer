@@ -870,7 +870,7 @@ namespace ControleBD
                     sqlSelect = "select NOM,\"LEVEL\",CID from Personnages where JID = :JID";
                 else
                 {
-                    sqlSelect = "SELECT GUID, NOM, CNAME, XP, \"LEVEL\", ISACTIVE FROM PERSONNAGES P " +
+                    sqlSelect = "SELECT GUID, NOM, CNAME, XP, \"LEVEL\", ISACTIVE FROM PERSONNAGES P " + 
                         "INNER JOIN CLASSES C ON P.CID = C.CID WHERE JID =:JID AND (ISACTIVE = 1";
                     if (afficherTout)
                         sqlSelect += " OR ISACTIVE = 0";
@@ -886,6 +886,45 @@ namespace ControleBD
             }
 
             return DSStats;
+        }
+
+        public static Personnages ReturnPersonnage(string nom)
+        {
+            Personnages personnage = new Personnages();
+
+            OracleConnection conn = Connection.GetInstance().conn;
+            OracleCommand sqlSelect = conn.CreateCommand();
+
+            sqlSelect.CommandText = "GESTIONJEU.GETPERSONNAGE";
+            sqlSelect.CommandType = CommandType.StoredProcedure;
+
+            OracleParameter refCursor = new OracleParameter(":perso", OracleDbType.RefCursor);
+            refCursor.Direction = ParameterDirection.ReturnValue;
+            sqlSelect.Parameters.Add(refCursor);
+
+            OracleParameter paramGUID = new OracleParameter(":characterID", OracleDbType.Int32);
+            paramGUID.Value = getGUID(nom);
+            paramGUID.Direction = ParameterDirection.Input;
+            sqlSelect.Parameters.Add(paramGUID);
+
+            OracleDataReader read = sqlSelect.ExecuteReader();
+
+
+            while(read.Read())
+            {
+                personnage.Nom = read.GetString(0);
+                personnage.Xp = read.GetInt32(1);
+                personnage.Level = read.GetInt32(2);
+                personnage.ClassName = read.GetString(3);
+                personnage.Health = read.GetInt32(4);
+                personnage.PhysAtk = read.GetInt32(5);
+                personnage.PhysDef = read.GetInt32(6);
+                personnage.MagicAtk = read.GetInt32(7);
+                personnage.MagicDef = read.GetInt32(8);
+            }
+            read.Close();
+
+            return personnage;
         }
 
         public static DataSet ReturnStatsWEB(int JID)
@@ -908,14 +947,12 @@ namespace ControleBD
             }
             return DSStats;
         }
-
-
         /// <summary>
         /// Cette fonction retourne un dataset avec le leaderboard
         /// </summary>
         /// <param name="JID"></param>
         /// <returns></returns>
-        public static DataSet ReturnLeaderboard(string username, bool Recherche = false)
+        public static DataSet ReturnLeaderboard(string username , bool Recherche = false)
         {
             DataSet DSLeaderboard = new DataSet();
             using (OracleDataAdapter oraDataAdapStats = new OracleDataAdapter())
@@ -924,6 +961,8 @@ namespace ControleBD
                 string sqlSelect = "";
                 try
                 {
+                    if (username != null)
+                    {
                     if (Recherche)
                         sqlSelect = "Select rownum as Position,username as Usager,victoires from VueClassement";
 
@@ -937,6 +976,13 @@ namespace ControleBD
 
                     oraDataAdapStats.SelectCommand.Parameters.Add(OraParamUsername);
                     oraDataAdapStats.Fill(DSLeaderboard, "Leaderboard");
+                }
+                    else
+                    {
+                        sqlSelect = "Select rownum as Position,username as Usager,victoires from VueClassement";
+                        oraDataAdapStats.SelectCommand = new OracleCommand(sqlSelect, conn);
+                        oraDataAdapStats.Fill(DSLeaderboard, "Leaderboard");
+                }
                 }
                 catch (OracleException ex)
                 {
@@ -977,6 +1023,32 @@ namespace ControleBD
                 Erreur.ErrorMessage(ex);
             }
             return 0;
+        }
+
+        public static int getGUID(string characterName)
+        {
+            OracleConnection conn = Connection.GetInstance().conn;
+            string sql = "select GUID from personnages where nom=:cname";
+
+            try
+            {
+                OracleCommand oraSelect = new OracleCommand(sql, conn);
+                OracleParameter OraParamName = new OracleParameter(":cname", OracleDbType.Varchar2, 32);
+                OraParamName.Value = characterName;
+                oraSelect.Parameters.Add(OraParamName);
+
+                using (OracleDataReader objRead = oraSelect.ExecuteReader())
+                {
+                    if (objRead.Read())
+                        return objRead.GetInt32(0);
+                }
+
+            }
+            catch (OracleException ex)
+            {
+                Erreur.ErrorMessage(ex);
+            }
+            return -1;
         }
 
         public static bool ResetPassword(string userHash, string passHash)

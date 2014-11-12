@@ -17,10 +17,10 @@ public class onMainMenu : MonoBehaviour
     private static int selectedItem;    // For the character inventory
     private static Vector2 scrollPos;
     // Lists
-    private static List<string> tabTeam = new List<string>();
-    private static List<string> tabCharac = new List<string>();
-    private static List<string> tabInvent = new List<string>();
-    private static List<string> tabItem = new List<string>();
+    public static List<string> tabTeam = new List<string>();
+    public static List<string> tabCharac = new List<string>();
+    public static List<string> tabInvent = new List<string>();
+    public static List<string> tabItem = new List<string>();
     // Team window
     private static float wT = 190.0f;
     private static float hT = Screen.height - 145;
@@ -61,8 +61,7 @@ public class onMainMenu : MonoBehaviour
     void Start()
     {
         remainingPosition = PlayerManager._instance._chosenTeam.Length;
-        ShowAllCharacters();
-        ShowSelectedCharacters();
+
         ShowPlayerInventory();
 
         onMenuLoad.listStyle.normal.textColor = Color.white;
@@ -76,7 +75,9 @@ public class onMainMenu : MonoBehaviour
         onMenuLoad.cb = new ComboBox(new Rect(onMenuLoad.rectCreate.xMin / 2 + 40, onMenuLoad.rectCreate.yMin + 10, 200, 30), onMenuLoad.contents[0],
             onMenuLoad.contents, "button", "box", onMenuLoad.listStyle);
 
-        __spriteClass = PlayerManager._instance._characters[0]._characterClass._className;
+
+
+        __spriteClass = PlayerManager._instance._selectedCharacter._characterClass._className;
         sprite1 = GetSprite(__spriteClass, 1);
         sprite2 = GetSprite(__spriteClass, 2);
     }
@@ -110,6 +111,8 @@ public class onMainMenu : MonoBehaviour
     {
         GUILayout.Space(25);
         selectedCharac = GUILayout.SelectionGrid(selectedCharac, tabCharac.ToArray(), 1);
+
+        GetHighlightedCharacter();
     }
 
     void doPlayWindow(int windowID)
@@ -149,7 +152,7 @@ public class onMainMenu : MonoBehaviour
         {
             string name = tabCharac[selectedCharac];
             int indexOfChar = PlayerManager._instance._characters.IndexOf(PlayerManager._instance._characters.Find(x => x._name == name));
-            Character c = PlayerManager._instance._characters[indexOfChar];
+            Character c = PlayerManager._instance._selectedCharacter;
 
             if (__spriteClass != c._characterClass._className)
             {
@@ -236,6 +239,12 @@ public class onMainMenu : MonoBehaviour
         }
         GUILayout.EndHorizontal();
         GUILayout.EndArea();
+    }
+
+    private void GetHighlightedCharacter()
+    {
+        PlayerManager._instance._selectedCharacter = null;
+
     }
 
     private Texture2D GetSprite(string characterClass, int spriteID)
