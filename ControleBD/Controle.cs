@@ -12,7 +12,7 @@ namespace ControleBD
     public class Controle
     {
         private static int SaltValueSize = 16;
-
+        
         public static bool deletePerso(int GUID)
         {
             OracleConnection conn = Connection.GetInstance().conn;
@@ -935,8 +935,8 @@ namespace ControleBD
                 OracleConnection conn = Connection.GetInstance().conn;
                 string sqlSelect = "";
                 sqlSelect = "select P.NOM,\"LEVEL\" as Niveau,CL.CNAME as Classe from Personnages P INNER JOIN CLASSES CL " +
-            "ON P.CID = CL.CID where JID = :JID";
-
+                "ON P.CID = CL.CID where JID = :JID";
+                
                 oraDataAdapStats.SelectCommand = new OracleCommand(sqlSelect, conn);
 
                 OracleParameter OraParamJID = new OracleParameter(":JID", OracleDbType.Int32, 10);
@@ -947,14 +947,12 @@ namespace ControleBD
             }
             return DSStats;
         }
-
-
         /// <summary>
         /// Cette fonction retourne un dataset avec le leaderboard
         /// </summary>
         /// <param name="JID"></param>
         /// <returns></returns>
-        public static DataSet ReturnLeaderboard(string username, bool Recherche = false)
+        public static DataSet ReturnLeaderboard(string username , bool Recherche = false)
         {
             DataSet DSLeaderboard = new DataSet();
             using (OracleDataAdapter oraDataAdapStats = new OracleDataAdapter())
@@ -963,6 +961,8 @@ namespace ControleBD
                 string sqlSelect = "";
                 try
                 {
+                    if (username != null)
+                    {
                     if (Recherche)
                         sqlSelect = "Select rownum as Position,username as Usager,victoires from VueClassement";
 
@@ -976,6 +976,13 @@ namespace ControleBD
 
                     oraDataAdapStats.SelectCommand.Parameters.Add(OraParamUsername);
                     oraDataAdapStats.Fill(DSLeaderboard, "Leaderboard");
+                }
+                    else
+                    {
+                        sqlSelect = "Select rownum as Position,username as Usager,victoires from VueClassement";
+                        oraDataAdapStats.SelectCommand = new OracleCommand(sqlSelect, conn);
+                        oraDataAdapStats.Fill(DSLeaderboard, "Leaderboard");
+                    }
                 }
                 catch (OracleException ex)
                 {
@@ -1007,7 +1014,7 @@ namespace ControleBD
                 using (OracleDataReader objRead = oraSelect.ExecuteReader())
                 {
                     if (objRead.Read())
-                        return objRead.GetInt32(0);
+                    return objRead.GetInt32(0);
                 }
 
             }
@@ -1082,7 +1089,7 @@ namespace ControleBD
         {
             public Phrase()
             {
-
+              
             }
             public static string Chiffrer(string valeur, int increment = 2)
             {
@@ -1152,7 +1159,7 @@ namespace ControleBD
                     objRead.Read();
                     return objRead.GetInt32(0) == 1;
                 }
-
+                
             }
             catch (OracleException ex)
             {
@@ -1160,7 +1167,7 @@ namespace ControleBD
                 return false;
             }
         }
-
+        
 
 
         //------------------------------ À ALEXIS ------------------------------//
@@ -1198,12 +1205,12 @@ namespace ControleBD
             using (OracleDataAdapter oraDataAdapItems = new OracleDataAdapter())
             {
                 OracleConnection conn = Connection.GetInstance().conn;
-                string sql = "SELECT J.IID, NOM, CNAME, \"LEVEL\", WATK, WDEF, MATK, MDEF, QUANTITY, ISACTIVE FROM ITEMS I " +
-                "INNER JOIN CLASSES C ON I.CID = C.CID " +
+            string sql = "SELECT J.IID, NOM, CNAME, \"LEVEL\", WATK, WDEF, MATK, MDEF, QUANTITY, ISACTIVE FROM ITEMS I " + 
+            "INNER JOIN CLASSES C ON I.CID = C.CID " + 
                 "INNER JOIN INVENTAIREJOUEUR J ON I.IID = J.IID WHERE JID =:jid AND (ISACTIVE = 1";
-                if (afficherTout)
+            if (afficherTout)
                     sql += " OR ISACTIVE = 0";
-                sql += ") ORDER BY IID";
+            sql += ") ORDER BY IID";
 
                 oraDataAdapItems.SelectCommand = new OracleCommand(sql, conn);
 
@@ -1213,8 +1220,8 @@ namespace ControleBD
                 oraDataAdapItems.SelectCommand.Parameters.Add(OraParamJID);
                 oraDataAdapItems.Fill(monDataSet, "STATS");
             }
-            return monDataSet;
-        }
+                return monDataSet;
+            }
 
         //public static bool UpdateItem(int jid, int iid, string nom, string classe, int level, int watk, int wdef, int matk, int mdef, int qte, string actif)
         //{
@@ -1297,7 +1304,7 @@ namespace ControleBD
         {
             OracleConnection conn = Connection.GetInstance().conn;
 
-            string sqlconfirmation = "UPDATE JOUEURS SET USERNAME =:Username, EMAIL =:Email, HASH_KEY =:Password, " +
+            string sqlconfirmation = "UPDATE JOUEURS SET USERNAME =:Username, EMAIL =:Email, HASH_KEY =:Password, " + 
                 "JOINDATE =:DateJoint, MONEY =:Argent, CONFIRMED =:Confirmer WHERE JID =:jid";
 
             try

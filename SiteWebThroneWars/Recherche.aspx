@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Recherche.aspx.cs" Inherits="SiteWebThroneWars.Stats2" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Recherche.aspx.cs" Inherits="SiteWebThroneWars.Stats2" EnableEventValidation="false" %>
 
 <!DOCTYPE html>
 
@@ -10,7 +10,6 @@
     <link rel="stylesheet" type="text/css" href="/sweet-alert.css" />
     <script src="/sweet-alert.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-
 </head>
 <body>
     <form id="form1" runat="server">
@@ -48,7 +47,9 @@
             <asp:Button Text="Rechercher" runat="server" OnClick="Rechercher_Click" />
         </div>
         <div class="Leaderboard">
-            <asp:GridView runat="server" ID="GV_Leaderboard" OnRowDataBound="GV_Leaderboard_OnRowDataBound">     
+            <asp:GridView runat="server" ID="GV_Leaderboard" OnRowDataBound="GV_Leaderboard_OnRowDataBound"  
+                AutoPostBack="true" OnSelectedIndexChanged="GV_Leaderboard_SelectedIndexChanged"
+                AllowPaging ="true" OnPageIndexChanging = "GV_Leaderboard_PageIndexChanging" PageSize = "5">     
             </asp:GridView>
         </div>
 
