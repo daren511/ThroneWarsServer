@@ -151,6 +151,8 @@
             // CHECK_SHOW_Activated
             // 
             this.CHECK_SHOW_Activated.AutoSize = true;
+            this.CHECK_SHOW_Activated.Checked = true;
+            this.CHECK_SHOW_Activated.CheckState = System.Windows.Forms.CheckState.Checked;
             this.CHECK_SHOW_Activated.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.CHECK_SHOW_Activated.Location = new System.Drawing.Point(204, 285);
             this.CHECK_SHOW_Activated.Name = "CHECK_SHOW_Activated";

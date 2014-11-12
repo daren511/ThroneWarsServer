@@ -68,6 +68,7 @@
             // 
             this.TB_Nom.Location = new System.Drawing.Point(80, 6);
             this.TB_Nom.Name = "TB_Nom";
+            this.TB_Nom.ReadOnly = true;
             this.TB_Nom.Size = new System.Drawing.Size(178, 20);
             this.TB_Nom.TabIndex = 10;
             // 
@@ -75,6 +76,7 @@
             // 
             this.TB_Level.Location = new System.Drawing.Point(264, 6);
             this.TB_Level.Name = "TB_Level";
+            this.TB_Level.ReadOnly = true;
             this.TB_Level.Size = new System.Drawing.Size(44, 20);
             this.TB_Level.TabIndex = 11;
             // 
@@ -82,6 +84,7 @@
             // 
             this.TB_WATK.Location = new System.Drawing.Point(80, 41);
             this.TB_WATK.Name = "TB_WATK";
+            this.TB_WATK.ReadOnly = true;
             this.TB_WATK.Size = new System.Drawing.Size(100, 20);
             this.TB_WATK.TabIndex = 12;
             // 
@@ -89,6 +92,7 @@
             // 
             this.TB_WDEF.Location = new System.Drawing.Point(208, 41);
             this.TB_WDEF.Name = "TB_WDEF";
+            this.TB_WDEF.ReadOnly = true;
             this.TB_WDEF.Size = new System.Drawing.Size(100, 20);
             this.TB_WDEF.TabIndex = 13;
             // 
@@ -96,6 +100,7 @@
             // 
             this.TB_MATK.Location = new System.Drawing.Point(80, 67);
             this.TB_MATK.Name = "TB_MATK";
+            this.TB_MATK.ReadOnly = true;
             this.TB_MATK.Size = new System.Drawing.Size(100, 20);
             this.TB_MATK.TabIndex = 14;
             // 
@@ -103,12 +108,14 @@
             // 
             this.TB_MDEF.Location = new System.Drawing.Point(208, 67);
             this.TB_MDEF.Name = "TB_MDEF";
+            this.TB_MDEF.ReadOnly = true;
             this.TB_MDEF.Size = new System.Drawing.Size(100, 20);
             this.TB_MDEF.TabIndex = 15;
             // 
             // CHECK_IsActive
             // 
             this.CHECK_IsActive.AutoSize = true;
+            this.CHECK_IsActive.Enabled = false;
             this.CHECK_IsActive.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.CHECK_IsActive.Location = new System.Drawing.Point(12, 41);
             this.CHECK_IsActive.Name = "CHECK_IsActive";
@@ -130,6 +137,7 @@
             // 
             // CB_Classe
             // 
+            this.CB_Classe.Enabled = false;
             this.CB_Classe.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.CB_Classe.FormattingEnabled = true;
             this.CB_Classe.Location = new System.Drawing.Point(80, 97);
@@ -164,6 +172,7 @@
             this.Controls.Add(this.BTN_OK);
             this.Controls.Add(this.LBL_IID);
             this.Name = "FORM_Item";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Load += new System.EventHandler(this.FORM_Item_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
