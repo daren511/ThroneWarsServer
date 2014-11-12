@@ -9,6 +9,7 @@
     <link rel="stylesheet" type="text/css" href="./FinDec.css" />
     <script type="text/javascript" src="/highslide/highslide.js"></script>
     <link rel="stylesheet" type="text/css" href="/highslide/highslide.css" />
+    <link rel="shortcut icon" href="/Images/Icon.png" />
     <script type="text/javascript">
     // override Highslide settings here
     // instead of editing the highslide.js file

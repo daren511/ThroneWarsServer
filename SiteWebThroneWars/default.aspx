@@ -9,6 +9,7 @@
 <title>Throne Wars -Projet FinDec - Page Principale</title>
 <meta charset="utf-8"/> 
 <link rel="stylesheet" type="text/css" href="FinDec.css"/>
+<link rel="shortcut icon" href="/Images/Icon.png" />
 </head>
 <body>
 	

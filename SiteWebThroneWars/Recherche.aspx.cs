@@ -122,9 +122,6 @@ namespace SiteWebThroneWars
 
         protected void GV_Leaderboard_SelectedIndexChanged(object sender, EventArgs e)
         {
-            int index = GV_Leaderboard.SelectedRow.RowIndex;
-            string name = GV_Leaderboard.SelectedRow.Cells[1].Text.ToString();
-            string victoires = GV_Leaderboard.SelectedRow.Cells[2].Text.ToString();
             foreach (GridViewRow rowColor in GV_Leaderboard.Rows)
             {
                 rowColor.BackColor = System.Drawing.Color.Transparent;

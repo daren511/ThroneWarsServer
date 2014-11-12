@@ -8,6 +8,7 @@
     <title>Throne Wars -Projet FinDec - Stats</title>
     <link rel="stylesheet" type="text/css" href="FinDec.css" />
     <link rel="stylesheet" type="text/css" href="/sweet-alert.css" />
+    <link rel="shortcut icon" href="/Images/Icon.png" />
     <script src="/sweet-alert.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 </head>
@@ -43,7 +44,7 @@
     </div>
         <div class="FormRecherche">
             <label>Nom d'utilisateur</label><br />
-            <asp:TextBox ID="TB_UsernameSearch" TextMode="SingleLine" runat="server" /><br />
+            <asp:TextBox ID="TB_UsernameSearch" TextMode="SingleLine" runat="server" /><br/><br />
             <asp:Button Text="Rechercher" runat="server" OnClick="Rechercher_Click" />
         </div>
         <div class="Leaderboard">
