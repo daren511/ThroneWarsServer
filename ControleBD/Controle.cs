@@ -907,14 +907,12 @@ namespace ControleBD
             }
             return DSStats;
         }
-
-
         /// <summary>
         /// Cette fonction retourne un dataset avec le leaderboard
         /// </summary>
         /// <param name="JID"></param>
         /// <returns></returns>
-        public static DataSet ReturnLeaderboard(string username , bool Recherche = false)
+        public static DataSet ReturnLeaderboard(string username = null, bool Recherche = false)
         {
             DataSet DSLeaderboard = new DataSet();
             using (OracleDataAdapter oraDataAdapStats = new OracleDataAdapter())
@@ -923,19 +921,28 @@ namespace ControleBD
                 string sqlSelect = "";
                 try
                 {
-                    if (Recherche)
-                        sqlSelect = "Select rownum as Position,username as Usager,victoires from VueClassement";
+                    if (username != null)
+                    {
+                        if (Recherche)
+                            sqlSelect = "Select rownum as Position,username as Usager,victoires from VueClassement";
 
+                        else
+                            sqlSelect = "select * from (select rownum as Position , username as Usager , victoires from vueclassement) where usager =:username";
+
+                        oraDataAdapStats.SelectCommand = new OracleCommand(sqlSelect, conn);
+
+                        OracleParameter OraParamUsername = new OracleParameter(":username", OracleDbType.Varchar2, 32);
+                        OraParamUsername.Value = username.ToLower();
+
+                        oraDataAdapStats.SelectCommand.Parameters.Add(OraParamUsername);
+                        oraDataAdapStats.Fill(DSLeaderboard, "Leaderboard");
+                    }
                     else
-                        sqlSelect = "select * from (select rownum as Position , username as Usager , victoires from vueclassement) where usager =:username";
-
-                    oraDataAdapStats.SelectCommand = new OracleCommand(sqlSelect, conn);
-
-                    OracleParameter OraParamUsername = new OracleParameter(":username", OracleDbType.Varchar2, 32);
-                    OraParamUsername.Value = username.ToLower();
-
-                    oraDataAdapStats.SelectCommand.Parameters.Add(OraParamUsername);
-                    oraDataAdapStats.Fill(DSLeaderboard, "Leaderboard");
+                    {
+                        sqlSelect = "Select rownum as Position,username as Usager,victoires from VueClassement";
+                        oraDataAdapStats.SelectCommand = new OracleCommand(sqlSelect, conn);
+                        oraDataAdapStats.Fill(DSLeaderboard, "Leaderboard");
+                    }
                 }
                 catch (OracleException ex)
                 {
