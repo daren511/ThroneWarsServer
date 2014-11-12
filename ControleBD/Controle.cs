@@ -1231,12 +1231,12 @@ namespace ControleBD
         public static bool UpdateJoueur(int jid, string nom, string email, string password, DateTime date, int argent, string confirmer)
         {
             OracleConnection conn = Connection.GetInstance().conn;
-            string sqlconfirmation = "UPDATE JOUEURS SET USERNAME =:Username, EMAIL =:Email, HASH_KEY =:Password, " +
+            string sql = "UPDATE JOUEURS SET USERNAME =:Username, EMAIL =:Email, HASH_KEY =:Password, " +
                 "JOINDATE =:DateJoint, MONEY =:Argent, CONFIRMED =:Confirmer WHERE JID =:jid";
 
             try
             {
-                OracleCommand oraUpdate = new OracleCommand(sqlconfirmation, conn);
+                OracleCommand oraUpdate = new OracleCommand(sql, conn);
 
                 OracleParameter OraParamUsername = new OracleParameter(":Username", OracleDbType.Varchar2, 32);
                 OracleParameter OraParamEmail = new OracleParameter(":Email", OracleDbType.Varchar2, 255);
