@@ -24,7 +24,7 @@
  					<li><a href="default.aspx">Accueil</a></li>
  					<li><a href="Inscription.aspx">Inscription</a></li>
                     <li><a href="Connexion.aspx">Connexion</a></li>
-				 	<li><a href="Recherche.aspx">Recherche Joueur</a></li>
+				 	<li><a href="Recherche.aspx">Classement</a></li>
 				 	<li><a href="Media.aspx">Média</a></li>
 				 </li>
 			</ul>
