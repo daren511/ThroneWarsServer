@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Oracle.DataAccess.Client;
+using ControleBD;
 
 namespace DeveloperApplication
 {
@@ -89,6 +91,20 @@ namespace DeveloperApplication
             ToolTip.SetToolTip(TB_MDEF, "Défense magique");
             ToolTip.SetToolTip(CB_Classe, "Classe");
             ToolTip.SetToolTip(TB_Quantite, "Quantité");
+            FillComboBox();
+        }
+
+        private void CheckKeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+                e.Handled = true;
+        }
+
+        private void FillComboBox()
+        {
+            List<string> classes = Controle.FillClasses();
+            for (int i = 0; i < classes.Count; ++i)
+                CB_Classe.Items.Add(classes[i]);
         }
     }
 }

@@ -79,6 +79,7 @@
             this.TB_Level.ReadOnly = true;
             this.TB_Level.Size = new System.Drawing.Size(44, 20);
             this.TB_Level.TabIndex = 11;
+            this.TB_Level.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.CheckKeyPress);
             // 
             // TB_WATK
             // 
@@ -87,6 +88,7 @@
             this.TB_WATK.ReadOnly = true;
             this.TB_WATK.Size = new System.Drawing.Size(100, 20);
             this.TB_WATK.TabIndex = 12;
+            this.TB_WATK.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.CheckKeyPress);
             // 
             // TB_WDEF
             // 
@@ -95,6 +97,7 @@
             this.TB_WDEF.ReadOnly = true;
             this.TB_WDEF.Size = new System.Drawing.Size(100, 20);
             this.TB_WDEF.TabIndex = 13;
+            this.TB_WDEF.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.CheckKeyPress);
             // 
             // TB_MATK
             // 
@@ -103,6 +106,7 @@
             this.TB_MATK.ReadOnly = true;
             this.TB_MATK.Size = new System.Drawing.Size(100, 20);
             this.TB_MATK.TabIndex = 14;
+            this.TB_MATK.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.CheckKeyPress);
             // 
             // TB_MDEF
             // 
@@ -111,6 +115,7 @@
             this.TB_MDEF.ReadOnly = true;
             this.TB_MDEF.Size = new System.Drawing.Size(100, 20);
             this.TB_MDEF.TabIndex = 15;
+            this.TB_MDEF.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.CheckKeyPress);
             // 
             // CHECK_IsActive
             // 
@@ -142,7 +147,7 @@
             this.CB_Classe.FormattingEnabled = true;
             this.CB_Classe.Location = new System.Drawing.Point(80, 97);
             this.CB_Classe.Name = "CB_Classe";
-            this.CB_Classe.Size = new System.Drawing.Size(121, 21);
+            this.CB_Classe.Size = new System.Drawing.Size(100, 21);
             this.CB_Classe.TabIndex = 18;
             // 
             // TB_Quantite
@@ -151,6 +156,7 @@
             this.TB_Quantite.Name = "TB_Quantite";
             this.TB_Quantite.Size = new System.Drawing.Size(100, 20);
             this.TB_Quantite.TabIndex = 19;
+            this.TB_Quantite.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.CheckKeyPress);
             // 
             // FORM_Item
             // 

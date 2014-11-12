@@ -870,7 +870,7 @@ namespace ControleBD
                     sqlSelect = "select NOM,\"LEVEL\",CID from Personnages where JID = :JID";
                 else
                 {
-                    sqlSelect = "SELECT GUID, NOM, CNAME, XP, \"LEVEL\", ISACTIVE FROM PERSONNAGES P " + 
+                    sqlSelect = "SELECT GUID, NOM, CNAME, XP, \"LEVEL\", ISACTIVE FROM PERSONNAGES P " +
                         "INNER JOIN CLASSES C ON P.CID = C.CID WHERE JID =:JID AND (ISACTIVE = 1";
                     if (afficherTout)
                         sqlSelect += " OR ISACTIVE = 0";
@@ -1231,7 +1231,6 @@ namespace ControleBD
         public static bool UpdateJoueur(int jid, string nom, string email, string password, DateTime date, int argent, string confirmer)
         {
             OracleConnection conn = Connection.GetInstance().conn;
-
             string sqlconfirmation = "UPDATE JOUEURS SET USERNAME =:Username, EMAIL =:Email, HASH_KEY =:Password, " +
                 "JOINDATE =:DateJoint, MONEY =:Argent, CONFIRMED =:Confirmer WHERE JID =:jid";
 
@@ -1303,6 +1302,91 @@ namespace ControleBD
             }
         }
 
+        public static bool AddPerso(int jid, string nom, int xp, int level, string classe, string actif)
+        {
+            OracleConnection conn = Connection.GetInstance().conn;
+            string sql = "INSERT INTO PERSONNAGES(JID,NOM,XP,\"LEVEL\",CID,ISACTIVE) " + 
+                "VALUES(:jid, :nom, :xp, :lvl, (SELECT CID FROM CLASSES WHERE CNAME =:classe), :actif)";
+
+            try
+            {
+                OracleCommand oraInsert = new OracleCommand(sql, conn);
+
+                OracleParameter OraParamJID = new OracleParameter(":jid", OracleDbType.Int32, 10);
+                OracleParameter OraParamNom = new OracleParameter(":nom", OracleDbType.Varchar2, 12);
+                OracleParameter OraParamXP = new OracleParameter(":xp", OracleDbType.Int32, 10);
+                OracleParameter OraParamLevel = new OracleParameter(":lvl", OracleDbType.Int32, 2);
+                OracleParameter OraParamClasse = new OracleParameter(":classe", OracleDbType.Varchar2, 40);
+                OracleParameter OraParamActif = new OracleParameter(":actif", OracleDbType.Char, 1);
+
+                OraParamJID.Value = jid;
+                OraParamNom.Value = nom;
+                OraParamXP.Value = xp;
+                OraParamLevel.Value = level;
+                OraParamClasse.Value = classe;
+                OraParamActif.Value = actif;
+
+                oraInsert.Parameters.Add(OraParamJID);
+                oraInsert.Parameters.Add(OraParamNom);
+                oraInsert.Parameters.Add(OraParamXP);
+                oraInsert.Parameters.Add(OraParamLevel);
+                oraInsert.Parameters.Add(OraParamClasse);
+                oraInsert.Parameters.Add(OraParamActif);
+
+                oraInsert.ExecuteNonQuery();
+                return true;
+            }
+            catch (OracleException ex)
+            {
+                Erreur.ErrorMessage(ex);
+                return false;
+            }
+        }
+
+        public static bool UpdatePerso(int guid, int jid, string nom, int xp, int level, string classe, string actif)
+        {
+            OracleConnection conn = Connection.GetInstance().conn;
+            string sql = "UPDATE PERSONNAGES SET NOM =:nom, XP =:xp, \"LEVEL\" =:lvl, " +
+                "CID =(SELECT CID FROM CLASSES WHERE CNAME =:classe), ISACTIVE =:actif WHERE GUID =:guid AND JID =:jid";
+
+            try
+            {
+                OracleCommand oraUpdate = new OracleCommand(sql, conn);
+
+                OracleParameter OraParamNom = new OracleParameter(":nom", OracleDbType.Varchar2, 12);
+                OracleParameter OraParamXP = new OracleParameter(":xp", OracleDbType.Int32, 10);
+                OracleParameter OraParamLevel = new OracleParameter(":lvl", OracleDbType.Int32, 2);
+                OracleParameter OraParamClasse = new OracleParameter(":classe", OracleDbType.Varchar2, 40);
+                OracleParameter OraParamActif = new OracleParameter(":actif", OracleDbType.Char, 1);
+                OracleParameter OraParamGUID = new OracleParameter(":guid", OracleDbType.Int32, 10);
+                OracleParameter OraParamJID = new OracleParameter(":jid", OracleDbType.Int32, 10);
+
+                OraParamNom.Value = nom;
+                OraParamXP.Value = xp;
+                OraParamLevel.Value = level;
+                OraParamClasse.Value = classe;
+                OraParamActif.Value = actif;
+                OraParamGUID.Value = guid;
+                OraParamJID.Value = jid;
+
+                oraUpdate.Parameters.Add(OraParamNom);
+                oraUpdate.Parameters.Add(OraParamXP);
+                oraUpdate.Parameters.Add(OraParamLevel);
+                oraUpdate.Parameters.Add(OraParamClasse);
+                oraUpdate.Parameters.Add(OraParamActif);
+                oraUpdate.Parameters.Add(OraParamGUID);
+                oraUpdate.Parameters.Add(OraParamJID);
+
+                oraUpdate.ExecuteNonQuery();
+                return true;
+            }
+            catch (OracleException ex)
+            {
+                Erreur.ErrorMessage(ex);
+                return false;
+            }
+        }
+
         public static bool UpdateStatePerso(int guid, string actif)
         {
             OracleConnection conn = Connection.GetInstance().conn;
@@ -1331,6 +1415,20 @@ namespace ControleBD
                 Erreur.ErrorMessage(ex);
                 return false;
             }
+        }
+
+        public static List<string> FillClasses()
+        {
+            List<string> listItem = new List<string>();
+            OracleConnection conn = Connection.GetInstance().conn;
+            string sql = "SELECT CNAME FROM CLASSES";
+            OracleCommand oraSelect = new OracleCommand(sql, conn);
+            using (OracleDataReader oraReader = oraSelect.ExecuteReader())
+            {
+                while (oraReader.Read())
+                    listItem.Add(oraReader.GetString(0));
+            }
+            return listItem;
         }
     }
 }

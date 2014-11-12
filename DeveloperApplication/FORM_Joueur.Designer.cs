@@ -63,9 +63,11 @@
             this.DGV_Inventaire.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DGV_Inventaire.Location = new System.Drawing.Point(12, 63);
             this.DGV_Inventaire.Name = "DGV_Inventaire";
+            this.DGV_Inventaire.ReadOnly = true;
             this.DGV_Inventaire.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.DGV_Inventaire.Size = new System.Drawing.Size(507, 213);
             this.DGV_Inventaire.TabIndex = 8;
+            this.DGV_Inventaire.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DGV_Inventaire_CellDoubleClick);
             // 
             // BTN_OK
             // 

@@ -55,6 +55,7 @@
             this.DGV_Joueurs.Size = new System.Drawing.Size(300, 183);
             this.DGV_Joueurs.TabIndex = 1;
             this.DGV_Joueurs.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DGV_Joueurs_CellClick);
+            this.DGV_Joueurs.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DGV_Joueurs_CellDoubleClick);
             // 
             // DGV_Personnages
             // 
@@ -70,6 +71,7 @@
             this.DGV_Personnages.Size = new System.Drawing.Size(434, 183);
             this.DGV_Personnages.TabIndex = 2;
             this.DGV_Personnages.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DGV_Personnages_CellClick);
+            this.DGV_Personnages.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DGV_Personnages_CellDoubleClick);
             // 
             // BTN_CONS_Joueur
             // 
