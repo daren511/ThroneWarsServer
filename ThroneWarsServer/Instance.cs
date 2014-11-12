@@ -45,7 +45,7 @@ namespace ThroneWarsServer
                 if(Joueur.isConnected)
                 {
                     Joueur.jid = Controle.getJID(Joueur.Username);
-                    envoyerDataSet(Controle.ReturnStats(Joueur.jid));                    
+                    envoyerDataSet(Controle.ReturnStats(Joueur.jid));
                 }
             }
             catch (Exception e)
