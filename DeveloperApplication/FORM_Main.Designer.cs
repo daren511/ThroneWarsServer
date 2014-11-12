@@ -167,6 +167,7 @@
             this.Controls.Add(this.DGV_Personnages);
             this.Controls.Add(this.DGV_Joueurs);
             this.Name = "FORM_Main";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Throne Wars";
             this.Load += new System.EventHandler(this.FORM_Main_Load);
             ((System.ComponentModel.ISupportInitialize)(this.DGV_Joueurs)).EndInit();

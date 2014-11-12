@@ -45,7 +45,14 @@ namespace ThroneWarsServer
                 if(Joueur.isConnected)
                 {
                     Joueur.jid = Controle.getJID(Joueur.Username);
-                    envoyerDataSet(Controle.ReturnStats(Joueur.jid));
+
+                    DataSet ds = Controle.ReturnStats(Joueur.jid);
+
+                    List<string> list = traiterDataSet(ds);
+                    envoyerListe(list);
+
+                    envoyerPersonnage(list[0]);
+                    
                 }
             }
             catch (Exception e)
@@ -54,13 +61,32 @@ namespace ThroneWarsServer
             }
             this.T.Abort();//arret du thread
         }
-
-        private void envoyerDataSet(DataSet ds)
+        private List<string> traiterDataSet(DataSet DS)
+        {
+            List<string> Liste = new List<string>();
+            foreach(DataRow dr in DS.Tables["StatsJoueur"].Rows)
+            {
+                Liste.Add(dr[0].ToString());
+            }
+            Liste.Capacity = Liste.Count;
+            return Liste;
+        }
+        private void envoyerListe(List<string> ds)
         {
             BinaryFormatter b = new BinaryFormatter();
             using (var stream = new MemoryStream())
             {
                 b.Serialize(stream, ds);
+                Joueur.Socket.Send(stream.ToArray());
+            }
+        }
+        private void envoyerPersonnage(string nom)
+        {
+            Personnages p = Controle.ReturnPersonnage(nom);
+            BinaryFormatter b = new BinaryFormatter();
+            using (var stream = new MemoryStream())
+            {
+                b.Serialize(stream, p);
                 Joueur.Socket.Send(stream.ToArray());
             }
         } 

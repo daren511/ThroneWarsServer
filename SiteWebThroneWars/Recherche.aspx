@@ -7,10 +7,25 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Throne Wars -Projet FinDec - Stats</title>
     <link rel="stylesheet" type="text/css" href="FinDec.css" />
+    <link rel="stylesheet" type="text/css" href="/sweet-alert.css" />
+    <script src="/sweet-alert.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
 </head>
 <body>
     <form id="form1" runat="server">
+        <script type="text/javascript">
+            function MessageBoxReussi() {
+                $(document).ready(function () {
+                    swal({ title: "Bravo! ", text: "Vous êtes connecté", type: "success", confirmButtonText: "Ok" });
+                });
+            }
+            function MessageBoxErreur(textadaptatif) {
+                $(document).ready(function () {
+                    swal({ title: "Échec! ", text: textadaptatif, type: "error", confirmButtonText: "I'm sad" });
+                });
+            }
+        </script>
     <div class="Entete">
         <img src="./Images/Logo_Grand.png" style="max-height: 100%; max-width: 100%;" />
     </div>
@@ -33,26 +48,14 @@
             <asp:Button Text="Rechercher" runat="server" OnClick="Rechercher_Click" />
         </div>
         <div class="Leaderboard">
-            <asp:Table ID="table" runat="server" GridLines="Both">
-                <asp:TableHeaderRow runat="server" ForeColor="Red">
-                    <asp:TableHeaderCell>Position</asp:TableHeaderCell>
-                    <asp:TableHeaderCell>Nom d'utilisateur</asp:TableHeaderCell> 
-                    <asp:TableHeaderCell>Victoires</asp:TableHeaderCell>
-                </asp:TableHeaderRow>
-            </asp:Table>
+            <asp:GridView runat="server" ID="GV_Leaderboard" OnRowDataBound="GV_Leaderboard_OnRowDataBound">     
+            </asp:GridView>
         </div>
+
         <div class="Stats">
-            <asp:Table ID="tableStats" runat="server" GridLines="Both">
-                <asp:TableHeaderRow runat="server" ForeColor="Red">
-                    <asp:TableHeaderCell># Personnage</asp:TableHeaderCell>
-                    <asp:TableHeaderCell>Niveaux</asp:TableHeaderCell>
-                    <asp:TableHeaderCell>XP</asp:TableHeaderCell>
-                    <asp:TableHeaderCell>Classe</asp:TableHeaderCell>
-                </asp:TableHeaderRow>
-            </asp:Table>
+           <asp:GridView runat="server" ID="GV_Stats">
+           </asp:GridView>
         </div>
-
-
     </form>
 </body>
 </html>

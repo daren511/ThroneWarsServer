@@ -119,7 +119,12 @@ namespace DeveloperApplication
 
         private void BTN_AJT_Perso_Click(object sender, EventArgs e)
         {
+            FORM_Perso FP = new FORM_Perso();
 
+            if (FP.ShowDialog() == DialogResult.OK)
+            {
+
+            }
         }
 
         private void BTN_CONS_Perso_Click(object sender, EventArgs e)
@@ -129,7 +134,13 @@ namespace DeveloperApplication
 
         private void BTN_DESAC_Perso_Click(object sender, EventArgs e)
         {
-
+            string confirmer = "";
+            if (DGV_Personnages.SelectedRows[0].Cells[5].Value.ToString() == "1")
+                confirmer = "0";
+            else
+                confirmer = "1";
+            if (Controle.UpdateStatePerso(Int32.Parse(DGV_Personnages.SelectedRows[0].Cells[0].Value.ToString()), confirmer))
+                ListerPerso();
         }
 
         private void CHECK_CFM_Perso_CheckedChanged(object sender, EventArgs e)
@@ -139,10 +150,13 @@ namespace DeveloperApplication
 
         private void ChangeBTNTextP()
         {
-            if (DGV_Joueurs.SelectedRows[0].Cells[6].Value.ToString() == "1")
-                BTN_DESAC_Perso.Text = "Désactiver";
-            else
-                BTN_DESAC_Perso.Text = "Activer";
+            if (DGV_Personnages.Rows.Count > 0)
+            {
+                if (DGV_Personnages.SelectedRows[0].Cells[5].Value.ToString() == "1")
+                    BTN_DESAC_Perso.Text = "Désactiver";
+                else
+                    BTN_DESAC_Perso.Text = "Activer";
+            }
         }
     }
 }

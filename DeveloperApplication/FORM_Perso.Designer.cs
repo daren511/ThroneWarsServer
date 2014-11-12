@@ -93,6 +93,7 @@
             // 
             // BTN_Annuler
             // 
+            this.BTN_Annuler.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.BTN_Annuler.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BTN_Annuler.Location = new System.Drawing.Point(451, 280);
             this.BTN_Annuler.Name = "BTN_Annuler";
@@ -103,6 +104,7 @@
             // 
             // BTN_OK
             // 
+            this.BTN_OK.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.BTN_OK.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BTN_OK.Location = new System.Drawing.Point(370, 280);
             this.BTN_OK.Name = "BTN_OK";
@@ -122,8 +124,10 @@
             // 
             // FORM_Perso
             // 
+            this.AcceptButton = this.BTN_OK;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.BTN_Annuler;
             this.ClientSize = new System.Drawing.Size(538, 317);
             this.Controls.Add(this.CB_Classe);
             this.Controls.Add(this.BTN_OK);

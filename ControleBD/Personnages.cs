@@ -3,12 +3,18 @@ using System.Collections.Generic;
 
 namespace ControleBD
 {
+    [Serializable]
     public class Personnages
     {
-        public string Nom { get; private set; }
-        public int Level { get; private set; }
-        public int Xp { get; private set; }
+        public string Nom { get;  set; }
+        public int Level { get;  set; }
+        public int Xp { get;  set; }
         List<Items> Item = new List<Items>();
+
+        public Personnages()
+        {
+
+        }
 
         public Personnages(string nom,int level,int classid)
         {
@@ -16,15 +22,19 @@ namespace ControleBD
             this.Level = level;
             this.ClassId = classid;
         }
-        public int ClassId { get; private set; }
-        public int Health { get; private set; }
-        public int Magic { get; private set; }
-        public int PhysAtk { get; private set; }
-        public int PhysDef { get; private set; }
-        public int MagicAtk { get; private set; }
-        public int MagicDef { get; private set; }
-        public int Moves { get; private set; }
-        public int Range { get; private set; }
+        public int ClassId { get;  set; }
+
+        public string ClassName {get; set;}
+
+        public int Health { get;  set; }
+        public int Magic { get;  set; }
+        public int PhysAtk { get;  set; }
+        public int PhysDef { get;  set; }
+        public int MagicAtk { get;  set; }
+        public int MagicDef { get;  set; }
+        public int Moves { get;  set; }
+        public int Range { get;  set; }
+
 
         public List<AttaqueSpeciale> Attaques = new List<AttaqueSpeciale>();
     }

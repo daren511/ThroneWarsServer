@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using ControleBD;
+using System.Data;
 
 namespace SiteWebThroneWars
 {
@@ -19,38 +20,64 @@ namespace SiteWebThroneWars
         {
             //Textbox pas null
             bool ok = VerifChamps();
-            if(ok)
+            string text = "";
+            DataSet DSStats = new DataSet();
+            DataSet DSLeaderboard = new DataSet();
+            if (ok)
+            {
+                
+                string user = TB_UsernameSearch.Text;
+                bool UserExiste = Controle.UserExiste(user);
+                //Prend le JID
+                int JID = Controle.getJID(user);
+                if (UserExiste)
+                {
+
+                    //Random random = new Random();
+                    //int randomNumber = random.Next(1, 9);
+                    //string userHash = Controle.Phrase.Chiffrer(user, randomNumber);
+                    //Response.Redirect("www.thronewars.ca/Recherche?User="+userHash);
+
+                    //Ramener la position du username dans le leaderboard
+                    DSLeaderboard = Controle.ReturnLeaderboard(user,true);
+                    if (DSLeaderboard != null)
+                    {
+                        GV_Leaderboard.DataSource = DSLeaderboard;
+                        GV_Leaderboard.DataBind();
+                    }
+
+
+                    //Ramener stats
+                    DSStats = Controle.ReturnStatsWEB(JID);
+                    if (DSStats != null)
+                    {
+                        GV_Stats.DataSource = DSStats;
+                        GV_Stats.DataBind(); 
+                    }
+                }
+                else
+                { 
+                    //Message erreur user inexistant
+                    text = "Usager inexistant";
+                    //Textbox vide erreur
+                    ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>MessageBoxErreur(\"" + text + "\");</script>", false);
+                }
+            }
+            else
             { 
-            string user = TB_UsernameSearch.Text;
-            Random random = new Random();
-            int randomNumber = random.Next(1, 9);
-            string userHash = Controle.Phrase.Chiffrer(user, randomNumber);
+                // message erreur champs vide
+                text = "Veuillez remplir tout les champs";
+                //Textbox vide erreur
+                ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>MessageBoxErreur(\"" + text + "\");</script>", false);
 
-            Response.Redirect("www.thronewars.ca:8080/Recherche?User="+userHash);
-            //Ramener la position du username dans le leaderboard
-
-
-            //Ramener stats
-        }
+            }
         }
 
         private void Leaderboard_Croissant()
         {
 
-            //Pour tous les enrigistrements de la BD
-            for (int i = 1; i < 100; ++i)
-            {
-                TableRow tr = new TableRow();
-                table.Rows.Add(tr);
-                // Pour tous les champs de l'enrigistrements courant
-                TableCell tdPosition = new TableCell();
-                TableCell tdUsername = new TableCell();
-                TableCell tdVictoires = new TableCell();
-                tr.Cells.Add(tdPosition);
-                tr.Cells.Add(tdUsername);
-                tr.Cells.Add(tdVictoires);
-                tdPosition.Text = i.ToString();
-            }
+            //Pour tous les enrigistrements du leaderboard
+            
         }
 
         protected bool VerifChamps()
@@ -61,6 +88,18 @@ namespace SiteWebThroneWars
                 Valide = true;
             }
             return Valide;
+        }
+
+        protected void GV_Leaderboard_OnRowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                // do your stuffs here, for example if column risk is your third column:
+                if (e.Row.Cells[1].Text == TB_UsernameSearch.Text.ToLower())
+                {
+                    e.Row.BackColor = System.Drawing.Color.Red;
+                }
+            }
         }
     }
 }

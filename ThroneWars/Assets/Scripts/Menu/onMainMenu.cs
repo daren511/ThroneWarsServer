@@ -145,79 +145,82 @@ public class onMainMenu : MonoBehaviour
         
     void doStatsWindow(int windowID)
     {
-        string name = tabCharac[selectedCharac].Remove(tabCharac[selectedCharac].LastIndexOf(','));
-        int indexOfChar = PlayerManager._instance._characters.IndexOf(PlayerManager._instance._characters.Find(x => x._name == name));
-        Character c = PlayerManager._instance._characters[indexOfChar];
-
-        if (__spriteClass != c._characterClass._className)
+        if(tabCharac.Count > 0)
         {
-            __spriteClass = c._characterClass._className;
-            sprite1 = GetSprite(c._characterClass._className, 1);
-            sprite2 = GetSprite(c._characterClass._className, 2);
+            string name = tabCharac[selectedCharac];
+            int indexOfChar = PlayerManager._instance._characters.IndexOf(PlayerManager._instance._characters.Find(x => x._name == name));
+            Character c = PlayerManager._instance._characters[indexOfChar];
+
+            if (__spriteClass != c._characterClass._className)
+            {
+                __spriteClass = c._characterClass._className;
+                sprite1 = GetSprite(c._characterClass._className, 1);
+                sprite2 = GetSprite(c._characterClass._className, 2);
+            }
+
+            GUILayout.BeginHorizontal();
+            GUILayout.BeginArea(new Rect(20f, 10f, 150, 150));
+            GUI.DrawTexture(new Rect(20f, 10f, 50, 50), sprite1, ScaleMode.StretchToFill, true, 0.0f);
+            GUILayout.EndArea();
+            GUILayout.BeginArea(new Rect(60f, 10f, 150, 150));
+            GUI.DrawTexture(new Rect(60f, 10f, 50, 50), sprite2, ScaleMode.StretchToFill, true, 0.0f);
+            GUILayout.EndArea();
+            GUILayout.EndHorizontal();
+
+
+            GUILayout.BeginVertical();
+            GUILayout.BeginArea(new Rect(30f, 80f, 200, 32));
+            GUILayout.Label(c._name + ", " + c._characterClass._className + " niveau " + c._characterClass._classLevel);
+            GUILayout.EndArea();
+            GUILayout.EndVertical();
+
+            GUILayout.BeginHorizontal();
+
+            GUILayout.BeginVertical();
+            GUI.DrawTexture(new Rect(325f, 20f, 32, 32), _healthTexture, ScaleMode.StretchToFill, true, 0.0f);
+            GUI.DrawTexture(new Rect(325f, 70f, 32, 32), _magicTexture, ScaleMode.StretchToFill, true, 0.0f);
+            GUILayout.EndVertical();
+
+            GUILayout.BeginVertical();
+            GUILayout.BeginArea(new Rect(360f, 20f, 100, 32));
+            GUILayout.Label(": " + c._maxHealth);
+            GUILayout.EndArea();
+            GUILayout.BeginArea(new Rect(360f, 75f, 100, 32));
+            GUILayout.Label(": " + c._maxMagic);
+            GUILayout.EndArea();
+            GUILayout.EndVertical();
+
+            GUILayout.BeginVertical();
+            GUI.DrawTexture(new Rect(425f, 20f, 32, 32), _atkTexture, ScaleMode.StretchToFill, true, 0.0f);
+            GUI.DrawTexture(new Rect(425f, 70f, 32, 32), _defTexture, ScaleMode.StretchToFill, true, 0.0f);
+            GUILayout.EndHorizontal();
+
+            GUILayout.BeginVertical();
+            GUILayout.BeginArea(new Rect(460f, 20f, 100, 32));
+            GUILayout.Label(": " + c._physAttack);
+            GUILayout.EndArea();
+            GUILayout.BeginArea(new Rect(460f, 75f, 100, 32));
+            GUILayout.Label(": " + c._physDefense);
+            GUILayout.EndArea();
+            GUILayout.EndVertical();
+
+            GUILayout.BeginVertical();
+            GUI.DrawTexture(new Rect(525f, 20f, 32, 32), _matkTexture, ScaleMode.StretchToFill, true, 0.0f);
+            GUI.DrawTexture(new Rect(525f, 70f, 32, 32), _mdefTexture, ScaleMode.StretchToFill, true, 0.0f);
+            GUILayout.EndVertical();
+
+            GUILayout.BeginVertical();
+            GUILayout.BeginArea(new Rect(560f, 20f, 100, 32));
+            GUILayout.Label(": " + c._magicAttack);
+            GUILayout.EndArea();
+            GUILayout.BeginArea(new Rect(560f, 75f, 100, 32));
+            GUILayout.Label(": " + c._magicDefense);
+            GUILayout.EndArea();
+            GUILayout.EndVertical();
+
+            GUILayout.EndHorizontal();
+           
         }
-
-        GUILayout.BeginHorizontal();
-        GUILayout.BeginArea(new Rect(20f, 10f, 150, 150));
-        GUI.DrawTexture(new Rect(20f, 10f, 50, 50), sprite1, ScaleMode.StretchToFill, true, 0.0f);
-        GUILayout.EndArea();
-        GUILayout.BeginArea(new Rect(60f, 10f, 150, 150));
-        GUI.DrawTexture(new Rect(60f, 10f, 50, 50), sprite2, ScaleMode.StretchToFill, true, 0.0f);
-        GUILayout.EndArea();
-        GUILayout.EndHorizontal();
-
-
-        GUILayout.BeginVertical();
-        GUILayout.BeginArea(new Rect(30f, 80f, 200, 32));
-        GUILayout.Label(c._name + ", " + c._characterClass._className + " niveau " + c._characterClass._classLevel);
-        GUILayout.EndArea();
-        GUILayout.EndVertical();
-
-        GUILayout.BeginHorizontal();
-
-        GUILayout.BeginVertical();
-        GUI.DrawTexture(new Rect(325f, 20f, 32, 32), _healthTexture, ScaleMode.StretchToFill, true, 0.0f);
-        GUI.DrawTexture(new Rect(325f, 70f, 32, 32), _magicTexture, ScaleMode.StretchToFill, true, 0.0f);
-        GUILayout.EndVertical();
-        
-        GUILayout.BeginVertical();
-        GUILayout.BeginArea(new Rect(360f, 20f, 100, 32));
-        GUILayout.Label(": " + c._maxHealth);
-        GUILayout.EndArea();
-        GUILayout.BeginArea(new Rect(360f, 75f, 100, 32));
-        GUILayout.Label(": " + c._maxMagic);
-        GUILayout.EndArea();
-        GUILayout.EndVertical();
-
-        GUILayout.BeginVertical();
-        GUI.DrawTexture(new Rect(425f, 20f, 32, 32), _atkTexture, ScaleMode.StretchToFill, true, 0.0f);
-        GUI.DrawTexture(new Rect(425f, 70f, 32, 32), _defTexture, ScaleMode.StretchToFill, true, 0.0f);
-        GUILayout.EndHorizontal();
-
-        GUILayout.BeginVertical();
-        GUILayout.BeginArea(new Rect(460f, 20f, 100, 32));
-        GUILayout.Label(": " + c._physAttack);
-        GUILayout.EndArea();
-        GUILayout.BeginArea(new Rect(460f, 75f, 100, 32));
-        GUILayout.Label(": " + c._physDefense);
-        GUILayout.EndArea();
-        GUILayout.EndVertical();
-
-        GUILayout.BeginVertical();
-        GUI.DrawTexture(new Rect(525f, 20f, 32, 32), _matkTexture, ScaleMode.StretchToFill, true, 0.0f);
-        GUI.DrawTexture(new Rect(525f, 70f, 32, 32), _mdefTexture, ScaleMode.StretchToFill, true, 0.0f);
-        GUILayout.EndVertical();
-
-        GUILayout.BeginVertical();
-        GUILayout.BeginArea(new Rect(560f, 20f, 100, 32));
-        GUILayout.Label(": " + c._magicAttack);
-        GUILayout.EndArea();
-        GUILayout.BeginArea(new Rect(560f, 75f, 100, 32));
-        GUILayout.Label(": " + c._magicDefense);
-        GUILayout.EndArea();
-        GUILayout.EndVertical();
-
-        GUILayout.EndHorizontal();
-
         GUILayout.Space(25);
         GUILayout.BeginArea(new Rect(rectStats.xMax / 6, rectStats.yMin + rectStats.height - 44, rectStats.width, 30));
         GUILayout.BeginHorizontal();
@@ -227,7 +230,7 @@ public class onMainMenu : MonoBehaviour
             SelectCharacter(selectedCharac);
         }
         GUI.enabled = chosenCharacters > 0;
-        if(GUILayout.Button("Retirer", GUILayout.Height(35), GUILayout.Width(200)))
+        if (GUILayout.Button("Retirer", GUILayout.Height(35), GUILayout.Width(200)))
         {
             UnselectCharacter(selectedTeam);
         }
