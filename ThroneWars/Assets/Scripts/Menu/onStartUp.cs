@@ -130,7 +130,12 @@ public class onStartUp : MonoBehaviour
                             List<Items> list = GetInventaireJoueur();
                             envoyerReponse("ok");
 
-                            Application.LoadLevel("MainMenu");
+                            for (int i = 0; i < list.Count; ++i )
+                            {
+                                Debug.Log(list[i].Nom);
+                            }
+
+                                Application.LoadLevel("MainMenu");
                         }
                         catch (Exception e)
                         {
@@ -248,9 +253,8 @@ public class onStartUp : MonoBehaviour
         {
             formatted[i] = buffer[i];
         }
-        Items item = new Items();
-        BinaryFormatter receive = new BinaryFormatter();
 
+        BinaryFormatter receive = new BinaryFormatter();
         using (var recstream = new MemoryStream(formatted))
         {
             list = receive.Deserialize(recstream) as List<Items>;
