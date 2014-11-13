@@ -113,7 +113,7 @@ namespace SiteWebThroneWars
                 // do your stuffs here, for example if column risk is your third column:
                 if (e.Row.Cells[1].Text == TB_UsernameSearch.Text.ToLower())
                 {
-                    e.Row.BackColor = System.Drawing.Color.Red;
+                    e.Row.BackColor = System.Drawing.Color.PowderBlue;
                 }
             }
         }
@@ -129,7 +129,7 @@ namespace SiteWebThroneWars
             GridViewRow row = GV_Leaderboard.SelectedRow;
             DataSet DSLeaderboardSelection = new DataSet();
             string user = row.Cells[1].Text;
-            row.BackColor = System.Drawing.Color.Red;
+            row.BackColor = System.Drawing.Color.PowderBlue;
 
             int JID = Controle.getJID(user);
             DSLeaderboardSelection = Controle.ReturnStatsWEB(JID);
