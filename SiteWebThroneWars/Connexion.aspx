@@ -5,6 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="shortcut icon" href="/Images/Icon.png" />
     <link rel="stylesheet" type="text/css" href="FinDec.css" />
     <link rel="stylesheet" type="text/css" href="/sweet-alert.css" />
     <script src="/sweet-alert.min.js"></script>
@@ -37,7 +38,7 @@
                 <li><a href="default.aspx">Accueil</a></li>
                 <li><a href="Inscription.aspx">Inscription</a></li>
                 <li><a href="Connexion.aspx">Connexion</a></li>
-                <li><a href="Recherche.aspx">Recherche Joueur</a></li>
+                <li><a href="Recherche.aspx">Classement</a></li>
                 <li><a href="Media.aspx">Média</a></li>
             </li>
         </ul>

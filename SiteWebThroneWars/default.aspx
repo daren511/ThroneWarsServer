@@ -9,6 +9,7 @@
 <title>Throne Wars -Projet FinDec - Page Principale</title>
 <meta charset="utf-8"/> 
 <link rel="stylesheet" type="text/css" href="FinDec.css"/>
+<link rel="shortcut icon" href="/Images/Icon.png" />
 </head>
 <body>
 	
@@ -23,7 +24,7 @@
  					<li><a href="default.aspx">Accueil</a></li>
  					<li><a href="Inscription.aspx">Inscription</a></li>
                     <li><a href="Connexion.aspx">Connexion</a></li>
-				 	<li><a href="Recherche.aspx">Recherche Joueur</a></li>
+				 	<li><a href="Recherche.aspx">Classement</a></li>
 				 	<li><a href="Media.aspx">Média</a></li>
 				 </li>
 			</ul>
