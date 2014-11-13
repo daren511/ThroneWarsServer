@@ -62,7 +62,7 @@ public class onMainMenu : MonoBehaviour
     {
         remainingPosition = PlayerManager._instance._chosenTeam.Length;
 
-        ShowPlayerInventory();
+        //ShowPlayerInventory();
 
         onMenuLoad.listStyle.normal.textColor = Color.white;
         onMenuLoad.listStyle.onHover.background =
@@ -112,7 +112,7 @@ public class onMainMenu : MonoBehaviour
         GUILayout.Space(25);
         selectedCharac = GUILayout.SelectionGrid(selectedCharac, tabCharac.ToArray(), 1);
 
-        GetHighlightedCharacter();
+       // GetHighlightedCharacter();
     }
 
     void doPlayWindow(int windowID)

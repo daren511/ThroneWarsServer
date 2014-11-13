@@ -52,6 +52,12 @@
     <Reference Include="ControleBD">
       <HintPath>Assets\Assemblies\ControleBD.dll</HintPath>
     </Reference>
+    <Reference Include="Emails">
+      <HintPath>Assets\Assemblies\Emails.dll</HintPath>
+    </Reference>
+    <Reference Include="Oracle.DataAccess">
+      <HintPath>Assets\Assemblies\Oracle.DataAccess.dll</HintPath>
+    </Reference>
     <Reference Include="System.Data">
       <HintPath>Assets\Assemblies\System.Data.dll</HintPath>
     </Reference>

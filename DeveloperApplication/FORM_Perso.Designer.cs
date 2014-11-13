@@ -39,6 +39,7 @@
             this.BTN_OK = new System.Windows.Forms.Button();
             this.CB_Classe = new System.Windows.Forms.ComboBox();
             this.ToolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.CHECK_AfficherTout = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.DGV_Inventaire)).BeginInit();
             this.SuspendLayout();
             // 
@@ -57,26 +58,35 @@
             this.TB_Nom.Name = "TB_Nom";
             this.TB_Nom.Size = new System.Drawing.Size(171, 20);
             this.TB_Nom.TabIndex = 1;
+            this.TB_Nom.TextChanged += new System.EventHandler(this.UpdateControls);
             // 
             // TB_XP
             // 
             this.TB_XP.Location = new System.Drawing.Point(277, 6);
             this.TB_XP.Name = "TB_XP";
+            this.TB_XP.ReadOnly = true;
             this.TB_XP.Size = new System.Drawing.Size(124, 20);
             this.TB_XP.TabIndex = 2;
+            this.TB_XP.Text = "0";
+            this.TB_XP.TextChanged += new System.EventHandler(this.UpdateControls);
+            this.TB_XP.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.CheckKeyPress);
             // 
             // TB_Level
             // 
             this.TB_Level.Location = new System.Drawing.Point(229, 6);
             this.TB_Level.Name = "TB_Level";
+            this.TB_Level.ReadOnly = true;
             this.TB_Level.Size = new System.Drawing.Size(42, 20);
             this.TB_Level.TabIndex = 3;
+            this.TB_Level.Text = "1";
+            this.TB_Level.TextChanged += new System.EventHandler(this.UpdateControls);
+            this.TB_Level.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.CheckKeyPress);
             // 
             // CHECK_IsActive
             // 
             this.CHECK_IsActive.AutoSize = true;
             this.CHECK_IsActive.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.CHECK_IsActive.Location = new System.Drawing.Point(52, 283);
+            this.CHECK_IsActive.Location = new System.Drawing.Point(15, 31);
             this.CHECK_IsActive.Name = "CHECK_IsActive";
             this.CHECK_IsActive.Size = new System.Drawing.Size(53, 17);
             this.CHECK_IsActive.TabIndex = 4;
@@ -86,9 +96,10 @@
             // DGV_Inventaire
             // 
             this.DGV_Inventaire.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.DGV_Inventaire.Location = new System.Drawing.Point(15, 44);
+            this.DGV_Inventaire.Location = new System.Drawing.Point(15, 54);
             this.DGV_Inventaire.Name = "DGV_Inventaire";
-            this.DGV_Inventaire.Size = new System.Drawing.Size(511, 220);
+            this.DGV_Inventaire.ReadOnly = true;
+            this.DGV_Inventaire.Size = new System.Drawing.Size(511, 207);
             this.DGV_Inventaire.TabIndex = 5;
             // 
             // BTN_Annuler
@@ -115,12 +126,27 @@
             // 
             // CB_Classe
             // 
+            this.CB_Classe.Enabled = false;
             this.CB_Classe.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.CB_Classe.FormattingEnabled = true;
             this.CB_Classe.Location = new System.Drawing.Point(407, 6);
             this.CB_Classe.Name = "CB_Classe";
             this.CB_Classe.Size = new System.Drawing.Size(119, 21);
             this.CB_Classe.TabIndex = 8;
+            this.CB_Classe.SelectedIndexChanged += new System.EventHandler(this.UpdateControls);
+            // 
+            // CHECK_AfficherTout
+            // 
+            this.CHECK_AfficherTout.AutoSize = true;
+            this.CHECK_AfficherTout.Checked = true;
+            this.CHECK_AfficherTout.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.CHECK_AfficherTout.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.CHECK_AfficherTout.Location = new System.Drawing.Point(15, 267);
+            this.CHECK_AfficherTout.Name = "CHECK_AfficherTout";
+            this.CHECK_AfficherTout.Size = new System.Drawing.Size(80, 17);
+            this.CHECK_AfficherTout.TabIndex = 9;
+            this.CHECK_AfficherTout.Text = "Afficher tout";
+            this.CHECK_AfficherTout.UseVisualStyleBackColor = true;
             // 
             // FORM_Perso
             // 
@@ -129,6 +155,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.BTN_Annuler;
             this.ClientSize = new System.Drawing.Size(538, 317);
+            this.Controls.Add(this.CHECK_AfficherTout);
             this.Controls.Add(this.CB_Classe);
             this.Controls.Add(this.BTN_OK);
             this.Controls.Add(this.BTN_Annuler);
@@ -158,5 +185,6 @@
         private System.Windows.Forms.Button BTN_OK;
         private System.Windows.Forms.ComboBox CB_Classe;
         private System.Windows.Forms.ToolTip ToolTip;
+        private System.Windows.Forms.CheckBox CHECK_AfficherTout;
     }
 }
