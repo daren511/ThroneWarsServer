@@ -9,7 +9,7 @@ namespace ControleBD
     [Serializable]
     public class Items
     {
-        public Items(string Nom, int Level, string Classe,  int WAtk, int WDef, int MAtk, int MDef,int Quantite=1)
+        public Items(string Nom, int Level, string Classe, int WAtk, int WDef, int MAtk, int MDef,int Quantite=1)
         {
             this.Nom = Nom;
             this.Level = Level;

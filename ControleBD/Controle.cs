@@ -778,7 +778,7 @@ namespace ControleBD
                     return objRead.GetInt32(0) == 1;// si le count est 1 sa veut donc dire qu'il existe un enregistrement avec se nom d'usager et mot de passe
                 }
             }
-            catch (OracleException ora)
+            catch (Exception ora)
             {
                 Console.WriteLine(ora.Message.ToString());
             }
@@ -801,7 +801,7 @@ namespace ControleBD
                 OracleCommand oraSelect = conn.CreateCommand();
                 oraSelect.CommandText = sqlSelect;
                 OracleParameter OraParamUsername = new OracleParameter(":USERNAME", OracleDbType.Varchar2, 32);
-                OraParamUsername.Value = user;
+                OraParamUsername.Value = user.ToLower();
                 oraSelect.Parameters.Add(OraParamUsername);
 
                 using (OracleDataReader objRead = oraSelect.ExecuteReader())
@@ -926,23 +926,27 @@ namespace ControleBD
 
             return personnage;
         }
-
-        public static List<Items> getInventaireJoueurs(string nom)
+        /// <summary>
+        /// Cette fonction retourne une inventaire complete de joueurs
+        /// </summary>
+        /// <param name="jid">le numero du joueur en question</param>
+        /// <returns>une liste contenant toute les items dans l'inventaire du joueur</returns>
+        public static List<Items> getInventaireJoueurs(int jid)
         {
             List<Items> Liste = new List<Items>();
 
             OracleConnection conn = Connection.GetInstance().conn;
             OracleCommand sqlSelect = conn.CreateCommand();
 
-            sqlSelect.CommandText = "GESTIONJEU.GETPERSONNAGE";
+            sqlSelect.CommandText = "GESTIONJEU.getinventairejoueur";
             sqlSelect.CommandType = CommandType.StoredProcedure;
 
             OracleParameter refCursor = new OracleParameter(":perso", OracleDbType.RefCursor);
             refCursor.Direction = ParameterDirection.ReturnValue;
             sqlSelect.Parameters.Add(refCursor);
 
-            OracleParameter paramGUID = new OracleParameter(":characterID", OracleDbType.Int32);
-            paramGUID.Value = getGUID(nom);
+            OracleParameter paramGUID = new OracleParameter(":JoueurID", OracleDbType.Int32);
+            paramGUID.Value = jid;
             paramGUID.Direction = ParameterDirection.Input;
             sqlSelect.Parameters.Add(paramGUID);
 
@@ -951,12 +955,48 @@ namespace ControleBD
 
             while(read.Read())
             {
-                Liste.Add(new Items(read.GetString(0),read.GetInt32(1),read.GetString(3),read.GetInt32(4),read.GetInt32(5),read.GetInt32(6),read.GetInt32(7)));
+                Liste.Add(new Items(read.GetString(0),read.GetInt32(1),read.GetString(2),read.GetInt32(3),read.GetInt32(4),read.GetInt32(5),read.GetInt32(6),read.GetInt32(7)));
             }
             read.Close();
             Liste.Capacity = Liste.Count;
             return Liste;
         }
+        /// <summary>
+        /// Cette fonction retourne une inventaire complete de joueurs
+        /// </summary>
+        /// <param name="jid">le numero du joueur en question</param>
+        /// <returns>une liste contenant toute les items dans l'inventaire du joueur</returns>
+        public static List<Items> getInventairePersonnage(int GUID)
+        {
+            List<Items> Liste = new List<Items>();
+
+            OracleConnection conn = Connection.GetInstance().conn;
+            OracleCommand sqlSelect = conn.CreateCommand();
+
+            sqlSelect.CommandText = "GESTIONJEU.getequipementpersonnage";
+            sqlSelect.CommandType = CommandType.StoredProcedure;
+
+            OracleParameter refCursor = new OracleParameter(":perso", OracleDbType.RefCursor);
+            refCursor.Direction = ParameterDirection.ReturnValue;
+            sqlSelect.Parameters.Add(refCursor);
+
+            OracleParameter paramGUID = new OracleParameter(":IDPersonnage", OracleDbType.Int32);
+            paramGUID.Value = GUID;
+            paramGUID.Direction = ParameterDirection.Input;
+            sqlSelect.Parameters.Add(paramGUID);
+
+            OracleDataReader read = sqlSelect.ExecuteReader();
+
+
+            while (read.Read())
+            {
+                Liste.Add(new Items(read.GetString(0), read.GetInt32(1), read.GetString(2), read.GetInt32(3), read.GetInt32(4), read.GetInt32(5), read.GetInt32(6)));
+            }
+            read.Close();
+            Liste.Capacity = Liste.Count;
+            return Liste;
+        }
+
 
 
         public static DataSet ReturnStatsWEB(int JID)

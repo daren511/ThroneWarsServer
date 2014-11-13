@@ -53,7 +53,7 @@ namespace ThroneWarsServer
                     recevoirString();
                     envoyerListe(Controle.ReturnPersonnage(list[0]));
                     recevoirString();
-                    envoyerListe(Controle.getInventaireJoueurs(list[0]));
+                    envoyerListe(Controle.getInventaireJoueurs(Joueur.jid));
 
                     
                 }
