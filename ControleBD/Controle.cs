@@ -927,6 +927,38 @@ namespace ControleBD
             return personnage;
         }
 
+        public static List<Items> getInventaireJoueurs(string nom)
+        {
+            List<Items> Liste = new List<Items>();
+
+            OracleConnection conn = Connection.GetInstance().conn;
+            OracleCommand sqlSelect = conn.CreateCommand();
+
+            sqlSelect.CommandText = "GESTIONJEU.GETPERSONNAGE";
+            sqlSelect.CommandType = CommandType.StoredProcedure;
+
+            OracleParameter refCursor = new OracleParameter(":perso", OracleDbType.RefCursor);
+            refCursor.Direction = ParameterDirection.ReturnValue;
+            sqlSelect.Parameters.Add(refCursor);
+
+            OracleParameter paramGUID = new OracleParameter(":characterID", OracleDbType.Int32);
+            paramGUID.Value = getGUID(nom);
+            paramGUID.Direction = ParameterDirection.Input;
+            sqlSelect.Parameters.Add(paramGUID);
+
+            OracleDataReader read = sqlSelect.ExecuteReader();
+
+
+            while(read.Read())
+            {
+                Liste.Add(new Items(read.GetString(0),read.GetInt32(1),read.GetString(3),read.GetInt32(4),read.GetInt32(5),read.GetInt32(6),read.GetInt32(7)));
+            }
+            read.Close();
+            Liste.Capacity = Liste.Count;
+            return Liste;
+        }
+
+
         public static DataSet ReturnStatsWEB(int JID)
         {
             DataSet DSStats = new DataSet();
