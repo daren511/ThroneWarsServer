@@ -9,6 +9,7 @@
     <link rel="stylesheet" type="text/css" href="./FinDec.css" />
     <script type="text/javascript" src="/highslide/highslide.js"></script>
     <link rel="stylesheet" type="text/css" href="/highslide/highslide.css" />
+    <link rel="shortcut icon" href="/Images/Icon.png" />
     <script type="text/javascript">
     // override Highslide settings here
     // instead of editing the highslide.js file
@@ -31,7 +32,7 @@
                     <li><a href="default.aspx">Accueil</a></li>
                     <li><a href="Inscription.aspx">Inscription</a></li>
                     <li><a href="Connexion.aspx">Connexion</a></li>
-                    <li><a href="Recherche.aspx">Recherche Joueur</a></li>
+                    <li><a href="Recherche.aspx">Classement</a></li>
                     <li><a href="Media.aspx">Média</a></li>
                 </li>
             </ul>

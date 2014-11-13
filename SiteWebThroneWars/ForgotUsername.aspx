@@ -8,6 +8,7 @@
 <meta charset="utf-8"/> 
 <link rel="stylesheet" type="text/css" href="FinDec.css"/>
 <link rel="stylesheet" type="text/css" href="/sweet-alert.css"/>
+<link rel="shortcut icon" href="/Images/Icon.png" />
 <script src="/sweet-alert.min.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 </head>
@@ -36,7 +37,7 @@
  					<li><a href="default.aspx">Accueil</a></li>
  					<li><a href="Inscription.aspx">Inscription</a></li>
                     <li><a href="Connexion.aspx">Connexion</a></li>
-				 	<li><a href="Recherche.aspx">Recherche Joueur</a></li>
+				 	<li><a href="Recherche.aspx">Classement</a></li>
 				 	<li><a href="Media.aspx">Média</a></li>
 				 </li>
 			</ul>

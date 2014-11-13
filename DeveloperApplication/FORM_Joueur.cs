@@ -20,7 +20,7 @@ namespace DeveloperApplication
             get { return Int32.Parse(LBL_JID.Text); }
             set { LBL_JID.Text = value.ToString(); }
         }
-        
+
         public string USERNAME
         {
             get { return TB_Username.Text; }
@@ -100,6 +100,16 @@ namespace DeveloperApplication
 
         private void BTN_Consulter_Click(object sender, EventArgs e)
         {
+            Consulter_Item();
+        }
+
+        private void DGV_Inventaire_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            Consulter_Item();
+        }
+
+        private void Consulter_Item()
+        {
             FORM_Item FI = new FORM_Item();
             FI.Text = DGV_Inventaire.SelectedRows[0].Cells[1].Value.ToString();
             FI.IID = int.Parse(DGV_Inventaire.SelectedRows[0].Cells[0].Value.ToString());
@@ -113,7 +123,7 @@ namespace DeveloperApplication
             FI.QUANTITE = int.Parse(DGV_Inventaire.SelectedRows[0].Cells[8].Value.ToString());
             FI.ISACTIVE = DGV_Inventaire.SelectedRows[0].Cells[9].Value.ToString();
 
-            if(FI.ShowDialog() == DialogResult.OK)
+            if (FI.ShowDialog() == DialogResult.OK)
             {
                 if (Controle.UpdateQuantity(JID, FI.IID, FI.QUANTITE))
                     Lister_Items();

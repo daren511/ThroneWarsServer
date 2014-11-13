@@ -204,8 +204,9 @@ public class onStartUp : MonoBehaviour
         {
             formatted[i] = buffer[i];
         }
-        Personnages perso = null;
+        Personnages perso = new Personnages();
         BinaryFormatter receive = new BinaryFormatter();
+        Debug.Log(typeof(Personnages).IsSerializable);
         using (var recstream = new MemoryStream(formatted))
         {
             perso = receive.Deserialize(recstream) as Personnages;

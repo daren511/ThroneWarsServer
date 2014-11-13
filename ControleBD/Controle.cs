@@ -12,7 +12,7 @@ namespace ControleBD
     public class Controle
     {
         private static int SaltValueSize = 16;
-        
+
         public static bool deletePerso(int GUID)
         {
             OracleConnection conn = Connection.GetInstance().conn;
@@ -967,8 +967,8 @@ namespace ControleBD
                 OracleConnection conn = Connection.GetInstance().conn;
                 string sqlSelect = "";
                 sqlSelect = "select P.NOM,\"LEVEL\" as Niveau,CL.CNAME as Classe from Personnages P INNER JOIN CLASSES CL " +
-                "ON P.CID = CL.CID where JID = :JID";
-                
+            "ON P.CID = CL.CID where JID = :JID";
+
                 oraDataAdapStats.SelectCommand = new OracleCommand(sqlSelect, conn);
 
                 OracleParameter OraParamJID = new OracleParameter(":JID", OracleDbType.Int32, 10);
@@ -1014,7 +1014,7 @@ namespace ControleBD
                         sqlSelect = "Select rownum as Position,username as Usager,victoires from VueClassement";
                         oraDataAdapStats.SelectCommand = new OracleCommand(sqlSelect, conn);
                         oraDataAdapStats.Fill(DSLeaderboard, "Leaderboard");
-                    }
+                }
                 }
                 catch (OracleException ex)
                 {
@@ -1046,7 +1046,7 @@ namespace ControleBD
                 using (OracleDataReader objRead = oraSelect.ExecuteReader())
                 {
                     if (objRead.Read())
-                    return objRead.GetInt32(0);
+                        return objRead.GetInt32(0);
                 }
 
             }
@@ -1121,7 +1121,7 @@ namespace ControleBD
         {
             public Phrase()
             {
-              
+
             }
             public static string Chiffrer(string valeur, int increment = 2)
             {
@@ -1191,7 +1191,7 @@ namespace ControleBD
                     objRead.Read();
                     return objRead.GetInt32(0) == 1;
                 }
-                
+
             }
             catch (OracleException ex)
             {
@@ -1199,7 +1199,7 @@ namespace ControleBD
                 return false;
             }
         }
-        
+
 
 
         //------------------------------ À ALEXIS ------------------------------//
@@ -1237,12 +1237,12 @@ namespace ControleBD
             using (OracleDataAdapter oraDataAdapItems = new OracleDataAdapter())
             {
                 OracleConnection conn = Connection.GetInstance().conn;
-            string sql = "SELECT J.IID, NOM, CNAME, \"LEVEL\", WATK, WDEF, MATK, MDEF, QUANTITY, ISACTIVE FROM ITEMS I " + 
-            "INNER JOIN CLASSES C ON I.CID = C.CID " + 
+                string sql = "SELECT J.IID, NOM, CNAME, \"LEVEL\", WATK, WDEF, MATK, MDEF, QUANTITY, ISACTIVE FROM ITEMS I " +
+                "INNER JOIN CLASSES C ON I.CID = C.CID " +
                 "INNER JOIN INVENTAIREJOUEUR J ON I.IID = J.IID WHERE JID =:jid AND (ISACTIVE = 1";
-            if (afficherTout)
+                if (afficherTout)
                     sql += " OR ISACTIVE = 0";
-            sql += ") ORDER BY IID";
+                sql += ") ORDER BY IID";
 
                 oraDataAdapItems.SelectCommand = new OracleCommand(sql, conn);
 
@@ -1252,8 +1252,8 @@ namespace ControleBD
                 oraDataAdapItems.SelectCommand.Parameters.Add(OraParamJID);
                 oraDataAdapItems.Fill(monDataSet, "STATS");
             }
-                return monDataSet;
-            }
+            return monDataSet;
+        }
 
         //public static bool UpdateItem(int jid, int iid, string nom, string classe, int level, int watk, int wdef, int matk, int mdef, int qte, string actif)
         //{
@@ -1335,13 +1335,12 @@ namespace ControleBD
         public static bool UpdateJoueur(int jid, string nom, string email, string password, DateTime date, int argent, string confirmer)
         {
             OracleConnection conn = Connection.GetInstance().conn;
-
-            string sqlconfirmation = "UPDATE JOUEURS SET USERNAME =:Username, EMAIL =:Email, HASH_KEY =:Password, " + 
+            string sql = "UPDATE JOUEURS SET USERNAME =:Username, EMAIL =:Email, HASH_KEY =:Password, " +
                 "JOINDATE =:DateJoint, MONEY =:Argent, CONFIRMED =:Confirmer WHERE JID =:jid";
 
             try
             {
-                OracleCommand oraUpdate = new OracleCommand(sqlconfirmation, conn);
+                OracleCommand oraUpdate = new OracleCommand(sql, conn);
 
                 OracleParameter OraParamUsername = new OracleParameter(":Username", OracleDbType.Varchar2, 32);
                 OracleParameter OraParamEmail = new OracleParameter(":Email", OracleDbType.Varchar2, 255);
@@ -1407,6 +1406,91 @@ namespace ControleBD
             }
         }
 
+        public static bool AddPerso(int jid, string nom, int xp, int level, string classe, string actif)
+        {
+            OracleConnection conn = Connection.GetInstance().conn;
+            string sql = "INSERT INTO PERSONNAGES(JID,NOM,XP,\"LEVEL\",CID,ISACTIVE) " + 
+                "VALUES(:jid, :nom, :xp, :lvl, (SELECT CID FROM CLASSES WHERE CNAME =:classe), :actif)";
+
+            try
+            {
+                OracleCommand oraInsert = new OracleCommand(sql, conn);
+
+                OracleParameter OraParamJID = new OracleParameter(":jid", OracleDbType.Int32, 10);
+                OracleParameter OraParamNom = new OracleParameter(":nom", OracleDbType.Varchar2, 12);
+                OracleParameter OraParamXP = new OracleParameter(":xp", OracleDbType.Int32, 10);
+                OracleParameter OraParamLevel = new OracleParameter(":lvl", OracleDbType.Int32, 2);
+                OracleParameter OraParamClasse = new OracleParameter(":classe", OracleDbType.Varchar2, 40);
+                OracleParameter OraParamActif = new OracleParameter(":actif", OracleDbType.Char, 1);
+
+                OraParamJID.Value = jid;
+                OraParamNom.Value = nom;
+                OraParamXP.Value = xp;
+                OraParamLevel.Value = level;
+                OraParamClasse.Value = classe;
+                OraParamActif.Value = actif;
+
+                oraInsert.Parameters.Add(OraParamJID);
+                oraInsert.Parameters.Add(OraParamNom);
+                oraInsert.Parameters.Add(OraParamXP);
+                oraInsert.Parameters.Add(OraParamLevel);
+                oraInsert.Parameters.Add(OraParamClasse);
+                oraInsert.Parameters.Add(OraParamActif);
+
+                oraInsert.ExecuteNonQuery();
+                return true;
+            }
+            catch (OracleException ex)
+            {
+                Erreur.ErrorMessage(ex);
+                return false;
+            }
+        }
+
+        public static bool UpdatePerso(int guid, int jid, string nom, int xp, int level, string classe, string actif)
+        {
+            OracleConnection conn = Connection.GetInstance().conn;
+            string sql = "UPDATE PERSONNAGES SET NOM =:nom, XP =:xp, \"LEVEL\" =:lvl, " +
+                "CID =(SELECT CID FROM CLASSES WHERE CNAME =:classe), ISACTIVE =:actif WHERE GUID =:guid AND JID =:jid";
+
+            try
+            {
+                OracleCommand oraUpdate = new OracleCommand(sql, conn);
+
+                OracleParameter OraParamNom = new OracleParameter(":nom", OracleDbType.Varchar2, 12);
+                OracleParameter OraParamXP = new OracleParameter(":xp", OracleDbType.Int32, 10);
+                OracleParameter OraParamLevel = new OracleParameter(":lvl", OracleDbType.Int32, 2);
+                OracleParameter OraParamClasse = new OracleParameter(":classe", OracleDbType.Varchar2, 40);
+                OracleParameter OraParamActif = new OracleParameter(":actif", OracleDbType.Char, 1);
+                OracleParameter OraParamGUID = new OracleParameter(":guid", OracleDbType.Int32, 10);
+                OracleParameter OraParamJID = new OracleParameter(":jid", OracleDbType.Int32, 10);
+
+                OraParamNom.Value = nom;
+                OraParamXP.Value = xp;
+                OraParamLevel.Value = level;
+                OraParamClasse.Value = classe;
+                OraParamActif.Value = actif;
+                OraParamGUID.Value = guid;
+                OraParamJID.Value = jid;
+
+                oraUpdate.Parameters.Add(OraParamNom);
+                oraUpdate.Parameters.Add(OraParamXP);
+                oraUpdate.Parameters.Add(OraParamLevel);
+                oraUpdate.Parameters.Add(OraParamClasse);
+                oraUpdate.Parameters.Add(OraParamActif);
+                oraUpdate.Parameters.Add(OraParamGUID);
+                oraUpdate.Parameters.Add(OraParamJID);
+
+                oraUpdate.ExecuteNonQuery();
+                return true;
+            }
+            catch (OracleException ex)
+            {
+                Erreur.ErrorMessage(ex);
+                return false;
+            }
+        }
+
         public static bool UpdateStatePerso(int guid, string actif)
         {
             OracleConnection conn = Connection.GetInstance().conn;
@@ -1435,6 +1519,20 @@ namespace ControleBD
                 Erreur.ErrorMessage(ex);
                 return false;
             }
+        }
+
+        public static List<string> FillClasses()
+        {
+            List<string> listItem = new List<string>();
+            OracleConnection conn = Connection.GetInstance().conn;
+            string sql = "SELECT CNAME FROM CLASSES";
+            OracleCommand oraSelect = new OracleCommand(sql, conn);
+            using (OracleDataReader oraReader = oraSelect.ExecuteReader())
+            {
+                while (oraReader.Read())
+                    listItem.Add(oraReader.GetString(0));
+            }
+            return listItem;
         }
     }
 }
