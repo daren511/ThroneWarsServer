@@ -49,6 +49,12 @@
     <Reference Include="ControleBD">
       <HintPath>Assets\Assemblies\ControleBD.dll</HintPath>
     </Reference>
+    <Reference Include="Emails">
+      <HintPath>Assets\Assemblies\Emails.dll</HintPath>
+    </Reference>
+    <Reference Include="Oracle.DataAccess">
+      <HintPath>Assets\Assemblies\Oracle.DataAccess.dll</HintPath>
+    </Reference>
     <Reference Include="System.Data">
       <HintPath>Assets\Assemblies\System.Data.dll</HintPath>
     </Reference>
@@ -196,6 +202,8 @@
     <None Include="Assets\Tile Based Map and Nav\Documentation\readme.txt" />
     <None Include="Assets\Water\Sources\Shaders\FX-Water Simple.shader" />
     <None Include="Assets\Assemblies\ControleBD.dll" />
+    <None Include="Assets\Assemblies\Emails.dll" />
+    <None Include="Assets\Assemblies\Oracle.DataAccess.dll" />
     <None Include="Assets\Assemblies\System.Data.dll" />
     <None Include="Assets\ThirdParty\NGUI\DLLs\NGUI.dll" />
   </ItemGroup>

@@ -121,8 +121,14 @@ public class onStartUp : MonoBehaviour
                         {
                             List<string> charNames = GetJoueur();
                             onMainMenu.tabCharac = charNames;
+                            envoyerReponse("ok");
 
                             Personnages p = GetPersonnage();
+                            LoadPersonnage(p);
+                            envoyerReponse("ok");
+
+                            List<Items> list = GetInventaireJoueur();
+                            envoyerReponse("ok");
 
                             Application.LoadLevel("MainMenu");
                         }
@@ -192,6 +198,20 @@ public class onStartUp : MonoBehaviour
         return joueur;
     }
 
+
+    private void envoyerReponse(string reponse)
+    {
+        byte[] data = Encoding.ASCII.GetBytes(reponse);
+
+        sck.Send(data);
+    }
+
+    private void LoadPersonnage(Personnages p)
+    {
+        PlayerManager._instance._selectedCharacter = Character.CreateCharacter(p.Nom, p.ClassName, p.Level, 3, 1,
+            p.Health, 100, null, p.PhysAtk, p.PhysDef, p.MagicAtk, p.MagicDef);
+    }
+
     private Personnages GetPersonnage()
     {
         int count = sck.ReceiveBufferSize;
@@ -206,7 +226,7 @@ public class onStartUp : MonoBehaviour
         }
         Personnages perso = new Personnages();
         BinaryFormatter receive = new BinaryFormatter();
-        Debug.Log(typeof(Personnages).IsSerializable);
+
         using (var recstream = new MemoryStream(formatted))
         {
             perso = receive.Deserialize(recstream) as Personnages;
@@ -214,6 +234,29 @@ public class onStartUp : MonoBehaviour
         return perso;
     }
 
+    private List<ControleBD.Items> GetInventaireJoueur()
+    {
+        List<Items> list = new List<Items>();
+
+        int count = sck.ReceiveBufferSize;
+        byte[] buffer;
+        buffer = new byte[count];
+        sck.Receive(buffer);
+
+        byte[] formatted = new byte[count];
+        for (int i = 0; i < count; i++)
+        {
+            formatted[i] = buffer[i];
+        }
+        Items item = new Items();
+        BinaryFormatter receive = new BinaryFormatter();
+
+        using (var recstream = new MemoryStream(formatted))
+        {
+            list = receive.Deserialize(recstream) as List<Items>;
+        }
+        return list;
+    }
 
     //private void GetPlayerInfo()
     //{
