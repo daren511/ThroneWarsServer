@@ -103,17 +103,17 @@ namespace DeveloperApplication
 
             if (TAB_Control.SelectedTab == PAGE_Inventaire)
             {
-                if (DGV_Inventaire.Rows.Count > 0)
-                    BTN_Consulter.Enabled = true;
-                else
-                    BTN_Consulter.Enabled = false;
-            }
+            if (DGV_Inventaire.Rows.Count > 0)
+                BTN_Consulter.Enabled = true;
+            else
+                BTN_Consulter.Enabled = false;
+        }
         }
 
         private void BTN_Consulter_Click(object sender, EventArgs e)
         {
             if (TAB_Control.SelectedTab == PAGE_Inventaire)
-                Consulter_Item();
+            Consulter_Item();
             else
                 ConsulterPotion();
         }
@@ -140,7 +140,7 @@ namespace DeveloperApplication
 
             if (FI.ShowDialog() == DialogResult.OK)
             {
-                if (Controle.UpdateQuantity(JID, FI.IID, FI.QUANTITE))
+                if (Controle.UpdateQuantityItem(JID, FI.IID, FI.QUANTITE))
                     Lister_Items();
             }
         }

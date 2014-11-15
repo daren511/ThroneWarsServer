@@ -26,8 +26,8 @@ namespace SiteWebThroneWars
                 if (TB_NewPassord.Text == TB_ConfirmPass.Text)
                 {
                     bool ResetOK = false;
-                    string passHash = Controle.HashPassword(TB_NewPassord.Text, null, System.Security.Cryptography.SHA256.Create());
-                    ResetOK = Controle.ResetPassword(userHash, passHash);
+                    string passHash = Controle.hashPassword(TB_NewPassord.Text, null, System.Security.Cryptography.SHA256.Create());
+                    ResetOK = Controle.resetPassword(userHash, passHash);
                     if (ResetOK)
                         ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>MessageBoxReussi();</script>", false);
                     

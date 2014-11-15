@@ -35,7 +35,7 @@ namespace SiteWebThroneWars
             {
                 // Aller chercher le username correspondant au courriel + envoie par email
                 // Fonction pas fini - UsernameRecovery
-                bool recoveryOk = Controle.UsernameRecovery(courriel);
+                bool recoveryOk = Controle.usernameRecovery(courriel);
                 if (recoveryOk)
                     ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>MessageBoxReussi();</script>", false);
                 else

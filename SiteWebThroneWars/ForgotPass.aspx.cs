@@ -27,7 +27,7 @@ namespace SiteWebThroneWars
             bool ok = VerifChamps();
             if (ok)
             {
-                RecoveryOk = Controle.PasswordRecovery(username);
+                RecoveryOk = Controle.passwordRecovery(username);
                 if (RecoveryOk)
                 {
                     ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>MessageBoxReussi();</script>", false);

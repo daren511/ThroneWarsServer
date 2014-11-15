@@ -107,7 +107,7 @@ namespace DeveloperApplication
 
         private void FillComboBox()
         {
-            List<string> classes = Controle.FillClasses();
+            List<string> classes = Controle.fillClasses();
             for (int i = 0; i < classes.Count; ++i)
                 CB_Classe.Items.Add(classes[i]);
         }

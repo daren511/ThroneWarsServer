@@ -12,31 +12,13 @@ namespace ControleBD
     public class Controle
     {
         private static int SaltValueSize = 16;
-
-        public static bool deletePerso(int GUID)
-        {
-            OracleConnection conn = Connection.GetInstance().conn;
-            string sqldelete = "delete cascade from Personnages where GUID =:GUID";
-            try
-            {
-                OracleCommand oraDelete = new OracleCommand(sqldelete, conn);
-                OracleParameter OraParaGUID = new OracleParameter(":GUID", OracleDbType.Int32);
-                oraDelete.Parameters.Add(OraParaGUID);
-                oraDelete.ExecuteNonQuery();
-                return true;
-            }
-            catch (OracleException ex)
-            {
-                Erreur.ErrorMessage(ex);
-                return false;
-            }
-        }
+        public enum Actions { CLICK, CREATE, DELETE, START_GAME };
 
         //-------------------------------------INSERT / UPDATE / DELETE PLAYER-------------------------------------------
 
         public static bool insertPlayer(string username, string email, string password)
         {
-            OracleConnection conn = Connection.GetInstance().conn;
+            OracleConnection conn = Connection.getInstance().conn;
 
             string sqlAjout = "insert into joueurs (username,EMAIL,Hash_KEY)" +
                     " VALUES(:username,:EMAIL,:Hash_KEY)";
@@ -51,7 +33,7 @@ namespace ControleBD
 
                 OraParaUsername.Value = username.ToLower();
                 OraParamEmail.Value = email;
-                OraParamHashKey.Value = Controle.HashPassword(password, null, System.Security.Cryptography.SHA256.Create());
+                OraParamHashKey.Value = Controle.hashPassword(password, null, System.Security.Cryptography.SHA256.Create());
 
 
                 oraAjout.Parameters.Add(OraParaUsername);
@@ -73,7 +55,7 @@ namespace ControleBD
         //TEMPORAIRE VERIFIER Si jid ou USERNAME
         public static bool updatePlayer(int jid, string username, string email, string password)
         {
-            OracleConnection conn = Connection.GetInstance().conn;
+            OracleConnection conn = Connection.getInstance().conn;
 
             string sqlupdate = "update joueurs set email=:EMAIL,Hash_KEY=:Hash_KEY where jid=:jid";
 
@@ -87,7 +69,7 @@ namespace ControleBD
                 OracleParameter OraParamJid = new OracleParameter(":jid", OracleDbType.Int32);
 
                 OraParamEmail.Value = email;
-                OraParamHashKey.Value = Controle.HashPassword(password, null, System.Security.Cryptography.SHA256.Create());
+                OraParamHashKey.Value = Controle.hashPassword(password, null, System.Security.Cryptography.SHA256.Create());
                 OraParamJid.Value = jid;
 
 
@@ -106,69 +88,88 @@ namespace ControleBD
             }
         }
 
+        //on delete pas a revoir*****
+        //public static bool deletePlayer(int JID)
+        //{
+        //    OracleConnection conn = Connection.getInstance().conn;
+        //    string sqldelete = "delete cascade from joueurs where JID =:JID ";
+        //    try
+        //    {
+        //        OracleCommand oraDelete = new OracleCommand(sqldelete, conn);
+        //        OracleParameter OraParaJID = new OracleParameter(":JID", OracleDbType.Int32);
+        //        oraDelete.Parameters.Add(OraParaJID);
+        //        oraDelete.ExecuteNonQuery();
+        //        return true;
+        //    }
+        //    catch (OracleException ex)
+        //    {
+        //        Erreur.ErrorMessage(ex);
+        //        return false;
+        //    }
 
-        public static bool deletePlayer(int JID)
+        //}
+
+        //public static bool deleteItem(int IID)
+        //{
+        //    OracleConnection conn = Connection.getInstance().conn;
+        //    string sqldelete = "delete cascade from Items where IID =:IID ";
+        //    try
+        //    {
+        //        OracleCommand oraDelete = new OracleCommand(sqldelete, conn);
+        //        OracleParameter OraParaIID = new OracleParameter(":IID", OracleDbType.Int32);
+        //        oraDelete.Parameters.Add(OraParaIID);
+        //        oraDelete.ExecuteNonQuery();
+        //        return true;
+        //    }
+        //    catch (OracleException ex)
+        //    {
+        //        Erreur.ErrorMessage(ex);
+        //        return false;
+        //    }
+        //}
+
+        //public static bool deletePerso(int GUID)
+        //{
+        //    OracleConnection conn = Connection.getInstance().conn;
+        //    string sqldelete = "delete cascade from Personnages where GUID =:GUID";
+        //    try
+        //    {
+        //        OracleCommand oraDelete = new OracleCommand(sqldelete, conn);
+        //        OracleParameter OraParaGUID = new OracleParameter(":GUID", OracleDbType.Int32);
+        //        oraDelete.Parameters.Add(OraParaGUID);
+        //        oraDelete.ExecuteNonQuery();
+        //        return true;
+        //    }
+        //    catch (OracleException ex)
+        //    {
+        //        Erreur.ErrorMessage(ex);
+        //        return false;
+        //    }
+        //}
+
+        //public static bool deleteHabiite(int HID)
+        //{
+        //    OracleConnection conn = Connection.getInstance().conn;
+        //    string sqldelete = "delete cascade from Items where HID =:HID ";
+        //    try
+        //    {
+        //        OracleCommand oraDelete = new OracleCommand(sqldelete, conn);
+        //        OracleParameter OraParaHID = new OracleParameter(":HID", OracleDbType.Int32);
+        //        oraDelete.Parameters.Add(OraParaHID);
+        //        oraDelete.ExecuteNonQuery();
+        //        return true;
+        //    }
+        //    catch (OracleException ex)
+        //    {
+        //        Erreur.ErrorMessage(ex);
+        //        return false;
+        //    }
+        //}
+
+
+        public static bool ajoutMoneyJoueur(int JID, int montant)
         {
-            OracleConnection conn = Connection.GetInstance().conn;
-            string sqldelete = "delete cascade from joueurs where JID =:JID ";
-            try
-            {
-                OracleCommand oraDelete = new OracleCommand(sqldelete, conn);
-                OracleParameter OraParaJID = new OracleParameter(":JID", OracleDbType.Int32);
-                oraDelete.Parameters.Add(OraParaJID);
-                oraDelete.ExecuteNonQuery();
-                return true;
-            }
-            catch (OracleException ex)
-            {
-                Erreur.ErrorMessage(ex);
-                return false;
-            }
-
-        }
-
-        public static bool deleteItem(int IID)
-        {
-            OracleConnection conn = Connection.GetInstance().conn;
-            string sqldelete = "delete cascade from Items where IID =:IID ";
-            try
-            {
-                OracleCommand oraDelete = new OracleCommand(sqldelete, conn);
-                OracleParameter OraParaIID = new OracleParameter(":IID", OracleDbType.Int32);
-                oraDelete.Parameters.Add(OraParaIID);
-                oraDelete.ExecuteNonQuery();
-                return true;
-            }
-            catch (OracleException ex)
-            {
-                Erreur.ErrorMessage(ex);
-                return false;
-            }
-        }
-
-        public static bool deleteHabiite(int HID)
-        {
-            OracleConnection conn = Connection.GetInstance().conn;
-            string sqldelete = "delete cascade from Items where HID =:HID ";
-            try
-            {
-                OracleCommand oraDelete = new OracleCommand(sqldelete, conn);
-                OracleParameter OraParaHID = new OracleParameter(":HID", OracleDbType.Int32);
-                oraDelete.Parameters.Add(OraParaHID);
-                oraDelete.ExecuteNonQuery();
-                return true;
-            }
-            catch (OracleException ex)
-            {
-                Erreur.ErrorMessage(ex);
-                return false;
-            }
-        }
-
-
-        public static bool AjoutMoneyJoueur(int JID, int montant)
-        {
-            OracleConnection conn = Connection.GetInstance().conn;
+            OracleConnection conn = Connection.getInstance().conn;
 
             string sqlupdate = "update joueurs set money=:montant where jid=:JID ";
 
@@ -191,9 +192,9 @@ namespace ControleBD
             }
         }
 
-        public static bool AjoutXPPersonnage(int GUID, int XP)
+        public static bool ajoutXPPersonnage(int GUID, int XP)
         {
-            OracleConnection conn = Connection.GetInstance().conn;
+            OracleConnection conn = Connection.getInstance().conn;
 
             string sqlupdate = "update Personnages set XP=:xp where guid=:GUID";
 
@@ -216,9 +217,7 @@ namespace ControleBD
             }
         }
 
-
-
-        private static string GenerateSaltValue()
+        private static string generateSaltValue()
         {
             UnicodeEncoding utf16 = new UnicodeEncoding();
 
@@ -231,7 +230,7 @@ namespace ControleBD
             return null;
         }
 
-        public static string HashPassword(string clearData, string saltValue, HashAlgorithm hash)
+        public static string hashPassword(string clearData, string saltValue, HashAlgorithm hash)
         {
             UnicodeEncoding encoding = new UnicodeEncoding();
 
@@ -243,7 +242,7 @@ namespace ControleBD
                 if (saltValue == null)
                 {
                     // Generate a salt string.
-                    saltValue = GenerateSaltValue();
+                    saltValue = generateSaltValue();
                 }
 
                 // Convert the salt string and the password string to a single
@@ -296,9 +295,9 @@ namespace ControleBD
         /// <param name="guID3">Character3 ID</param>
         /// <param name="guID4">Character4 ID</param>
         /// <returns>True if the function worked</returns>
-        private static bool addPlayer(int mID, int jID, int guID1, int guID2, int guID3, int guID4)
+        private static bool addPlayerMatch(int mID, int jID, int guID1, int guID2, int guID3, int guID4)
         {
-            OracleConnection conn = Connection.GetInstance().conn;
+            OracleConnection conn = Connection.getInstance().conn;
             try
             {
                 OracleCommand oraAdd = new OracleCommand("PACK_MATCHS", conn);
@@ -360,7 +359,7 @@ namespace ControleBD
         /// <returns>True if the function worked</returns>
         private static bool createMatch(int mID, int jID, int map, int guID1, int guID2, int guID3, int guID4)
         {
-            OracleConnection conn = Connection.GetInstance().conn;
+            OracleConnection conn = Connection.getInstance().conn;
             try
             {
                 OracleCommand oraCreate = new OracleCommand("PACK_MATCHS", conn);
@@ -456,7 +455,7 @@ namespace ControleBD
                                         int guID7, int kills7, char isDead7,
                                         int guID8, int kills8, char isDead8)
         {
-            OracleConnection conn = Connection.GetInstance().conn;
+            OracleConnection conn = Connection.getInstance().conn;
             try
             {
                 OracleCommand oraAdd = new OracleCommand("PACK_MATCHS", conn);
@@ -625,14 +624,14 @@ namespace ControleBD
 
         //-----------------------------------------  FONCTIONS SITE WEB ---------------------------------------------
 
-        public static bool PasswordRecovery(string username)
+        public static bool passwordRecovery(string username)
         {
-            OracleConnection conn = Connection.GetInstance().conn;
+            OracleConnection conn = Connection.getInstance().conn;
 
             string sqlSelect = "select username,email from joueurs where username = :username";
             string result = "";
             string resultemail = "";
-            bool userExiste = Controle.UserExiste(username);
+            bool userExiste = Controle.userExiste(username);
             if (userExiste)
             {
                 try
@@ -675,7 +674,7 @@ namespace ControleBD
 
         public static bool confirmAccount(string userHash)
         {
-            OracleConnection conn = Connection.GetInstance().conn;
+            OracleConnection conn = Connection.getInstance().conn;
             int encrypthint = Int32.Parse(userHash.Substring(userHash.Length - 1));
             userHash = userHash.Substring(0, userHash.Length - 1);
             string userNonHash = Controle.Phrase.Dechiffrer(userHash, encrypthint);
@@ -707,10 +706,10 @@ namespace ControleBD
             }
         }
 
-        public static bool UsernameRecovery(string email)
+        public static bool usernameRecovery(string email)
         {
-            OracleConnection conn = Connection.GetInstance().conn;
-            bool courrielExiste = Controle.CourrielExiste(email);
+            OracleConnection conn = Connection.getInstance().conn;
+            bool courrielExiste = Controle.courrielExiste(email);
             if (courrielExiste)
             {
                 string sqlSelect = "select username from joueurs where email = :email";
@@ -755,11 +754,11 @@ namespace ControleBD
         /// <param name="user"></param>
         /// <param name="password">DEJA HASHER(pour eviter que le mot de passe passe en clair sur le reseau)</param>
         /// <returns>en cas d'erreur la fonction retourne false, si la requete a fonctionner elle retourne true si le nom d'usager et le mot de passe sont correcte</returns>
-        public static bool UserPassCorrespondant(string user, string password)
+        public static bool userPassCorrespondant(string user, string password)
         {
             try
             {
-                OracleConnection conn = Connection.GetInstance().conn;
+                OracleConnection conn = Connection.getInstance().conn;
                 string sqlSelect = "select count(*) from joueurs where USERNAME = :USERNAME and HASH_KEY = :HASH_KEY";
 
 
@@ -794,7 +793,7 @@ namespace ControleBD
         {
             try
             {
-                OracleConnection conn = Connection.GetInstance().conn;
+                OracleConnection conn = Connection.getInstance().conn;
                 string sqlSelect = "select CONFIRMED from joueurs where USERNAME = :USERNAME";
 
 
@@ -823,9 +822,9 @@ namespace ControleBD
         /// <param name="username"></param>
         /// <param name="PassHash"></param>
         /// <returns></returns>
-        public static bool UpdatePassword(string username, string PassHash)
+        public static bool updatePassword(string username, string PassHash)
         {
-            OracleConnection conn = Connection.GetInstance().conn;
+            OracleConnection conn = Connection.getInstance().conn;
 
             string sqlconfirmation = "update joueurs set HASH_KEY =:PassHash where Username=:username";
 
@@ -859,18 +858,18 @@ namespace ControleBD
         /// <param name="app">Booléen qui choisit quelle requête SQl choisir</param>
         /// <param name="afficherTout">Affiche tous les perso ou ceux actifs</param>
         /// <returns>un dataset contenant les informations des personnages</returns>
-        public static DataSet ReturnStats(int JID, bool app = false, bool afficherTout = false)
+        public static DataSet returnStats(int JID, bool app = false, bool afficherTout = false)
         {
             DataSet DSStats = new DataSet();
             using (OracleDataAdapter oraDataAdapStats = new OracleDataAdapter())
             {
-                OracleConnection conn = Connection.GetInstance().conn;
+                OracleConnection conn = Connection.getInstance().conn;
                 string sqlSelect = "";
                 if (!app)
                     sqlSelect = "select NOM,\"LEVEL\",CID from Personnages where JID = :JID";
                 else
                 {
-                    sqlSelect = "SELECT GUID, NOM, CNAME, XP, \"LEVEL\", ISACTIVE FROM PERSONNAGES P " +
+                    sqlSelect = "SELECT GUID, NOM, CNAME, XP, \"LEVEL\", ISACTIVE FROM PERSONNAGES P " + 
                         "INNER JOIN CLASSES C ON P.CID = C.CID WHERE JID =:JID AND (ISACTIVE = 1";
                     if (afficherTout)
                         sqlSelect += " OR ISACTIVE = 0";
@@ -888,11 +887,11 @@ namespace ControleBD
             return DSStats;
         }
 
-        public static Personnages ReturnPersonnage(string nom)
+        public static Personnages returnPersonnage(string nom)
         {
             Personnages personnage = new Personnages();
 
-            OracleConnection conn = Connection.GetInstance().conn;
+            OracleConnection conn = Connection.getInstance().conn;
             OracleCommand sqlSelect = conn.CreateCommand();
 
             sqlSelect.CommandText = "GESTIONJEU.GETPERSONNAGE";
@@ -935,7 +934,7 @@ namespace ControleBD
         {
             List<Items> Liste = new List<Items>();
 
-            OracleConnection conn = Connection.GetInstance().conn;
+            OracleConnection conn = Connection.getInstance().conn;
             OracleCommand sqlSelect = conn.CreateCommand();
 
             sqlSelect.CommandText = "GESTIONJEU.getinventairejoueur";
@@ -970,7 +969,7 @@ namespace ControleBD
         {
             List<Items> Liste = new List<Items>();
 
-            OracleConnection conn = Connection.GetInstance().conn;
+            OracleConnection conn = Connection.getInstance().conn;
             OracleCommand sqlSelect = conn.CreateCommand();
 
             sqlSelect.CommandText = "GESTIONJEU.getequipementpersonnage";
@@ -999,12 +998,12 @@ namespace ControleBD
 
 
 
-        public static DataSet ReturnStatsWEB(int JID)
+        public static DataSet getStatsWEB(int JID)
         {
             DataSet DSStats = new DataSet();
             using (OracleDataAdapter oraDataAdapStats = new OracleDataAdapter())
             {
-                OracleConnection conn = Connection.GetInstance().conn;
+                OracleConnection conn = Connection.getInstance().conn;
                 string sqlSelect = "";
                 sqlSelect = "select P.NOM,\"LEVEL\" as Niveau,CL.CNAME as Classe from Personnages P INNER JOIN CLASSES CL " +
             "ON P.CID = CL.CID where JID = :JID";
@@ -1024,37 +1023,38 @@ namespace ControleBD
         /// </summary>
         /// <param name="JID"></param>
         /// <returns></returns>
+        public static DataSet getLeaderboard(string username , bool Recherche = false)
         public static DataSet ReturnLeaderboard(string username, bool Recherche = false)
         {
             DataSet DSLeaderboard = new DataSet();
             using (OracleDataAdapter oraDataAdapStats = new OracleDataAdapter())
             {
-                OracleConnection conn = Connection.GetInstance().conn;
+                OracleConnection conn = Connection.getInstance().conn;
                 string sqlSelect = "";
                 try
                 {
                     if (username != null)
                     {
-                        if (Recherche)
-                            sqlSelect = "Select rownum as Position,username as Usager,victoires from VueClassement";
+                    if (Recherche)
+                        sqlSelect = "Select rownum as Position,username as Usager,victoires from VueClassement";
 
-                        else
-                            sqlSelect = "select * from (select rownum as Position , username as Usager , victoires from vueclassement) where usager =:username";
+                    else
+                        sqlSelect = "select * from (select rownum as Position , username as Usager , victoires from vueclassement) where usager =:username";
 
-                        oraDataAdapStats.SelectCommand = new OracleCommand(sqlSelect, conn);
+                    oraDataAdapStats.SelectCommand = new OracleCommand(sqlSelect, conn);
 
-                        OracleParameter OraParamUsername = new OracleParameter(":username", OracleDbType.Varchar2, 32);
-                        OraParamUsername.Value = username.ToLower();
+                    OracleParameter OraParamUsername = new OracleParameter(":username", OracleDbType.Varchar2, 32);
+                    OraParamUsername.Value = username.ToLower();
 
-                        oraDataAdapStats.SelectCommand.Parameters.Add(OraParamUsername);
-                        oraDataAdapStats.Fill(DSLeaderboard, "Leaderboard");
-                    }
+                    oraDataAdapStats.SelectCommand.Parameters.Add(OraParamUsername);
+                    oraDataAdapStats.Fill(DSLeaderboard, "Leaderboard");
+                }
                     else
                     {
                         sqlSelect = "Select rownum as Position,username as Usager,victoires from VueClassement";
                         oraDataAdapStats.SelectCommand = new OracleCommand(sqlSelect, conn);
                         oraDataAdapStats.Fill(DSLeaderboard, "Leaderboard");
-                    }
+                }
                 }
                 catch (OracleException ex)
                 {
@@ -1070,7 +1070,7 @@ namespace ControleBD
         /// <returns>le numero 'JID' du joueur correspondant au nom d'usager donnee en parametre si l'usager n'existe pas,on retourne 0</returns>
         public static int getJID(string username)
         {
-            OracleConnection conn = Connection.GetInstance().conn;
+            OracleConnection conn = Connection.getInstance().conn;
 
             string sqlconfirmation = "select jid from joueurs where username=:username";
 
@@ -1099,7 +1099,7 @@ namespace ControleBD
 
         public static int getGUID(string characterName)
         {
-            OracleConnection conn = Connection.GetInstance().conn;
+            OracleConnection conn = Connection.getInstance().conn;
             string sql = "select GUID from personnages where nom=:cname";
 
             try
@@ -1123,9 +1123,9 @@ namespace ControleBD
             return -1;
         }
 
-        public static bool ResetPassword(string userHash, string passHash)
+        public static bool resetPassword(string userHash, string passHash)
         {
-            OracleConnection conn = Connection.GetInstance().conn;
+            OracleConnection conn = Connection.getInstance().conn;
 
             int encrypthint = Int32.Parse(userHash.Substring(userHash.Length - 1));
             userHash = userHash.Substring(0, userHash.Length - 1);
@@ -1185,9 +1185,9 @@ namespace ControleBD
             }
         }
 
-        public static bool UserExiste(string user)
+        public static bool userExiste(string user)
         {
-            OracleConnection conn = Connection.GetInstance().conn;
+            OracleConnection conn = Connection.getInstance().conn;
 
             string sqlSelect = "select count(*) from joueurs where username =:username";
             try
@@ -1212,9 +1212,9 @@ namespace ControleBD
             }
         }
 
-        public static bool CourrielExiste(string courriel)
+        public static bool courrielExiste(string courriel)
         {
-            OracleConnection conn = Connection.GetInstance().conn;
+            OracleConnection conn = Connection.getInstance().conn;
 
             string sqlSelect = "select count(*) from joueurs where email =:courriel";
             try
@@ -1244,9 +1244,9 @@ namespace ControleBD
 
         //------------------------------ À ALEXIS ------------------------------//
         // J'VOUS TOUCHE LE RECTUM SI VOUS MODIFIER QUELQUE CHOSE
-        public static DataSet ListPlayers(bool afficherTout)
+        public static DataSet listPlayers(bool afficherTout)
         {
-            OracleConnection conn = Connection.GetInstance().conn;
+            OracleConnection conn = Connection.getInstance().conn;
             DataSet monDataSet = new DataSet();
             string sql = "SELECT JID, USERNAME, EMAIL, HASH_KEY, JOINDATE, MONEY, CONFIRMED FROM JOUEURS WHERE CONFIRMED = 1 ";
             if (afficherTout)
@@ -1311,8 +1311,8 @@ namespace ControleBD
 
                 if (doitAfficher == 1 || doitAfficher == 2)
                 {
-                    OracleParameter OraParamJID = new OracleParameter(":jid", OracleDbType.Int32, 10);
-                    OraParamJID.Value = jid;
+                OracleParameter OraParamJID = new OracleParameter(":jid", OracleDbType.Int32, 10);
+                OraParamJID.Value = jid;
                     oraDataAdapItems.SelectCommand.Parameters.Add(OraParamJID);
                 }
 
@@ -1408,9 +1408,9 @@ namespace ControleBD
         //    }
         //}
 
-        public static bool UpdateQuantity(int jid, int iid, int qte)
+        public static bool UpdateQuantityItem(int jid, int iid, int qte)
         {
-            OracleConnection conn = Connection.GetInstance().conn;
+            OracleConnection conn = Connection.getInstance().conn;
             string sqlconfirmation = "UPDATE INVENTAIREJOUEUR SET QUANTITY =:quantite WHERE JID =:jid AND IID =:iid";
 
             try
@@ -1439,9 +1439,9 @@ namespace ControleBD
             }
         }
 
-        public static bool UpdateJoueur(int jid, string nom, string email, string password, DateTime date, int argent, string confirmer)
+        public static bool updateJoueur(int jid, string nom, string email, string password, DateTime date, int argent, string confirmer)
         {
-            OracleConnection conn = Connection.GetInstance().conn;
+            OracleConnection conn = Connection.getInstance().conn;
             string sql = "UPDATE JOUEURS SET USERNAME =:Username, EMAIL =:Email, HASH_KEY =:Password, " +
                 "JOINDATE =:DateJoint, MONEY =:Argent, CONFIRMED =:Confirmer WHERE JID =:jid";
 
@@ -1483,9 +1483,9 @@ namespace ControleBD
             }
         }
 
-        public static bool UpdateStateJoueur(int jid, string confirmer)
+        public static bool updateStateJoueur(int jid, string confirmer)
         {
-            OracleConnection conn = Connection.GetInstance().conn;
+            OracleConnection conn = Connection.getInstance().conn;
 
             string sqlconfirmation = "UPDATE JOUEURS SET CONFIRMED =:Confirmer WHERE JID =:jid";
 
@@ -1512,11 +1512,20 @@ namespace ControleBD
                 return false;
             }
         }
-
-        public static bool AddPerso(int jid, string nom, int xp, int level, string classe, string actif)
+        /// <summary>
+        /// DOUBLONS A EFFACER
+        /// </summary>
+        /// <param name="jid"></param>
+        /// <param name="nom"></param>
+        /// <param name="xp"></param>
+        /// <param name="level"></param>
+        /// <param name="classe"></param>
+        /// <param name="actif"></param>
+        /// <returns></returns>
+        public static bool addPerso(int jid, string nom, int xp, int level, string classe, string actif)
         {
-            OracleConnection conn = Connection.GetInstance().conn;
-            string sql = "INSERT INTO PERSONNAGES(JID,NOM,XP,\"LEVEL\",CID,ISACTIVE) " +
+            OracleConnection conn = Connection.getInstance().conn;
+            string sql = "INSERT INTO PERSONNAGES(JID,NOM,XP,\"LEVEL\",CID,ISACTIVE) " + 
                 "VALUES(:jid, :nom, :xp, :lvl, (SELECT CID FROM CLASSES WHERE CNAME =:classe), :actif)";
 
             try
@@ -1554,9 +1563,9 @@ namespace ControleBD
             }
         }
 
-        public static bool UpdatePerso(int guid, int jid, string nom, int xp, int level, string classe, string actif)
+        public static bool updatePerso(int guid, int jid, string nom, int xp, int level, string classe, string actif)
         {
-            OracleConnection conn = Connection.GetInstance().conn;
+            OracleConnection conn = Connection.getInstance().conn;
             string sql = "UPDATE PERSONNAGES SET NOM =:nom, XP =:xp, \"LEVEL\" =:lvl, " +
                 "CID =(SELECT CID FROM CLASSES WHERE CNAME =:classe), ISACTIVE =:actif WHERE GUID =:guid AND JID =:jid";
 
@@ -1598,9 +1607,9 @@ namespace ControleBD
             }
         }
 
-        public static bool UpdateStatePerso(int guid, string actif)
+        public static bool updateStatePerso(int guid, string actif)
         {
-            OracleConnection conn = Connection.GetInstance().conn;
+            OracleConnection conn = Connection.getInstance().conn;
 
             string sqlconfirmation = "UPDATE PERSONNAGES SET ISACTIVE =:Actif WHERE GUID =:guid";
 
@@ -1628,10 +1637,10 @@ namespace ControleBD
             }
         }
 
-        public static List<string> FillClasses()
+        public static List<string> fillClasses()
         {
             List<string> listItem = new List<string>();
-            OracleConnection conn = Connection.GetInstance().conn;
+            OracleConnection conn = Connection.getInstance().conn;
             string sql = "SELECT CNAME FROM CLASSES";
             OracleCommand oraSelect = new OracleCommand(sql, conn);
             using (OracleDataReader oraReader = oraSelect.ExecuteReader())
