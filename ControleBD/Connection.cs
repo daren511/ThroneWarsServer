@@ -9,7 +9,7 @@ namespace ControleBD
     {
         public OracleConnection conn { get; private set; }
         private static Connection instance;
-        public static Connection GetInstance()
+        public static Connection getInstance()
         {
             if (instance == null)
             {

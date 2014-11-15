@@ -36,15 +36,15 @@ namespace ThroneWarsServer
                     sck1 = sckserver.Accept();
                 }
 
-
                 if (SocketConnected(sck1))
                 {
                     v.Add(new Joueur(sck1,v.Count));
                     new Instance(v[v.Count-1]).T.Start();
 
                     Console.WriteLine("Joueur connecté : " + (sck1.RemoteEndPoint as IPEndPoint).Address);
-                    sck1 = null;
+                    
                 }
+                sck1 = null;
             }
 
         }
