@@ -42,7 +42,6 @@
             this.TSMI_Quitter = new System.Windows.Forms.ToolStripMenuItem();
             this.TSMI_Items = new System.Windows.Forms.ToolStripMenuItem();
             this.TSMI_Potions = new System.Windows.Forms.ToolStripMenuItem();
-            this.TSMI_Classes = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.DGV_Joueurs)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.DGV_Personnages)).BeginInit();
             this.STRIP_Menu.SuspendLayout();
@@ -166,8 +165,7 @@
             this.STRIP_Menu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fichierToolStripMenuItem,
             this.TSMI_Items,
-            this.TSMI_Potions,
-            this.TSMI_Classes});
+            this.TSMI_Potions});
             this.STRIP_Menu.Location = new System.Drawing.Point(0, 0);
             this.STRIP_Menu.Name = "STRIP_Menu";
             this.STRIP_Menu.Size = new System.Drawing.Size(800, 24);
@@ -202,12 +200,6 @@
             this.TSMI_Potions.Size = new System.Drawing.Size(59, 20);
             this.TSMI_Potions.Text = "Potions";
             this.TSMI_Potions.Click += new System.EventHandler(this.TSMI_Potions_Click);
-            // 
-            // TSMI_Classes
-            // 
-            this.TSMI_Classes.Name = "TSMI_Classes";
-            this.TSMI_Classes.Size = new System.Drawing.Size(57, 20);
-            this.TSMI_Classes.Text = "Classes";
             // 
             // FORM_Main
             // 
@@ -254,7 +246,6 @@
         private System.Windows.Forms.ToolStripMenuItem TSMI_Quitter;
         private System.Windows.Forms.ToolStripMenuItem TSMI_Items;
         private System.Windows.Forms.ToolStripMenuItem TSMI_Potions;
-        private System.Windows.Forms.ToolStripMenuItem TSMI_Classes;
     }
 }
 

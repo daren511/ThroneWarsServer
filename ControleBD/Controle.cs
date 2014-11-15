@@ -1277,7 +1277,7 @@ namespace ControleBD
         /// <param name="doitAfficher">Affiche tous les items(0), ceux d'un joueur(1) ou ceux d'un personnages(2)</param>
         /// <param name="guid">Personnage ID</param>
         /// <returns>Le dataset rempli</returns>
-        public static DataSet listItems(bool afficherTout, int jid, int doitAfficher = 0, int guid = 0)
+        public static DataSet listItems(bool afficherTout, int jid = 0, int doitAfficher = 0, int guid = 0)
         {
 
             DataSet monDataSet = new DataSet();
@@ -1361,51 +1361,51 @@ namespace ControleBD
             return monDataSet;
         }
 
-        //public static bool UpdateItem(int jid, int iid, string nom, string classe, int level, int watk, int wdef, int matk, int mdef, int qte, string actif)
-        //{
-        //    OracleConnection conn = Connection.GetInstance().conn;
+        public static bool updateItem(int iid, string nom, int level, int watk, int wdef, int matk, int mdef, string actif)
+        {
+            OracleConnection conn = Connection.getInstance().conn;
+            string sql = "UPDATE ITEMS SET NOM =:nom, \"LEVEL\" =:level, WATK =:watk, WDEF =:wdef, MATK =:matk, MDEF =:mdef, ISACTIVE =:actif WHERE IID =:iid";
 
-        //    string sqlconfirmation = "UPDATE ITEMS SET NOM =:nom, CID =:(SELECT CID FROM CLASSES WHERE CNAME =:classe), " + 
-        //        "LEVEL =:Level, WATK =:watk, WDEF =:wdef, MATK =:matk, MDEF =:mdef, ISACTIVE =:actif, " + 
-        //        "QUANTITY =:quantite FROM ITEMS I INNER JOIN J ON I.IID = J.IID WHERE J.JID =:jid AND I.IID =:iid";
+            try
+            {
+                OracleCommand oraUpdate = new OracleCommand(sql, conn);
 
-        //    try
-        //    {
-        //        OracleCommand oraUpdate = new OracleCommand(sqlconfirmation, conn);
+                OracleParameter OraParamNom = new OracleParameter(":nom", OracleDbType.Varchar2, 40);
+                OracleParameter OraParamLevel = new OracleParameter(":level", OracleDbType.Int32, 2);
+                OracleParameter OraParamWATK = new OracleParameter(":watk", OracleDbType.Int32, 4);
+                OracleParameter OraParamWDEF = new OracleParameter(":wdef", OracleDbType.Int32, 4);
+                OracleParameter OraParamMATK = new OracleParameter(":matk", OracleDbType.Int32, 4);
+                OracleParameter OraParamMDEF = new OracleParameter(":mdef", OracleDbType.Int32, 4);
+                OracleParameter OraParamActif = new OracleParameter(":actif", OracleDbType.Char, 1);
+                OracleParameter OraParamIID = new OracleParameter(":iid", OracleDbType.Int32, 10);
 
-        //        OracleParameter OraParamUsername = new OracleParameter(":Username", OracleDbType.Varchar2, 32);
-        //        OracleParameter OraParamEmail = new OracleParameter(":Email", OracleDbType.Varchar2, 255);
-        //        OracleParameter OraParamPassword = new OracleParameter(":Password", OracleDbType.Varchar2, 75);
-        //        OracleParameter OraParamDateJoint = new OracleParameter(":DateJoint", OracleDbType.Date);
-        //        OracleParameter OraParamArgent = new OracleParameter(":Argent", OracleDbType.Int32, 20);
-        //        OracleParameter OraParamConfirmer = new OracleParameter(":Confirmer", OracleDbType.Char);
-        //        OracleParameter OraParamJID = new OracleParameter(":jid", OracleDbType.Int32, 10);
+                OraParamNom.Value = nom;
+                OraParamLevel.Value = level;
+                OraParamWATK.Value = watk;
+                OraParamWDEF.Value = wdef;
+                OraParamMATK.Value = matk;
+                OraParamMDEF.Value = mdef;
+                OraParamActif.Value = actif;
+                OraParamIID.Value = iid;
 
-        //        OraParamUsername.Value = nom;
-        //        OraParamEmail.Value = email;
-        //        OraParamPassword.Value = password;
-        //        OraParamDateJoint.Value = date.ToString("dd MMM yyyy");
-        //        OraParamArgent.Value = argent;
-        //        OraParamConfirmer.Value = confirmer;
-        //        OraParamJID.Value = jid;
+                oraUpdate.Parameters.Add(OraParamNom);
+                oraUpdate.Parameters.Add(OraParamLevel);
+                oraUpdate.Parameters.Add(OraParamWATK);
+                oraUpdate.Parameters.Add(OraParamWDEF);
+                oraUpdate.Parameters.Add(OraParamMATK);
+                oraUpdate.Parameters.Add(OraParamMDEF);
+                oraUpdate.Parameters.Add(OraParamActif);
+                oraUpdate.Parameters.Add(OraParamIID);
 
-        //        oraUpdate.Parameters.Add(OraParamUsername);
-        //        oraUpdate.Parameters.Add(OraParamEmail);
-        //        oraUpdate.Parameters.Add(OraParamPassword);
-        //        oraUpdate.Parameters.Add(OraParamDateJoint);
-        //        oraUpdate.Parameters.Add(OraParamArgent);
-        //        oraUpdate.Parameters.Add(OraParamConfirmer);
-        //        oraUpdate.Parameters.Add(OraParamJID);
-
-        //        oraUpdate.ExecuteNonQuery();
-        //        return true;
-        //    }
-        //    catch (OracleException ex)
-        //    {
-        //        Erreur.ErrorMessage(ex);
-        //        return false;
-        //    }
-        //}
+                oraUpdate.ExecuteNonQuery();
+                return true;
+            }
+            catch (OracleException ex)
+            {
+                Erreur.ErrorMessage(ex);
+                return false;
+            }
+        }
 
         public static bool updateQuantityItem(int jid, int iid, int qte)
         {

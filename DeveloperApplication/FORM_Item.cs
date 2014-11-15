@@ -15,6 +15,9 @@ namespace DeveloperApplication
     public partial class FORM_Item : Form
     {
         //---------- VARIABLES ----------//
+        public bool VISIBLE = true;
+        public bool CANMODIFY = false;
+
         public int IID
         {
             get { return int.Parse(LBL_IID.Text); }
@@ -75,8 +78,6 @@ namespace DeveloperApplication
             set { CHECK_IsActive.Checked = Convert.ToBoolean(Int32.Parse(value)); }
         }
 
-        public bool VISIBLE = true;
-
 
         public FORM_Item()
         {
@@ -97,6 +98,16 @@ namespace DeveloperApplication
 
             if (!VISIBLE)
                 TB_Quantite.Visible = false;
+            if(CANMODIFY)
+            {
+                TB_Nom.ReadOnly = false;
+                TB_Level.ReadOnly = false;
+                TB_WATK.ReadOnly = false;
+                TB_WDEF.ReadOnly = false;
+                TB_MATK.ReadOnly = false;
+                TB_MDEF.ReadOnly = false;
+                CHECK_IsActive.Enabled = true;
+            }
         }
 
         private void CheckKeyPress(object sender, KeyPressEventArgs e)

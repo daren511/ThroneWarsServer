@@ -192,10 +192,7 @@ namespace DeveloperApplication
             if (TAB_Control.SelectedTab == PAGE_Inventaire)
             {
                 if (DGV_Inventaire.Rows.Count > 0)
-                {
                     BTN_Consulter.Enabled = true;
-                    BTN_Ajouter.Enabled = false;
-                }
                 else
                     BTN_Consulter.Enabled = false;
             }
