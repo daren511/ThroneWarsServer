@@ -13,6 +13,7 @@ public class PlayerManager : MonoBehaviour
     public Character[] _chosenTeam { get; set; }
     public PlayerInventory _playerInventory;
     public List<Character> _characters = new List<Character>();
+    public Character _selectedCharacter;
     public int _playerSide;
     public int _gold;
 

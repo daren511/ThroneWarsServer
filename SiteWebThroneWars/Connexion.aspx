@@ -5,6 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="shortcut icon" href="/Images/Icon.png" />
     <link rel="stylesheet" type="text/css" href="FinDec.css" />
     <link rel="stylesheet" type="text/css" href="/sweet-alert.css" />
     <script src="/sweet-alert.min.js"></script>
@@ -37,7 +38,7 @@
                 <li><a href="default.aspx">Accueil</a></li>
                 <li><a href="Inscription.aspx">Inscription</a></li>
                 <li><a href="Connexion.aspx">Connexion</a></li>
-                <li><a href="Recherche.aspx">Recherche Joueur</a></li>
+                <li><a href="Recherche.aspx">Classement</a></li>
                 <li><a href="Media.aspx">Média</a></li>
             </li>
         </ul>
@@ -54,19 +55,14 @@
             <a href="ChangePassword.aspx">Changer son mot de passe</a>
         </div>
         <div class="Leaderboard">
-            <asp:Table ID="tableLeaderbord" runat="server" GridLines="Both">
-                <asp:TableHeaderRow runat="server" ForeColor="Red">
-                    <asp:TableHeaderCell>Position</asp:TableHeaderCell>
-                    <asp:TableHeaderCell>Nom d'utilisateur</asp:TableHeaderCell>
-                    <asp:TableHeaderCell>Victoires</asp:TableHeaderCell>
-                </asp:TableHeaderRow>
-            </asp:Table>
+            <asp:GridView runat="server" ID="GV_Leaderboard" EmptyDataText="No data found!" OnRowDataBound="GV_Leaderboard_OnRowDataBound">
+                
+            </asp:GridView>
         </div>
 
         <div class="Stats">
 
-                 <asp:GridView runat="server" ID="GV_Stats">
-                     
+                 <asp:GridView runat="server" ID="GV_Stats" EmptyDataText="No data found!">
                  </asp:GridView>
         </div>
     </form>

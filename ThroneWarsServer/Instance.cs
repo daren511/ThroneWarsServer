@@ -32,7 +32,7 @@ namespace ThroneWarsServer
             {
                 if (!Joueur.isConnected && Joueur.isAlive())
                 {
-                    string Login = recevoirLogin();
+                    string Login = recevoirString();
                     Joueur.Username = Login.Split(Splitter)[0];
                     bool reponse = Controle.UserPassCorrespondant(Joueur.Username, Login.Split(Splitter)[1]);//verifie si les informations de login sont ok
                     if (reponse) 
@@ -45,7 +45,17 @@ namespace ThroneWarsServer
                 if(Joueur.isConnected)
                 {
                     Joueur.jid = Controle.getJID(Joueur.Username);
-                    envoyerDataSet(Controle.ReturnStats(Joueur.jid));                    
+
+                    DataSet ds = Controle.ReturnStats(Joueur.jid);
+
+                    List<string> list = traiterDataSet(ds);
+                    envoyerListe(list);
+                    recevoirString();
+                    envoyerListe(Controle.ReturnPersonnage(list[0]));
+                    recevoirString();
+                    envoyerListe(Controle.getInventaireJoueurs(Joueur.jid));
+
+                    
                 }
             }
             catch (Exception e)
@@ -54,8 +64,17 @@ namespace ThroneWarsServer
             }
             this.T.Abort();//arret du thread
         }
-
-        private void envoyerDataSet(DataSet ds)
+        private List<string> traiterDataSet(DataSet DS)
+        {
+            List<string> Liste = new List<string>();
+            foreach(DataRow dr in DS.Tables["StatsJoueur"].Rows)
+            {
+                Liste.Add(dr[0].ToString());
+            }
+            Liste.Capacity = Liste.Count;
+            return Liste;
+        }
+        private void envoyerListe<T>(T ds)
         {
             BinaryFormatter b = new BinaryFormatter();
             using (var stream = new MemoryStream())
@@ -63,16 +82,26 @@ namespace ThroneWarsServer
                 b.Serialize(stream, ds);
                 Joueur.Socket.Send(stream.ToArray());
             }
-        } 
+        }
+        //private void envoyerPersonnage(string nom)
+        //{
+            
+        //    BinaryFormatter b = new BinaryFormatter();
+        //    using (var stream = new MemoryStream())
+        //    {
+        //        b.Serialize(stream, p);
+        //        Joueur.Socket.Send(stream.ToArray());
+        //    }
+        //} 
         private void envoyerReponse(string reponse)
         {
             byte[] data = Encoding.ASCII.GetBytes(reponse);
 
             Joueur.Socket.Send(data);
         }
-        private string recevoirLogin()
+        private string recevoirString()
         {
-            string login;
+            string S;
             byte[] buffer = new byte[Joueur.Socket.SendBufferSize];
             int bytesRead = Joueur.Socket.Receive(buffer);
             byte[] formatted = new byte[bytesRead];
@@ -81,9 +110,9 @@ namespace ThroneWarsServer
                 formatted[i] = buffer[i];
             }
 
-            login = Encoding.ASCII.GetString(formatted);
+            S = Encoding.ASCII.GetString(formatted);
 
-            return login;
+            return S;
         }
     }
 }

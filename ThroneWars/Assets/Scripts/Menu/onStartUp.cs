@@ -119,19 +119,28 @@ public class onStartUp : MonoBehaviour
                     {
                         try
                         {
-                            playerData = GetJoueurData();
+                            List<string> charNames = GetJoueur();
+                            onMainMenu.tabCharac = charNames;
+                            envoyerReponse("ok");
 
-                            DataTable dt = playerData.Tables["StatsJoueur"];
-                            foreach (DataRow dr in dt.Rows)
+                            Personnages p = GetPersonnage();
+                            LoadPersonnage(p);
+                            envoyerReponse("ok");
+
+                            List<Items> list = GetInventaireJoueur();
+                            envoyerReponse("ok");
+
+                            for (int i = 0; i < list.Count; ++i )
                             {
-                                Debug.Log(dr["Nom"].ToString());
+                                Debug.Log(list[i].Nom);
                             }
+
+                                Application.LoadLevel("MainMenu");
                         }
                         catch (Exception e)
                         {
                             Debug.Log(e);
                         }
-                        //Application.LoadLevel("MainMenu");
                     }
                 }
             }
@@ -173,7 +182,7 @@ public class onStartUp : MonoBehaviour
         confirmed = ans.Split(SPLITTER)[1].Contains("True");
     }
 
-    private Joueur GetJoueur()
+    private List<string> GetJoueur()
     {
         int count = sck.ReceiveBufferSize;
         byte[] buffer;
@@ -185,90 +194,98 @@ public class onStartUp : MonoBehaviour
         {
             formatted[i] = buffer[i];
         }
-        Joueur joueur = null;
+        List<string> joueur = null;
         BinaryFormatter receive = new BinaryFormatter();
         using (var recstream = new MemoryStream(formatted))
         {
-            joueur = receive.Deserialize(recstream) as Joueur;
+            joueur = receive.Deserialize(recstream) as List<string>;
         }
         return joueur;
     }
 
-    private DataSet GetJoueurData()
-    {
-        DataSet data = new DataSet();
-        try
-        {
-            byte[] buffer = new byte[sck.SendBufferSize];
-            int bytesRead = sck.Receive(buffer);
-            byte[] formatted = new byte[bytesRead];
 
-            for (int i = 0; i < bytesRead; i++)
-            {
-                formatted[i] = buffer[i];
-            }
-            BinaryFormatter receive = new BinaryFormatter();           
-            using (var recstream = new MemoryStream(formatted))
-            {
-                data = receive.Deserialize(recstream) as DataSet;
-            }
-        }
-        catch (SerializationException e)
-        {
-            Debug.Log(e.Message);
-        }
-        return data;
+    private void envoyerReponse(string reponse)
+    {
+        byte[] data = Encoding.ASCII.GetBytes(reponse);
+
+        sck.Send(data);
     }
 
-    private DataSet DeserializeByteArrayToDataSet(byte[] byteArrayData)
+    private void LoadPersonnage(Personnages p)
     {
-        DataSet tempDataSet = new DataSet();
-        DataTable dt;
-        // Deserializing into datatable    
-        using (MemoryStream stream = new MemoryStream(byteArrayData))
-        {
-            BinaryFormatter bformatter = new BinaryFormatter();
-            dt = (DataTable)bformatter.Deserialize(stream);
-            if (dt != null)
-            {
-                foreach (DataRow row in dt.Rows)
-                {
-                    Debug.Log("----------------------");
-                    Debug.Log(row[0]);
-                    Debug.Log(row[1]);
-                    Debug.Log(row[2]);
-                    Debug.Log("----------------------");
-                }
-            }
-        }
-        // Adding DataTable into DataSet    
-        tempDataSet.Tables.Add(dt);
-        return tempDataSet;
+        PlayerManager._instance._selectedCharacter = Character.CreateCharacter(p.Nom, p.ClassName, p.Level, 3, 1,
+            p.Health, 100, null, p.PhysAtk, p.PhysDef, p.MagicAtk, p.MagicDef);
     }
-    private void GetPlayerInfo()
+
+    private Personnages GetPersonnage()
     {
-        Joueur joueur = GetJoueur();
-        PlayerInventory playerInvent = null;
-        List<Potion> list = new List<Potion>();
-        Potion uItem;
-        EquipableItem eItem;
+        int count = sck.ReceiveBufferSize;
+        byte[] buffer;
+        buffer = new byte[count];
+        sck.Receive(buffer);
 
-        Personnages perso;
-        string charClass;
-
-        for (int i = 0; i < joueur.Persos.Count; ++i)
+        byte[] formatted = new byte[count];
+        for (int i = 0; i < count; i++)
         {
-            perso = joueur.Persos[i];
-            charClass = GetCharacterClass(perso.ClassId);
-            //ici traiter l'inventaire du personnage
-            CharacterInventory characterInvent = GetCharacterInventory(i);
-
-            PlayerManager._instance._characters.Add(Character.CreateCharacter(perso.Nom, charClass, perso.Level, perso.Xp, perso.Moves,
-                perso.Range, perso.Health, perso.Magic, characterInvent, perso.PhysAtk, perso.PhysDef, perso.MagicAtk, perso.MagicDef));
-
+            formatted[i] = buffer[i];
         }
-        PlayerManager._instance._playerInventory = playerInvent;
+        Personnages perso = new Personnages();
+        BinaryFormatter receive = new BinaryFormatter();
+
+        using (var recstream = new MemoryStream(formatted))
+        {
+            perso = receive.Deserialize(recstream) as Personnages;
+        }
+        return perso;
     }
+
+    private List<ControleBD.Items> GetInventaireJoueur()
+    {
+        List<Items> list = new List<Items>();
+
+        int count = sck.ReceiveBufferSize;
+        byte[] buffer;
+        buffer = new byte[count];
+        sck.Receive(buffer);
+
+        byte[] formatted = new byte[count];
+        for (int i = 0; i < count; i++)
+        {
+            formatted[i] = buffer[i];
+        }
+
+        BinaryFormatter receive = new BinaryFormatter();
+        using (var recstream = new MemoryStream(formatted))
+        {
+            list = receive.Deserialize(recstream) as List<Items>;
+        }
+        return list;
+    }
+
+    //private void GetPlayerInfo()
+    //{
+    //    Joueur joueur = GetJoueur();
+    //    PlayerInventory playerInvent = null;
+    //    List<Potion> list = new List<Potion>();
+    //    Potion uItem;
+    //    EquipableItem eItem;
+
+    //    Personnages perso;
+    //    string charClass;
+
+    //    for (int i = 0; i < joueur.Persos.Count; ++i)
+    //    {
+    //        perso = joueur.Persos[i];
+    //        charClass = GetCharacterClass(perso.ClassId);
+    //        //ici traiter l'inventaire du personnage
+    //        CharacterInventory characterInvent = GetCharacterInventory(i);
+
+    //        PlayerManager._instance._characters.Add(Character.CreateCharacter(perso.Nom, charClass, perso.Level, perso.Xp, perso.Moves,
+    //            perso.Range, perso.Health, perso.Magic, characterInvent, perso.PhysAtk, perso.PhysDef, perso.MagicAtk, perso.MagicDef));
+
+    //    }
+    //    PlayerManager._instance._playerInventory = playerInvent;
+    //}
     private CharacterInventory GetCharacterInventory(int pos)
     {
         CharacterInventory characterInvent = new CharacterInventory();
