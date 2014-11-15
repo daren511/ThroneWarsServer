@@ -207,7 +207,7 @@ namespace DeveloperApplication
 
             if (FP.ShowDialog() == DialogResult.OK)
             {
-                if (Controle.UpdatePerso(FP.GUID, JID, FP.NOM, FP.XP, FP.LEVEL, FP.CLASSE, FP.ISACTIVE))
+                if (Controle.updatePerso(FP.GUID, JID, FP.NOM, FP.XP, FP.LEVEL, FP.CLASSE, FP.ISACTIVE))
                     ListerPerso();
             }
         }

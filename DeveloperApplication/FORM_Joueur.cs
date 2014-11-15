@@ -98,7 +98,7 @@ namespace DeveloperApplication
 
         private void Lister_Items()
         {
-            BindingSource maSource = new BindingSource(Controle.ListItems(CHECK_SHOW_Activated.Checked, JID, 1), "STATS");
+            BindingSource maSource = new BindingSource(Controle.listItems(CHECK_SHOW_Activated.Checked, JID, 1), "STATS");
             DGV_Inventaire.DataSource = maSource;
 
             if (TAB_Control.SelectedTab == PAGE_Inventaire)
@@ -140,14 +140,14 @@ namespace DeveloperApplication
 
             if (FI.ShowDialog() == DialogResult.OK)
             {
-                if (Controle.UpdateQuantityItem(JID, FI.IID, FI.QUANTITE))
+                if (Controle.updateQuantityItem(JID, FI.IID, FI.QUANTITE))
                     Lister_Items();
             }
         }
 
         private void ListerPotions()
         {
-            BindingSource maSource = new BindingSource(Controle.ListPotions(JID, 1), "POTIONS");
+            BindingSource maSource = new BindingSource(Controle.listPotions(JID, 1), "POTIONS");
             DGV_Potions.DataSource = maSource;
 
             if (TAB_Control.SelectedTab == PAGE_Potions)

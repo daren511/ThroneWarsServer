@@ -109,7 +109,7 @@ namespace DeveloperApplication
 
         private void Lister_Items()
         {
-            BindingSource maSource = new BindingSource(Controle.ListItems(CHECK_AfficherTout.Checked, JID, 2, GUID), "STATS");
+            BindingSource maSource = new BindingSource(Controle.listItems(CHECK_AfficherTout.Checked, JID, 2, GUID), "STATS");
             DGV_Inventaire.DataSource = maSource;
 
             if (DGV_Inventaire.Rows.Count > 0)

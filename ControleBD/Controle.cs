@@ -1023,8 +1023,7 @@ namespace ControleBD
         /// </summary>
         /// <param name="JID"></param>
         /// <returns></returns>
-        public static DataSet getLeaderboard(string username , bool Recherche = false)
-        public static DataSet ReturnLeaderboard(string username, bool Recherche = false)
+        public static DataSet getLeaderboard(string username, bool Recherche = false)
         {
             DataSet DSLeaderboard = new DataSet();
             using (OracleDataAdapter oraDataAdapStats = new OracleDataAdapter())
@@ -1278,13 +1277,13 @@ namespace ControleBD
         /// <param name="doitAfficher">Affiche tous les items(0), ceux d'un joueur(1) ou ceux d'un personnages(2)</param>
         /// <param name="guid">Personnage ID</param>
         /// <returns>Le dataset rempli</returns>
-        public static DataSet ListItems(bool afficherTout, int jid, int doitAfficher = 0, int guid = 0)
+        public static DataSet listItems(bool afficherTout, int jid, int doitAfficher = 0, int guid = 0)
         {
 
             DataSet monDataSet = new DataSet();
             using (OracleDataAdapter oraDataAdapItems = new OracleDataAdapter())
             {
-                OracleConnection conn = Connection.GetInstance().conn;
+                OracleConnection conn = Connection.getInstance().conn;
                 string sql = "SELECT I.IID, NOM, CNAME, \"LEVEL\", WATK, WDEF, MATK, MDEF, ";
                 if (doitAfficher == 1)
                     sql += "QUANTITY, ";
@@ -1334,12 +1333,12 @@ namespace ControleBD
         /// <param name="jid">Joueur ID</param>
         /// <param name="doitAfficher">Affiche toutes les potions(0) ou celles d'un joueur(1)</param>
         /// <returns>Le dataset rempli</returns>
-        public static DataSet ListPotions(int jid, int doitAfficher = 0)
+        public static DataSet listPotions(int jid, int doitAfficher = 0)
         {
             DataSet monDataSet = new DataSet();
             using (OracleDataAdapter oraDataAdapPotions = new OracleDataAdapter())
             {
-                OracleConnection conn = Connection.GetInstance().conn;
+                OracleConnection conn = Connection.getInstance().conn;
 
                 string sql = "SELECT P.PID, NOM, DESCRIPTION, DURATION, WATK, WDEF, MATK, MDEF";
                 if (doitAfficher != 0)
@@ -1408,7 +1407,7 @@ namespace ControleBD
         //    }
         //}
 
-        public static bool UpdateQuantityItem(int jid, int iid, int qte)
+        public static bool updateQuantityItem(int jid, int iid, int qte)
         {
             OracleConnection conn = Connection.getInstance().conn;
             string sqlconfirmation = "UPDATE INVENTAIREJOUEUR SET QUANTITY =:quantite WHERE JID =:jid AND IID =:iid";
