@@ -13,9 +13,9 @@ namespace SiteWebThroneWars
 {
     public partial class Connexion : System.Web.UI.Page
     {
+       
         protected void Page_Load(object sender, EventArgs e)
         {
-
         }
         protected void Connexion_Click(object sender, EventArgs e)
         {
@@ -29,7 +29,6 @@ namespace SiteWebThroneWars
             // if Text box pas null
             if (ok)
             {
-
                 //Variable des textbox
                 string user = username.Text;
                 string pass = password.Text;

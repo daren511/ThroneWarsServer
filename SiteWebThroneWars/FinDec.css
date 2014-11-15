@@ -187,12 +187,11 @@ div.FormRecherche{
 
 .Leaderboard{
   margin-top:3%;
-  margin-left: 37%;
-  max-height: 300px;
-
-  overflow: scroll;
+  margin-left: 38%;
+  min-height:50px;
+  max-height: 20%;
   overflow-x:hidden; 
-  width:25%;
+  width:22%;
 
   background-color: #219ac2;
   border: 4px solid #000000;
@@ -216,12 +215,10 @@ div.FormRecherche{
 }
 .Stats{
   margin-top:3%;
-  margin-left: 37%;
-  max-height: 300px;
-
-  /*overflow: scroll;*/
-  /*overflow-x:hidden; */
-  width:25%;
+  margin-left: 38%;
+  min-height:100px;
+  max-height:20%;
+  width:22%;
 
   background-color: #219ac2;
   border: 4px solid #000000;

@@ -12,7 +12,8 @@ namespace ControleBD
     public class Controle
     {
         private static int SaltValueSize = 16;
-
+        public enum Actions { CLICK, CREATE, DELETE, START_GAME };
+        
         public static bool deletePerso(int GUID)
         {
             OracleConnection conn = Connection.GetInstance().conn;
@@ -1060,8 +1061,8 @@ namespace ControleBD
                 {
                     Erreur.ErrorMessage(ex);
                 }
-                return DSLeaderboard;
-            }
+            return DSLeaderboard;
+        }
         }
         /// <summary>
         /// cette fonction ramene le numero d'un joueur a l'aide du nom d'usager (puisqu'il est unique)
@@ -1086,7 +1087,7 @@ namespace ControleBD
                 using (OracleDataReader objRead = oraSelect.ExecuteReader())
                 {
                     if (objRead.Read())
-                        return objRead.GetInt32(0);
+                    return objRead.GetInt32(0);
                 }
 
             }
@@ -1161,7 +1162,7 @@ namespace ControleBD
         {
             public Phrase()
             {
-
+              
             }
             public static string Chiffrer(string valeur, int increment = 2)
             {
@@ -1231,7 +1232,7 @@ namespace ControleBD
                     objRead.Read();
                     return objRead.GetInt32(0) == 1;
                 }
-
+                
             }
             catch (OracleException ex)
             {
@@ -1239,7 +1240,7 @@ namespace ControleBD
                 return false;
             }
         }
-
+        
 
 
         //------------------------------ À ALEXIS ------------------------------//

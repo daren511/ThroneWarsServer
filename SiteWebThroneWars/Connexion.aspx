@@ -55,14 +55,14 @@
             <a href="ChangePassword.aspx">Changer son mot de passe</a>
         </div>
         <div class="Leaderboard">
-            <asp:GridView runat="server" ID="GV_Leaderboard" OnRowDataBound="GV_Leaderboard_OnRowDataBound">
+            <asp:GridView runat="server" ID="GV_Leaderboard" EmptyDataText="No data found!" OnRowDataBound="GV_Leaderboard_OnRowDataBound">
                 
             </asp:GridView>
         </div>
 
         <div class="Stats">
 
-                 <asp:GridView runat="server" ID="GV_Stats">
+                 <asp:GridView runat="server" ID="GV_Stats" EmptyDataText="No data found!">
                  </asp:GridView>
         </div>
     </form>
