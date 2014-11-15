@@ -44,18 +44,10 @@ namespace ThroneWarsServer
                 }
                 if(Joueur.isConnected)
                 {
-                    Joueur.jid = Controle.getJID(Joueur.Username);
+                    Joueur.jid = Controle.getJID(j.Username);
+                    startUP(Joueur);
 
-                    DataSet ds = Controle.ReturnStats(Joueur.jid);
-
-                    List<string> list = traiterDataSet(ds);
-                    envoyerListe(list);
-                    recevoirString();
-                    envoyerListe(Controle.ReturnPersonnage(list[0]));
-                    recevoirString();
-                    envoyerListe(Controle.getInventaireJoueurs(Joueur.jid));
-
-                    
+               
                 }
             }
             catch (Exception e)
@@ -64,6 +56,19 @@ namespace ThroneWarsServer
             }
             this.T.Abort();//arret du thread
         }
+
+        private void startUP(Joueur j)
+        {            
+            DataSet ds = Controle.ReturnStats(j.jid);
+            List<string> list = traiterDataSet(ds);
+            envoyerListe(list);
+            recevoirString();
+            envoyerListe(Controle.getInventaireJoueurs(j.jid));
+            recevoirString();
+            envoyerListe(Controle.ReturnPersonnage(list[0]));
+            
+        }
+
         private List<string> traiterDataSet(DataSet DS)
         {
             List<string> Liste = new List<string>();
