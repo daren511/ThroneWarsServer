@@ -75,6 +75,8 @@ namespace DeveloperApplication
             set { CHECK_IsActive.Checked = Convert.ToBoolean(Int32.Parse(value)); }
         }
 
+        public bool VISIBLE = true;
+
 
         public FORM_Item()
         {
@@ -92,6 +94,9 @@ namespace DeveloperApplication
             ToolTip.SetToolTip(CB_Classe, "Classe");
             ToolTip.SetToolTip(TB_Quantite, "Quantité");
             FillComboBox();
+
+            if (!VISIBLE)
+                TB_Quantite.Visible = false;
         }
 
         private void CheckKeyPress(object sender, KeyPressEventArgs e)

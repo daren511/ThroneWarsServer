@@ -33,6 +33,21 @@ namespace DeveloperApplication
             DGV_Personnages.Columns[4].Visible = false;
         }
 
+        private void TSMI_Quitter_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void TSMI_Items_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void TSMI_Potions_Click(object sender, EventArgs e)
+        {
+
+        }
+
         //---------- JOUEURS ----------//
         private void ListerJoueurs()
         {
@@ -178,6 +193,8 @@ namespace DeveloperApplication
 
         private void ConsulterPerso()
         {
+            int JID = Int32.Parse(DGV_Joueurs.SelectedRows[0].Cells[0].Value.ToString());
+
             FORM_Perso FP = new FORM_Perso();
             FP.Text = DGV_Personnages.SelectedRows[0].Cells[1].Value.ToString();
             FP.GUID = int.Parse(DGV_Personnages.SelectedRows[0].Cells[0].Value.ToString());
@@ -186,11 +203,11 @@ namespace DeveloperApplication
             FP.XP = int.Parse(DGV_Personnages.SelectedRows[0].Cells[3].Value.ToString());
             FP.LEVEL = int.Parse(DGV_Personnages.SelectedRows[0].Cells[4].Value.ToString());
             FP.ISACTIVE = DGV_Personnages.SelectedRows[0].Cells[5].Value.ToString();
+            FP.JID = JID;
 
-            if(FP.ShowDialog() == DialogResult.OK)
+            if (FP.ShowDialog() == DialogResult.OK)
             {
-                int JID = Int32.Parse(DGV_Joueurs.SelectedRows[0].Cells[0].Value.ToString());
-                if(Controle.UpdatePerso(FP.GUID, JID, FP.NOM, FP.XP, FP.LEVEL, FP.CLASSE, FP.ISACTIVE))
+                if (Controle.UpdatePerso(FP.GUID, JID, FP.NOM, FP.XP, FP.LEVEL, FP.CLASSE, FP.ISACTIVE))
                     ListerPerso();
             }
         }

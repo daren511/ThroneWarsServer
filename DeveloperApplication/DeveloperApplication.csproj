@@ -75,6 +75,12 @@
     <Compile Include="FORM_Perso.Designer.cs">
       <DependentUpon>FORM_Perso.cs</DependentUpon>
     </Compile>
+    <Compile Include="FORM_Potion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FORM_Potion.Designer.cs">
+      <DependentUpon>FORM_Potion.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="FORM_Classe.resx">
@@ -91,6 +97,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FORM_Perso.resx">
       <DependentUpon>FORM_Perso.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FORM_Potion.resx">
+      <DependentUpon>FORM_Potion.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

@@ -40,6 +40,7 @@
             this.CB_Classe = new System.Windows.Forms.ComboBox();
             this.ToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.CHECK_AfficherTout = new System.Windows.Forms.CheckBox();
+            this.BTN_Consulter = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.DGV_Inventaire)).BeginInit();
             this.SuspendLayout();
             // 
@@ -95,12 +96,17 @@
             // 
             // DGV_Inventaire
             // 
+            this.DGV_Inventaire.AllowUserToAddRows = false;
+            this.DGV_Inventaire.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.DGV_Inventaire.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.DGV_Inventaire.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DGV_Inventaire.Location = new System.Drawing.Point(15, 54);
             this.DGV_Inventaire.Name = "DGV_Inventaire";
             this.DGV_Inventaire.ReadOnly = true;
+            this.DGV_Inventaire.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.DGV_Inventaire.Size = new System.Drawing.Size(511, 207);
             this.DGV_Inventaire.TabIndex = 5;
+            this.DGV_Inventaire.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DGV_Inventaire_CellDoubleClick);
             // 
             // BTN_Annuler
             // 
@@ -141,12 +147,23 @@
             this.CHECK_AfficherTout.Checked = true;
             this.CHECK_AfficherTout.CheckState = System.Windows.Forms.CheckState.Checked;
             this.CHECK_AfficherTout.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.CHECK_AfficherTout.Location = new System.Drawing.Point(15, 267);
+            this.CHECK_AfficherTout.Location = new System.Drawing.Point(229, 270);
             this.CHECK_AfficherTout.Name = "CHECK_AfficherTout";
             this.CHECK_AfficherTout.Size = new System.Drawing.Size(80, 17);
             this.CHECK_AfficherTout.TabIndex = 9;
             this.CHECK_AfficherTout.Text = "Afficher tout";
             this.CHECK_AfficherTout.UseVisualStyleBackColor = true;
+            // 
+            // BTN_Consulter
+            // 
+            this.BTN_Consulter.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BTN_Consulter.Location = new System.Drawing.Point(15, 267);
+            this.BTN_Consulter.Name = "BTN_Consulter";
+            this.BTN_Consulter.Size = new System.Drawing.Size(176, 23);
+            this.BTN_Consulter.TabIndex = 10;
+            this.BTN_Consulter.Text = "Consulter";
+            this.BTN_Consulter.UseVisualStyleBackColor = true;
+            this.BTN_Consulter.Click += new System.EventHandler(this.BTN_Consulter_Click);
             // 
             // FORM_Perso
             // 
@@ -155,6 +172,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.BTN_Annuler;
             this.ClientSize = new System.Drawing.Size(538, 317);
+            this.Controls.Add(this.BTN_Consulter);
             this.Controls.Add(this.CHECK_AfficherTout);
             this.Controls.Add(this.CB_Classe);
             this.Controls.Add(this.BTN_OK);
@@ -186,5 +204,6 @@
         private System.Windows.Forms.ComboBox CB_Classe;
         private System.Windows.Forms.ToolTip ToolTip;
         private System.Windows.Forms.CheckBox CHECK_AfficherTout;
+        private System.Windows.Forms.Button BTN_Consulter;
     }
 }

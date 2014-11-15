@@ -870,7 +870,7 @@ namespace ControleBD
                     sqlSelect = "select NOM,\"LEVEL\",CID from Personnages where JID = :JID";
                 else
                 {
-                    sqlSelect = "SELECT GUID, NOM, CNAME, XP, \"LEVEL\", ISACTIVE FROM PERSONNAGES P " + 
+                    sqlSelect = "SELECT GUID, NOM, CNAME, XP, \"LEVEL\", ISACTIVE FROM PERSONNAGES P " +
                         "INNER JOIN CLASSES C ON P.CID = C.CID WHERE JID =:JID AND (ISACTIVE = 1";
                     if (afficherTout)
                         sqlSelect += " OR ISACTIVE = 0";
@@ -910,7 +910,7 @@ namespace ControleBD
             OracleDataReader read = sqlSelect.ExecuteReader();
 
 
-            while(read.Read())
+            while (read.Read())
             {
                 personnage.Nom = read.GetString(0);
                 personnage.Xp = read.GetInt32(1);
@@ -953,9 +953,9 @@ namespace ControleBD
             OracleDataReader read = sqlSelect.ExecuteReader();
 
 
-            while(read.Read())
+            while (read.Read())
             {
-                Liste.Add(new Items(read.GetString(0),read.GetInt32(1),read.GetString(2),read.GetInt32(3),read.GetInt32(4),read.GetInt32(5),read.GetInt32(6),read.GetInt32(7)));
+                Liste.Add(new Items(read.GetString(0), read.GetInt32(1), read.GetString(2), read.GetInt32(3), read.GetInt32(4), read.GetInt32(5), read.GetInt32(6), read.GetInt32(7)));
             }
             read.Close();
             Liste.Capacity = Liste.Count;
@@ -1024,7 +1024,7 @@ namespace ControleBD
         /// </summary>
         /// <param name="JID"></param>
         /// <returns></returns>
-        public static DataSet ReturnLeaderboard(string username , bool Recherche = false)
+        public static DataSet ReturnLeaderboard(string username, bool Recherche = false)
         {
             DataSet DSLeaderboard = new DataSet();
             using (OracleDataAdapter oraDataAdapStats = new OracleDataAdapter())
@@ -1035,26 +1035,26 @@ namespace ControleBD
                 {
                     if (username != null)
                     {
-                    if (Recherche)
-                        sqlSelect = "Select rownum as Position,username as Usager,victoires from VueClassement";
+                        if (Recherche)
+                            sqlSelect = "Select rownum as Position,username as Usager,victoires from VueClassement";
 
-                    else
-                        sqlSelect = "select * from (select rownum as Position , username as Usager , victoires from vueclassement) where usager =:username";
+                        else
+                            sqlSelect = "select * from (select rownum as Position , username as Usager , victoires from vueclassement) where usager =:username";
 
-                    oraDataAdapStats.SelectCommand = new OracleCommand(sqlSelect, conn);
+                        oraDataAdapStats.SelectCommand = new OracleCommand(sqlSelect, conn);
 
-                    OracleParameter OraParamUsername = new OracleParameter(":username", OracleDbType.Varchar2, 32);
-                    OraParamUsername.Value = username.ToLower();
+                        OracleParameter OraParamUsername = new OracleParameter(":username", OracleDbType.Varchar2, 32);
+                        OraParamUsername.Value = username.ToLower();
 
-                    oraDataAdapStats.SelectCommand.Parameters.Add(OraParamUsername);
-                    oraDataAdapStats.Fill(DSLeaderboard, "Leaderboard");
-                }
+                        oraDataAdapStats.SelectCommand.Parameters.Add(OraParamUsername);
+                        oraDataAdapStats.Fill(DSLeaderboard, "Leaderboard");
+                    }
                     else
                     {
                         sqlSelect = "Select rownum as Position,username as Usager,victoires from VueClassement";
                         oraDataAdapStats.SelectCommand = new OracleCommand(sqlSelect, conn);
                         oraDataAdapStats.Fill(DSLeaderboard, "Leaderboard");
-                }
+                    }
                 }
                 catch (OracleException ex)
                 {
@@ -1270,27 +1270,94 @@ namespace ControleBD
             }
         }
 
-        public static DataSet ListItems(bool afficherTout, int jid)
+        /// <summary>
+        /// Liste les items
+        /// </summary>
+        /// <param name="afficherTout">Si on affiche les items inactifs(0)</param>
+        /// <param name="jid">Joueur ID</param>
+        /// <param name="doitAfficher">Affiche tous les items(0), ceux d'un joueur(1) ou ceux d'un personnages(2)</param>
+        /// <param name="guid">Personnage ID</param>
+        /// <returns>Le dataset rempli</returns>
+        public static DataSet ListItems(bool afficherTout, int jid, int doitAfficher = 0, int guid = 0)
         {
 
             DataSet monDataSet = new DataSet();
             using (OracleDataAdapter oraDataAdapItems = new OracleDataAdapter())
             {
                 OracleConnection conn = Connection.GetInstance().conn;
-                string sql = "SELECT J.IID, NOM, CNAME, \"LEVEL\", WATK, WDEF, MATK, MDEF, QUANTITY, ISACTIVE FROM ITEMS I " +
-                "INNER JOIN CLASSES C ON I.CID = C.CID " +
-                "INNER JOIN INVENTAIREJOUEUR J ON I.IID = J.IID WHERE JID =:jid AND (ISACTIVE = 1";
+                string sql = "SELECT I.IID, NOM, CNAME, \"LEVEL\", WATK, WDEF, MATK, MDEF, ";
+                if (doitAfficher == 1)
+                    sql += "QUANTITY, ";
+                sql += "ISACTIVE FROM ITEMS I INNER JOIN CLASSES C ON I.CID = C.CID ";
+
+                switch(doitAfficher)
+                {
+                    case 0:
+                        sql += "WHERE (ISACTIVE = 1";
+                        break;
+                    case 1:
+                        sql += "INNER JOIN INVENTAIREJOUEUR J ON I.IID = J.IID WHERE JID =:jid AND (ISACTIVE = 1";
+                        break;
+                    case 2:
+                        sql += "INNER JOIN ITEMSPERSONNAGES IP ON I.IID = IP.IID WHERE JID =:jid AND GUID =:guid AND (ISACTIVE = 1";
+                        break;
+                }
+
                 if (afficherTout)
                     sql += " OR ISACTIVE = 0";
                 sql += ") ORDER BY IID";
 
                 oraDataAdapItems.SelectCommand = new OracleCommand(sql, conn);
 
-                OracleParameter OraParamJID = new OracleParameter(":jid", OracleDbType.Int32, 10);
-                OraParamJID.Value = jid;
+                if (doitAfficher == 1 || doitAfficher == 2)
+                {
+                    OracleParameter OraParamJID = new OracleParameter(":jid", OracleDbType.Int32, 10);
+                    OraParamJID.Value = jid;
+                    oraDataAdapItems.SelectCommand.Parameters.Add(OraParamJID);
+                }
 
-                oraDataAdapItems.SelectCommand.Parameters.Add(OraParamJID);
+                if (doitAfficher == 2)
+                {
+                    OracleParameter OraParamGUID = new OracleParameter(":guid", OracleDbType.Int32, 10);
+                    OraParamGUID.Value = guid;
+                    oraDataAdapItems.SelectCommand.Parameters.Add(OraParamGUID);
+                }
+
                 oraDataAdapItems.Fill(monDataSet, "STATS");
+            }
+            return monDataSet;
+        }
+
+        /// <summary>
+        /// Liste les potions
+        /// </summary>
+        /// <param name="jid">Joueur ID</param>
+        /// <param name="doitAfficher">Affiche toutes les potions(0) ou celles d'un joueur(1)</param>
+        /// <returns>Le dataset rempli</returns>
+        public static DataSet ListPotions(int jid, int doitAfficher = 0)
+        {
+            DataSet monDataSet = new DataSet();
+            using (OracleDataAdapter oraDataAdapPotions = new OracleDataAdapter())
+            {
+                OracleConnection conn = Connection.GetInstance().conn;
+
+                string sql = "SELECT P.PID, NOM, DESCRIPTION, DURATION, WATK, WDEF, MATK, MDEF";
+                if (doitAfficher != 0)
+                    sql += ", QUANTITY FROM POTIONS P INNER JOIN POTIONJOUEURS J ON P.PID = J.PID WHERE JID = :jid ";
+                else
+                    sql += "FROM POTIONS P ";
+                sql += "ORDER BY PID";
+
+                oraDataAdapPotions.SelectCommand = new OracleCommand(sql, conn);
+
+                if (doitAfficher != 0)
+                {
+                    OracleParameter OraParamJID = new OracleParameter(":jid", OracleDbType.Int32, 10);
+                    OraParamJID.Value = jid;
+                    oraDataAdapPotions.SelectCommand.Parameters.Add(OraParamJID);
+                }
+
+                oraDataAdapPotions.Fill(monDataSet, "POTIONS");
             }
             return monDataSet;
         }
@@ -1449,7 +1516,7 @@ namespace ControleBD
         public static bool AddPerso(int jid, string nom, int xp, int level, string classe, string actif)
         {
             OracleConnection conn = Connection.GetInstance().conn;
-            string sql = "INSERT INTO PERSONNAGES(JID,NOM,XP,\"LEVEL\",CID,ISACTIVE) " + 
+            string sql = "INSERT INTO PERSONNAGES(JID,NOM,XP,\"LEVEL\",CID,ISACTIVE) " +
                 "VALUES(:jid, :nom, :xp, :lvl, (SELECT CID FROM CLASSES WHERE CNAME =:classe), :actif)";
 
             try

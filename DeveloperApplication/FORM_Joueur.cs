@@ -79,6 +79,15 @@ namespace DeveloperApplication
             DGV_Inventaire.Columns[5].Visible = false;
             DGV_Inventaire.Columns[6].Visible = false;
             DGV_Inventaire.Columns[7].Visible = false;
+
+            ListerPotions();
+            DGV_Potions.Columns[0].Visible = false;
+            DGV_Potions.Columns[2].Visible = false;
+            DGV_Potions.Columns[3].Visible = false;
+            DGV_Potions.Columns[4].Visible = false;
+            DGV_Potions.Columns[5].Visible = false;
+            DGV_Potions.Columns[6].Visible = false;
+            DGV_Potions.Columns[7].Visible = false;
         }
 
         private void TB_Argent_KeyPress(object sender, KeyPressEventArgs e)
@@ -89,18 +98,24 @@ namespace DeveloperApplication
 
         private void Lister_Items()
         {
-            BindingSource maSource = new BindingSource(Controle.ListItems(CHECK_SHOW_Activated.Checked, JID), "STATS");
+            BindingSource maSource = new BindingSource(Controle.ListItems(CHECK_SHOW_Activated.Checked, JID, 1), "STATS");
             DGV_Inventaire.DataSource = maSource;
 
-            if (DGV_Inventaire.Rows.Count > 0)
-                BTN_Consulter.Enabled = true;
-            else
-                BTN_Consulter.Enabled = false;
+            if (TAB_Control.SelectedTab == PAGE_Inventaire)
+            {
+                if (DGV_Inventaire.Rows.Count > 0)
+                    BTN_Consulter.Enabled = true;
+                else
+                    BTN_Consulter.Enabled = false;
+            }
         }
 
         private void BTN_Consulter_Click(object sender, EventArgs e)
         {
-            Consulter_Item();
+            if (TAB_Control.SelectedTab == PAGE_Inventaire)
+                Consulter_Item();
+            else
+                ConsulterPotion();
         }
 
         private void DGV_Inventaire_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
@@ -128,6 +143,48 @@ namespace DeveloperApplication
                 if (Controle.UpdateQuantity(JID, FI.IID, FI.QUANTITE))
                     Lister_Items();
             }
+        }
+
+        private void ListerPotions()
+        {
+            BindingSource maSource = new BindingSource(Controle.ListPotions(JID, 1), "POTIONS");
+            DGV_Potions.DataSource = maSource;
+
+            if (TAB_Control.SelectedTab == PAGE_Potions)
+            {
+                if (DGV_Potions.Rows.Count > 0)
+                    BTN_Consulter.Enabled = true;
+                else
+                    BTN_Consulter.Enabled = false;
+            }
+        }
+
+        private void ConsulterPotion()
+        {
+
+        }
+
+        private void TAB_Control_Selecting(object sender, TabControlCancelEventArgs e)
+        {
+            if (TAB_Control.SelectedTab == PAGE_Inventaire)
+            {
+                if (DGV_Inventaire.Rows.Count > 0)
+                    BTN_Consulter.Enabled = true;
+                else
+                    BTN_Consulter.Enabled = false;
+            }
+            else
+            {
+                if (DGV_Potions.Rows.Count > 0)
+                    BTN_Consulter.Enabled = true;
+                else
+                    BTN_Consulter.Enabled = false;
+            }
+        }
+
+        private void DGV_Potions_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            ConsulterPotion();
         }
     }
 }

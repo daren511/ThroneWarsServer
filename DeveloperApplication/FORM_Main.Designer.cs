@@ -37,8 +37,15 @@
             this.BTN_DESAC_Perso = new System.Windows.Forms.Button();
             this.CHECK_CFM_Joueur = new System.Windows.Forms.CheckBox();
             this.CHECK_CFM_Perso = new System.Windows.Forms.CheckBox();
+            this.STRIP_Menu = new System.Windows.Forms.MenuStrip();
+            this.fichierToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.TSMI_Quitter = new System.Windows.Forms.ToolStripMenuItem();
+            this.TSMI_Items = new System.Windows.Forms.ToolStripMenuItem();
+            this.TSMI_Potions = new System.Windows.Forms.ToolStripMenuItem();
+            this.TSMI_Classes = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.DGV_Joueurs)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.DGV_Personnages)).BeginInit();
+            this.STRIP_Menu.SuspendLayout();
             this.SuspendLayout();
             // 
             // DGV_Joueurs
@@ -47,12 +54,12 @@
             this.DGV_Joueurs.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.DGV_Joueurs.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.DGV_Joueurs.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.DGV_Joueurs.Location = new System.Drawing.Point(13, 12);
+            this.DGV_Joueurs.Location = new System.Drawing.Point(13, 27);
             this.DGV_Joueurs.MultiSelect = false;
             this.DGV_Joueurs.Name = "DGV_Joueurs";
             this.DGV_Joueurs.ReadOnly = true;
             this.DGV_Joueurs.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.DGV_Joueurs.Size = new System.Drawing.Size(300, 183);
+            this.DGV_Joueurs.Size = new System.Drawing.Size(300, 168);
             this.DGV_Joueurs.TabIndex = 1;
             this.DGV_Joueurs.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DGV_Joueurs_CellClick);
             this.DGV_Joueurs.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DGV_Joueurs_CellDoubleClick);
@@ -63,12 +70,12 @@
             this.DGV_Personnages.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.DGV_Personnages.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.DGV_Personnages.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.DGV_Personnages.Location = new System.Drawing.Point(350, 12);
+            this.DGV_Personnages.Location = new System.Drawing.Point(350, 27);
             this.DGV_Personnages.MultiSelect = false;
             this.DGV_Personnages.Name = "DGV_Personnages";
             this.DGV_Personnages.ReadOnly = true;
             this.DGV_Personnages.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.DGV_Personnages.Size = new System.Drawing.Size(434, 183);
+            this.DGV_Personnages.Size = new System.Drawing.Size(434, 168);
             this.DGV_Personnages.TabIndex = 2;
             this.DGV_Personnages.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DGV_Personnages_CellClick);
             this.DGV_Personnages.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DGV_Personnages_CellDoubleClick);
@@ -154,6 +161,54 @@
             this.CHECK_CFM_Perso.UseVisualStyleBackColor = true;
             this.CHECK_CFM_Perso.CheckedChanged += new System.EventHandler(this.CHECK_CFM_Perso_CheckedChanged);
             // 
+            // STRIP_Menu
+            // 
+            this.STRIP_Menu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.fichierToolStripMenuItem,
+            this.TSMI_Items,
+            this.TSMI_Potions,
+            this.TSMI_Classes});
+            this.STRIP_Menu.Location = new System.Drawing.Point(0, 0);
+            this.STRIP_Menu.Name = "STRIP_Menu";
+            this.STRIP_Menu.Size = new System.Drawing.Size(800, 24);
+            this.STRIP_Menu.TabIndex = 11;
+            this.STRIP_Menu.Text = "menuStrip1";
+            // 
+            // fichierToolStripMenuItem
+            // 
+            this.fichierToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.TSMI_Quitter});
+            this.fichierToolStripMenuItem.Name = "fichierToolStripMenuItem";
+            this.fichierToolStripMenuItem.Size = new System.Drawing.Size(54, 20);
+            this.fichierToolStripMenuItem.Text = "Fichier";
+            // 
+            // TSMI_Quitter
+            // 
+            this.TSMI_Quitter.Name = "TSMI_Quitter";
+            this.TSMI_Quitter.Size = new System.Drawing.Size(152, 22);
+            this.TSMI_Quitter.Text = "Quitter";
+            this.TSMI_Quitter.Click += new System.EventHandler(this.TSMI_Quitter_Click);
+            // 
+            // TSMI_Items
+            // 
+            this.TSMI_Items.Name = "TSMI_Items";
+            this.TSMI_Items.Size = new System.Drawing.Size(48, 20);
+            this.TSMI_Items.Text = "Items";
+            this.TSMI_Items.Click += new System.EventHandler(this.TSMI_Items_Click);
+            // 
+            // TSMI_Potions
+            // 
+            this.TSMI_Potions.Name = "TSMI_Potions";
+            this.TSMI_Potions.Size = new System.Drawing.Size(59, 20);
+            this.TSMI_Potions.Text = "Potions";
+            this.TSMI_Potions.Click += new System.EventHandler(this.TSMI_Potions_Click);
+            // 
+            // TSMI_Classes
+            // 
+            this.TSMI_Classes.Name = "TSMI_Classes";
+            this.TSMI_Classes.Size = new System.Drawing.Size(57, 20);
+            this.TSMI_Classes.Text = "Classes";
+            // 
             // FORM_Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -168,12 +223,16 @@
             this.Controls.Add(this.BTN_CONS_Joueur);
             this.Controls.Add(this.DGV_Personnages);
             this.Controls.Add(this.DGV_Joueurs);
+            this.Controls.Add(this.STRIP_Menu);
+            this.MainMenuStrip = this.STRIP_Menu;
             this.Name = "FORM_Main";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Throne Wars";
             this.Load += new System.EventHandler(this.FORM_Main_Load);
             ((System.ComponentModel.ISupportInitialize)(this.DGV_Joueurs)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.DGV_Personnages)).EndInit();
+            this.STRIP_Menu.ResumeLayout(false);
+            this.STRIP_Menu.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -190,6 +249,12 @@
         private System.Windows.Forms.Button BTN_DESAC_Perso;
         private System.Windows.Forms.CheckBox CHECK_CFM_Joueur;
         private System.Windows.Forms.CheckBox CHECK_CFM_Perso;
+        private System.Windows.Forms.MenuStrip STRIP_Menu;
+        private System.Windows.Forms.ToolStripMenuItem fichierToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem TSMI_Quitter;
+        private System.Windows.Forms.ToolStripMenuItem TSMI_Items;
+        private System.Windows.Forms.ToolStripMenuItem TSMI_Potions;
+        private System.Windows.Forms.ToolStripMenuItem TSMI_Classes;
     }
 }
 

@@ -42,7 +42,15 @@
             this.CHECK_Confirmed = new System.Windows.Forms.CheckBox();
             this.ToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.CHECK_SHOW_Activated = new System.Windows.Forms.CheckBox();
+            this.TAB_Control = new System.Windows.Forms.TabControl();
+            this.PAGE_Inventaire = new System.Windows.Forms.TabPage();
+            this.PAGE_Potions = new System.Windows.Forms.TabPage();
+            this.DGV_Potions = new System.Windows.Forms.DataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.DGV_Inventaire)).BeginInit();
+            this.TAB_Control.SuspendLayout();
+            this.PAGE_Inventaire.SuspendLayout();
+            this.PAGE_Potions.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.DGV_Potions)).BeginInit();
             this.SuspendLayout();
             // 
             // LBL_JID
@@ -61,11 +69,11 @@
             this.DGV_Inventaire.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.DGV_Inventaire.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.DGV_Inventaire.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.DGV_Inventaire.Location = new System.Drawing.Point(12, 63);
+            this.DGV_Inventaire.Location = new System.Drawing.Point(6, 6);
             this.DGV_Inventaire.Name = "DGV_Inventaire";
             this.DGV_Inventaire.ReadOnly = true;
             this.DGV_Inventaire.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.DGV_Inventaire.Size = new System.Drawing.Size(507, 213);
+            this.DGV_Inventaire.Size = new System.Drawing.Size(487, 175);
             this.DGV_Inventaire.TabIndex = 8;
             this.DGV_Inventaire.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DGV_Inventaire_CellDoubleClick);
             // 
@@ -163,6 +171,54 @@
             this.CHECK_SHOW_Activated.Text = "Afficher tout";
             this.CHECK_SHOW_Activated.UseVisualStyleBackColor = true;
             // 
+            // TAB_Control
+            // 
+            this.TAB_Control.Controls.Add(this.PAGE_Inventaire);
+            this.TAB_Control.Controls.Add(this.PAGE_Potions);
+            this.TAB_Control.HotTrack = true;
+            this.TAB_Control.Location = new System.Drawing.Point(12, 62);
+            this.TAB_Control.Name = "TAB_Control";
+            this.TAB_Control.SelectedIndex = 0;
+            this.TAB_Control.Size = new System.Drawing.Size(507, 213);
+            this.TAB_Control.TabIndex = 19;
+            this.TAB_Control.Selecting += new System.Windows.Forms.TabControlCancelEventHandler(this.TAB_Control_Selecting);
+            // 
+            // PAGE_Inventaire
+            // 
+            this.PAGE_Inventaire.Controls.Add(this.DGV_Inventaire);
+            this.PAGE_Inventaire.Location = new System.Drawing.Point(4, 22);
+            this.PAGE_Inventaire.Name = "PAGE_Inventaire";
+            this.PAGE_Inventaire.Padding = new System.Windows.Forms.Padding(3);
+            this.PAGE_Inventaire.Size = new System.Drawing.Size(499, 187);
+            this.PAGE_Inventaire.TabIndex = 0;
+            this.PAGE_Inventaire.Text = "Inventaire";
+            this.PAGE_Inventaire.UseVisualStyleBackColor = true;
+            // 
+            // PAGE_Potions
+            // 
+            this.PAGE_Potions.Controls.Add(this.DGV_Potions);
+            this.PAGE_Potions.Location = new System.Drawing.Point(4, 22);
+            this.PAGE_Potions.Name = "PAGE_Potions";
+            this.PAGE_Potions.Padding = new System.Windows.Forms.Padding(3);
+            this.PAGE_Potions.Size = new System.Drawing.Size(499, 187);
+            this.PAGE_Potions.TabIndex = 1;
+            this.PAGE_Potions.Text = "Potions";
+            this.PAGE_Potions.UseVisualStyleBackColor = true;
+            // 
+            // DGV_Potions
+            // 
+            this.DGV_Potions.AllowUserToAddRows = false;
+            this.DGV_Potions.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.DGV_Potions.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
+            this.DGV_Potions.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.DGV_Potions.Location = new System.Drawing.Point(6, 6);
+            this.DGV_Potions.Name = "DGV_Potions";
+            this.DGV_Potions.ReadOnly = true;
+            this.DGV_Potions.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.DGV_Potions.Size = new System.Drawing.Size(487, 175);
+            this.DGV_Potions.TabIndex = 0;
+            this.DGV_Potions.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DGV_Potions_CellDoubleClick);
+            // 
             // FORM_Joueur
             // 
             this.AcceptButton = this.BTN_OK;
@@ -170,6 +226,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.BTN_Annuler;
             this.ClientSize = new System.Drawing.Size(531, 317);
+            this.Controls.Add(this.TAB_Control);
             this.Controls.Add(this.CHECK_SHOW_Activated);
             this.Controls.Add(this.CHECK_Confirmed);
             this.Controls.Add(this.TB_Argent);
@@ -180,12 +237,15 @@
             this.Controls.Add(this.BTN_Annuler);
             this.Controls.Add(this.BTN_Consulter);
             this.Controls.Add(this.BTN_OK);
-            this.Controls.Add(this.DGV_Inventaire);
             this.Controls.Add(this.LBL_JID);
             this.Name = "FORM_Joueur";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Load += new System.EventHandler(this.FORM_Joueur_Load);
             ((System.ComponentModel.ISupportInitialize)(this.DGV_Inventaire)).EndInit();
+            this.TAB_Control.ResumeLayout(false);
+            this.PAGE_Inventaire.ResumeLayout(false);
+            this.PAGE_Potions.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.DGV_Potions)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -206,5 +266,9 @@
         private System.Windows.Forms.CheckBox CHECK_Confirmed;
         private System.Windows.Forms.ToolTip ToolTip;
         private System.Windows.Forms.CheckBox CHECK_SHOW_Activated;
+        private System.Windows.Forms.TabControl TAB_Control;
+        private System.Windows.Forms.TabPage PAGE_Inventaire;
+        private System.Windows.Forms.TabPage PAGE_Potions;
+        private System.Windows.Forms.DataGridView DGV_Potions;
     }
 }
