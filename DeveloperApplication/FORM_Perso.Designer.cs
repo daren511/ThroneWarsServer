@@ -41,6 +41,7 @@
             this.ToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.CHECK_AfficherTout = new System.Windows.Forms.CheckBox();
             this.BTN_Consulter = new System.Windows.Forms.Button();
+            this.BTN_Supprimer = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.DGV_Inventaire)).BeginInit();
             this.SuspendLayout();
             // 
@@ -112,7 +113,7 @@
             // 
             this.BTN_Annuler.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.BTN_Annuler.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BTN_Annuler.Location = new System.Drawing.Point(451, 280);
+            this.BTN_Annuler.Location = new System.Drawing.Point(451, 267);
             this.BTN_Annuler.Name = "BTN_Annuler";
             this.BTN_Annuler.Size = new System.Drawing.Size(75, 23);
             this.BTN_Annuler.TabIndex = 6;
@@ -123,7 +124,7 @@
             // 
             this.BTN_OK.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.BTN_OK.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BTN_OK.Location = new System.Drawing.Point(370, 280);
+            this.BTN_OK.Location = new System.Drawing.Point(370, 267);
             this.BTN_OK.Name = "BTN_OK";
             this.BTN_OK.Size = new System.Drawing.Size(75, 23);
             this.BTN_OK.TabIndex = 7;
@@ -147,7 +148,7 @@
             this.CHECK_AfficherTout.Checked = true;
             this.CHECK_AfficherTout.CheckState = System.Windows.Forms.CheckState.Checked;
             this.CHECK_AfficherTout.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.CHECK_AfficherTout.Location = new System.Drawing.Point(229, 270);
+            this.CHECK_AfficherTout.Location = new System.Drawing.Point(277, 270);
             this.CHECK_AfficherTout.Name = "CHECK_AfficherTout";
             this.CHECK_AfficherTout.Size = new System.Drawing.Size(80, 17);
             this.CHECK_AfficherTout.TabIndex = 9;
@@ -165,13 +166,25 @@
             this.BTN_Consulter.UseVisualStyleBackColor = true;
             this.BTN_Consulter.Click += new System.EventHandler(this.BTN_Consulter_Click);
             // 
+            // BTN_Supprimer
+            // 
+            this.BTN_Supprimer.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BTN_Supprimer.Location = new System.Drawing.Point(197, 267);
+            this.BTN_Supprimer.Name = "BTN_Supprimer";
+            this.BTN_Supprimer.Size = new System.Drawing.Size(74, 23);
+            this.BTN_Supprimer.TabIndex = 11;
+            this.BTN_Supprimer.Text = "Supprimer";
+            this.BTN_Supprimer.UseVisualStyleBackColor = true;
+            this.BTN_Supprimer.Click += new System.EventHandler(this.BTN_Supprimer_Click);
+            // 
             // FORM_Perso
             // 
             this.AcceptButton = this.BTN_OK;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.BTN_Annuler;
-            this.ClientSize = new System.Drawing.Size(538, 317);
+            this.ClientSize = new System.Drawing.Size(538, 303);
+            this.Controls.Add(this.BTN_Supprimer);
             this.Controls.Add(this.BTN_Consulter);
             this.Controls.Add(this.CHECK_AfficherTout);
             this.Controls.Add(this.CB_Classe);
@@ -205,5 +218,6 @@
         private System.Windows.Forms.ToolTip ToolTip;
         private System.Windows.Forms.CheckBox CHECK_AfficherTout;
         private System.Windows.Forms.Button BTN_Consulter;
+        private System.Windows.Forms.Button BTN_Supprimer;
     }
 }

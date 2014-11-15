@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.LBL_PID = new System.Windows.Forms.Label();
             this.TB_Nom = new System.Windows.Forms.TextBox();
             this.TB_Desc = new System.Windows.Forms.TextBox();
@@ -39,6 +40,7 @@
             this.TB_MDEF = new System.Windows.Forms.TextBox();
             this.BTN_Annuler = new System.Windows.Forms.Button();
             this.BTN_OK = new System.Windows.Forms.Button();
+            this.ToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.SuspendLayout();
             // 
             // LBL_PID
@@ -55,6 +57,7 @@
             this.TB_Nom.Location = new System.Drawing.Point(52, 6);
             this.TB_Nom.MaxLength = 40;
             this.TB_Nom.Name = "TB_Nom";
+            this.TB_Nom.ReadOnly = true;
             this.TB_Nom.Size = new System.Drawing.Size(220, 20);
             this.TB_Nom.TabIndex = 1;
             // 
@@ -64,6 +67,7 @@
             this.TB_Desc.MaxLength = 255;
             this.TB_Desc.Multiline = true;
             this.TB_Desc.Name = "TB_Desc";
+            this.TB_Desc.ReadOnly = true;
             this.TB_Desc.Size = new System.Drawing.Size(220, 78);
             this.TB_Desc.TabIndex = 2;
             // 
@@ -72,6 +76,7 @@
             this.TB_Duration.Location = new System.Drawing.Point(52, 116);
             this.TB_Duration.MaxLength = 1;
             this.TB_Duration.Name = "TB_Duration";
+            this.TB_Duration.ReadOnly = true;
             this.TB_Duration.Size = new System.Drawing.Size(100, 20);
             this.TB_Duration.TabIndex = 3;
             // 
@@ -88,6 +93,7 @@
             this.TB_WATK.Location = new System.Drawing.Point(52, 159);
             this.TB_WATK.MaxLength = 4;
             this.TB_WATK.Name = "TB_WATK";
+            this.TB_WATK.ReadOnly = true;
             this.TB_WATK.Size = new System.Drawing.Size(100, 20);
             this.TB_WATK.TabIndex = 5;
             // 
@@ -96,6 +102,7 @@
             this.TB_WDEF.Location = new System.Drawing.Point(174, 159);
             this.TB_WDEF.MaxLength = 4;
             this.TB_WDEF.Name = "TB_WDEF";
+            this.TB_WDEF.ReadOnly = true;
             this.TB_WDEF.Size = new System.Drawing.Size(100, 20);
             this.TB_WDEF.TabIndex = 6;
             // 
@@ -104,6 +111,7 @@
             this.TB_MATK.Location = new System.Drawing.Point(52, 186);
             this.TB_MATK.MaxLength = 4;
             this.TB_MATK.Name = "TB_MATK";
+            this.TB_MATK.ReadOnly = true;
             this.TB_MATK.Size = new System.Drawing.Size(100, 20);
             this.TB_MATK.TabIndex = 7;
             // 
@@ -112,6 +120,7 @@
             this.TB_MDEF.Location = new System.Drawing.Point(174, 185);
             this.TB_MDEF.MaxLength = 4;
             this.TB_MDEF.Name = "TB_MDEF";
+            this.TB_MDEF.ReadOnly = true;
             this.TB_MDEF.Size = new System.Drawing.Size(100, 20);
             this.TB_MDEF.TabIndex = 8;
             // 
@@ -156,6 +165,8 @@
             this.Controls.Add(this.TB_Nom);
             this.Controls.Add(this.LBL_PID);
             this.Name = "FORM_Potion";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            this.Load += new System.EventHandler(this.FORM_Potion_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -174,5 +185,6 @@
         private System.Windows.Forms.TextBox TB_MDEF;
         private System.Windows.Forms.Button BTN_Annuler;
         private System.Windows.Forms.Button BTN_OK;
+        private System.Windows.Forms.ToolTip ToolTip;
     }
 }

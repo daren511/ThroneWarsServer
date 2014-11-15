@@ -46,6 +46,9 @@
             this.PAGE_Inventaire = new System.Windows.Forms.TabPage();
             this.PAGE_Potions = new System.Windows.Forms.TabPage();
             this.DGV_Potions = new System.Windows.Forms.DataGridView();
+            this.label1 = new System.Windows.Forms.Label();
+            this.CB_Perso = new System.Windows.Forms.ComboBox();
+            this.BTN_Ajouter = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.DGV_Inventaire)).BeginInit();
             this.TAB_Control.SuspendLayout();
             this.PAGE_Inventaire.SuspendLayout();
@@ -73,7 +76,7 @@
             this.DGV_Inventaire.Name = "DGV_Inventaire";
             this.DGV_Inventaire.ReadOnly = true;
             this.DGV_Inventaire.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.DGV_Inventaire.Size = new System.Drawing.Size(487, 175);
+            this.DGV_Inventaire.Size = new System.Drawing.Size(487, 151);
             this.DGV_Inventaire.TabIndex = 8;
             this.DGV_Inventaire.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DGV_Inventaire_CellDoubleClick);
             // 
@@ -170,6 +173,7 @@
             this.CHECK_SHOW_Activated.TabIndex = 18;
             this.CHECK_SHOW_Activated.Text = "Afficher tout";
             this.CHECK_SHOW_Activated.UseVisualStyleBackColor = true;
+            this.CHECK_SHOW_Activated.CheckedChanged += new System.EventHandler(this.CHECK_SHOW_Activated_CheckedChanged);
             // 
             // TAB_Control
             // 
@@ -185,6 +189,9 @@
             // 
             // PAGE_Inventaire
             // 
+            this.PAGE_Inventaire.Controls.Add(this.BTN_Ajouter);
+            this.PAGE_Inventaire.Controls.Add(this.CB_Perso);
+            this.PAGE_Inventaire.Controls.Add(this.label1);
             this.PAGE_Inventaire.Controls.Add(this.DGV_Inventaire);
             this.PAGE_Inventaire.Location = new System.Drawing.Point(4, 22);
             this.PAGE_Inventaire.Name = "PAGE_Inventaire";
@@ -219,6 +226,35 @@
             this.DGV_Potions.TabIndex = 0;
             this.DGV_Potions.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DGV_Potions_CellDoubleClick);
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(6, 166);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(166, 13);
+            this.label1.TabIndex = 9;
+            this.label1.Text = "Ajouter cet item à l\'inventaire de : ";
+            // 
+            // CB_Perso
+            // 
+            this.CB_Perso.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.CB_Perso.FormattingEnabled = true;
+            this.CB_Perso.Location = new System.Drawing.Point(178, 163);
+            this.CB_Perso.Name = "CB_Perso";
+            this.CB_Perso.Size = new System.Drawing.Size(121, 21);
+            this.CB_Perso.TabIndex = 10;
+            // 
+            // BTN_Ajouter
+            // 
+            this.BTN_Ajouter.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BTN_Ajouter.Location = new System.Drawing.Point(347, 161);
+            this.BTN_Ajouter.Name = "BTN_Ajouter";
+            this.BTN_Ajouter.Size = new System.Drawing.Size(146, 23);
+            this.BTN_Ajouter.TabIndex = 11;
+            this.BTN_Ajouter.Text = "Ajouter";
+            this.BTN_Ajouter.UseVisualStyleBackColor = true;
+            this.BTN_Ajouter.Click += new System.EventHandler(this.BTN_Ajouter_Click);
+            // 
             // FORM_Joueur
             // 
             this.AcceptButton = this.BTN_OK;
@@ -244,6 +280,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.DGV_Inventaire)).EndInit();
             this.TAB_Control.ResumeLayout(false);
             this.PAGE_Inventaire.ResumeLayout(false);
+            this.PAGE_Inventaire.PerformLayout();
             this.PAGE_Potions.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.DGV_Potions)).EndInit();
             this.ResumeLayout(false);
@@ -270,5 +307,8 @@
         private System.Windows.Forms.TabPage PAGE_Inventaire;
         private System.Windows.Forms.TabPage PAGE_Potions;
         private System.Windows.Forms.DataGridView DGV_Potions;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button BTN_Ajouter;
+        private System.Windows.Forms.ComboBox CB_Perso;
     }
 }

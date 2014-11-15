@@ -144,5 +144,18 @@ namespace DeveloperApplication
         {
             ConsulterItem();
         }
+
+        private void BTN_Supprimer_Click(object sender, EventArgs e)
+        {
+            string nom = DGV_Inventaire.SelectedRows[0].Cells[1].Value.ToString();
+            if (MessageBox.Show("Voulez-vous vraiment supprimer cet item?", "Supprimer " + nom, MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                int IID = int.Parse(DGV_Inventaire.SelectedRows[0].Cells[0].Value.ToString());
+                if (Controle.deleteItemPersonnages(GUID, IID, JID))
+                    Lister_Items();
+                else
+                    MessageBox.Show("Impossible de supprimer l'item");
+            }
+        }
     }
 }

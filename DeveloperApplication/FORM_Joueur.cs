@@ -88,6 +88,10 @@ namespace DeveloperApplication
             DGV_Potions.Columns[5].Visible = false;
             DGV_Potions.Columns[6].Visible = false;
             DGV_Potions.Columns[7].Visible = false;
+
+            FillComboBox();
+            if (CB_Perso.Items.Count == 0 || DGV_Inventaire.Rows.Count == 0)
+                BTN_Ajouter.Enabled = false;
         }
 
         private void TB_Argent_KeyPress(object sender, KeyPressEventArgs e)
@@ -103,17 +107,20 @@ namespace DeveloperApplication
 
             if (TAB_Control.SelectedTab == PAGE_Inventaire)
             {
-            if (DGV_Inventaire.Rows.Count > 0)
-                BTN_Consulter.Enabled = true;
-            else
-                BTN_Consulter.Enabled = false;
-        }
+                if (DGV_Inventaire.Rows.Count > 0)
+                {
+                    BTN_Consulter.Enabled = true;
+                    BTN_Ajouter.Enabled = true;
+                }
+                else
+                    BTN_Consulter.Enabled = false;
+            }
         }
 
         private void BTN_Consulter_Click(object sender, EventArgs e)
         {
             if (TAB_Control.SelectedTab == PAGE_Inventaire)
-            Consulter_Item();
+                Consulter_Item();
             else
                 ConsulterPotion();
         }
@@ -161,7 +168,23 @@ namespace DeveloperApplication
 
         private void ConsulterPotion()
         {
+            FORM_Potion FP = new FORM_Potion();
+            FP.Text = DGV_Potions.SelectedRows[0].Cells[1].Value.ToString();
+            FP.PID = int.Parse(DGV_Potions.SelectedRows[0].Cells[0].Value.ToString());
+            FP.NOM = DGV_Potions.SelectedRows[0].Cells[1].Value.ToString();
+            FP.DESCRIPTION = DGV_Potions.SelectedRows[0].Cells[2].Value.ToString();
+            FP.DURATION = int.Parse(DGV_Potions.SelectedRows[0].Cells[3].Value.ToString());
+            FP.WATK = int.Parse(DGV_Potions.SelectedRows[0].Cells[4].Value.ToString());
+            FP.WDEF = int.Parse(DGV_Potions.SelectedRows[0].Cells[5].Value.ToString());
+            FP.MATK = int.Parse(DGV_Potions.SelectedRows[0].Cells[6].Value.ToString());
+            FP.MDEF = int.Parse(DGV_Potions.SelectedRows[0].Cells[7].Value.ToString());
+            FP.QUANTITE = int.Parse(DGV_Potions.SelectedRows[0].Cells[8].Value.ToString());
 
+            if (FP.ShowDialog() == DialogResult.OK)
+            {
+                if (Controle.updateQuantityPotion(JID, FP.PID, FP.QUANTITE))
+                    ListerPotions();
+            }
         }
 
         private void TAB_Control_Selecting(object sender, TabControlCancelEventArgs e)
@@ -169,7 +192,10 @@ namespace DeveloperApplication
             if (TAB_Control.SelectedTab == PAGE_Inventaire)
             {
                 if (DGV_Inventaire.Rows.Count > 0)
+                {
                     BTN_Consulter.Enabled = true;
+                    BTN_Ajouter.Enabled = false;
+                }
                 else
                     BTN_Consulter.Enabled = false;
             }
@@ -185,6 +211,29 @@ namespace DeveloperApplication
         private void DGV_Potions_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             ConsulterPotion();
+        }
+
+        private void CHECK_SHOW_Activated_CheckedChanged(object sender, EventArgs e)
+        {
+            Lister_Items();
+        }
+
+        private void FillComboBox()
+        {
+            List<string> perso = Controle.fillPerso(JID);
+            for (int i = 0; i < perso.Count; ++i)
+                CB_Perso.Items.Add(perso[i]);
+            CB_Perso.SelectedIndex = 0;
+        }
+
+        private void BTN_Ajouter_Click(object sender, EventArgs e)
+        {
+            string nom = CB_Perso.SelectedItem.ToString();
+            int IID = int.Parse(DGV_Inventaire.SelectedRows[0].Cells[0].Value.ToString());
+            if (Controle.addItemPersonnages(nom, IID, JID))
+                Lister_Items();
+            else
+                MessageBox.Show("Ce personnage possède déjà cet item");
         }
     }
 }

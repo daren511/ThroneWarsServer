@@ -60,12 +60,33 @@ namespace DeveloperApplication
             set { TB_MDEF.Text = value.ToString(); }
         }
 
+        public int QUANTITE
+        {
+            get { return int.Parse(TB_Quantite.Text); }
+            set { TB_Quantite.Text = value.ToString(); }
+        }
+
         public bool VISIBLE = true;
 
 
         public FORM_Potion()
         {
             InitializeComponent();
+        }
+
+        private void FORM_Potion_Load(object sender, EventArgs e)
+        {
+            ToolTip.SetToolTip(TB_Nom, "Nom");
+            ToolTip.SetToolTip(TB_Desc, "Description");
+            ToolTip.SetToolTip(TB_Duration, "Durée");
+            ToolTip.SetToolTip(TB_Quantite, "Quantité");
+            ToolTip.SetToolTip(TB_WATK, "Attaque physique");
+            ToolTip.SetToolTip(TB_WDEF, "Défense physique");
+            ToolTip.SetToolTip(TB_MATK, "Attaque magique");
+            ToolTip.SetToolTip(TB_MDEF, "Défense magique");
+
+            if (!VISIBLE)
+                TB_Quantite.Visible = false;
         }
     }
 }

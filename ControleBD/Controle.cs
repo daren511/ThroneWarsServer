@@ -869,7 +869,7 @@ namespace ControleBD
                     sqlSelect = "select NOM,\"LEVEL\",CID from Personnages where JID = :JID";
                 else
                 {
-                    sqlSelect = "SELECT GUID, NOM, CNAME, XP, \"LEVEL\", ISACTIVE FROM PERSONNAGES P " + 
+                    sqlSelect = "SELECT GUID, NOM, CNAME, XP, \"LEVEL\", ISACTIVE FROM PERSONNAGES P " +
                         "INNER JOIN CLASSES C ON P.CID = C.CID WHERE JID =:JID AND (ISACTIVE = 1";
                     if (afficherTout)
                         sqlSelect += " OR ISACTIVE = 0";
@@ -1034,26 +1034,26 @@ namespace ControleBD
                 {
                     if (username != null)
                     {
-                    if (Recherche)
-                        sqlSelect = "Select rownum as Position,username as Usager,victoires from VueClassement";
+                        if (Recherche)
+                            sqlSelect = "Select rownum as Position,username as Usager,victoires from VueClassement";
 
-                    else
-                        sqlSelect = "select * from (select rownum as Position , username as Usager , victoires from vueclassement) where usager =:username";
+                        else
+                            sqlSelect = "select * from (select rownum as Position , username as Usager , victoires from vueclassement) where usager =:username";
 
-                    oraDataAdapStats.SelectCommand = new OracleCommand(sqlSelect, conn);
+                        oraDataAdapStats.SelectCommand = new OracleCommand(sqlSelect, conn);
 
-                    OracleParameter OraParamUsername = new OracleParameter(":username", OracleDbType.Varchar2, 32);
-                    OraParamUsername.Value = username.ToLower();
+                        OracleParameter OraParamUsername = new OracleParameter(":username", OracleDbType.Varchar2, 32);
+                        OraParamUsername.Value = username.ToLower();
 
-                    oraDataAdapStats.SelectCommand.Parameters.Add(OraParamUsername);
-                    oraDataAdapStats.Fill(DSLeaderboard, "Leaderboard");
-                }
+                        oraDataAdapStats.SelectCommand.Parameters.Add(OraParamUsername);
+                        oraDataAdapStats.Fill(DSLeaderboard, "Leaderboard");
+                    }
                     else
                     {
                         sqlSelect = "Select rownum as Position,username as Usager,victoires from VueClassement";
                         oraDataAdapStats.SelectCommand = new OracleCommand(sqlSelect, conn);
                         oraDataAdapStats.Fill(DSLeaderboard, "Leaderboard");
-                }
+                    }
                 }
                 catch (OracleException ex)
                 {
@@ -1289,7 +1289,7 @@ namespace ControleBD
                     sql += "QUANTITY, ";
                 sql += "ISACTIVE FROM ITEMS I INNER JOIN CLASSES C ON I.CID = C.CID ";
 
-                switch(doitAfficher)
+                switch (doitAfficher)
                 {
                     case 0:
                         sql += "WHERE (ISACTIVE = 1";
@@ -1310,8 +1310,8 @@ namespace ControleBD
 
                 if (doitAfficher == 1 || doitAfficher == 2)
                 {
-                OracleParameter OraParamJID = new OracleParameter(":jid", OracleDbType.Int32, 10);
-                OraParamJID.Value = jid;
+                    OracleParameter OraParamJID = new OracleParameter(":jid", OracleDbType.Int32, 10);
+                    OraParamJID.Value = jid;
                     oraDataAdapItems.SelectCommand.Parameters.Add(OraParamJID);
                 }
 
@@ -1417,8 +1417,8 @@ namespace ControleBD
                 OracleCommand oraUpdate = new OracleCommand(sqlconfirmation, conn);
 
                 OracleParameter OraParamQTE = new OracleParameter(":quantite", OracleDbType.Int32, 2);
-                OracleParameter OraParamJID = new OracleParameter(":iid", OracleDbType.Int32, 10);
-                OracleParameter OraParamIID = new OracleParameter(":jid", OracleDbType.Int32, 10);
+                OracleParameter OraParamJID = new OracleParameter(":jid", OracleDbType.Int32, 10);
+                OracleParameter OraParamIID = new OracleParameter(":iid", OracleDbType.Int32, 10);
 
                 OraParamQTE.Value = qte;
                 OraParamJID.Value = jid;
@@ -1427,6 +1427,99 @@ namespace ControleBD
                 oraUpdate.Parameters.Add(OraParamQTE);
                 oraUpdate.Parameters.Add(OraParamJID);
                 oraUpdate.Parameters.Add(OraParamIID);
+
+                oraUpdate.ExecuteNonQuery();
+                return true;
+            }
+            catch (OracleException ex)
+            {
+                Erreur.ErrorMessage(ex);
+                return false;
+            }
+        }
+
+        public static bool deleteItemPersonnages(int guid, int iid, int jid)
+        {
+            OracleConnection conn = Connection.getInstance().conn;
+            string sql = "DELETE FROM ITEMSPERSONNAGES WHERE GUID =:guid AND IID =:iid AND JID =:jid";
+
+            try
+            {
+                OracleCommand oraDelete = new OracleCommand(sql, conn);
+
+                OracleParameter OraParamGUID = new OracleParameter(":guid", OracleDbType.Int32, 10);
+                OracleParameter OraParamIID = new OracleParameter(":iid", OracleDbType.Int32, 10);
+                OracleParameter OraParamJID = new OracleParameter(":jid", OracleDbType.Int32, 10);
+
+                OraParamGUID.Value = guid;
+                OraParamIID.Value = iid;
+                OraParamJID.Value = jid;
+
+                oraDelete.Parameters.Add(OraParamGUID);
+                oraDelete.Parameters.Add(OraParamIID);
+                oraDelete.Parameters.Add(OraParamJID);
+
+                oraDelete.ExecuteNonQuery();
+                return true;
+            }
+            catch (OracleException ex)
+            {
+                Erreur.ErrorMessage(ex);
+                return false;
+            }
+        }
+
+        public static bool addItemPersonnages(string nom, int iid, int jid)
+        {
+            OracleConnection conn = Connection.getInstance().conn;
+            string sql = "INSERT INTO ITEMSPERSONNAGES VALUES((SELECT GUID FROM PERSONNAGES WHERE NOM =:nom), :iid, :jid)";
+
+            try
+            {
+                OracleCommand oraInsert = new OracleCommand(sql, conn);
+
+                OracleParameter OraParamNom = new OracleParameter(":nom", OracleDbType.Varchar2, 12);
+                OracleParameter OraParamIID = new OracleParameter(":iid", OracleDbType.Int32, 10);
+                OracleParameter OraParamJID = new OracleParameter(":jid", OracleDbType.Int32, 10);
+
+                OraParamNom.Value = nom;
+                OraParamIID.Value = iid;
+                OraParamJID.Value = jid;
+
+                oraInsert.Parameters.Add(OraParamNom);
+                oraInsert.Parameters.Add(OraParamIID);
+                oraInsert.Parameters.Add(OraParamJID);
+
+                oraInsert.ExecuteNonQuery();
+                return true;
+            }
+            catch (OracleException ex)
+            {
+                Erreur.ErrorMessage(ex);
+                return false;
+            }
+        }
+
+        public static bool updateQuantityPotion(int jid, int pid, int qte)
+        {
+            OracleConnection conn = Connection.getInstance().conn;
+            string sqlconfirmation = "UPDATE POTIONJOUEURS SET QUANTITY =:quantite WHERE JID =:jid AND PID =:pid";
+
+            try
+            {
+                OracleCommand oraUpdate = new OracleCommand(sqlconfirmation, conn);
+
+                OracleParameter OraParamQTE = new OracleParameter(":quantite", OracleDbType.Int32, 2);
+                OracleParameter OraParamJID = new OracleParameter(":jid", OracleDbType.Int32, 10);
+                OracleParameter OraParamPID = new OracleParameter(":pid", OracleDbType.Int32, 10);
+
+                OraParamQTE.Value = qte;
+                OraParamJID.Value = jid;
+                OraParamPID.Value = pid;
+
+                oraUpdate.Parameters.Add(OraParamQTE);
+                oraUpdate.Parameters.Add(OraParamJID);
+                oraUpdate.Parameters.Add(OraParamPID);
 
                 oraUpdate.ExecuteNonQuery();
                 return true;
@@ -1524,7 +1617,7 @@ namespace ControleBD
         public static bool addPerso(int jid, string nom, int xp, int level, string classe, string actif)
         {
             OracleConnection conn = Connection.getInstance().conn;
-            string sql = "INSERT INTO PERSONNAGES(JID,NOM,XP,\"LEVEL\",CID,ISACTIVE) " + 
+            string sql = "INSERT INTO PERSONNAGES(JID,NOM,XP,\"LEVEL\",CID,ISACTIVE) " +
                 "VALUES(:jid, :nom, :xp, :lvl, (SELECT CID FROM CLASSES WHERE CNAME =:classe), :actif)";
 
             try
@@ -1648,6 +1741,25 @@ namespace ControleBD
                     listItem.Add(oraReader.GetString(0));
             }
             return listItem;
+        }
+
+        public static List<string> fillPerso(int jid)
+        {
+            List<string> listPerso = new List<string>();
+            OracleConnection conn = Connection.getInstance().conn;
+            string sql = "SELECT NOM FROM PERSONNAGES WHERE JID =:jid";
+
+            OracleCommand oraSelect = new OracleCommand(sql, conn);
+            OracleParameter OraParamJID = new OracleParameter(":jid", OracleDbType.Int32, 10);
+            OraParamJID.Value = jid;
+            oraSelect.Parameters.Add(OraParamJID);
+
+            using (OracleDataReader oraReader = oraSelect.ExecuteReader())
+            {
+                while (oraReader.Read())
+                    listPerso.Add(oraReader.GetString(0));
+            }
+            return listPerso;
         }
     }
 }
