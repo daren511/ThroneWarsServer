@@ -12,6 +12,7 @@ namespace ControleBD
     public class Controle
     {
         private static int SaltValueSize = 16;
+        public enum Actions {CLICK, CREATE, DELETE,START_GAME }
         
         public static bool deletePerso(int GUID)
         {
