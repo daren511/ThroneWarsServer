@@ -1361,17 +1361,64 @@ namespace ControleBD
             return monDataSet;
         }
 
-        public static bool updateItem(int iid, string nom, int level, int watk, int wdef, int matk, int mdef, string actif)
+        public static bool addItem(string nom, string classe, int level, int watk, int wdef, int matk, int mdef, string actif)
         {
             OracleConnection conn = Connection.getInstance().conn;
-            string sql = "UPDATE ITEMS SET NOM =:nom, \"LEVEL\" =:level, WATK =:watk, WDEF =:wdef, MATK =:matk, MDEF =:mdef, ISACTIVE =:actif WHERE IID =:iid";
+            string sql = "INSERT INTO ITEMS(NOM,CID,\"LEVEL\",WATK,WDEF,MATK,MDEF,ISACTIVE) " + 
+                   "VALUES(:nom, (SELECT CID FROM CLASSES WHERE CNAME =:classe), :lvl, :watk, :wdef, :matk, :mdef, :actif)";
 
             try
             {
                 OracleCommand oraUpdate = new OracleCommand(sql, conn);
 
                 OracleParameter OraParamNom = new OracleParameter(":nom", OracleDbType.Varchar2, 40);
-                OracleParameter OraParamLevel = new OracleParameter(":level", OracleDbType.Int32, 2);
+                OracleParameter OraParamClasse = new OracleParameter(":classe", OracleDbType.Varchar2, 40);
+                OracleParameter OraParamLevel = new OracleParameter(":lvl", OracleDbType.Int32, 2);
+                OracleParameter OraParamWATK = new OracleParameter(":watk", OracleDbType.Int32, 4);
+                OracleParameter OraParamWDEF = new OracleParameter(":wdef", OracleDbType.Int32, 4);
+                OracleParameter OraParamMATK = new OracleParameter(":matk", OracleDbType.Int32, 4);
+                OracleParameter OraParamMDEF = new OracleParameter(":mdef", OracleDbType.Int32, 4);
+                OracleParameter OraParamActif = new OracleParameter(":actif", OracleDbType.Char, 1);
+
+                OraParamNom.Value = nom;
+                OraParamClasse.Value = classe;
+                OraParamLevel.Value = level;
+                OraParamWATK.Value = watk;
+                OraParamWDEF.Value = wdef;
+                OraParamMATK.Value = matk;
+                OraParamMDEF.Value = mdef;
+                OraParamActif.Value = actif;
+
+                oraUpdate.Parameters.Add(OraParamNom);
+                oraUpdate.Parameters.Add(OraParamClasse);
+                oraUpdate.Parameters.Add(OraParamLevel);
+                oraUpdate.Parameters.Add(OraParamWATK);
+                oraUpdate.Parameters.Add(OraParamWDEF);
+                oraUpdate.Parameters.Add(OraParamMATK);
+                oraUpdate.Parameters.Add(OraParamMDEF);
+                oraUpdate.Parameters.Add(OraParamActif);
+
+                oraUpdate.ExecuteNonQuery();
+                return true;
+            }
+            catch (OracleException ex)
+            {
+                Erreur.ErrorMessage(ex);
+                return false;
+            }
+        }
+
+        public static bool updateItem(int iid, string nom, int level, int watk, int wdef, int matk, int mdef, string actif)
+        {
+            OracleConnection conn = Connection.getInstance().conn;
+            string sql = "UPDATE ITEMS SET NOM =:nom, \"LEVEL\" =:lvl, WATK =:watk, WDEF =:wdef, MATK =:matk, MDEF =:mdef, ISACTIVE =:actif WHERE IID =:iid";
+
+            try
+            {
+                OracleCommand oraUpdate = new OracleCommand(sql, conn);
+
+                OracleParameter OraParamNom = new OracleParameter(":nom", OracleDbType.Varchar2, 40);
+                OracleParameter OraParamLevel = new OracleParameter(":lvl", OracleDbType.Int32, 2);
                 OracleParameter OraParamWATK = new OracleParameter(":watk", OracleDbType.Int32, 4);
                 OracleParameter OraParamWDEF = new OracleParameter(":wdef", OracleDbType.Int32, 4);
                 OracleParameter OraParamMATK = new OracleParameter(":matk", OracleDbType.Int32, 4);
@@ -1460,6 +1507,34 @@ namespace ControleBD
                 oraDelete.Parameters.Add(OraParamJID);
 
                 oraDelete.ExecuteNonQuery();
+                return true;
+            }
+            catch (OracleException ex)
+            {
+                Erreur.ErrorMessage(ex);
+                return false;
+            }
+        }
+
+        public static bool updateStateItem(int iid, string actif)
+        {
+            OracleConnection conn = Connection.getInstance().conn;
+            string sql = "UPDATE ITEMS SET ISACTIVE =:ACTIF WHERE IID =:iid";
+
+            try
+            {
+                OracleCommand oraUpdate = new OracleCommand(sql, conn);
+
+                OracleParameter OraParamActif = new OracleParameter(":actif", OracleDbType.Char, 1);
+                OracleParameter OraParamIID = new OracleParameter(":iid", OracleDbType.Int32, 10);
+
+                OraParamActif.Value = actif;
+                OraParamIID.Value = iid;
+
+                oraUpdate.Parameters.Add(OraParamActif);
+                oraUpdate.Parameters.Add(OraParamIID);
+
+                oraUpdate.ExecuteNonQuery();
                 return true;
             }
             catch (OracleException ex)

@@ -98,7 +98,7 @@ namespace DeveloperApplication
 
             if (!VISIBLE)
                 TB_Quantite.Visible = false;
-            if(CANMODIFY)
+            if(CANMODIFY || this.Text == "Ajout")
             {
                 TB_Nom.ReadOnly = false;
                 TB_Level.ReadOnly = false;
@@ -108,6 +108,12 @@ namespace DeveloperApplication
                 TB_MDEF.ReadOnly = false;
                 CHECK_IsActive.Enabled = true;
             }
+            if (this.Text == "Ajout")
+            {
+                LBL_IID.Text = "";
+                CB_Classe.Enabled = true;
+            }
+            UpdateControls(sender, e);
         }
 
         private void CheckKeyPress(object sender, KeyPressEventArgs e)
@@ -121,6 +127,27 @@ namespace DeveloperApplication
             List<string> classes = Controle.fillClasses();
             for (int i = 0; i < classes.Count; ++i)
                 CB_Classe.Items.Add(classes[i]);
+        }
+
+        private void UpdateControls(object sender, EventArgs e)
+        {
+            if (this.Text == "Ajout" || CANMODIFY)
+            {
+                if (string.IsNullOrWhiteSpace(TB_Nom.Text) || string.IsNullOrWhiteSpace(TB_Level.Text) ||
+                    string.IsNullOrWhiteSpace(TB_WATK.Text) || string.IsNullOrWhiteSpace(TB_WDEF.Text) ||
+                    string.IsNullOrWhiteSpace(TB_MATK.Text) || string.IsNullOrWhiteSpace(TB_MDEF.Text) ||
+                    string.IsNullOrWhiteSpace(CB_Classe.Text))
+                    BTN_OK.Enabled = false;
+                else
+                    BTN_OK.Enabled = true;
+            }
+            else if(VISIBLE)
+            {
+                if (string.IsNullOrWhiteSpace(TB_Quantite.Text))
+                    BTN_OK.Enabled = false;
+                else
+                    BTN_OK.Enabled = true;
+            }
         }
     }
 }
