@@ -57,6 +57,7 @@
             // TB_Nom
             // 
             this.TB_Nom.Location = new System.Drawing.Point(52, 6);
+            this.TB_Nom.MaxLength = 12;
             this.TB_Nom.Name = "TB_Nom";
             this.TB_Nom.Size = new System.Drawing.Size(171, 20);
             this.TB_Nom.TabIndex = 1;
@@ -65,6 +66,7 @@
             // TB_XP
             // 
             this.TB_XP.Location = new System.Drawing.Point(277, 6);
+            this.TB_XP.MaxLength = 10;
             this.TB_XP.Name = "TB_XP";
             this.TB_XP.ReadOnly = true;
             this.TB_XP.Size = new System.Drawing.Size(124, 20);
@@ -76,6 +78,7 @@
             // TB_Level
             // 
             this.TB_Level.Location = new System.Drawing.Point(229, 6);
+            this.TB_Level.MaxLength = 2;
             this.TB_Level.Name = "TB_Level";
             this.TB_Level.ReadOnly = true;
             this.TB_Level.Size = new System.Drawing.Size(42, 20);

@@ -169,6 +169,7 @@ namespace DeveloperApplication
         private void ConsulterPotion()
         {
             FORM_Potion FP = new FORM_Potion();
+            FP.CANMODIFY = false;
             FP.Text = DGV_Potions.SelectedRows[0].Cells[1].Value.ToString();
             FP.PID = int.Parse(DGV_Potions.SelectedRows[0].Cells[0].Value.ToString());
             FP.NOM = DGV_Potions.SelectedRows[0].Cells[1].Value.ToString();

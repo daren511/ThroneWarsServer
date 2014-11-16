@@ -1333,7 +1333,7 @@ namespace ControleBD
         /// <param name="jid">Joueur ID</param>
         /// <param name="doitAfficher">Affiche toutes les potions(0) ou celles d'un joueur(1)</param>
         /// <returns>Le dataset rempli</returns>
-        public static DataSet listPotions(int jid, int doitAfficher = 0)
+        public static DataSet listPotions(int jid = 0, int doitAfficher = 0)
         {
             DataSet monDataSet = new DataSet();
             using (OracleDataAdapter oraDataAdapPotions = new OracleDataAdapter())
@@ -1344,7 +1344,7 @@ namespace ControleBD
                 if (doitAfficher != 0)
                     sql += ", QUANTITY FROM POTIONS P INNER JOIN POTIONJOUEURS J ON P.PID = J.PID WHERE JID = :jid ";
                 else
-                    sql += "FROM POTIONS P ";
+                    sql += " FROM POTIONS P ";
                 sql += "ORDER BY PID";
 
                 oraDataAdapPotions.SelectCommand = new OracleCommand(sql, conn);
@@ -1364,7 +1364,7 @@ namespace ControleBD
         public static bool addItem(string nom, string classe, int level, int watk, int wdef, int matk, int mdef, string actif)
         {
             OracleConnection conn = Connection.getInstance().conn;
-            string sql = "INSERT INTO ITEMS(NOM,CID,\"LEVEL\",WATK,WDEF,MATK,MDEF,ISACTIVE) " + 
+            string sql = "INSERT INTO ITEMS(NOM,CID,\"LEVEL\",WATK,WDEF,MATK,MDEF,ISACTIVE) " +
                    "VALUES(:nom, (SELECT CID FROM CLASSES WHERE CNAME =:classe), :lvl, :watk, :wdef, :matk, :mdef, :actif)";
 
             try
@@ -1578,7 +1578,7 @@ namespace ControleBD
         public static bool updateQuantityPotion(int jid, int pid, int qte)
         {
             OracleConnection conn = Connection.getInstance().conn;
-            string sqlconfirmation = "UPDATE POTIONJOUEURS SET QUANTITY =:quantite WHERE JID =:jid AND PID =:pid";
+            string sqlconfirmation = "UPDATE POTIONJOUEURS SET QUANTITY =(QUANTITY + :quantite) WHERE JID =:jid AND PID =:pid";
 
             try
             {
@@ -1594,6 +1594,126 @@ namespace ControleBD
 
                 oraUpdate.Parameters.Add(OraParamQTE);
                 oraUpdate.Parameters.Add(OraParamJID);
+                oraUpdate.Parameters.Add(OraParamPID);
+
+                oraUpdate.ExecuteNonQuery();
+                return true;
+            }
+            catch (OracleException ex)
+            {
+                Erreur.ErrorMessage(ex);
+                return false;
+            }
+        }
+
+        public static bool addPotion(string nom, string description, int duration, int watk, int wdef, int matk, int mdef)
+        {
+            OracleConnection conn = Connection.getInstance().conn;
+            string sql = "INSERT INTO POTIONS(NOM,DESCRIPTION,DURATION,WATK,WDEF,MATK,MDEF) VALUES(:nom,:description,:duration,:watk,:wdef,:matk,:mdef)";
+
+            try
+            {
+                OracleCommand oraInsert = new OracleCommand(sql, conn);
+
+                OracleParameter OraParamNom = new OracleParameter(":nom", OracleDbType.Varchar2, 40);
+                OracleParameter OraParamDesc = new OracleParameter(":description", OracleDbType.Varchar2, 255);
+                OracleParameter OraParamDuree = new OracleParameter(":duration", OracleDbType.Int32, 1);
+                OracleParameter OraParamWATK = new OracleParameter(":watk", OracleDbType.Int32, 4);
+                OracleParameter OraParamWDEF = new OracleParameter(":wdef", OracleDbType.Int32, 4);
+                OracleParameter OraParamMATK = new OracleParameter(":matk", OracleDbType.Int32, 4);
+                OracleParameter OraParamMDEF = new OracleParameter(":mdef", OracleDbType.Int32, 4);
+
+                OraParamNom.Value = nom;
+                OraParamDesc.Value = description;
+                OraParamDuree.Value = duration;
+                OraParamWATK.Value = watk;
+                OraParamWDEF.Value = wdef;
+                OraParamMATK.Value = matk;
+                OraParamMDEF.Value = mdef;
+
+                oraInsert.Parameters.Add(OraParamNom);
+                oraInsert.Parameters.Add(OraParamDesc);
+                oraInsert.Parameters.Add(OraParamDuree);
+                oraInsert.Parameters.Add(OraParamWATK);
+                oraInsert.Parameters.Add(OraParamWDEF);
+                oraInsert.Parameters.Add(OraParamMATK);
+                oraInsert.Parameters.Add(OraParamMDEF);
+
+                oraInsert.ExecuteNonQuery();
+                return true;
+            }
+            catch (OracleException ex)
+            {
+                Erreur.ErrorMessage(ex);
+                return false;
+            }
+        }
+
+        public static bool addPotionJoueurs(int pid, int jid, int qte)
+        {
+            OracleConnection conn = Connection.getInstance().conn;
+            string sql = "INSERT INTO POTIONJOUEURS VALUES(:pid, :jid, :qte)";
+
+            try
+            {
+                OracleCommand oraInsert = new OracleCommand(sql, conn);
+
+                OracleParameter OraParamPID = new OracleParameter(":pid", OracleDbType.Int32, 10);
+                OracleParameter OraParamJID = new OracleParameter(":jid", OracleDbType.Int32, 10);
+                OracleParameter OraParamQTE = new OracleParameter(":qte", OracleDbType.Int32, 2);
+
+                OraParamPID.Value = pid;
+                OraParamJID.Value = jid;
+                OraParamQTE.Value = qte;
+
+                oraInsert.Parameters.Add(OraParamPID);
+                oraInsert.Parameters.Add(OraParamJID);
+                oraInsert.Parameters.Add(OraParamQTE);
+
+                oraInsert.ExecuteNonQuery();
+                return true;
+            }
+            catch (OracleException ex)
+            {
+                Erreur.ErrorMessage(ex);
+                return updateQuantityPotion(jid, pid, qte);
+            }
+        }
+
+        public static bool updatePotion(int pid, string nom, string description, int duration, int watk, int wdef, int matk, int mdef)
+        {
+            OracleConnection conn = Connection.getInstance().conn;
+            string sql = "UPDATE POTIONS SET NOM =:nom, DESCRIPTION =:description, DURATION =:duration, WATK =:watk, WDEF =:wdef, MATK =:matk, MDEF =:mdef WHERE PID =:pid";
+
+            try
+            {
+                OracleCommand oraUpdate = new OracleCommand(sql, conn);
+
+                OracleParameter OraParamNom = new OracleParameter(":nom", OracleDbType.Varchar2, 40);
+                OracleParameter OraParamDesc = new OracleParameter(":description", OracleDbType.Varchar2, 255);
+                OracleParameter OraParamDuree = new OracleParameter(":duration", OracleDbType.Int32, 1);
+                OracleParameter OraParamWATK = new OracleParameter(":watk", OracleDbType.Int32, 4);
+                OracleParameter OraParamWDEF = new OracleParameter(":wdef", OracleDbType.Int32, 4);
+                OracleParameter OraParamMATK = new OracleParameter(":matk", OracleDbType.Int32, 4);
+                OracleParameter OraParamMDEF = new OracleParameter(":mdef", OracleDbType.Int32, 4);
+                OracleParameter OraParamPID = new OracleParameter(":pid", OracleDbType.Int32, 10);
+
+                OraParamNom.Value = nom;
+                OraParamDesc.Value = description;
+                OraParamDuree.Value = duration;
+                OraParamWATK.Value = watk;
+                OraParamWDEF.Value = wdef;
+                OraParamMATK.Value = matk;
+                OraParamMDEF.Value = mdef;
+                OraParamPID.Value = pid;
+
+                oraUpdate.Parameters.Add(OraParamNom);
+                oraUpdate.Parameters.Add(OraParamDesc);
+                oraUpdate.Parameters.Add(OraParamDuree);
+                oraUpdate.Parameters.Add(OraParamWATK);
+                oraUpdate.Parameters.Add(OraParamWDEF);
+                oraUpdate.Parameters.Add(OraParamMATK);
+                oraUpdate.Parameters.Add(OraParamMDEF);
                 oraUpdate.Parameters.Add(OraParamPID);
 
                 oraUpdate.ExecuteNonQuery();
@@ -1835,6 +1955,20 @@ namespace ControleBD
                     listPerso.Add(oraReader.GetString(0));
             }
             return listPerso;
+        }
+
+        public static List<string> fillJoueurs()
+        {
+            List<string> listJoueur = new List<string>();
+            OracleConnection conn = Connection.getInstance().conn;
+            string sql = "SELECT USERNAME FROM JOUEURS";
+            OracleCommand oraSelect = new OracleCommand(sql, conn);
+            using (OracleDataReader oraReader = oraSelect.ExecuteReader())
+            {
+                while (oraReader.Read())
+                    listJoueur.Add(oraReader.GetString(0));
+            }
+            return listJoueur;
         }
     }
 }

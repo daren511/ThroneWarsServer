@@ -60,6 +60,7 @@
             this.TB_Nom.ReadOnly = true;
             this.TB_Nom.Size = new System.Drawing.Size(220, 20);
             this.TB_Nom.TabIndex = 1;
+            this.TB_Nom.TextChanged += new System.EventHandler(this.UpdateControls);
             // 
             // TB_Desc
             // 
@@ -70,6 +71,7 @@
             this.TB_Desc.ReadOnly = true;
             this.TB_Desc.Size = new System.Drawing.Size(220, 78);
             this.TB_Desc.TabIndex = 2;
+            this.TB_Desc.TextChanged += new System.EventHandler(this.UpdateControls);
             // 
             // TB_Duration
             // 
@@ -79,6 +81,8 @@
             this.TB_Duration.ReadOnly = true;
             this.TB_Duration.Size = new System.Drawing.Size(100, 20);
             this.TB_Duration.TabIndex = 3;
+            this.TB_Duration.TextChanged += new System.EventHandler(this.UpdateControls);
+            this.TB_Duration.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.CheckKeyPress);
             // 
             // TB_Quantite
             // 
@@ -87,6 +91,8 @@
             this.TB_Quantite.Name = "TB_Quantite";
             this.TB_Quantite.Size = new System.Drawing.Size(100, 20);
             this.TB_Quantite.TabIndex = 4;
+            this.TB_Quantite.TextChanged += new System.EventHandler(this.UpdateControls);
+            this.TB_Quantite.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.CheckKeyPress);
             // 
             // TB_WATK
             // 
@@ -96,6 +102,8 @@
             this.TB_WATK.ReadOnly = true;
             this.TB_WATK.Size = new System.Drawing.Size(100, 20);
             this.TB_WATK.TabIndex = 5;
+            this.TB_WATK.TextChanged += new System.EventHandler(this.UpdateControls);
+            this.TB_WATK.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.CheckKeyPress);
             // 
             // TB_WDEF
             // 
@@ -105,6 +113,8 @@
             this.TB_WDEF.ReadOnly = true;
             this.TB_WDEF.Size = new System.Drawing.Size(100, 20);
             this.TB_WDEF.TabIndex = 6;
+            this.TB_WDEF.TextChanged += new System.EventHandler(this.UpdateControls);
+            this.TB_WDEF.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.CheckKeyPress);
             // 
             // TB_MATK
             // 
@@ -114,6 +124,8 @@
             this.TB_MATK.ReadOnly = true;
             this.TB_MATK.Size = new System.Drawing.Size(100, 20);
             this.TB_MATK.TabIndex = 7;
+            this.TB_MATK.TextChanged += new System.EventHandler(this.UpdateControls);
+            this.TB_MATK.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.CheckKeyPress);
             // 
             // TB_MDEF
             // 
@@ -123,6 +135,8 @@
             this.TB_MDEF.ReadOnly = true;
             this.TB_MDEF.Size = new System.Drawing.Size(100, 20);
             this.TB_MDEF.TabIndex = 8;
+            this.TB_MDEF.TextChanged += new System.EventHandler(this.UpdateControls);
+            this.TB_MDEF.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.CheckKeyPress);
             // 
             // BTN_Annuler
             // 

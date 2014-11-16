@@ -98,7 +98,7 @@ namespace DeveloperApplication
 
             if (!VISIBLE)
                 TB_Quantite.Visible = false;
-            if(CANMODIFY || this.Text == "Ajout")
+            if (CANMODIFY || this.Text == "Ajout")
             {
                 TB_Nom.ReadOnly = false;
                 TB_Level.ReadOnly = false;
@@ -141,7 +141,7 @@ namespace DeveloperApplication
                 else
                     BTN_OK.Enabled = true;
             }
-            else if(VISIBLE)
+            else if (VISIBLE)
             {
                 if (string.IsNullOrWhiteSpace(TB_Quantite.Text))
                     BTN_OK.Enabled = false;

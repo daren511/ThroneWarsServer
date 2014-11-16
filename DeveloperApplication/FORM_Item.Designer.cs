@@ -67,6 +67,7 @@
             // TB_Nom
             // 
             this.TB_Nom.Location = new System.Drawing.Point(80, 6);
+            this.TB_Nom.MaxLength = 40;
             this.TB_Nom.Name = "TB_Nom";
             this.TB_Nom.ReadOnly = true;
             this.TB_Nom.Size = new System.Drawing.Size(178, 20);
@@ -76,6 +77,7 @@
             // TB_Level
             // 
             this.TB_Level.Location = new System.Drawing.Point(264, 6);
+            this.TB_Level.MaxLength = 2;
             this.TB_Level.Name = "TB_Level";
             this.TB_Level.ReadOnly = true;
             this.TB_Level.Size = new System.Drawing.Size(44, 20);
@@ -86,6 +88,7 @@
             // TB_WATK
             // 
             this.TB_WATK.Location = new System.Drawing.Point(80, 41);
+            this.TB_WATK.MaxLength = 4;
             this.TB_WATK.Name = "TB_WATK";
             this.TB_WATK.ReadOnly = true;
             this.TB_WATK.Size = new System.Drawing.Size(100, 20);
@@ -96,6 +99,7 @@
             // TB_WDEF
             // 
             this.TB_WDEF.Location = new System.Drawing.Point(208, 41);
+            this.TB_WDEF.MaxLength = 4;
             this.TB_WDEF.Name = "TB_WDEF";
             this.TB_WDEF.ReadOnly = true;
             this.TB_WDEF.Size = new System.Drawing.Size(100, 20);
@@ -106,6 +110,7 @@
             // TB_MATK
             // 
             this.TB_MATK.Location = new System.Drawing.Point(80, 67);
+            this.TB_MATK.MaxLength = 4;
             this.TB_MATK.Name = "TB_MATK";
             this.TB_MATK.ReadOnly = true;
             this.TB_MATK.Size = new System.Drawing.Size(100, 20);
@@ -116,6 +121,7 @@
             // TB_MDEF
             // 
             this.TB_MDEF.Location = new System.Drawing.Point(208, 67);
+            this.TB_MDEF.MaxLength = 4;
             this.TB_MDEF.Name = "TB_MDEF";
             this.TB_MDEF.ReadOnly = true;
             this.TB_MDEF.Size = new System.Drawing.Size(100, 20);
@@ -160,6 +166,7 @@
             // TB_Quantite
             // 
             this.TB_Quantite.Location = new System.Drawing.Point(208, 98);
+            this.TB_Quantite.MaxLength = 2;
             this.TB_Quantite.Name = "TB_Quantite";
             this.TB_Quantite.Size = new System.Drawing.Size(100, 20);
             this.TB_Quantite.TabIndex = 19;

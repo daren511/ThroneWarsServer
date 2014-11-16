@@ -40,14 +40,15 @@ namespace DeveloperApplication
 
         private void TSMI_Items_Click(object sender, EventArgs e)
         {
-            FORM_LST_Item FLI = new FORM_LST_Item();
+            FORM_Lister FLI = new FORM_Lister();
             FLI.ShowDialog();
         }
 
         private void TSMI_Potions_Click(object sender, EventArgs e)
         {
-            FORM_LST_Potion FLP = new FORM_LST_Potion();
-            FLP.ShowDialog();
+            FORM_Lister FLI = new FORM_Lister();
+            FLI.estItem = false;
+            FLI.ShowDialog();
         }
 
         //---------- JOUEURS ----------//

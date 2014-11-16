@@ -13,6 +13,9 @@ namespace DeveloperApplication
     public partial class FORM_Potion : Form
     {
         //---------- VARIABLES ----------//
+        public bool VISIBLE = true;
+        public bool CANMODIFY = true;
+
         public int PID
         {
             get { return int.Parse(LBL_PID.Text); }
@@ -66,8 +69,6 @@ namespace DeveloperApplication
             set { TB_Quantite.Text = value.ToString(); }
         }
 
-        public bool VISIBLE = true;
-
 
         public FORM_Potion()
         {
@@ -87,6 +88,47 @@ namespace DeveloperApplication
 
             if (!VISIBLE)
                 TB_Quantite.Visible = false;
+
+            if(CANMODIFY || this.Text == "Ajout")
+            {
+                TB_Nom.ReadOnly = false;
+                TB_Desc.ReadOnly = false;
+                TB_Duration.ReadOnly = false;
+                TB_WATK.ReadOnly = false;
+                TB_WDEF.ReadOnly = false;
+                TB_MATK.ReadOnly = false;
+                TB_MDEF.ReadOnly = false;
+            }
+            if (this.Text == "Ajout")
+                LBL_PID.Text = "";
+            UpdateControls(sender, e);
+        }
+
+        private void CheckKeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+                e.Handled = true;
+        }
+
+        private void UpdateControls(object sender, EventArgs e)
+        {
+            if (this.Text == "Ajout" || CANMODIFY)
+            {
+                if (string.IsNullOrWhiteSpace(TB_Nom.Text) || string.IsNullOrWhiteSpace(TB_Desc.Text) ||
+                    string.IsNullOrWhiteSpace(TB_Duration.Text) ||string.IsNullOrWhiteSpace(TB_WATK.Text) || 
+                    string.IsNullOrWhiteSpace(TB_WDEF.Text) || string.IsNullOrWhiteSpace(TB_MATK.Text) || 
+                    string.IsNullOrWhiteSpace(TB_MDEF.Text))
+                    BTN_OK.Enabled = false;
+                else
+                    BTN_OK.Enabled = true;
+            }
+            else if (VISIBLE)
+            {
+                if (string.IsNullOrWhiteSpace(TB_Quantite.Text))
+                    BTN_OK.Enabled = false;
+                else
+                    BTN_OK.Enabled = true;
+            }
         }
     }
 }

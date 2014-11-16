@@ -44,11 +44,11 @@
             this.CHECK_SHOW_Activated = new System.Windows.Forms.CheckBox();
             this.TAB_Control = new System.Windows.Forms.TabControl();
             this.PAGE_Inventaire = new System.Windows.Forms.TabPage();
+            this.BTN_Ajouter = new System.Windows.Forms.Button();
+            this.CB_Perso = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.PAGE_Potions = new System.Windows.Forms.TabPage();
             this.DGV_Potions = new System.Windows.Forms.DataGridView();
-            this.label1 = new System.Windows.Forms.Label();
-            this.CB_Perso = new System.Windows.Forms.ComboBox();
-            this.BTN_Ajouter = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.DGV_Inventaire)).BeginInit();
             this.TAB_Control.SuspendLayout();
             this.PAGE_Inventaire.SuspendLayout();
@@ -116,6 +116,7 @@
             // TB_Username
             // 
             this.TB_Username.Location = new System.Drawing.Point(63, 10);
+            this.TB_Username.MaxLength = 32;
             this.TB_Username.Name = "TB_Username";
             this.TB_Username.Size = new System.Drawing.Size(170, 20);
             this.TB_Username.TabIndex = 12;
@@ -123,6 +124,7 @@
             // TB_Email
             // 
             this.TB_Email.Location = new System.Drawing.Point(63, 36);
+            this.TB_Email.MaxLength = 255;
             this.TB_Email.Name = "TB_Email";
             this.TB_Email.Size = new System.Drawing.Size(170, 20);
             this.TB_Email.TabIndex = 13;
@@ -130,6 +132,7 @@
             // TB_PWD
             // 
             this.TB_PWD.Location = new System.Drawing.Point(239, 10);
+            this.TB_PWD.MaxLength = 75;
             this.TB_PWD.Name = "TB_PWD";
             this.TB_PWD.ReadOnly = true;
             this.TB_PWD.Size = new System.Drawing.Size(190, 20);
@@ -145,6 +148,7 @@
             // TB_Argent
             // 
             this.TB_Argent.Location = new System.Drawing.Point(239, 37);
+            this.TB_Argent.MaxLength = 20;
             this.TB_Argent.Name = "TB_Argent";
             this.TB_Argent.Size = new System.Drawing.Size(158, 20);
             this.TB_Argent.TabIndex = 16;
@@ -201,6 +205,35 @@
             this.PAGE_Inventaire.Text = "Inventaire";
             this.PAGE_Inventaire.UseVisualStyleBackColor = true;
             // 
+            // BTN_Ajouter
+            // 
+            this.BTN_Ajouter.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BTN_Ajouter.Location = new System.Drawing.Point(347, 161);
+            this.BTN_Ajouter.Name = "BTN_Ajouter";
+            this.BTN_Ajouter.Size = new System.Drawing.Size(146, 23);
+            this.BTN_Ajouter.TabIndex = 11;
+            this.BTN_Ajouter.Text = "Ajouter";
+            this.BTN_Ajouter.UseVisualStyleBackColor = true;
+            this.BTN_Ajouter.Click += new System.EventHandler(this.BTN_Ajouter_Click);
+            // 
+            // CB_Perso
+            // 
+            this.CB_Perso.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.CB_Perso.FormattingEnabled = true;
+            this.CB_Perso.Location = new System.Drawing.Point(178, 163);
+            this.CB_Perso.Name = "CB_Perso";
+            this.CB_Perso.Size = new System.Drawing.Size(121, 21);
+            this.CB_Perso.TabIndex = 10;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(6, 166);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(166, 13);
+            this.label1.TabIndex = 9;
+            this.label1.Text = "Ajouter cet item à l\'inventaire de : ";
+            // 
             // PAGE_Potions
             // 
             this.PAGE_Potions.Controls.Add(this.DGV_Potions);
@@ -225,35 +258,6 @@
             this.DGV_Potions.Size = new System.Drawing.Size(487, 175);
             this.DGV_Potions.TabIndex = 0;
             this.DGV_Potions.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DGV_Potions_CellDoubleClick);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 166);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(166, 13);
-            this.label1.TabIndex = 9;
-            this.label1.Text = "Ajouter cet item à l\'inventaire de : ";
-            // 
-            // CB_Perso
-            // 
-            this.CB_Perso.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.CB_Perso.FormattingEnabled = true;
-            this.CB_Perso.Location = new System.Drawing.Point(178, 163);
-            this.CB_Perso.Name = "CB_Perso";
-            this.CB_Perso.Size = new System.Drawing.Size(121, 21);
-            this.CB_Perso.TabIndex = 10;
-            // 
-            // BTN_Ajouter
-            // 
-            this.BTN_Ajouter.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BTN_Ajouter.Location = new System.Drawing.Point(347, 161);
-            this.BTN_Ajouter.Name = "BTN_Ajouter";
-            this.BTN_Ajouter.Size = new System.Drawing.Size(146, 23);
-            this.BTN_Ajouter.TabIndex = 11;
-            this.BTN_Ajouter.Text = "Ajouter";
-            this.BTN_Ajouter.UseVisualStyleBackColor = true;
-            this.BTN_Ajouter.Click += new System.EventHandler(this.BTN_Ajouter_Click);
             // 
             // FORM_Joueur
             // 
