@@ -7,21 +7,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Oracle.DataAccess.Client;
-using ControleBD;
 
 namespace DeveloperApplication
 {
-    public partial class FORM_Item : Form
+    public partial class FORM_Potion : Form
     {
         //---------- VARIABLES ----------//
         public bool VISIBLE = true;
-        public bool CANMODIFY = false;
+        public bool CANMODIFY = true;
 
-        public int IID
+        public int PID
         {
-            get { return int.Parse(LBL_IID.Text); }
-            set { LBL_IID.Text = value.ToString(); }
+            get { return int.Parse(LBL_PID.Text); }
+            set { LBL_PID.Text = value.ToString(); }
         }
 
         public string NOM
@@ -30,16 +28,16 @@ namespace DeveloperApplication
             set { TB_Nom.Text = value; }
         }
 
-        public string CLASSE
+        public string DESCRIPTION
         {
-            get { return CB_Classe.Text; }
-            set { CB_Classe.Text = value.ToString(); }
+            get { return TB_Desc.Text; }
+            set { TB_Desc.Text = value; }
         }
 
-        public int LEVEL
+        public int DURATION
         {
-            get { return int.Parse(TB_Level.Text); }
-            set { TB_Level.Text = value.ToString(); }
+            get { return int.Parse(TB_Duration.Text); }
+            set { TB_Duration.Text = value.ToString(); }
         }
 
         public int WATK
@@ -59,7 +57,6 @@ namespace DeveloperApplication
             get { return int.Parse(TB_MATK.Text); }
             set { TB_MATK.Text = value.ToString(); }
         }
-
         public int MDEF
         {
             get { return int.Parse(TB_MDEF.Text); }
@@ -72,47 +69,38 @@ namespace DeveloperApplication
             set { TB_Quantite.Text = value.ToString(); }
         }
 
-        public string ISACTIVE
-        {
-            get { return CHECK_IsActive.Checked ? "1" : "0"; }
-            set { CHECK_IsActive.Checked = Convert.ToBoolean(Int32.Parse(value)); }
-        }
 
-
-        public FORM_Item()
+        public FORM_Potion()
         {
             InitializeComponent();
         }
 
-        private void FORM_Item_Load(object sender, EventArgs e)
+        private void FORM_Potion_Load(object sender, EventArgs e)
         {
             ToolTip.SetToolTip(TB_Nom, "Nom");
-            ToolTip.SetToolTip(TB_Level, "Niveau");
+            ToolTip.SetToolTip(TB_Desc, "Description");
+            ToolTip.SetToolTip(TB_Duration, "Durée");
+            ToolTip.SetToolTip(TB_Quantite, "Quantité");
             ToolTip.SetToolTip(TB_WATK, "Attaque physique");
             ToolTip.SetToolTip(TB_WDEF, "Défense physique");
             ToolTip.SetToolTip(TB_MATK, "Attaque magique");
             ToolTip.SetToolTip(TB_MDEF, "Défense magique");
-            ToolTip.SetToolTip(CB_Classe, "Classe");
-            ToolTip.SetToolTip(TB_Quantite, "Quantité");
-            FillComboBox();
 
             if (!VISIBLE)
                 TB_Quantite.Visible = false;
-            if (CANMODIFY || this.Text == "Ajout")
+
+            if(CANMODIFY || this.Text == "Ajout")
             {
                 TB_Nom.ReadOnly = false;
-                TB_Level.ReadOnly = false;
+                TB_Desc.ReadOnly = false;
+                TB_Duration.ReadOnly = false;
                 TB_WATK.ReadOnly = false;
                 TB_WDEF.ReadOnly = false;
                 TB_MATK.ReadOnly = false;
                 TB_MDEF.ReadOnly = false;
-                CHECK_IsActive.Enabled = true;
             }
             if (this.Text == "Ajout")
-            {
-                LBL_IID.Text = "";
-                CB_Classe.Enabled = true;
-            }
+                LBL_PID.Text = "";
             UpdateControls(sender, e);
         }
 
@@ -122,21 +110,14 @@ namespace DeveloperApplication
                 e.Handled = true;
         }
 
-        private void FillComboBox()
-        {
-            List<string> classes = Controle.fillClasses();
-            for (int i = 0; i < classes.Count; ++i)
-                CB_Classe.Items.Add(classes[i]);
-        }
-
         private void UpdateControls(object sender, EventArgs e)
         {
             if (this.Text == "Ajout" || CANMODIFY)
             {
-                if (string.IsNullOrWhiteSpace(TB_Nom.Text) || string.IsNullOrWhiteSpace(TB_Level.Text) ||
-                    string.IsNullOrWhiteSpace(TB_WATK.Text) || string.IsNullOrWhiteSpace(TB_WDEF.Text) ||
-                    string.IsNullOrWhiteSpace(TB_MATK.Text) || string.IsNullOrWhiteSpace(TB_MDEF.Text) ||
-                    string.IsNullOrWhiteSpace(CB_Classe.Text))
+                if (string.IsNullOrWhiteSpace(TB_Nom.Text) || string.IsNullOrWhiteSpace(TB_Desc.Text) ||
+                    string.IsNullOrWhiteSpace(TB_Duration.Text) ||string.IsNullOrWhiteSpace(TB_WATK.Text) || 
+                    string.IsNullOrWhiteSpace(TB_WDEF.Text) || string.IsNullOrWhiteSpace(TB_MATK.Text) || 
+                    string.IsNullOrWhiteSpace(TB_MDEF.Text))
                     BTN_OK.Enabled = false;
                 else
                     BTN_OK.Enabled = true;

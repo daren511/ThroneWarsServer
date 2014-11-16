@@ -45,12 +45,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FORM_Classe.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FORM_Classe.Designer.cs">
-      <DependentUpon>FORM_Classe.cs</DependentUpon>
-    </Compile>
     <Compile Include="FORM_Item.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -62,6 +56,12 @@
     </Compile>
     <Compile Include="FORM_Joueur.Designer.cs">
       <DependentUpon>FORM_Joueur.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FORM_Lister.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FORM_Lister.Designer.cs">
+      <DependentUpon>FORM_Lister.cs</DependentUpon>
     </Compile>
     <Compile Include="FORM_Main.cs">
       <SubType>Form</SubType>
@@ -75,22 +75,31 @@
     <Compile Include="FORM_Perso.Designer.cs">
       <DependentUpon>FORM_Perso.cs</DependentUpon>
     </Compile>
+    <Compile Include="FORM_Potion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FORM_Potion.Designer.cs">
+      <DependentUpon>FORM_Potion.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="FORM_Classe.resx">
-      <DependentUpon>FORM_Classe.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="FORM_Item.resx">
       <DependentUpon>FORM_Item.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FORM_Joueur.resx">
       <DependentUpon>FORM_Joueur.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FORM_Lister.resx">
+      <DependentUpon>FORM_Lister.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FORM_Main.resx">
       <DependentUpon>FORM_Main.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FORM_Perso.resx">
       <DependentUpon>FORM_Perso.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FORM_Potion.resx">
+      <DependentUpon>FORM_Potion.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

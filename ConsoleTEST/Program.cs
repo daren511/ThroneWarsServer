@@ -12,7 +12,7 @@ namespace ConsoleTEST
         static void Main(string[] args)
         {
             //Console.WriteLine(Controle.insertPlayer("TEST3", "TEST3", "TESTTEST").ToString());
-            Controle.ReturnStats(2);
+            Controle.returnStats(2);
             Console.ReadLine();
         }
     }

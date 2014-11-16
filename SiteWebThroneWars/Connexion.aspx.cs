@@ -13,9 +13,9 @@ namespace SiteWebThroneWars
 {
     public partial class Connexion : System.Web.UI.Page
     {
+       
         protected void Page_Load(object sender, EventArgs e)
         {
-
         }
         protected void Connexion_Click(object sender, EventArgs e)
         {
@@ -29,13 +29,12 @@ namespace SiteWebThroneWars
             // if Text box pas null
             if (ok)
             {
-
                 //Variable des textbox
                 string user = username.Text;
                 string pass = password.Text;
 
-                string passHash = Controle.HashPassword(pass, null, System.Security.Cryptography.SHA256.Create());
-                Connecter = Controle.UserPassCorrespondant(user, passHash);
+                string passHash = Controle.hashPassword(pass, null, System.Security.Cryptography.SHA256.Create());
+                Connecter = Controle.userPassCorrespondant(user, passHash);
 
                 if (Connecter)
                 {
@@ -49,7 +48,7 @@ namespace SiteWebThroneWars
                     {
                         //Si oui > Ramener la position du leaderboard
                         
-                        DSLeaderboard = Controle.ReturnLeaderboard(user);
+                        DSLeaderboard = Controle.getLeaderboard(user);
                         if (DSLeaderboard != null)
                         {
                             GV_Leaderboard.DataSource = DSLeaderboard;
@@ -57,7 +56,7 @@ namespace SiteWebThroneWars
                         }
                          
                         // Return stats des persos dans un DataSet
-                        DS = Controle.ReturnStatsWEB(JID);
+                        DS = Controle.getStatsWEB(JID);
                         if (DS != null)
                         {
                             GV_Stats.DataSource = DS;

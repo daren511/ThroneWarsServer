@@ -24,7 +24,7 @@ namespace ControleBD
             this.Position = position;
         }
 
-        public bool isAlive()
+        public bool socketIsConnected()
         {
             return !(Socket.Poll(1000, SelectMode.SelectRead) && Socket.Available == 0);
         }

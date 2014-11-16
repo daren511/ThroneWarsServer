@@ -51,6 +51,8 @@ namespace DeveloperApplication
             set { CHECK_IsActive.Checked = Convert.ToBoolean(int.Parse(value)); }
         }
 
+        public int JID;
+
 
         public FORM_Perso()
         {
@@ -69,13 +71,23 @@ namespace DeveloperApplication
                 CB_Classe.Enabled = true;
                 LBL_GUID.Text = "";
             }
+            else
+                Lister_Items();
             FillComboBox();
             UpdateControls(sender, e);
+
+            DGV_Inventaire.Columns[0].Visible = false;
+            DGV_Inventaire.Columns[2].Visible = false;
+            DGV_Inventaire.Columns[3].Visible = false;
+            DGV_Inventaire.Columns[4].Visible = false;
+            DGV_Inventaire.Columns[5].Visible = false;
+            DGV_Inventaire.Columns[6].Visible = false;
+            DGV_Inventaire.Columns[7].Visible = false;
         }
 
         private void FillComboBox()
         {
-            List<string> classes = Controle.FillClasses();
+            List<string> classes = Controle.fillClasses();
             for (int i = 0; i < classes.Count; ++i)
                 CB_Classe.Items.Add(classes[i]);
         }
@@ -93,6 +105,57 @@ namespace DeveloperApplication
                 BTN_OK.Enabled = false;
             else
                 BTN_OK.Enabled = true;
+        }
+
+        private void Lister_Items()
+        {
+            BindingSource maSource = new BindingSource(Controle.listItems(CHECK_AfficherTout.Checked, JID, 2, GUID), "STATS");
+            DGV_Inventaire.DataSource = maSource;
+
+            if (DGV_Inventaire.Rows.Count > 0)
+                BTN_Consulter.Enabled = true;
+            else
+                BTN_Consulter.Enabled = false;
+        }
+
+        private void ConsulterItem()
+        {
+            FORM_Item FI = new FORM_Item();
+            FI.Text = DGV_Inventaire.SelectedRows[0].Cells[1].Value.ToString();
+            FI.IID = int.Parse(DGV_Inventaire.SelectedRows[0].Cells[0].Value.ToString());
+            FI.NOM = DGV_Inventaire.SelectedRows[0].Cells[1].Value.ToString();
+            FI.CLASSE = DGV_Inventaire.SelectedRows[0].Cells[2].Value.ToString();
+            FI.LEVEL = int.Parse(DGV_Inventaire.SelectedRows[0].Cells[3].Value.ToString());
+            FI.WATK = int.Parse(DGV_Inventaire.SelectedRows[0].Cells[4].Value.ToString());
+            FI.WDEF = int.Parse(DGV_Inventaire.SelectedRows[0].Cells[5].Value.ToString());
+            FI.MATK = int.Parse(DGV_Inventaire.SelectedRows[0].Cells[6].Value.ToString());
+            FI.MDEF = int.Parse(DGV_Inventaire.SelectedRows[0].Cells[7].Value.ToString());
+            FI.ISACTIVE = DGV_Inventaire.SelectedRows[0].Cells[8].Value.ToString();
+            FI.VISIBLE = false;
+            FI.ShowDialog();
+        }
+
+        private void BTN_Consulter_Click(object sender, EventArgs e)
+        {
+            ConsulterItem();
+        }
+
+        private void DGV_Inventaire_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            ConsulterItem();
+        }
+
+        private void BTN_Supprimer_Click(object sender, EventArgs e)
+        {
+            string nom = DGV_Inventaire.SelectedRows[0].Cells[1].Value.ToString();
+            if (MessageBox.Show("Voulez-vous vraiment supprimer cet item?", "Supprimer " + nom, MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                int IID = int.Parse(DGV_Inventaire.SelectedRows[0].Cells[0].Value.ToString());
+                if (Controle.deleteItemPersonnages(GUID, IID, JID))
+                    Lister_Items();
+                else
+                    MessageBox.Show("Impossible de supprimer l'item");
+            }
         }
     }
 }

@@ -30,11 +30,11 @@ namespace ThroneWarsServer
         {
             try
             {
-                if (!Joueur.isConnected && Joueur.isAlive())
+                if (!Joueur.isConnected && Joueur.socketIsConnected())
                 {
                     string Login = recevoirString();
                     Joueur.Username = Login.Split(Splitter)[0];
-                    bool reponse = Controle.UserPassCorrespondant(Joueur.Username, Login.Split(Splitter)[1]);//verifie si les informations de login sont ok
+                    bool reponse = Controle.userPassCorrespondant(Joueur.Username, Login.Split(Splitter)[1]);//verifie si les informations de login sont ok
                     if (reponse) 
                     {
                         envoyerReponse(reponse.ToString() + Splitter + Controle.accountIsConfirmed(Joueur.Username).ToString());
@@ -45,25 +45,52 @@ namespace ThroneWarsServer
                 if(Joueur.isConnected)
                 {
                     Joueur.jid = Controle.getJID(Joueur.Username);
+                    startUP(Joueur);
+                    Controle.Actions Choix = 0;
+                    while(Joueur.socketIsConnected() && Choix != Controle.Actions.START_GAME)
+                    {
+                        //read le choix ici
+                        switch(Choix)
+                        {
+                            case Controle.Actions.CLICK:
+                                
+                                break;
+                                
+                            case Controle.Actions.CREATE:
 
-                    DataSet ds = Controle.ReturnStats(Joueur.jid);
+                                break;
+                            case Controle.Actions.DELETE:
 
-                    List<string> list = traiterDataSet(ds);
-                    envoyerListe(list);
-                    recevoirString();
-                    envoyerListe(Controle.ReturnPersonnage(list[0]));
-                    recevoirString();
-                    envoyerListe(Controle.getInventaireJoueurs(Joueur.jid));
+                                break;
+                            case Controle.Actions.START_GAME:
 
-                    
+                                break;    
+                        }
+                    }
+               
                 }
             }
             catch (Exception e)
             {
+                if(Joueur.socketIsConnected())
                 Console.WriteLine(e.Message);
             }
             this.T.Abort();//arret du thread
         }
+        /// <summary>
+        /// Execute les actions neccesaires au demmarage de Unity
+        /// </summary>
+        /// <param name="j">Le Joueur</param>
+        private void startUP(Joueur j)
+        {            
+            List<string> list = traiterDataSet(Controle.returnStats(j.jid));
+            envoyerListe(list);
+            recevoirString();
+            envoyerListe(Controle.getInventaireJoueurs(j.jid));
+            recevoirString();
+            envoyerListe(Controle.returnPersonnage(list[0]));
+        }
+
         private List<string> traiterDataSet(DataSet DS)
         {
             List<string> Liste = new List<string>();

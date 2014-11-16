@@ -39,15 +39,15 @@ namespace SiteWebThroneWars
                 }
                 else
                 {
-                    string oldpassHash = Controle.HashPassword(oldpass, null, System.Security.Cryptography.SHA256.Create());
-                    bool Correspondant = Controle.UserPassCorrespondant(user, oldpassHash);
+                    string oldpassHash = Controle.hashPassword(oldpass, null, System.Security.Cryptography.SHA256.Create());
+                    bool Correspondant = Controle.userPassCorrespondant(user, oldpassHash);
                     if (Correspondant)
                     {
                         // Crypter le nouveau mot de passe et envoyer
-                        string newpassHash = Controle.HashPassword(newPass, null, System.Security.Cryptography.SHA256.Create());
+                        string newpassHash = Controle.hashPassword(newPass, null, System.Security.Cryptography.SHA256.Create());
 
                         //Changer le password du user avec le nouveau password hashé
-                        bool ChangeOk = Controle.UpdatePassword(user, newpassHash);
+                        bool ChangeOk = Controle.updatePassword(user, newpassHash);
                         if (ChangeOk)
                         {
                             // Messagebox changement réussi
