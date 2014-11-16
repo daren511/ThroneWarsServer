@@ -8,13 +8,21 @@ public class Item
     public string _itemName { get;  set; }
     public string _itemDescription { get;  set; }
     public int _quantity { get;  set; }
+    public int _bonusPhysAtk { get; set; }
+    public int _bonusPhysDef { get; set; }
+    public int _bonusMagicAtk { get; set; }
+    public int _bonusMagicDef { get; set; }
 
-    public Item(int lvlReq, string classReq, string name, string descr, int qte)
+    public Item(int lvlReq, string classReq, string name, int patk, int pdef, int matk, int mdef, string descr, int qte)
     {
         _levelRequ = lvlReq;
         _classRequ = classReq;
         _itemName = name;
         _itemDescription = descr;
+        _bonusPhysAtk = patk;
+        _bonusPhysDef = pdef;
+        _bonusMagicAtk = matk;
+        _bonusMagicDef = mdef;
         _quantity = qte;
     }
 

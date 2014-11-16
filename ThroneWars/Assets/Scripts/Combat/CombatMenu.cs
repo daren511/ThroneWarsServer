@@ -278,7 +278,7 @@ public class CombatMenu : MonoBehaviour
             {
                 Destroy(allObjects[i]);
             }
-            onStartUp.GetBidonPlayer();
+            //onStartUp.GetBidonPlayer();
             Application.LoadLevel("MainMenu");            
         }
     }

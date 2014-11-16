@@ -141,8 +141,8 @@ public class Log_GUI : MonoBehaviour
         //on crée l'inventaire de chaque personnage, encore içi, peut être mis dans la DLL commune au serveur, pour reçevoir les infos
         //directement
         playerInvent = new PlayerInventory(list);
-        eItem = new EquipableItem(1, "Guerrier", "Épée de fer", "Une simple épée en fer", "WATK", 10, "Weapon", 1);
-        characterInvent._invent.Add(eItem);
+        //eItem = new EquipableItem(1, "Guerrier", "Épée de fer", "Une simple épée en fer", "WATK", 10, "Weapon", 1);
+        //characterInvent._invent.Add(eItem);
 
         //tout les personnages du joueur, pour le menu prinçipal
         PlayerManager._instance._characters.Add(Character.CreateCharacter("Bartoc", "Guerrier", 2, 3, 2, 100, 10, characterInvent, 20, 10, 0, 10));
