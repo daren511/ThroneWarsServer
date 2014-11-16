@@ -50,7 +50,8 @@
         <div class="Leaderboard">
             <asp:GridView runat="server" ID="GV_Leaderboard" OnRowDataBound="GV_Leaderboard_OnRowDataBound"  
                 AutoPostBack="true" OnSelectedIndexChanged="GV_Leaderboard_SelectedIndexChanged"
-                AllowPaging ="true" OnPageIndexChanging = "GV_Leaderboard_PageIndexChanging" PageSize = "5">     
+                AllowPaging ="true" EmptyDataText="Aucun personnages dans ce joueur"
+                OnPageIndexChanging = "GV_Leaderboard_PageIndexChanging" PageSize = "5">     
             </asp:GridView>
         </div>
 

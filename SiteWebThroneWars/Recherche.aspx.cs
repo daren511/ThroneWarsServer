@@ -28,7 +28,7 @@ namespace SiteWebThroneWars
             {
 
                 string user = TB_UsernameSearch.Text;
-                bool UserExiste = Controle.UserExiste(user);
+                bool UserExiste = Controle.userExiste(user);
                 //Prend le JID
                 int JID = Controle.getJID(user);
                 if (UserExiste)
@@ -40,7 +40,7 @@ namespace SiteWebThroneWars
                     //Response.Redirect("www.thronewars.ca/Recherche?User="+userHash);
 
                     //Ramener la position du username dans le leaderboard
-                    DSLeaderboard = Controle.ReturnLeaderboard(user, true);
+                    DSLeaderboard = Controle.getLeaderboard(user, true);
                     if (DSLeaderboard != null)
                     {
                         GV_Leaderboard.DataSource = DSLeaderboard;
@@ -49,7 +49,7 @@ namespace SiteWebThroneWars
 
 
                     //Ramener stats
-                    DSStats = Controle.ReturnStatsWEB(JID);
+                    DSStats = Controle.getStatsWEB(JID);
                     if (DSStats != null)
                     {
                         GV_Stats.DataSource = DSStats;
@@ -80,7 +80,7 @@ namespace SiteWebThroneWars
         {
 
             //Pour tous les enrigistrements du leaderboard
-            DataSet DSLeaderboard = Controle.ReturnLeaderboard(null,false);
+            DataSet DSLeaderboard = Controle.getLeaderboard(null,false);
             if (DSLeaderboard != null)
             {
                 GV_Leaderboard.DataSource = DSLeaderboard;
@@ -113,7 +113,7 @@ namespace SiteWebThroneWars
                 // do your stuffs here, for example if column risk is your third column:
                 if (e.Row.Cells[1].Text == TB_UsernameSearch.Text.ToLower())
                 {
-                    e.Row.BackColor = System.Drawing.Color.Red;
+                    e.Row.BackColor = System.Drawing.Color.PowderBlue;
                 }
             }
         }
@@ -129,10 +129,10 @@ namespace SiteWebThroneWars
             GridViewRow row = GV_Leaderboard.SelectedRow;
             DataSet DSLeaderboardSelection = new DataSet();
             string user = row.Cells[1].Text;
-            row.BackColor = System.Drawing.Color.Red;
+            row.BackColor = System.Drawing.Color.PowderBlue;
 
             int JID = Controle.getJID(user);
-            DSLeaderboardSelection = Controle.ReturnStatsWEB(JID);
+            DSLeaderboardSelection = Controle.getStatsWEB(JID);
             if (DSLeaderboardSelection != null)
             {
                 GV_Stats.DataSource = DSLeaderboardSelection;

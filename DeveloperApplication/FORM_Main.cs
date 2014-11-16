@@ -33,10 +33,28 @@ namespace DeveloperApplication
             DGV_Personnages.Columns[4].Visible = false;
         }
 
+        private void TSMI_Quitter_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void TSMI_Items_Click(object sender, EventArgs e)
+        {
+            FORM_Lister FLI = new FORM_Lister();
+            FLI.ShowDialog();
+        }
+
+        private void TSMI_Potions_Click(object sender, EventArgs e)
+        {
+            FORM_Lister FLI = new FORM_Lister();
+            FLI.estItem = false;
+            FLI.ShowDialog();
+        }
+
         //---------- JOUEURS ----------//
         private void ListerJoueurs()
         {
-            BindingSource maSource = new BindingSource(Controle.ListPlayers(CHECK_CFM_Joueur.Checked), "JOUEURS");
+            BindingSource maSource = new BindingSource(Controle.listPlayers(CHECK_CFM_Joueur.Checked), "JOUEURS");
             DGV_Joueurs.DataSource = maSource;
             ChangeBTNTextJ();
 
@@ -61,7 +79,7 @@ namespace DeveloperApplication
                 confirmer = "0";
             else
                 confirmer = "1";
-            if (Controle.UpdateStateJoueur(Int32.Parse(DGV_Joueurs.SelectedRows[0].Cells[0].Value.ToString()), confirmer))
+            if (Controle.updateStateJoueur(Int32.Parse(DGV_Joueurs.SelectedRows[0].Cells[0].Value.ToString()), confirmer))
                 ListerJoueurs();
         }
 
@@ -97,7 +115,7 @@ namespace DeveloperApplication
 
             if (FJ.ShowDialog() == DialogResult.OK)
             {
-                if (Controle.UpdateJoueur(FJ.JID, FJ.USERNAME, FJ.EMAIL, FJ.PASSWORD, FJ.JOINDATE, FJ.MONEY, FJ.CONFIRMED))
+                if (Controle.updateJoueur(FJ.JID, FJ.USERNAME, FJ.EMAIL, FJ.PASSWORD, FJ.JOINDATE, FJ.MONEY, FJ.CONFIRMED))
                     ListerJoueurs();
             }
         }
@@ -106,7 +124,7 @@ namespace DeveloperApplication
         private void ListerPerso()
         {
             BindingSource maSource = new BindingSource(
-                Controle.ReturnStats(
+                Controle.returnStats(
                     Int32.Parse(DGV_Joueurs.SelectedRows[0].Cells[0].Value.ToString()), true, CHECK_CFM_Perso.Checked), "StatsJoueur");
             DGV_Personnages.DataSource = maSource;
             if (DGV_Personnages.Rows.Count > 0)
@@ -134,7 +152,7 @@ namespace DeveloperApplication
             if (FP.ShowDialog() == DialogResult.OK)
             {
                 int JID = Int32.Parse(DGV_Joueurs.SelectedRows[0].Cells[0].Value.ToString());
-                if (Controle.AddPerso(JID, FP.NOM, FP.XP, FP.LEVEL, FP.CLASSE, FP.ISACTIVE))
+                if (Controle.addPerso(JID, FP.NOM, FP.XP, FP.LEVEL, FP.CLASSE, FP.ISACTIVE))
                     ListerPerso();
             }
         }
@@ -151,7 +169,7 @@ namespace DeveloperApplication
                 confirmer = "0";
             else
                 confirmer = "1";
-            if (Controle.UpdateStatePerso(Int32.Parse(DGV_Personnages.SelectedRows[0].Cells[0].Value.ToString()), confirmer))
+            if (Controle.updateStatePerso(Int32.Parse(DGV_Personnages.SelectedRows[0].Cells[0].Value.ToString()), confirmer))
                 ListerPerso();
         }
 
@@ -178,6 +196,8 @@ namespace DeveloperApplication
 
         private void ConsulterPerso()
         {
+            int JID = Int32.Parse(DGV_Joueurs.SelectedRows[0].Cells[0].Value.ToString());
+
             FORM_Perso FP = new FORM_Perso();
             FP.Text = DGV_Personnages.SelectedRows[0].Cells[1].Value.ToString();
             FP.GUID = int.Parse(DGV_Personnages.SelectedRows[0].Cells[0].Value.ToString());
@@ -186,11 +206,11 @@ namespace DeveloperApplication
             FP.XP = int.Parse(DGV_Personnages.SelectedRows[0].Cells[3].Value.ToString());
             FP.LEVEL = int.Parse(DGV_Personnages.SelectedRows[0].Cells[4].Value.ToString());
             FP.ISACTIVE = DGV_Personnages.SelectedRows[0].Cells[5].Value.ToString();
+            FP.JID = JID;
 
-            if(FP.ShowDialog() == DialogResult.OK)
+            if (FP.ShowDialog() == DialogResult.OK)
             {
-                int JID = Int32.Parse(DGV_Joueurs.SelectedRows[0].Cells[0].Value.ToString());
-                if(Controle.UpdatePerso(FP.GUID, JID, FP.NOM, FP.XP, FP.LEVEL, FP.CLASSE, FP.ISACTIVE))
+                if (Controle.updatePerso(FP.GUID, JID, FP.NOM, FP.XP, FP.LEVEL, FP.CLASSE, FP.ISACTIVE))
                     ListerPerso();
             }
         }
