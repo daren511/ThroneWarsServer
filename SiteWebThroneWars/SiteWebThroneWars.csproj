@@ -108,6 +108,7 @@
     <Content Include="default.aspx" />
     <Content Include="Recherche.aspx" />
     <Content Include="ResetPassword.aspx" />
+    <Content Include="SendConfirmation.aspx" />
     <Content Include="sweet-alert.css" />
     <Content Include="sweet-alert.js" />
     <Content Include="sweet-alert.min.js" />
@@ -186,6 +187,13 @@
     </Compile>
     <Compile Include="ResetPassword.aspx.designer.cs">
       <DependentUpon>ResetPassword.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SendConfirmation.aspx.cs">
+      <DependentUpon>SendConfirmation.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SendConfirmation.aspx.designer.cs">
+      <DependentUpon>SendConfirmation.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

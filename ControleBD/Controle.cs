@@ -623,7 +623,44 @@ namespace ControleBD
         }
 
         //-----------------------------------------  FONCTIONS SITE WEB ---------------------------------------------
+        public static string getEmail(string username)
+        {
+            OracleConnection conn = Connection.getInstance().conn;
+            string sqlSelect = "select email from joueurs where username = :username";
+            string result = "";
+            try
+            {
+                OracleCommand oraSelect = conn.CreateCommand();
+                oraSelect.CommandText = sqlSelect;
+                OracleParameter OraParamUser = new OracleParameter(":username", OracleDbType.Varchar2, 32);
+                OraParamUser.Value = username;
 
+                oraSelect.Parameters.Add(OraParamUser);
+
+                OracleDataReader objRead = oraSelect.ExecuteReader();
+                while (objRead.Read())
+                {
+                    result = objRead.GetString(0);
+                }
+                objRead.Close();
+
+                if (result != null)
+                {
+                    return result;
+                }
+            }
+            catch (OracleException ex)
+            {
+                Erreur.ErrorMessage(ex);
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Fonction qui est utilisé dans le form web de ForgotPassword
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns></returns>
         public static bool passwordRecovery(string username)
         {
             OracleConnection conn = Connection.getInstance().conn;
@@ -671,7 +708,11 @@ namespace ControleBD
             else
                 return false;
         }
-
+        /// <summary>
+        /// Fonction qui sert a confirmer le compte lorsque le user utilise le lien dans le courriel
+        /// </summary>
+        /// <param name="userHash"></param>
+        /// <returns></returns>
         public static bool confirmAccount(string userHash)
         {
             OracleConnection conn = Connection.getInstance().conn;
@@ -705,7 +746,11 @@ namespace ControleBD
                 return false;
             }
         }
-
+        /// <summary>
+        /// Fonction qui est utlisé dans le form web de ForgotUsername 
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
         public static bool usernameRecovery(string email)
         {
             OracleConnection conn = Connection.getInstance().conn;
@@ -806,7 +851,7 @@ namespace ControleBD
                 using (OracleDataReader objRead = oraSelect.ExecuteReader())
                 {
                     objRead.Read();//positionnement a la premiere valeur a lire;
-                    return objRead.GetString(0) == "1";// si le char qui reviens est 1 sa veut donc dire que le nom d'usager est confirme 
+                    return objRead.GetString(0) == "1";// si le char qui reviens est 1 sa veut donc dire que le nom d'usager est confirmé
                 }
             }
             catch (OracleException ora)
