@@ -127,6 +127,7 @@
             // 
             // CB_Joueurs
             // 
+            this.CB_Joueurs.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.CB_Joueurs.FormattingEnabled = true;
             this.CB_Joueurs.Location = new System.Drawing.Point(132, 334);
             this.CB_Joueurs.Name = "CB_Joueurs";
