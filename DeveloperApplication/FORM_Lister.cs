@@ -247,13 +247,14 @@ namespace DeveloperApplication
             {
                 Lister_Potions();
                 TB_Qte.Text = "";
-                LBL_Envoyer.Text = "Envoie effectué";
+                LBL_Envoyer.ForeColor = Color.Green;
+                LBL_Envoyer.Text = "Envoi effectué";
                 LBL_Envoyer.Visible = true;
             }
             else
             {
                 LBL_Envoyer.ForeColor = Color.Red;
-                LBL_Envoyer.Text = "Envoie impossible";
+                LBL_Envoyer.Text = "Envoi impossible";
             }
         }
     }

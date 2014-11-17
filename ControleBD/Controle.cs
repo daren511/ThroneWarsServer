@@ -1799,16 +1799,7 @@ namespace ControleBD
                 return false;
             }
         }
-        /// <summary>
-        /// DOUBLONS A EFFACER
-        /// </summary>
-        /// <param name="jid"></param>
-        /// <param name="nom"></param>
-        /// <param name="xp"></param>
-        /// <param name="level"></param>
-        /// <param name="classe"></param>
-        /// <param name="actif"></param>
-        /// <returns></returns>
+
         public static bool addPerso(int jid, string nom, int xp, int level, string classe, string actif)
         {
             OracleConnection conn = Connection.getInstance().conn;

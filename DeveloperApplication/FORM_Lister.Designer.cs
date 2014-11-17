@@ -171,9 +171,9 @@
             this.LBL_Envoyer.ForeColor = System.Drawing.Color.Green;
             this.LBL_Envoyer.Location = new System.Drawing.Point(246, 364);
             this.LBL_Envoyer.Name = "LBL_Envoyer";
-            this.LBL_Envoyer.Size = new System.Drawing.Size(82, 13);
+            this.LBL_Envoyer.Size = new System.Drawing.Size(76, 13);
             this.LBL_Envoyer.TabIndex = 11;
-            this.LBL_Envoyer.Text = "Envoie effectué";
+            this.LBL_Envoyer.Text = "Envoi effectué";
             // 
             // FORM_Lister
             // 
