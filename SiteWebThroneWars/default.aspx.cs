@@ -12,7 +12,11 @@ namespace SiteWebThroneWars
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            string userAgent = Request.UserAgent;
+            if (userAgent.Contains("BlackBerry") || (userAgent.Contains("iPhone") || (userAgent.Contains("Android"))))
+            {
+                Response.Redirect("default_mobile.aspx");
+            }
         }
     }
 }

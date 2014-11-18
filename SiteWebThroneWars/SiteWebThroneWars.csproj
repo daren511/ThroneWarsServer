@@ -72,6 +72,7 @@
     <Content Include="ChangePassword.aspx" />
     <Content Include="ConfirmAccount.aspx" />
     <Content Include="Connexion.aspx" />
+    <Content Include="default_mobile.aspx" />
     <Content Include="FinDec.css" />
     <Content Include="ForgotUsername.aspx" />
     <Content Include="ForgotPass.aspx" />
@@ -137,6 +138,13 @@
     </Compile>
     <Compile Include="Connexion.aspx.designer.cs">
       <DependentUpon>Connexion.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="default_mobile.aspx.cs">
+      <DependentUpon>default_mobile.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="default_mobile.aspx.designer.cs">
+      <DependentUpon>default_mobile.aspx</DependentUpon>
     </Compile>
     <Compile Include="ForgotUsername.aspx.cs">
       <DependentUpon>ForgotUsername.aspx</DependentUpon>

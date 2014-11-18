@@ -18,7 +18,7 @@ namespace SiteWebThroneWars
         protected void SendLinkBack_Click(object sender, EventArgs e)
         {
             string text = "";
-            string user = TB_Username.Text;
+            string user = TB_Username.Text.ToLower();
             bool userExiste = Controle.userExiste(user);
             bool isConfirmed = Controle.accountIsConfirmed(user);
             string courriel = Controle.getEmail(user);
