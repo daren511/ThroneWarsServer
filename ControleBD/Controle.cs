@@ -1502,7 +1502,7 @@ namespace ControleBD
         public static bool updateQuantityItem(int jid, int iid, int qte)
         {
             OracleConnection conn = Connection.getInstance().conn;
-            string sqlconfirmation = "UPDATE INVENTAIREJOUEUR SET QUANTITY =:quantite WHERE JID =:jid AND IID =:iid";
+            string sqlconfirmation = "UPDATE INVENTAIREJOUEUR SET QUANTITY =(QUANTITY + :quantite) WHERE JID =:jid AND IID =:iid";
 
             try
             {
@@ -1617,6 +1617,38 @@ namespace ControleBD
             {
                 Erreur.ErrorMessage(ex);
                 return false;
+            }
+        }
+
+        public static bool addItemInventaire(int iid, int jid, int qte)
+        {
+            OracleConnection conn = Connection.getInstance().conn;
+            string sql = "INSERT INTO INVENTAIREJOUEUR VALUES(:jid, :iid, :quantite)";
+
+            try
+            {
+                OracleCommand oraInsert = new OracleCommand(sql, conn);
+
+                OracleParameter OraParamJID = new OracleParameter(":jid", OracleDbType.Int32, 10);
+                OracleParameter OraParamIID = new OracleParameter(":iid", OracleDbType.Int32, 10);
+                OracleParameter OraParamQTE = new OracleParameter(":quantite", OracleDbType.Int32, 2);
+
+
+                OraParamJID.Value = jid;
+                OraParamIID.Value = iid;
+                OraParamQTE.Value = qte;
+
+                oraInsert.Parameters.Add(OraParamJID);
+                oraInsert.Parameters.Add(OraParamIID);
+                oraInsert.Parameters.Add(OraParamQTE);
+
+                oraInsert.ExecuteNonQuery();
+                return true;
+            }
+            catch (OracleException ex)
+            {
+                Erreur.ErrorMessage(ex);
+                return updateQuantityItem(jid, iid, qte);
             }
         }
 

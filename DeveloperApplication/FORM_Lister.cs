@@ -28,19 +28,20 @@ namespace DeveloperApplication
             if (estItem)
             {
                 Lister_Items();
-                PotionPourJoueur(false);
+                LBL_Ajouter.Text = "Ajouter cet item à : ";
             }
             else
             {
                 BTN_Ajouter.Text = "Ajouter une potion";
                 BTN_Etat.Visible = false;
                 CHECK_AfficherTout.Visible = false;
-                PotionPourJoueur(true);
-                FillComboBox();
-                UpdateControls(sender, e);
+                ChangerPositionPotion();
                 Lister_Potions();
             }
+            FillComboBox();
+            UpdateControls(sender, e);
             DGV_Liste.Columns[0].Visible = false;
+            LBL_Envoyer.Visible = false;
         }
 
         private void Check_KeyPress(object sender, KeyPressEventArgs e)
@@ -49,24 +50,14 @@ namespace DeveloperApplication
                 e.Handled = true;
         }
 
-        private void PotionPourJoueur(bool estVisible)
+        private void ChangerPositionPotion()
         {
-            LBL_Ajouter.Visible = estVisible;
-            CB_Joueurs.Visible = estVisible;
-            BTN_Ajouter_Potion.Visible = estVisible;
-            LBL_Qte.Visible = estVisible;
-            TB_Qte.Visible = estVisible;
-            LBL_Envoyer.Visible = false;
-
-            if(estVisible)
-            {
-                LBL_Ajouter.Location = new Point(LBL_Ajouter.Location.X, LBL_Ajouter.Location.Y - newY);
-                CB_Joueurs.Location = new Point(CB_Joueurs.Location.X, CB_Joueurs.Location.Y - newY);
-                BTN_Ajouter_Potion.Location = new Point(BTN_Ajouter_Potion.Location.X, BTN_Ajouter_Potion.Location.Y - newY);
-                LBL_Qte.Location = new Point(LBL_Qte.Location.X, LBL_Qte.Location.Y - newY);
-                TB_Qte.Location = new Point(TB_Qte.Location.X, TB_Qte.Location.Y - newY);
-                LBL_Envoyer.Location = new Point(LBL_Envoyer.Location.X, LBL_Envoyer.Location.Y - newY);
-            }
+            LBL_Ajouter.Location = new Point(LBL_Ajouter.Location.X, LBL_Ajouter.Location.Y - newY);
+            CB_Joueurs.Location = new Point(CB_Joueurs.Location.X, CB_Joueurs.Location.Y - newY);
+            BTN_Ajouter_Au_Joueur.Location = new Point(BTN_Ajouter_Au_Joueur.Location.X, BTN_Ajouter_Au_Joueur.Location.Y - newY);
+            LBL_Qte.Location = new Point(LBL_Qte.Location.X, LBL_Qte.Location.Y - newY);
+            TB_Qte.Location = new Point(TB_Qte.Location.X, TB_Qte.Location.Y - newY);
+            LBL_Envoyer.Location = new Point(LBL_Envoyer.Location.X, LBL_Envoyer.Location.Y - newY);
         }
 
         private void FillComboBox()
@@ -80,9 +71,9 @@ namespace DeveloperApplication
         private void UpdateControls(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(TB_Qte.Text) || string.IsNullOrWhiteSpace(CB_Joueurs.Text))
-                BTN_Ajouter_Potion.Enabled = false;
+                BTN_Ajouter_Au_Joueur.Enabled = false;
             else
-                BTN_Ajouter_Potion.Enabled = true;
+                BTN_Ajouter_Au_Joueur.Enabled = true;
         }
 
         private void Lister_Items()
@@ -226,7 +217,7 @@ namespace DeveloperApplication
             FP.VISIBLE = false;
             FP.Text = "Ajout";
 
-            if(FP.ShowDialog() == DialogResult.OK)
+            if (FP.ShowDialog() == DialogResult.OK)
             {
                 if (Controle.addPotion(FP.NOM, FP.DESCRIPTION, FP.DURATION, FP.WATK, FP.WDEF, FP.MATK, FP.MDEF))
                     Lister_Potions();
@@ -238,14 +229,23 @@ namespace DeveloperApplication
             Lister_Items();
         }
 
-        private void BTN_Ajouter_Potion_Click(object sender, EventArgs e)
+        private void BTN_Ajouter_Au_Joueur_Click(object sender, EventArgs e)
         {
-            int PID = int.Parse(DGV_Liste.SelectedRows[0].Cells[0].Value.ToString());
+            bool reussi = false;
+            int ID = int.Parse(DGV_Liste.SelectedRows[0].Cells[0].Value.ToString());
             int JID = Controle.getJID(CB_Joueurs.SelectedItem.ToString());
             int QTE = int.Parse(TB_Qte.Text);
-            if (Controle.addPotionJoueurs(PID, JID, QTE))
+
+            if (estItem)
+                reussi = Controle.addItemInventaire(ID, JID, QTE);
+            else
+                reussi = Controle.addPotionJoueurs(ID, JID, QTE);
+            if (reussi)
             {
-                Lister_Potions();
+                if (estItem)
+                    Lister_Items();
+                else
+                    Lister_Potions();
                 TB_Qte.Text = "";
                 LBL_Envoyer.ForeColor = Color.Green;
                 LBL_Envoyer.Text = "Envoi effectué";
