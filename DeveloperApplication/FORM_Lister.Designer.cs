@@ -37,7 +37,7 @@
             this.LBL_Ajouter = new System.Windows.Forms.Label();
             this.CB_Joueurs = new System.Windows.Forms.ComboBox();
             this.TB_Qte = new System.Windows.Forms.TextBox();
-            this.BTN_Ajouter_Potion = new System.Windows.Forms.Button();
+            this.BTN_Ajouter_Au_Joueur = new System.Windows.Forms.Button();
             this.LBL_Qte = new System.Windows.Forms.Label();
             this.LBL_Envoyer = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.DGV_Liste)).BeginInit();
@@ -98,7 +98,7 @@
             // 
             this.BTN_Fermer.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.BTN_Fermer.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BTN_Fermer.Location = new System.Drawing.Point(629, 342);
+            this.BTN_Fermer.Location = new System.Drawing.Point(629, 359);
             this.BTN_Fermer.Name = "BTN_Fermer";
             this.BTN_Fermer.Size = new System.Drawing.Size(75, 23);
             this.BTN_Fermer.TabIndex = 4;
@@ -112,7 +112,7 @@
             this.BTN_Ajouter.Name = "BTN_Ajouter";
             this.BTN_Ajouter.Size = new System.Drawing.Size(184, 23);
             this.BTN_Ajouter.TabIndex = 5;
-            this.BTN_Ajouter.Text = "Ajouter";
+            this.BTN_Ajouter.Text = "Ajouter un item";
             this.BTN_Ajouter.UseVisualStyleBackColor = true;
             this.BTN_Ajouter.Click += new System.EventHandler(this.BTN_Ajouter_Click);
             // 
@@ -145,16 +145,16 @@
             this.TB_Qte.TextChanged += new System.EventHandler(this.UpdateControls);
             this.TB_Qte.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Check_KeyPress);
             // 
-            // BTN_Ajouter_Potion
+            // BTN_Ajouter_Au_Joueur
             // 
-            this.BTN_Ajouter_Potion.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BTN_Ajouter_Potion.Location = new System.Drawing.Point(249, 332);
-            this.BTN_Ajouter_Potion.Name = "BTN_Ajouter_Potion";
-            this.BTN_Ajouter_Potion.Size = new System.Drawing.Size(75, 23);
-            this.BTN_Ajouter_Potion.TabIndex = 9;
-            this.BTN_Ajouter_Potion.Text = "Ajouter";
-            this.BTN_Ajouter_Potion.UseVisualStyleBackColor = true;
-            this.BTN_Ajouter_Potion.Click += new System.EventHandler(this.BTN_Ajouter_Potion_Click);
+            this.BTN_Ajouter_Au_Joueur.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BTN_Ajouter_Au_Joueur.Location = new System.Drawing.Point(249, 332);
+            this.BTN_Ajouter_Au_Joueur.Name = "BTN_Ajouter_Au_Joueur";
+            this.BTN_Ajouter_Au_Joueur.Size = new System.Drawing.Size(75, 23);
+            this.BTN_Ajouter_Au_Joueur.TabIndex = 9;
+            this.BTN_Ajouter_Au_Joueur.Text = "Ajouter";
+            this.BTN_Ajouter_Au_Joueur.UseVisualStyleBackColor = true;
+            this.BTN_Ajouter_Au_Joueur.Click += new System.EventHandler(this.BTN_Ajouter_Au_Joueur_Click);
             // 
             // LBL_Qte
             // 
@@ -180,10 +180,10 @@
             this.AcceptButton = this.BTN_Fermer;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(716, 377);
+            this.ClientSize = new System.Drawing.Size(716, 390);
             this.Controls.Add(this.LBL_Envoyer);
             this.Controls.Add(this.LBL_Qte);
-            this.Controls.Add(this.BTN_Ajouter_Potion);
+            this.Controls.Add(this.BTN_Ajouter_Au_Joueur);
             this.Controls.Add(this.TB_Qte);
             this.Controls.Add(this.CB_Joueurs);
             this.Controls.Add(this.LBL_Ajouter);
@@ -213,7 +213,7 @@
         private System.Windows.Forms.Label LBL_Ajouter;
         private System.Windows.Forms.ComboBox CB_Joueurs;
         private System.Windows.Forms.TextBox TB_Qte;
-        private System.Windows.Forms.Button BTN_Ajouter_Potion;
+        private System.Windows.Forms.Button BTN_Ajouter_Au_Joueur;
         private System.Windows.Forms.Label LBL_Qte;
         private System.Windows.Forms.Label LBL_Envoyer;
     }
