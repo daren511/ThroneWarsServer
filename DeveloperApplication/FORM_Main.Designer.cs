@@ -220,8 +220,9 @@
             this.Controls.Add(this.STRIP_Menu);
             this.MainMenuStrip = this.STRIP_Menu;
             this.Name = "FORM_Main";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Throne Wars";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FORM_Main_FormClosed);
             this.Load += new System.EventHandler(this.FORM_Main_Load);
             ((System.ComponentModel.ISupportInitialize)(this.DGV_Joueurs)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.DGV_Personnages)).EndInit();

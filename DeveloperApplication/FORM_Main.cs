@@ -231,5 +231,10 @@ namespace DeveloperApplication
                     ListerPerso();
             }
         }
+
+        private void FORM_Main_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Application.Exit();
+        }
     }
 }
