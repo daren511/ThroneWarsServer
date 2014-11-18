@@ -61,7 +61,7 @@ namespace DeveloperApplication
             BindingSource maSource = new BindingSource(Controle.listPlayers(CHECK_CFM_Joueur.Checked), "JOUEURS");
             DGV_Joueurs.DataSource = maSource;
 
-            if (index != -1)
+            if (index != -1 && index < DGV_Joueurs.Rows.Count)
             {
                 DGV_Joueurs.Rows[0].Selected = false;
                 DGV_Joueurs.Rows[index].Selected = true;
@@ -149,7 +149,7 @@ namespace DeveloperApplication
                 BTN_CONS_Perso.Enabled = false;
                 BTN_DESAC_Perso.Enabled = false;
             }
-            if (index != -1)
+            if (index != -1 && index < DGV_Personnages.Rows.Count)
             {
                 DGV_Personnages.Rows[0].Selected = false;
                 DGV_Personnages.Rows[index].Selected = true;

@@ -87,7 +87,7 @@ namespace DeveloperApplication
                 BTN_Modifier.Enabled = true;
             else
                 BTN_Modifier.Enabled = false;
-            if (index != -1)
+            if (index != -1 && index < DGV_Liste.Rows.Count)
             {
                 DGV_Liste.Rows[0].Selected = false;
                 DGV_Liste.Rows[index].Selected = true;
@@ -106,7 +106,7 @@ namespace DeveloperApplication
                 BTN_Modifier.Enabled = true;
             else
                 BTN_Modifier.Enabled = false;
-            if (index != -1)
+            if (index != -1 && index < DGV_Liste.Rows.Count)
             {
                 DGV_Liste.Rows[0].Selected = false;
                 DGV_Liste.Rows[index].Selected = true;

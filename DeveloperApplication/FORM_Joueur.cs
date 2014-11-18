@@ -117,7 +117,7 @@ namespace DeveloperApplication
                 else
                     BTN_Consulter.Enabled = false;
             }
-            if (index != -1)
+            if (index != -1 && index < DGV_Inventaire.Rows.Count)
             {
                 DGV_Inventaire.Rows[0].Selected = false;
                 DGV_Inventaire.Rows[index].Selected = true;
@@ -174,7 +174,7 @@ namespace DeveloperApplication
                 else
                     BTN_Consulter.Enabled = false;
             }
-            if (index != -1)
+            if (index != -1 && index < DGV_Potions.Rows.Count)
             {
                 DGV_Potions.Rows[0].Selected = false;
                 DGV_Potions.Rows[index].Selected = true;
