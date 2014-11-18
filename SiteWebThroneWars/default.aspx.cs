@@ -14,7 +14,7 @@ namespace SiteWebThroneWars
         {
             if (Request.Browser.IsMobileDevice)
             {
-                Response.Redirect("~/default_mobile.aspx");
+                Response.Redirect("default_mobile.aspx");
             }
         }
     }
