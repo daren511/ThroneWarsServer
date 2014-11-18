@@ -78,18 +78,27 @@ namespace DeveloperApplication
 
         private void Lister_Items()
         {
+            int index = -1;
+            if (DGV_Liste.Rows.Count > 0) { index = DGV_Liste.SelectedRows[0].Index; }
             BindingSource maSource = new BindingSource(Controle.listItems(CHECK_AfficherTout.Checked), "STATS");
             DGV_Liste.DataSource = maSource;
-            ChangeBTNText();
 
             if (DGV_Liste.Rows.Count > 0)
                 BTN_Modifier.Enabled = true;
             else
                 BTN_Modifier.Enabled = false;
+            if (index != -1)
+            {
+                DGV_Liste.Rows[0].Selected = false;
+                DGV_Liste.Rows[index].Selected = true;
+            }
+            ChangeBTNText();
         }
 
         private void Lister_Potions()
         {
+            int index = -1;
+            if (DGV_Liste.Rows.Count > 0) { index = DGV_Liste.SelectedRows[0].Index; }
             BindingSource maSource = new BindingSource(Controle.listPotions(), "POTIONS");
             DGV_Liste.DataSource = maSource;
 
@@ -97,6 +106,11 @@ namespace DeveloperApplication
                 BTN_Modifier.Enabled = true;
             else
                 BTN_Modifier.Enabled = false;
+            if (index != -1)
+            {
+                DGV_Liste.Rows[0].Selected = false;
+                DGV_Liste.Rows[index].Selected = true;
+            }
         }
 
         private void ModifierItem()
@@ -184,10 +198,13 @@ namespace DeveloperApplication
 
         private void ChangeBTNText()
         {
-            if (DGV_Liste.SelectedRows[0].Cells[8].Value.ToString() == "1")
-                BTN_Etat.Text = "Désactiver";
-            else
-                BTN_Etat.Text = "Activer";
+            if (DGV_Liste.Rows.Count > 0)
+            {
+                if (DGV_Liste.SelectedRows[0].Cells[8].Value.ToString() == "1")
+                    BTN_Etat.Text = "Désactiver";
+                else
+                    BTN_Etat.Text = "Activer";
+            }
         }
 
         private void BTN_Ajouter_Click(object sender, EventArgs e)
@@ -242,10 +259,6 @@ namespace DeveloperApplication
                 reussi = Controle.addPotionJoueurs(ID, JID, QTE);
             if (reussi)
             {
-                if (estItem)
-                    Lister_Items();
-                else
-                    Lister_Potions();
                 TB_Qte.Text = "";
                 LBL_Envoyer.ForeColor = Color.Green;
                 LBL_Envoyer.Text = "Envoi effectué";

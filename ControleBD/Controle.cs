@@ -2006,16 +2006,26 @@ namespace ControleBD
             return listItem;
         }
 
-        public static List<string> fillPerso(int jid)
+        public static List<string> fillPerso(int jid, string classe)
         {
             List<string> listPerso = new List<string>();
             OracleConnection conn = Connection.getInstance().conn;
             string sql = "SELECT NOM FROM PERSONNAGES WHERE JID =:jid";
+            if (classe != "Tous")
+                sql += " AND CID =(SELECT CID FROM CLASSES WHERE CNAME=:classe)";
 
             OracleCommand oraSelect = new OracleCommand(sql, conn);
+
             OracleParameter OraParamJID = new OracleParameter(":jid", OracleDbType.Int32, 10);
             OraParamJID.Value = jid;
             oraSelect.Parameters.Add(OraParamJID);
+
+            if (classe != "Tous")
+            {
+                OracleParameter OraParamClasse = new OracleParameter(":classe", OracleDbType.Varchar2, 40);
+                OraParamClasse.Value = classe;
+                oraSelect.Parameters.Add(OraParamClasse);
+            }
 
             using (OracleDataReader oraReader = oraSelect.ExecuteReader())
             {

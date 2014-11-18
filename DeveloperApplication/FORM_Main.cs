@@ -41,12 +41,14 @@ namespace DeveloperApplication
         private void TSMI_Items_Click(object sender, EventArgs e)
         {
             FORM_Lister FLI = new FORM_Lister();
+            FLI.Text = "Lister tous les items";
             FLI.ShowDialog();
         }
 
         private void TSMI_Potions_Click(object sender, EventArgs e)
         {
             FORM_Lister FLI = new FORM_Lister();
+            FLI.Text = "Lister toutes les potions";
             FLI.estItem = false;
             FLI.ShowDialog();
         }
@@ -54,8 +56,16 @@ namespace DeveloperApplication
         //---------- JOUEURS ----------//
         private void ListerJoueurs()
         {
+            int index = -1;
+            if (DGV_Joueurs.Rows.Count > 0) { index = DGV_Joueurs.SelectedRows[0].Index; }
             BindingSource maSource = new BindingSource(Controle.listPlayers(CHECK_CFM_Joueur.Checked), "JOUEURS");
             DGV_Joueurs.DataSource = maSource;
+
+            if (index != -1)
+            {
+                DGV_Joueurs.Rows[0].Selected = false;
+                DGV_Joueurs.Rows[index].Selected = true;
+            }
             ChangeBTNTextJ();
 
             ListerPerso();
@@ -123,12 +133,14 @@ namespace DeveloperApplication
         //---------- PERSONNAGES ----------//
         private void ListerPerso()
         {
+            int index = -1;
             BindingSource maSource = new BindingSource(
                 Controle.returnStats(
                     Int32.Parse(DGV_Joueurs.SelectedRows[0].Cells[0].Value.ToString()), true, CHECK_CFM_Perso.Checked), "StatsJoueur");
             DGV_Personnages.DataSource = maSource;
             if (DGV_Personnages.Rows.Count > 0)
             {
+                index = DGV_Personnages.SelectedRows[0].Index;
                 BTN_CONS_Perso.Enabled = true;
                 BTN_DESAC_Perso.Enabled = true;
             }
@@ -136,6 +148,11 @@ namespace DeveloperApplication
             {
                 BTN_CONS_Perso.Enabled = false;
                 BTN_DESAC_Perso.Enabled = false;
+            }
+            if (index != -1)
+            {
+                DGV_Personnages.Rows[0].Selected = false;
+                DGV_Personnages.Rows[index].Selected = true;
             }
             ChangeBTNTextP();
         }

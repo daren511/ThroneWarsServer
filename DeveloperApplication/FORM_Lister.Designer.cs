@@ -52,6 +52,7 @@
             this.DGV_Liste.Location = new System.Drawing.Point(12, 12);
             this.DGV_Liste.Name = "DGV_Liste";
             this.DGV_Liste.ReadOnly = true;
+            this.DGV_Liste.RowHeadersVisible = false;
             this.DGV_Liste.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.DGV_Liste.Size = new System.Drawing.Size(692, 287);
             this.DGV_Liste.TabIndex = 0;
