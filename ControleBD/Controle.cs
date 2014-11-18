@@ -628,7 +628,7 @@ namespace ControleBD
             OracleConnection conn = Connection.getInstance().conn;
             string sqlSelect = "select email from joueurs where username = :username";
             string result = "";
-            try
+            try 
             {
                 OracleCommand oraSelect = conn.CreateCommand();
                 oraSelect.CommandText = sqlSelect;
