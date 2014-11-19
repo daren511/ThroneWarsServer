@@ -90,6 +90,8 @@
             // CHECK_IsActive
             // 
             this.CHECK_IsActive.AutoSize = true;
+            this.CHECK_IsActive.Checked = true;
+            this.CHECK_IsActive.CheckState = System.Windows.Forms.CheckState.Checked;
             this.CHECK_IsActive.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.CHECK_IsActive.Location = new System.Drawing.Point(15, 31);
             this.CHECK_IsActive.Name = "CHECK_IsActive";
@@ -107,6 +109,7 @@
             this.DGV_Inventaire.Location = new System.Drawing.Point(15, 54);
             this.DGV_Inventaire.Name = "DGV_Inventaire";
             this.DGV_Inventaire.ReadOnly = true;
+            this.DGV_Inventaire.RowHeadersVisible = false;
             this.DGV_Inventaire.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.DGV_Inventaire.Size = new System.Drawing.Size(511, 207);
             this.DGV_Inventaire.TabIndex = 5;

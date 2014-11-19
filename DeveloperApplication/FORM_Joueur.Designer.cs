@@ -75,9 +75,11 @@
             this.DGV_Inventaire.Location = new System.Drawing.Point(6, 6);
             this.DGV_Inventaire.Name = "DGV_Inventaire";
             this.DGV_Inventaire.ReadOnly = true;
+            this.DGV_Inventaire.RowHeadersVisible = false;
             this.DGV_Inventaire.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.DGV_Inventaire.Size = new System.Drawing.Size(487, 151);
             this.DGV_Inventaire.TabIndex = 8;
+            this.DGV_Inventaire.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DGV_Inventaire_CellClick);
             this.DGV_Inventaire.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DGV_Inventaire_CellDoubleClick);
             // 
             // BTN_OK
@@ -254,6 +256,7 @@
             this.DGV_Potions.Location = new System.Drawing.Point(6, 6);
             this.DGV_Potions.Name = "DGV_Potions";
             this.DGV_Potions.ReadOnly = true;
+            this.DGV_Potions.RowHeadersVisible = false;
             this.DGV_Potions.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.DGV_Potions.Size = new System.Drawing.Size(487, 175);
             this.DGV_Potions.TabIndex = 0;

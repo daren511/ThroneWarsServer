@@ -72,6 +72,7 @@
     <Content Include="ChangePassword.aspx" />
     <Content Include="ConfirmAccount.aspx" />
     <Content Include="Connexion.aspx" />
+    <Content Include="default_mobile.aspx" />
     <Content Include="FinDec.css" />
     <Content Include="ForgotUsername.aspx" />
     <Content Include="ForgotPass.aspx" />
@@ -108,6 +109,7 @@
     <Content Include="default.aspx" />
     <Content Include="Recherche.aspx" />
     <Content Include="ResetPassword.aspx" />
+    <Content Include="SendConfirmation.aspx" />
     <Content Include="sweet-alert.css" />
     <Content Include="sweet-alert.js" />
     <Content Include="sweet-alert.min.js" />
@@ -136,6 +138,13 @@
     </Compile>
     <Compile Include="Connexion.aspx.designer.cs">
       <DependentUpon>Connexion.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="default_mobile.aspx.cs">
+      <DependentUpon>default_mobile.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="default_mobile.aspx.designer.cs">
+      <DependentUpon>default_mobile.aspx</DependentUpon>
     </Compile>
     <Compile Include="ForgotUsername.aspx.cs">
       <DependentUpon>ForgotUsername.aspx</DependentUpon>
@@ -186,6 +195,13 @@
     </Compile>
     <Compile Include="ResetPassword.aspx.designer.cs">
       <DependentUpon>ResetPassword.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SendConfirmation.aspx.cs">
+      <DependentUpon>SendConfirmation.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SendConfirmation.aspx.designer.cs">
+      <DependentUpon>SendConfirmation.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

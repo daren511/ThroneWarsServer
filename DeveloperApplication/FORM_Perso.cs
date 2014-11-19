@@ -109,6 +109,8 @@ namespace DeveloperApplication
 
         private void Lister_Items()
         {
+            int index = -1;
+            if (DGV_Inventaire.Rows.Count > 0) { index = DGV_Inventaire.SelectedRows[0].Index; }
             BindingSource maSource = new BindingSource(Controle.listItems(CHECK_AfficherTout.Checked, JID, 2, GUID), "STATS");
             DGV_Inventaire.DataSource = maSource;
 
@@ -116,6 +118,11 @@ namespace DeveloperApplication
                 BTN_Consulter.Enabled = true;
             else
                 BTN_Consulter.Enabled = false;
+            if (index != -1 && index < DGV_Inventaire.Rows.Count)
+            {
+                DGV_Inventaire.Rows[0].Selected = false;
+                DGV_Inventaire.Rows[index].Selected = true;
+            }
         }
 
         private void ConsulterItem()

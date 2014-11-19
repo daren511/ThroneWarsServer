@@ -7,7 +7,7 @@ namespace Emails
 {
     public static class Email
     {
-        public static string SujetInscription = "Confirmation compte - Throne Wars";
+        public static string SujetInscription = "Confirmation compte - Throne Wars"; 
         public static string BodyConfirmation = "Veuillez confirmer votre compte lier à ce courriel." +
             "Voici votre lien pour confirmer : www.thronewars.ca/ConfirmAccount.aspx?User=";
         public static string SujetForgetUser = "Récupération de nom d'utilisateur - Throne Wars";

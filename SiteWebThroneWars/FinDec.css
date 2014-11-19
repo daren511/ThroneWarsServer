@@ -187,7 +187,7 @@ div.FormRecherche{
 
 .Leaderboard{
   margin-top:3%;
-  margin-left: 38%;
+  margin-left:38%;
   min-height:50px;
   max-height: 20%;
   overflow-x:hidden; 
@@ -202,7 +202,7 @@ div.FormRecherche{
 }
 .LeaderboardTable table{
   margin-top:3%;
-  margin-left:7%;
+  margin-left:10%;
 }
 .LeaderboardTable td{
   vertical-align:middle;
@@ -228,7 +228,7 @@ div.FormRecherche{
 }
 .Stats table{
   margin-top:3%;
-  margin-left:7%;
+  margin-left:10%;
 }
 .Stats td{
   vertical-align:middle;

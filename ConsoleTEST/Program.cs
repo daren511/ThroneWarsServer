@@ -11,8 +11,7 @@ namespace ConsoleTEST
     {
         static void Main(string[] args)
         {
-            //Console.WriteLine(Controle.insertPlayer("TEST3", "TEST3", "TESTTEST").ToString());
-            Controle.returnStats(2);
+            Console.WriteLine(Controle.hashPassword("Warst",null,System.Security.Cryptography.SHA256.Create()).ToString());
             Console.ReadLine();
         }
     }

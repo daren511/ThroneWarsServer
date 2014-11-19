@@ -132,6 +132,8 @@
             // CHECK_IsActive
             // 
             this.CHECK_IsActive.AutoSize = true;
+            this.CHECK_IsActive.Checked = true;
+            this.CHECK_IsActive.CheckState = System.Windows.Forms.CheckState.Checked;
             this.CHECK_IsActive.Enabled = false;
             this.CHECK_IsActive.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.CHECK_IsActive.Location = new System.Drawing.Point(12, 41);

@@ -102,6 +102,8 @@ namespace DeveloperApplication
 
         private void Lister_Items()
         {
+            int index = -1;
+            if (DGV_Inventaire.Rows.Count > 0) { index = DGV_Inventaire.SelectedRows[0].Index; }
             BindingSource maSource = new BindingSource(Controle.listItems(CHECK_SHOW_Activated.Checked, JID, 1), "STATS");
             DGV_Inventaire.DataSource = maSource;
 
@@ -115,6 +117,12 @@ namespace DeveloperApplication
                 else
                     BTN_Consulter.Enabled = false;
             }
+            if (index != -1 && index < DGV_Inventaire.Rows.Count)
+            {
+                DGV_Inventaire.Rows[0].Selected = false;
+                DGV_Inventaire.Rows[index].Selected = true;
+            }
+            FillComboBox();
         }
 
         private void BTN_Consulter_Click(object sender, EventArgs e)
@@ -154,6 +162,8 @@ namespace DeveloperApplication
 
         private void ListerPotions()
         {
+            int index = -1;
+            if (DGV_Potions.Rows.Count > 0) { index = DGV_Potions.SelectedRows[0].Index; }
             BindingSource maSource = new BindingSource(Controle.listPotions(JID, 1), "POTIONS");
             DGV_Potions.DataSource = maSource;
 
@@ -163,6 +173,11 @@ namespace DeveloperApplication
                     BTN_Consulter.Enabled = true;
                 else
                     BTN_Consulter.Enabled = false;
+            }
+            if (index != -1 && index < DGV_Potions.Rows.Count)
+            {
+                DGV_Potions.Rows[0].Selected = false;
+                DGV_Potions.Rows[index].Selected = true;
             }
         }
 
@@ -218,10 +233,15 @@ namespace DeveloperApplication
 
         private void FillComboBox()
         {
-            List<string> perso = Controle.fillPerso(JID);
-            for (int i = 0; i < perso.Count; ++i)
-                CB_Perso.Items.Add(perso[i]);
-            CB_Perso.SelectedIndex = 0;
+            if (DGV_Inventaire.Rows.Count > 0)
+            {
+                CB_Perso.Items.Clear();
+                string classe = DGV_Inventaire.SelectedRows[0].Cells[2].Value.ToString();
+                List<string> perso = Controle.fillPerso(JID, classe);
+                for (int i = 0; i < perso.Count; ++i)
+                    CB_Perso.Items.Add(perso[i]);
+                CB_Perso.SelectedIndex = 0;
+            }
         }
 
         private void BTN_Ajouter_Click(object sender, EventArgs e)
@@ -232,6 +252,11 @@ namespace DeveloperApplication
                 Lister_Items();
             else
                 MessageBox.Show("Ce personnage possède déjà cet item");
+        }
+
+        private void DGV_Inventaire_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            FillComboBox();
         }
     }
 }

@@ -13,7 +13,7 @@ namespace SiteWebThroneWars
 {
     public partial class Connexion : System.Web.UI.Page
     {
-       
+
         protected void Page_Load(object sender, EventArgs e)
         {
         }
@@ -26,6 +26,7 @@ namespace SiteWebThroneWars
             // Textbox non null
             bool ok = VerifChamps();
             bool Connecter = false;
+            bool siConfirmer = false;
             // if Text box pas null
             if (ok)
             {
@@ -35,51 +36,56 @@ namespace SiteWebThroneWars
 
                 string passHash = Controle.hashPassword(pass, null, System.Security.Cryptography.SHA256.Create());
                 Connecter = Controle.userPassCorrespondant(user, passHash);
-
-                if (Connecter)
+                siConfirmer = Controle.accountIsConfirmed(user);
+                if (!siConfirmer)
                 {
-                    ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>MessageBoxReussi();</script>", false);
-
-                    //Prend le JID
-                    int JID = Controle.getJID(user);
-                    
-
-                    if (JID != 0)
+                    text = "Veuillez visiter votre courriel pour confirmer votre compte";
+                    // Pas connecté
+                    ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>MessageBoxWarning(\"" + text + "\");</script>", false);
+                }
+                    if (Connecter)
                     {
-                        //Si oui > Ramener la position du leaderboard
-                        
-                        DSLeaderboard = Controle.getLeaderboard(user);
-                        if (DSLeaderboard != null)
+                       // ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>MessageBoxReussi();</script>", false);
+
+                        //Prend le JID
+                        int JID = Controle.getJID(user);
+
+
+                        if (JID != 0)
                         {
-                            GV_Leaderboard.DataSource = DSLeaderboard;
-                            GV_Leaderboard.DataBind();
+                            //Si oui > Ramener la position du leaderboard
+
+                            DSLeaderboard = Controle.getLeaderboard(user);
+                            if (DSLeaderboard != null)
+                            {
+                                GV_Leaderboard.DataSource = DSLeaderboard;
+                                GV_Leaderboard.DataBind();
+                            }
+
+                            // Return stats des persos dans un DataSet
+                            DS = Controle.getStatsWEB(JID);
+                            if (DS != null)
+                            {
+                                GV_Stats.DataSource = DS;
+                                GV_Stats.DataBind();
+                            }
+
                         }
-                         
-                        // Return stats des persos dans un DataSet
-                        DS = Controle.getStatsWEB(JID);
-                        if (DS != null)
+                        else
                         {
-                            GV_Stats.DataSource = DS;
-                            GV_Stats.DataBind();
+                            text = "JID Invalide ";
+                            //Textbox vide erreur
+                            ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>MessageBoxErreur(\"" + text + "\");</script>", false);
                         }
-                        
                     }
-
-
                     else
                     {
-                        text = "JID Invalide ";
-                        //Textbox vide erreur
+                        text = "Le nom d'utilisateur et le mot de passe n'étaient pas correspondant";
+                        // Pas connecté
                         ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>MessageBoxErreur(\"" + text + "\");</script>", false);
                     }
-                }
-                else
-                {
-                    text = "Le nom d'utilisateur et le mot de passe n'étaient pas correspondant";
-                    // Pas connecté
-                    ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>MessageBoxErreur(\"" + text + "\");</script>", false);
-                }
-            }
+                }  
+        
             else
             {
                 text = "Vous devez remplir tout les champs requis";
@@ -106,13 +112,13 @@ namespace SiteWebThroneWars
         }
 
         protected void GV_Leaderboard_OnRowDataBound(object sender, GridViewRowEventArgs e)
-        { 
+        {
             if (e.Row.RowType == DataControlRowType.DataRow)
-             {
-        // do your stuffs here, for example if column risk is your third column:
+            {
+                // do your stuffs here, for example if column risk is your third column:
                 if (e.Row.Cells[1].Text == username.Text.ToLower())
                 {
-                    e.Row.BackColor = System.Drawing.Color.Red;
+                    e.Row.BackColor = System.Drawing.Color.PowderBlue;
                 }
             }
         }
