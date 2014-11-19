@@ -13,7 +13,7 @@ namespace ThroneWarsServer
 {
     class Program
     {
-        const int PORT = 50052;
+        const int PORT = 50053;
         static List<Joueur> v = new List<Joueur>();
         static List<Instance> i = new List<Instance>();
         static Socket sckserver;
@@ -41,7 +41,7 @@ namespace ThroneWarsServer
                     v.Add(new Joueur(sck1,v.Count));
                     new Instance(v[v.Count-1]).T.Start();
 
-                    Console.WriteLine("Joueur connecté : " + (sck1.RemoteEndPoint as IPEndPoint).Address);
+                    Console.WriteLine("["+ System.DateTime.Now +"] Joueur connecté : " + (sck1.RemoteEndPoint as IPEndPoint).Address);
                     
                 }
                 sck1 = null;

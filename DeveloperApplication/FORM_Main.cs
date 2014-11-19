@@ -169,7 +169,7 @@ namespace DeveloperApplication
             if (FP.ShowDialog() == DialogResult.OK)
             {
                 int JID = Int32.Parse(DGV_Joueurs.SelectedRows[0].Cells[0].Value.ToString());
-                if (Controle.addPerso(JID, FP.NOM, FP.XP, FP.LEVEL, FP.CLASSE, FP.ISACTIVE))
+                if (Controle.addPerso(JID, FP.NOM, FP.CLASSE, FP.ISACTIVE, FP.XP, FP.LEVEL))
                     ListerPerso();
             }
         }
