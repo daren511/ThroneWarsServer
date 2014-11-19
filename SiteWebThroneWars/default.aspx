@@ -11,8 +11,7 @@
 <link rel="stylesheet" type="text/css" href="FinDec.css"/>
 <link rel="shortcut icon" href="/Images/Icon.png" />
 </head>
-<body>
-	
+<body>	
 		<div class="Entete">
 		<img src="./Images/Logo_Grand.png" style="max-height:100%; max-width:100%;"/> <!-- A checker les dimensions ou plus grosse image -->
 		</div>
@@ -53,7 +52,7 @@
 					<div class="Telechargement">
 						<h3>Téléchargement</h3>
 						<p>Client de téléchargement à venir</p>
-                        <p>Beta test login : <a href="Images/ThroneWars.zip">ici</a> </p>
+                        <p>Beta test login V0.04 : <a href="Downloads\Thronewars_Setup.exe">ici</a> </p>
 					</div>
 					
 				</div>
