@@ -11,7 +11,6 @@ using System.IO;
 public class onMainMenu : MonoBehaviour
 {
     //---------- VARIABLES
-    GUIStyle mapStyle;
     private bool hasUpdatedGui = false;
     private bool[] tabMap = { false };
     private List<bool> itemsToggles = new List<bool>();
@@ -40,11 +39,13 @@ public class onMainMenu : MonoBehaviour
     // Inventory window  (player)
     private static float wI = wP / 2;
     private static float hI = (Screen.height - hP) / 2;
-    private static Rect rectInvent = new Rect((Screen.width - wI) / 1.37f, (Screen.height - hI) / 1.455f, wI, hI);
+    private static Rect rectInvent = new Rect((Screen.width - wI) / 1.24f, (Screen.height - hI) / 1.2f, wI, hI);
     // Character stats window
-    private static float wS = wP;
-    private static float hS = hI - 10;
-    private static Rect rectStats = new Rect((Screen.width - wS) / 2, 3, wS, hS);
+    private static float wS = wP / 2;
+    private static float hS = (hI - 10) / 2;
+    private static Rect rectStats = new Rect((Screen.width - wS) / 2, (Screen.height - hS) / 4, wS, hS);
+    // Item window  (character)
+    private static Rect rectItem = new Rect((Screen.width - wP) / 2, (Screen.height - hI) / 1.2f, wP / 2, hI);
     // Character stats icons
     public Texture2D _healthTexture;
     public Texture2D _magicTexture;
@@ -52,8 +53,6 @@ public class onMainMenu : MonoBehaviour
     public Texture2D _defTexture;
     public Texture2D _matkTexture;
     public Texture2D _mdefTexture;
-    // Item window  (character)
-    private static Rect rectItem = new Rect((Screen.width - wS) / 2, (Screen.height - hI) / 1.455f, wS / 2, hI);
 
     private string __spriteClass;
     private Texture2D sprite1 = null;
@@ -302,9 +301,9 @@ public class onMainMenu : MonoBehaviour
             GUILayout.EndHorizontal();
 
         }
-        GUILayout.Space(25);
-        GUILayout.BeginArea(new Rect(rectStats.xMax / 6, rectStats.yMin + rectStats.height - 44, rectStats.width, 30));
+        GUILayout.BeginArea(new Rect(rectStats.width / 24, rectStats.height / 1.2f, rectStats.width, 40));
         GUILayout.BeginHorizontal();
+        GUILayout.FlexibleSpace();
 
         GUI.enabled = remainingPosition > 0 && tabCharac.Count > 0;
         if (GUILayout.Button("Ajouter", GUILayout.Height(35), GUILayout.Width(200)))
@@ -316,6 +315,7 @@ public class onMainMenu : MonoBehaviour
         {
             UnselectCharacter(selectedTeam);
         }
+        GUILayout.FlexibleSpace();
         GUILayout.EndHorizontal();
         GUILayout.EndArea();
     }

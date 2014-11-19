@@ -14,10 +14,8 @@ public class ResourceManager : MonoBehaviour
     private Color _secondaryColor = new Color(1.0f, 0.972f, 0.0f, 1.0f);
     // Background & Logo
     private Texture _background = Resources.Load("Menu/Background", typeof(Texture)) as Texture;
-    private Texture _logo = Resources.Load("Menu/Logo", typeof(Texture)) as Texture;
-    private static float wL = Screen.width - 20;
-    private static float hL = 1900.0f;
-    private static Rect rectLogo = new Rect((Screen.width - wL) / 2, 5, wL, hL);
+    private static Texture _logo = Resources.Load("Menu/Logo", typeof(Texture)) as Texture;
+    private static Rect rectLogo = new Rect((Screen.width - _logo.width) / 2, 0, _logo.width, _logo.height);
     // Instance
     private static ResourceManager _instance = null;
 
