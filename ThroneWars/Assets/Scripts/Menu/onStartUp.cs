@@ -36,15 +36,7 @@ public class onStartUp : MonoBehaviour
 
     void OnGUI()
     {
-        if (Event.current.type == EventType.keyDown)
-        {            
-            Debug.Log("touche appuyée : " + Event.current.keyCode + " " + KeyCode.Return);
-            if(Event.current.keyCode == KeyCode.Return)
-            {
-                Debug.Log("enter");
-            }
-        }
-        if (Event.current.type == EventType.keyDown && Event.current.keyCode == KeyCode.Return 
+        if (Event.current.type == EventType.keyDown && Event.current.keyCode == KeyCode.Return
             && userValue.Trim() != "" && pwdvalue.Trim() != "")
         {
             Connection();
@@ -149,6 +141,15 @@ public class onStartUp : MonoBehaviour
         }
         GUILayout.FlexibleSpace();
         GUILayout.EndHorizontal();
+    }
+
+    private void checkEnter()
+    {
+        if (Input.GetKey("return"))
+        {
+            if (userValue.Trim() != "" && pwdvalue.Trim() != "")
+                Connection();
+        }
     }
 
 
