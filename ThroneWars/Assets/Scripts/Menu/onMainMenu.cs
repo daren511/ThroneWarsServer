@@ -46,12 +46,12 @@ public class onMainMenu : MonoBehaviour
     private static float hS = hI - 10;
     private static Rect rectStats = new Rect((Screen.width - wS) / 2, 3, wS, hS);
     // Character stats icons
-    public  Texture2D _healthTexture;
-    public  Texture2D _magicTexture;
-    public  Texture2D _atkTexture;
-    public  Texture2D _defTexture;
-    public  Texture2D _matkTexture;
-    public  Texture2D _mdefTexture;
+    public Texture2D _healthTexture;
+    public Texture2D _magicTexture;
+    public Texture2D _atkTexture;
+    public Texture2D _defTexture;
+    public Texture2D _matkTexture;
+    public Texture2D _mdefTexture;
     // Item window  (character)
     private static Rect rectItem = new Rect((Screen.width - wS) / 2, (Screen.height - hI) / 1.455f, wS / 2, hI);
 
@@ -79,10 +79,12 @@ public class onMainMenu : MonoBehaviour
         onMenuLoad.cb = new ComboBox(new Rect(onMenuLoad.rectCreate.xMin / 2 + 40, onMenuLoad.rectCreate.yMin + 10, 200, 30), onMenuLoad.contents[0],
             onMenuLoad.contents, "button", "box", onMenuLoad.listStyle);
 
-
-        __spriteClass = PlayerManager._instance._selectedCharacter._characterClass._className;
-        sprite1 = GetSprite(__spriteClass, 1);
-        sprite2 = GetSprite(__spriteClass, 2);
+        if (PlayerManager._instance._selectedCharacter != null)
+        {
+            __spriteClass = PlayerManager._instance._selectedCharacter._characterClass._className;
+            sprite1 = GetSprite(__spriteClass, 1);
+            sprite2 = GetSprite(__spriteClass, 2);
+        }
     }
 
 
@@ -103,10 +105,7 @@ public class onMainMenu : MonoBehaviour
         GUILayout.Window(6, rectItem, doItemWindow, "", ColoredGUISkin.Skin.box);
         GUILayout.Window(7, rectStats, doStatsWindow, "", ColoredGUISkin.Skin.box);
     }
-    void Update()
-    {
 
-    }
     void doTeamWindow(int windowID)
     {
         GUILayout.Space(25);
@@ -118,9 +117,12 @@ public class onMainMenu : MonoBehaviour
         GUILayout.Space(25);
         selectedCharac = GUILayout.SelectionGrid(selectedCharac, tabCharac.ToArray(), 1);
 
-        if (PlayerManager._instance._selectedCharacter._name != tabCharac[selectedCharac])
+        if (tabCharac != null && PlayerManager._instance._selectedCharacter != null)
         {
-            GetHighlightedCharacter();
+            if (PlayerManager._instance._selectedCharacter._name != tabCharac[selectedCharac])
+            {
+                GetHighlightedCharacter();
+            }
         }
     }
 
@@ -132,8 +134,7 @@ public class onMainMenu : MonoBehaviour
         GUILayout.FlexibleSpace();
         GUILayout.EndHorizontal();
 
-        //GUI.enabled = chosenCharacters == PlayerManager._instance._chosenTeam.Length && tabMap[0];
-        GUI.enabled = false;
+        GUI.enabled = chosenCharacters == PlayerManager._instance._chosenTeam.Length && tabMap[0];
         if (GUILayout.Button("Jouer"))
         {
             // Go to the place character screen
@@ -156,11 +157,11 @@ public class onMainMenu : MonoBehaviour
         GUI.Label(new Rect(295, 30, 150, 25), "QTÉ");
 
         GUILayout.EndHorizontal();
-        
+
         scrollPos = GUILayout.BeginScrollView(scrollPos, ColoredGUISkin.Skin.verticalScrollbar, ColoredGUISkin.Skin.scrollView);
         //selectedInvent = GUILayout.SelectionGrid(selectedInvent, tabInvent.ToArray(), 1);
 
-        for (int i = 0; i < PlayerManager._instance._playerInventory._equips.Count; ++i )
+        for (int i = 0; i < PlayerManager._instance._playerInventory._equips.Count; ++i)
         {
             int offset = i * 25;
             EquipableItem item = PlayerManager._instance._playerInventory._equips[i];
@@ -185,7 +186,7 @@ public class onMainMenu : MonoBehaviour
     void doItemWindow(int windowID)
     {
         GUILayout.Space(25);
-            //selectedItem = GUILayout.SelectionGrid(selectedItem, tabItem.ToArray(), 1);
+        //selectedItem = GUILayout.SelectionGrid(selectedItem, tabItem.ToArray(), 1);
 
         GUILayout.BeginHorizontal();
 
@@ -196,30 +197,33 @@ public class onMainMenu : MonoBehaviour
 
         GUILayout.EndHorizontal();
 
-
-        for (int i = 0; i < PlayerManager._instance._selectedCharacter._characterInventory._invent.Count; ++i)
+        if (PlayerManager._instance._selectedCharacter != null && PlayerManager._instance._selectedCharacter._characterInventory._invent.Count > 0)
         {
-            int offset = i * 25;
-            EquipableItem item = PlayerManager._instance._selectedCharacter._characterInventory._invent[i];
-            Rect itemButton = new Rect(0, 20 + offset, 100, 20);
 
-            GUI.enabled = chosenCharacters > 0 && tabTeam.Count > 0;
-            if (GUILayout.Button(item._itemName, GUILayout.Height(30), GUILayout.Width(100)))
+
+            for (int i = 0; i < PlayerManager._instance._selectedCharacter._characterInventory._invent.Count; ++i)
             {
+                int offset = i * 25;
+                EquipableItem item = PlayerManager._instance._selectedCharacter._characterInventory._invent[i];
+                Rect itemButton = new Rect(0, 20 + offset, 100, 20);
 
-            } 
-            GUI.Label(new Rect(75, 20 + offset, 20, 20), item._bonusPhysAtk.ToString());
-            GUI.Label(new Rect(125, 20 + offset, 20, 20), item._bonusPhysDef.ToString());
-            GUI.Label(new Rect(175, 20 + offset, 20, 20), item._bonusMagicAtk.ToString());
-            GUI.Label(new Rect(225, 20 + offset, 20, 20), item._bonusMagicDef.ToString());
-            GUI.Label(new Rect(275, 20 + offset, 20, 20), item._quantity.ToString());
+                GUI.enabled = chosenCharacters > 0 && tabTeam.Count > 0;
+                if (GUILayout.Button(item._itemName, GUILayout.Height(30), GUILayout.Width(100)))
+                {
+
+                }
+                GUI.Label(new Rect(75, 20 + offset, 20, 20), item._bonusPhysAtk.ToString());
+                GUI.Label(new Rect(125, 20 + offset, 20, 20), item._bonusPhysDef.ToString());
+                GUI.Label(new Rect(175, 20 + offset, 20, 20), item._bonusMagicAtk.ToString());
+                GUI.Label(new Rect(225, 20 + offset, 20, 20), item._bonusMagicDef.ToString());
+                GUI.Label(new Rect(275, 20 + offset, 20, 20), item._quantity.ToString());
+            }
         }
-
     }
-        
+
     void doStatsWindow(int windowID)
     {
-        if(tabCharac.Count > 0)
+        if (tabCharac.Count > 0)
         {
             string name = tabCharac[selectedCharac];
             int indexOfChar = PlayerManager._instance._characters.IndexOf(PlayerManager._instance._characters.Find(x => x._name == name));
@@ -293,7 +297,7 @@ public class onMainMenu : MonoBehaviour
             GUILayout.EndVertical();
 
             GUILayout.EndHorizontal();
-           
+
         }
         GUILayout.Space(25);
         GUILayout.BeginArea(new Rect(rectStats.xMax / 6, rectStats.yMin + rectStats.height - 44, rectStats.width, 30));
@@ -319,7 +323,7 @@ public class onMainMenu : MonoBehaviour
         PlayerManager._instance.SendAction(Controle.Actions.CLICK);
 
         PlayerManager._instance.Send(tabCharac[selectedCharac]);
-        PlayerManager._instance.LoadPersonnage(PlayerManager._instance.GetPersonnage());        
+        PlayerManager._instance.LoadPersonnage(PlayerManager._instance.GetPersonnage());
     }
 
     private Texture2D GetSprite(string characterClass, int spriteID)
@@ -345,7 +349,7 @@ public class onMainMenu : MonoBehaviour
 
     void SelectCharacter(int pos)
     {
-        string name = tabCharac[selectedCharac];       
+        string name = tabCharac[selectedCharac];
         PlayerManager._instance._chosenTeam[chosenCharacters] = PlayerManager._instance._selectedCharacter;
 
         tabCharac.RemoveAt(pos);
@@ -381,7 +385,7 @@ public class onMainMenu : MonoBehaviour
         for (int i = 0; i < PlayerManager._instance._chosenTeam.Length; ++i)
         {
             c = PlayerManager._instance._chosenTeam[i];
-            if(c != null)
+            if (c != null)
                 tabTeam.Add(c._name.ToString());
         }
     }
@@ -389,7 +393,7 @@ public class onMainMenu : MonoBehaviour
     {
         tabInvent.Clear();
         EquipableItem item;
-        for(int i = 0; i < PlayerManager._instance._playerInventory._equips.Count; ++i)
+        for (int i = 0; i < PlayerManager._instance._playerInventory._equips.Count; ++i)
         {
             item = PlayerManager._instance._playerInventory._equips[i];
             tabInvent.Add(item._itemName + " " + item._quantity);

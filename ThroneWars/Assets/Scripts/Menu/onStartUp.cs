@@ -34,9 +34,22 @@ public class onStartUp : MonoBehaviour
     private static float hL = 210.0f;
     private Rect rectLogin = new Rect((Screen.width - wL) / 2, (Screen.height - hL) / 2, wL, hL);
 
-    private DataSet playerData;
     void OnGUI()
     {
+        if (Event.current.type == EventType.keyDown)
+        {            
+            Debug.Log("touche appuyée : " + Event.current.keyCode + " " + KeyCode.Return);
+            if(Event.current.keyCode == KeyCode.Return)
+            {
+                Debug.Log("enter");
+            }
+        }
+        if (Event.current.type == EventType.keyDown && Event.current.keyCode == KeyCode.Return 
+            && userValue.Trim() != "" && pwdvalue.Trim() != "")
+        {
+            Connection();
+        }
+
         hasUpdatedGui = ResourceManager.GetInstance.UpdateGUI(hasUpdatedGui);
         ResourceManager.GetInstance.CreateBackground();
         ResourceManager.GetInstance.CreateLogo();
@@ -45,7 +58,41 @@ public class onStartUp : MonoBehaviour
         GUILayout.Window(2, rectLogin, doLoginWindow, "Login");   // Draw the login window
         onMenuLoad.createMenuWindow(false);
     }
+    void Connection()
+    {
+        try
+        {
+            PlayerManager._instance.ConnectToServer();
 
+            if (PlayerManager._instance.sck.Connected)
+            {
+                // on vérifie les infos entrées par le joueur(usager, mot de passe)
+                string ans = PlayerManager._instance.CheckUserInfos(userValue, pwdvalue);
+
+                validInfos = ans.Split(SPLITTER)[0].Contains("True");
+                confirmed = ans.Split(SPLITTER)[1].Contains("True");
+
+                if (validInfos && confirmed)
+                {
+                    try
+                    {
+                        PlayerManager._instance.LoadPlayer();
+
+                        Application.LoadLevel("MainMenu");
+                    }
+                    catch (Exception e)
+                    {
+                        Debug.Log(e);
+                    }
+                }
+            }
+        }
+        catch (SocketException ex)   // The user can't connect to the server
+        {
+            Debug.Log(ex.Message.ToString());
+            canConnect = false;
+        }
+    }
     void doLoginWindow(int windowID)
     {
         // Ornament
@@ -98,38 +145,7 @@ public class onStartUp : MonoBehaviour
         GUILayout.FlexibleSpace();
         if (GUILayout.Button("Connexion", GUILayout.Width(170), GUILayout.Height(40)))
         {
-            try
-            {
-                PlayerManager._instance.ConnectToServer();
-
-                if (PlayerManager._instance.sck.Connected)
-                {
-                    // on vérifie les infos entrées par le joueur(usager, mot de passe)
-                    string ans = PlayerManager._instance.CheckUserInfos(userValue, pwdvalue);
-
-                    validInfos = ans.Split(SPLITTER)[0].Contains("True");
-                    confirmed = ans.Split(SPLITTER)[1].Contains("True");
-
-                    if (validInfos && confirmed)
-                    {
-                        try
-                        {
-                            PlayerManager._instance.LoadPlayer();
-
-                            Application.LoadLevel("MainMenu");
-                        }
-                        catch (Exception e)
-                        {
-                            Debug.Log(e);
-                        }
-                    }
-                }
-            }
-            catch (SocketException ex)   // The user can't connect to the server
-            {
-                Debug.Log(ex.Message.ToString());
-                canConnect = false;
-            }
+            Connection();
         }
         GUILayout.FlexibleSpace();
         GUILayout.EndHorizontal();

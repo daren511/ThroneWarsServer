@@ -207,9 +207,11 @@ public class onMenuLoad : MonoBehaviour
         {
             // Delete the character
             //todo: mettre le personnage inactif, rafraichir la liste personnages
-
-
-            wantToDelete = false;
+            if(PlayerManager._instance.DeleteCharacter(PlayerManager._instance._selectedCharacter._name))
+            {
+                wantToDelete = false;
+                //remove character in game
+            }
         }
         if (GUILayout.Button("Non", GUILayout.Height(37)))
         {
