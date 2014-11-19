@@ -11,7 +11,6 @@ using System.IO;
 public class onMainMenu : MonoBehaviour
 {
     //---------- VARIABLES
-    GUIStyle mapStyle;
     private bool hasUpdatedGui = false;
     private bool[] tabMap = { false };
     private List<bool> itemsToggles = new List<bool>();
@@ -40,11 +39,13 @@ public class onMainMenu : MonoBehaviour
     // Inventory window  (player)
     private static float wI = wP / 2;
     private static float hI = (Screen.height - hP) / 2;
-    private static Rect rectInvent = new Rect((Screen.width - wI) / 1.37f, (Screen.height - hI) / 1.455f, wI, hI);
+    private static Rect rectInvent = new Rect((Screen.width - wI) / 1.24f, (Screen.height - hI) / 1.2f, wI, hI);
     // Character stats window
-    private static float wS = wP;
-    private static float hS = hI - 10;
-    private static Rect rectStats = new Rect((Screen.width - wS) / 2, 3, wS, hS);
+    private static float wS = wP / 2;
+    private static float hS = (hI - 10) / 2;
+    private static Rect rectStats = new Rect((Screen.width - wS) / 2, (Screen.height - hS) / 4, wS, hS);
+    // Item window  (character)
+    private static Rect rectItem = new Rect((Screen.width - wP) / 2, (Screen.height - hI) / 1.2f, wP / 2, hI);
     // Character stats icons
     public Texture2D _healthTexture;
     public Texture2D _magicTexture;
@@ -52,8 +53,6 @@ public class onMainMenu : MonoBehaviour
     public Texture2D _defTexture;
     public Texture2D _matkTexture;
     public Texture2D _mdefTexture;
-    // Item window  (character)
-    private static Rect rectItem = new Rect((Screen.width - wS) / 2, (Screen.height - hI) / 1.455f, wS / 2, hI);
 
     private string __spriteClass;
     private Texture2D sprite1 = null;
@@ -76,7 +75,8 @@ public class onMainMenu : MonoBehaviour
         onMenuLoad.listStyle.padding.top =
         onMenuLoad.listStyle.padding.bottom = 4;
 
-        onMenuLoad.cb = new ComboBox(new Rect(onMenuLoad.rectCreate.xMin / 2 + 40, onMenuLoad.rectCreate.yMin + 10, 200, 30), onMenuLoad.contents[0],
+        onMenuLoad.cb = new ComboBox(new Rect(onMenuLoad.rectCreate.width / 2 + (onMenuLoad.rectCreate.width * 0.02f),
+            onMenuLoad.rectCreate.height / 2 - 40, 185, 30), onMenuLoad.contents[0],
             onMenuLoad.contents, "button", "box", onMenuLoad.listStyle);
 
         if (PlayerManager._instance._selectedCharacter != null)
@@ -172,6 +172,7 @@ public class onMainMenu : MonoBehaviour
             if (GUILayout.Button(item._itemName, GUILayout.Height(30), GUILayout.Width(100)))
             {
                 //ajouter item au personnage
+
             }
             GUI.Label(new Rect(75, 20 + offset, 20, 20), item._bonusPhysAtk.ToString());
             GUI.Label(new Rect(125, 20 + offset, 20, 20), item._bonusPhysDef.ToString());
@@ -300,9 +301,9 @@ public class onMainMenu : MonoBehaviour
             GUILayout.EndHorizontal();
 
         }
-        GUILayout.Space(25);
-        GUILayout.BeginArea(new Rect(rectStats.xMax / 6, rectStats.yMin + rectStats.height - 44, rectStats.width, 30));
+        GUILayout.BeginArea(new Rect(rectStats.width / 24, rectStats.height / 1.2f, rectStats.width, 40));
         GUILayout.BeginHorizontal();
+        GUILayout.FlexibleSpace();
 
         GUI.enabled = remainingPosition > 0 && tabCharac.Count > 0;
         if (GUILayout.Button("Ajouter", GUILayout.Height(35), GUILayout.Width(200)))
@@ -314,6 +315,7 @@ public class onMainMenu : MonoBehaviour
         {
             UnselectCharacter(selectedTeam);
         }
+        GUILayout.FlexibleSpace();
         GUILayout.EndHorizontal();
         GUILayout.EndArea();
     }

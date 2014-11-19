@@ -193,8 +193,7 @@ public class PlayerManager : MonoBehaviour
 
     public void LoadPersonnage(Personnages p)
     {
-        CharacterInventory invent = new CharacterInventory();
-
+        CharacterInventory invent = GetCharacterInventory(new List<Items>());
 
         PlayerManager._instance._selectedCharacter = Character.CreateCharacter(p.Nom, p.ClassName, p.Level, 3, 1,
             p.Health, 100, invent, p.PhysAtk, p.PhysDef, p.MagicAtk, p.MagicDef);
@@ -209,6 +208,17 @@ public class PlayerManager : MonoBehaviour
             PlayerManager._instance._playerInventory._equips.Add(eItem);
         }
 
+    }
+    public CharacterInventory GetCharacterInventory(List<Items> items)
+    {
+        CharacterInventory invent = new CharacterInventory();
+
+        for (int i = 0; i < items.Count; ++i )
+        {
+            Items it = items[i];
+            invent._invent.Add(new EquipableItem(it.Level, it.Classe, it.Nom, it.Description, it.WAtk, it.WDef, it.MAtk, it.MDef, it.Quantite));
+        }
+        return invent;
     }
     public List<Items> GetPlayerInventory()
     {

@@ -37,7 +37,8 @@ public class onMenuLoad : MonoBehaviour
                                     new GUIContent("Mage"), new GUIContent("Prêtre") };
 
     public static GUIStyle listStyle = new GUIStyle();
-
+    private static GUIStyle lblError = new GUIStyle();
+    private static bool error = false;
 
     public static void createQuitWindow()
     {
@@ -165,6 +166,7 @@ public class onMenuLoad : MonoBehaviour
         GUILayout.Space(100);
         GUILayout.BeginHorizontal();
         GUI.enabled = characName.Trim() != "";
+
         if (GUILayout.Button("Créer", GUILayout.Height(37)))
         {
             // Create the character
@@ -173,16 +175,27 @@ public class onMenuLoad : MonoBehaviour
             if(PlayerManager._instance.CreateCharacter(characName, characClass))
             {
                 wantToCreate = false;
-                onMainMenu.tabCharac.Add(characName);
-                
+                onMainMenu.tabCharac.Add(characName);                
             }
             else
             {
-                //message d'erreur : nom de personnage déjà utilisé
+                error = true;
             }
 
         }
         GUI.enabled = true;
+        if (error) 
+        {
+            lblError.normal.textColor = Color.red;
+            GUI.Label(new Rect(rectCreate.width / 2 + (rectCreate.width * 0.03f), rectCreate.height / 2 - 53, 200, 40),
+                "Ce nom est déjà utilisé!", lblError);
+        }
+        else
+        {
+            GUI.Label(new Rect(rectCreate.width / 2 + (rectCreate.width * 0.03f), rectCreate.height / 2 - 50, 100, 40),
+                "", lblError);
+        }
+
         if (GUILayout.Button("Annuler", GUILayout.Height(37)))
         {
             wantToCreate = false;
