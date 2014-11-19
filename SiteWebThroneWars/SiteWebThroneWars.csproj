@@ -171,7 +171,6 @@
     <Content Include="ThroneWarsOutput\ThroneWars_Data\Mono\etc\mono\2.0\DefaultWsdlHelpGenerator.aspx" />
     <Content Include="ThroneWarsOutput\ThroneWars_Data\Mono\etc\mono\mconfig\config.xml" />
     <Content Include="ThroneWarsOutput\ThroneWars_Data\Mono\mono.dll" />
-    <Content Include="ThroneWarsOutput\ThroneWars_Data\output_log.txt" />
     <Content Include="ThroneWarsOutput\ThroneWars_Data\Plugins\Oracle.DataAccess.dll" />
     <Content Include="ThroneWarsOutput\ThroneWars_Data\ScreenSelector.bmp" />
     <Content Include="ThroneWarsOutput\UnityPlayer_Symbols.pdb" />
@@ -316,7 +315,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>6077</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

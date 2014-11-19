@@ -55,7 +55,9 @@ public class onMenuLoad : MonoBehaviour
     public static void createCreationWindow()
     {
         if(wantToCreate)
-            GUILayout.Window(-3, rectCreate, doCreateWindow, "Créer un personage");
+        {
+            GUILayout.Window(-3, rectCreate, doCreateWindow, "Créer un personage");            
+        }
     }
     public static void createMenuWindow(bool isMM)
     {
@@ -91,13 +93,7 @@ public class onMenuLoad : MonoBehaviour
             if (GUILayout.Button("Retour"))
             {
                 // Back to the login screen
-                onMainMenu.tabCharac.Clear();
-                onMainMenu.tabInvent.Clear();
-                onMainMenu.tabTeam.Clear();
-                onMainMenu.tabItem.Clear();
-                PlayerManager._instance._playerInventory._equips.Clear();
-                PlayerManager._instance._playerInventory._potions.Clear();
-               // PlayerManager._instance._chosenTeam
+                PlayerManager._instance.ClearPlayer();
                 Application.LoadLevel("Login");
             }
         }
@@ -148,7 +144,7 @@ public class onMenuLoad : MonoBehaviour
 
     private static void doCreateWindow(int windowID)
     {
-
+        
         // Ornament
         GUI.DrawTexture(new Rect(20, 4, 31, 40), ColoredGUISkin.Skin.customStyles[0].normal.background);
 
