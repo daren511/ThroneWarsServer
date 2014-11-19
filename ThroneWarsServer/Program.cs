@@ -41,7 +41,7 @@ namespace ThroneWarsServer
                     v.Add(new Joueur(sck1,v.Count));
                     new Instance(v[v.Count-1]).T.Start();
 
-                    Console.WriteLine("Joueur connecté : " + (sck1.RemoteEndPoint as IPEndPoint).Address);
+                    Console.WriteLine("["+ System.DateTime.Now +"] Joueur connecté : " + (sck1.RemoteEndPoint as IPEndPoint).Address);
                     
                 }
                 sck1 = null;
