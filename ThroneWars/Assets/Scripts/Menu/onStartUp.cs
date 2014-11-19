@@ -98,6 +98,9 @@ public class onStartUp : MonoBehaviour
         GUILayout.Label("Usager");
         GUILayout.FlexibleSpace();
         GUILayout.EndVertical();
+        checkEnter();
+        checkArrowDown();
+        GUI.SetNextControlName("User");
         userValue = GUILayout.TextField(userValue, GUILayout.Width(300));
         GUILayout.EndHorizontal();
 
@@ -108,8 +111,16 @@ public class onStartUp : MonoBehaviour
         GUILayout.Label("Mot de passe");
         GUILayout.FlexibleSpace();
         GUILayout.EndVertical();
+        checkEnter();
+        checkArrowUp();
+        GUI.SetNextControlName("PWD");
         pwdvalue = GUILayout.PasswordField(pwdvalue, '*', GUILayout.Width(300));
         GUILayout.EndHorizontal();
+
+        if (GUI.GetNameOfFocusedControl() == string.Empty)
+        {
+            GUI.FocusControl("PWD");
+        }
 
         // If the user can't connect
         GUILayout.BeginHorizontal();
@@ -145,10 +156,26 @@ public class onStartUp : MonoBehaviour
 
     private void checkEnter()
     {
-        if (Input.GetKey("return"))
+        if (Event.current.keyCode == KeyCode.Return)
         {
             if (userValue.Trim() != "" && pwdvalue.Trim() != "")
                 Connection();
+        }
+    }
+
+    private void checkArrowDown()
+    {
+        if (Event.current.keyCode == KeyCode.DownArrow)
+        {
+            GUI.FocusControl("PWD");
+        }
+    }
+
+    private void checkArrowUp()
+    {
+        if (Event.current.keyCode == KeyCode.UpArrow)
+        {
+            GUI.FocusControl("User");
         }
     }
 
