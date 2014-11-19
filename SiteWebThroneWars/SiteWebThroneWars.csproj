@@ -63,6 +63,7 @@
     <Content Include="Downloads\Thronewars_Setup.exe" />
     <Content Include="favicon.ico" />
     <Content Include="Images\ThroneWars.zip" />
+    <None Include="Properties\PublishProfiles\Francis Site Web.pubxml" />
     <None Include="Properties\PublishProfiles\Throne.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
