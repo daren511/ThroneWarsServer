@@ -28,7 +28,7 @@ public class PlayerManager : MonoBehaviour
     public Socket sck;
     public IPEndPoint localEndPoint;
     public string ip = "bd.thronewars.ca";
-    public int port = 50052;
+    public int port = 50053;
 
 
     //singleton
@@ -76,10 +76,12 @@ public class PlayerManager : MonoBehaviour
         LoadPlayerinventory(list);
         Send("ok");
 
-        Personnages p = GetPersonnage();
-        LoadPersonnage(p);
-        Send("ok");
-
+        if(onMainMenu.tabCharac.Count > 0)
+        {
+            Personnages p = GetPersonnage();
+            LoadPersonnage(p);
+            Send("ok");
+        }
 
     }
     public List<string> GetAllPersonnages()
@@ -149,7 +151,24 @@ public class PlayerManager : MonoBehaviour
         {
             formatted[i] = buffer[i];
         }
-        return Encoding.ASCII.GetString(formatted) == "True";
+        return Encoding.UTF8.GetString(formatted).Contains("True");
+    }
+    public bool DeleteCharacter(string nom)
+    {
+        SendAction(Controle.Actions.DELETE);
+        Send(nom);
+
+        int count = sck.ReceiveBufferSize;
+        byte[] buffer;
+        buffer = new byte[count];
+
+        sck.Receive(buffer);
+        byte[] formatted = new byte[count];
+        for (int i = 0; i < count; i++)
+        {
+            formatted[i] = buffer[i];
+        }
+        return Encoding.UTF8.GetString(formatted).Contains("True");
     }
     public string CheckUserInfos(string user, string pw)
     {
@@ -168,7 +187,7 @@ public class PlayerManager : MonoBehaviour
         {
             formatted[i] = buffer[i];
         }
-        return Encoding.ASCII.GetString(formatted).ToString();
+        return Encoding.UTF8.GetString(formatted).ToString();
     }
 
 
