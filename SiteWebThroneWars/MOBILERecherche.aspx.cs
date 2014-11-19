@@ -7,7 +7,7 @@ using System.Web.UI.WebControls;
 
 namespace SiteWebThroneWars
 {
-    public partial class default_mobile : System.Web.UI.Page
+    public partial class MOBILERecherche : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {

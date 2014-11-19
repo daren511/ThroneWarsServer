@@ -11,15 +11,7 @@
 <link rel="stylesheet" type="text/css" href="FinDec.css"/>
 <link rel="shortcut icon" href="/Images/Icon.png" />
 </head>
-<body>
-    <script type="text/javascript">
-<!--
-    if (screen.width <= 699) {
-        document.location = "http://www.thronewars.ca/MOBILEdefault.aspx";
-    }
-    //-->
-</script>
-	
+<body>	
 		<div class="Entete">
 		<img src="./Images/Logo_Grand.png" style="max-height:100%; max-width:100%;"/> <!-- A checker les dimensions ou plus grosse image -->
 		</div>

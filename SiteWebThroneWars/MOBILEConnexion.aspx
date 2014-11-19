@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="default_mobile.aspx.cs" Inherits="SiteWebThroneWars.default_mobile" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="MOBILEConnexion.aspx.cs" Inherits="SiteWebThroneWars.MOBILEConnexion" %>
 
 <!DOCTYPE html>
 
@@ -10,7 +10,7 @@
 <body>
     <form id="form1" runat="server">
     <div>
-        <p>Test pour site en mobile</p>
+    <p> Page Connexion Mobile en cours</p>
     </div>
     </form>
 </body>

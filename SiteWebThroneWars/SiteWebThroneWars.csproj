@@ -73,7 +73,6 @@
     <Content Include="ChangePassword.aspx" />
     <Content Include="ConfirmAccount.aspx" />
     <Content Include="Connexion.aspx" />
-    <Content Include="default_mobile.aspx" />
     <Content Include="FinDec.css" />
     <Content Include="ForgotUsername.aspx" />
     <Content Include="ForgotPass.aspx" />
@@ -108,6 +107,11 @@
     <Content Include="Inscription.aspx" />
     <Content Include="Media.aspx" />
     <Content Include="default.aspx" />
+    <Content Include="MOBILEConnexion.aspx" />
+    <Content Include="MOBILEdefault.aspx" />
+    <Content Include="MOBILEInscription.aspx" />
+    <Content Include="MOBILEMedia.aspx" />
+    <Content Include="MOBILERecherche.aspx" />
     <Content Include="Recherche.aspx" />
     <Content Include="ResetPassword.aspx" />
     <Content Include="SendConfirmation.aspx" />
@@ -139,13 +143,6 @@
     </Compile>
     <Compile Include="Connexion.aspx.designer.cs">
       <DependentUpon>Connexion.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="default_mobile.aspx.cs">
-      <DependentUpon>default_mobile.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="default_mobile.aspx.designer.cs">
-      <DependentUpon>default_mobile.aspx</DependentUpon>
     </Compile>
     <Compile Include="ForgotUsername.aspx.cs">
       <DependentUpon>ForgotUsername.aspx</DependentUpon>
@@ -181,6 +178,41 @@
     </Compile>
     <Compile Include="default.aspx.designer.cs">
       <DependentUpon>default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MOBILEConnexion.aspx.cs">
+      <DependentUpon>MOBILEConnexion.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MOBILEConnexion.aspx.designer.cs">
+      <DependentUpon>MOBILEConnexion.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MOBILEdefault.aspx.cs">
+      <DependentUpon>MOBILEdefault.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MOBILEdefault.aspx.designer.cs">
+      <DependentUpon>MOBILEdefault.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MOBILEInscription.aspx.cs">
+      <DependentUpon>MOBILEInscription.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MOBILEInscription.aspx.designer.cs">
+      <DependentUpon>MOBILEInscription.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MOBILEMedia.aspx.cs">
+      <DependentUpon>MOBILEMedia.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MOBILEMedia.aspx.designer.cs">
+      <DependentUpon>MOBILEMedia.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MOBILERecherche.aspx.cs">
+      <DependentUpon>MOBILERecherche.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MOBILERecherche.aspx.designer.cs">
+      <DependentUpon>MOBILERecherche.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Recherche.aspx.cs">
