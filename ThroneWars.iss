@@ -29,8 +29,8 @@ Name: "french"; MessagesFile: "compiler:Languages\French.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-Source: "C:\ThroneWarsOutput\ThroneWars.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\ThroneWarsOutput\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\inetpub\Throne\SiteWeb\ThroneWarsOutput\ThroneWars.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\inetpub\Throne\SiteWeb\ThroneWarsOutput\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
