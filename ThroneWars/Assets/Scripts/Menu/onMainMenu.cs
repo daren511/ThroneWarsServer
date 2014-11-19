@@ -76,7 +76,8 @@ public class onMainMenu : MonoBehaviour
         onMenuLoad.listStyle.padding.top =
         onMenuLoad.listStyle.padding.bottom = 4;
 
-        onMenuLoad.cb = new ComboBox(new Rect(onMenuLoad.rectCreate.xMin / 2 + 40, onMenuLoad.rectCreate.yMin + 10, 200, 30), onMenuLoad.contents[0],
+        onMenuLoad.cb = new ComboBox(new Rect(onMenuLoad.rectCreate.width / 2 + (onMenuLoad.rectCreate.width * 0.02f),
+            onMenuLoad.rectCreate.height / 2 - 40, 185, 30), onMenuLoad.contents[0],
             onMenuLoad.contents, "button", "box", onMenuLoad.listStyle);
 
         if (PlayerManager._instance._selectedCharacter != null)
@@ -172,6 +173,7 @@ public class onMainMenu : MonoBehaviour
             if (GUILayout.Button(item._itemName, GUILayout.Height(30), GUILayout.Width(100)))
             {
                 //ajouter item au personnage
+
             }
             GUI.Label(new Rect(75, 20 + offset, 20, 20), item._bonusPhysAtk.ToString());
             GUI.Label(new Rect(125, 20 + offset, 20, 20), item._bonusPhysDef.ToString());
