@@ -53,6 +53,7 @@
 					<div class="Telechargement">
 						<h3>Téléchargement</h3>
 						<p>Client de téléchargement à venir</p>
+                        <p>Beta test login : <a href="Images/ThroneWars.zip">ici</a> </p>
 					</div>
 					
 				</div>

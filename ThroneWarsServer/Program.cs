@@ -13,7 +13,7 @@ namespace ThroneWarsServer
 {
     class Program
     {
-        const int PORT = 50052;
+        const int PORT = 50053;
         static List<Joueur> v = new List<Joueur>();
         static List<Instance> i = new List<Instance>();
         static Socket sckserver;

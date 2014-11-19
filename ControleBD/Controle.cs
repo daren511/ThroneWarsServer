@@ -88,85 +88,6 @@ namespace ControleBD
             }
         }
 
-        //on delete pas a revoir*****
-        //public static bool deletePlayer(int JID)
-        //{
-        //    OracleConnection conn = Connection.getInstance().conn;
-        //    string sqldelete = "delete cascade from joueurs where JID =:JID ";
-        //    try
-        //    {
-        //        OracleCommand oraDelete = new OracleCommand(sqldelete, conn);
-        //        OracleParameter OraParaJID = new OracleParameter(":JID", OracleDbType.Int32);
-        //        oraDelete.Parameters.Add(OraParaJID);
-        //        oraDelete.ExecuteNonQuery();
-        //        return true;
-        //    }
-        //    catch (OracleException ex)
-        //    {
-        //        Erreur.ErrorMessage(ex);
-        //        return false;
-        //    }
-
-        //}
-
-        //public static bool deleteItem(int IID)
-        //{
-        //    OracleConnection conn = Connection.getInstance().conn;
-        //    string sqldelete = "delete cascade from Items where IID =:IID ";
-        //    try
-        //    {
-        //        OracleCommand oraDelete = new OracleCommand(sqldelete, conn);
-        //        OracleParameter OraParaIID = new OracleParameter(":IID", OracleDbType.Int32);
-        //        oraDelete.Parameters.Add(OraParaIID);
-        //        oraDelete.ExecuteNonQuery();
-        //        return true;
-        //    }
-        //    catch (OracleException ex)
-        //    {
-        //        Erreur.ErrorMessage(ex);
-        //        return false;
-        //    }
-        //}
-
-        //public static bool deletePerso(int GUID)
-        //{
-        //    OracleConnection conn = Connection.getInstance().conn;
-        //    string sqldelete = "delete cascade from Personnages where GUID =:GUID";
-        //    try
-        //    {
-        //        OracleCommand oraDelete = new OracleCommand(sqldelete, conn);
-        //        OracleParameter OraParaGUID = new OracleParameter(":GUID", OracleDbType.Int32);
-        //        oraDelete.Parameters.Add(OraParaGUID);
-        //        oraDelete.ExecuteNonQuery();
-        //        return true;
-        //    }
-        //    catch (OracleException ex)
-        //    {
-        //        Erreur.ErrorMessage(ex);
-        //        return false;
-        //    }
-        //}
-
-        //public static bool deleteHabiite(int HID)
-        //{
-        //    OracleConnection conn = Connection.getInstance().conn;
-        //    string sqldelete = "delete cascade from Items where HID =:HID ";
-        //    try
-        //    {
-        //        OracleCommand oraDelete = new OracleCommand(sqldelete, conn);
-        //        OracleParameter OraParaHID = new OracleParameter(":HID", OracleDbType.Int32);
-        //        oraDelete.Parameters.Add(OraParaHID);
-        //        oraDelete.ExecuteNonQuery();
-        //        return true;
-        //    }
-        //    catch (OracleException ex)
-        //    {
-        //        Erreur.ErrorMessage(ex);
-        //        return false;
-        //    }
-        //}
-
-
         public static bool ajoutMoneyJoueur(int JID, int montant)
         {
             OracleConnection conn = Connection.getInstance().conn;
@@ -866,7 +787,7 @@ namespace ControleBD
                 OracleConnection conn = Connection.getInstance().conn;
                 string sqlSelect = "";
                 if (!app)
-                    sqlSelect = "select NOM,\"LEVEL\",CID from Personnages where JID = :JID";
+                    sqlSelect = "select NOM,\"LEVEL\",CID from Personnages where JID = :JID and ISACTIVE = 1";
                 else
                 {
                     sqlSelect = "SELECT GUID, NOM, CNAME, XP, \"LEVEL\", ISACTIVE FROM PERSONNAGES P " +
@@ -1800,7 +1721,7 @@ namespace ControleBD
             }
         }
 
-        public static bool addPerso(int jid, string nom, int xp, int level, string classe, string actif)
+        public static bool addPerso(int jid, string nom, string classe, string actif = "1",int xp = 0, int level = 1)
         {
             OracleConnection conn = Connection.getInstance().conn;
             string sql = "INSERT INTO PERSONNAGES(JID,NOM,XP,\"LEVEL\",CID,ISACTIVE) " +
@@ -1836,7 +1757,10 @@ namespace ControleBD
             }
             catch (OracleException ex)
             {
-                Erreur.ErrorMessage(ex);
+                if(ex.Number != 1)
+                    Erreur.ErrorMessage(ex);
+                
+                
                 return false;
             }
         }
