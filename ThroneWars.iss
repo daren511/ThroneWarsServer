@@ -7,7 +7,7 @@
 ; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
 AppId={{DCCA69B6-E1EE-471B-91DC-2E5E50C89CB3}
 AppName=Throne Wars
-AppVersion=0.002
+AppVersion=0.004
 ;AppVerName=Throne Wars 0.002
 AppPublisher=Collège Lionel-Groulx
 AppPublisherURL=http://www.thronewars.ca
@@ -16,7 +16,7 @@ AppUpdatesURL=http://www.thronewars.ca
 DefaultDirName={pf}\Throne Wars
 DefaultGroupName=Throne Wars
 AllowNoIcons=yes
-OutputDir=C:\inetpub\Throne\SiteWeb\Images
+OutputDir=C:\inetpub\Throne\SiteWeb\Downloads
 OutputBaseFilename=Thronewars_Setup
 SetupIconFile=C:\ThroneWarsServer\ThroneWars\Assets\Textures\icon.ico
 Compression=lzma
