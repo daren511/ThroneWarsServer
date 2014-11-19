@@ -10,7 +10,7 @@
 namespace SiteWebThroneWars {
     
     
-    public partial class default_mobile {
+    public partial class MOBILEdefault {
         
         /// <summary>
         /// Contrôle form1.
