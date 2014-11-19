@@ -16,7 +16,7 @@ namespace DeveloperApplication
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FORM_Main());
+            Application.Run(new FORM_Login());
         }
     }
 }

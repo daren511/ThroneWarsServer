@@ -57,6 +57,7 @@
             this.DGV_Joueurs.MultiSelect = false;
             this.DGV_Joueurs.Name = "DGV_Joueurs";
             this.DGV_Joueurs.ReadOnly = true;
+            this.DGV_Joueurs.RowHeadersVisible = false;
             this.DGV_Joueurs.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.DGV_Joueurs.Size = new System.Drawing.Size(300, 168);
             this.DGV_Joueurs.TabIndex = 1;
@@ -73,6 +74,7 @@
             this.DGV_Personnages.MultiSelect = false;
             this.DGV_Personnages.Name = "DGV_Personnages";
             this.DGV_Personnages.ReadOnly = true;
+            this.DGV_Personnages.RowHeadersVisible = false;
             this.DGV_Personnages.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.DGV_Personnages.Size = new System.Drawing.Size(434, 168);
             this.DGV_Personnages.TabIndex = 2;
@@ -183,7 +185,7 @@
             // TSMI_Quitter
             // 
             this.TSMI_Quitter.Name = "TSMI_Quitter";
-            this.TSMI_Quitter.Size = new System.Drawing.Size(152, 22);
+            this.TSMI_Quitter.Size = new System.Drawing.Size(111, 22);
             this.TSMI_Quitter.Text = "Quitter";
             this.TSMI_Quitter.Click += new System.EventHandler(this.TSMI_Quitter_Click);
             // 
@@ -218,8 +220,9 @@
             this.Controls.Add(this.STRIP_Menu);
             this.MainMenuStrip = this.STRIP_Menu;
             this.Name = "FORM_Main";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Throne Wars";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FORM_Main_FormClosed);
             this.Load += new System.EventHandler(this.FORM_Main_Load);
             ((System.ComponentModel.ISupportInitialize)(this.DGV_Joueurs)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.DGV_Personnages)).EndInit();

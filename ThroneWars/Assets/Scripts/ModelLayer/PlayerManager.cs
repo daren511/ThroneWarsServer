@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Net.Sockets;
 using System.Net;
 using System.Text;
-using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 using ControleBD;
+using System.Runtime.Serialization.Formatters.Binary;
 /*
  * PlayerManager
  * par Charles Hunter-Roy, 2014
@@ -61,7 +61,7 @@ public class PlayerManager : MonoBehaviour
     }
     public void Send(string reponse)
     {
-        byte[] data = Encoding.ASCII.GetBytes(reponse);
+        byte[] data = Encoding.UTF8.GetBytes(reponse);
 
         sck.Send(data);
     }
@@ -79,6 +79,8 @@ public class PlayerManager : MonoBehaviour
         Personnages p = GetPersonnage();
         LoadPersonnage(p);
         Send("ok");
+
+
     }
     public List<string> GetAllPersonnages()
     {
@@ -121,9 +123,37 @@ public class PlayerManager : MonoBehaviour
         }
         return perso;
     }
-    public string CheckPasswordUser(string user, string pw)
+    public void SendAction(Controle.Actions ac)
     {
-        byte[] data = Encoding.ASCII.GetBytes(user + SPLITTER + Controle.HashPassword(pw, null, System.Security.Cryptography.SHA256.Create()));
+        BinaryFormatter b = new BinaryFormatter();
+        using (var stream = new MemoryStream())
+        {
+            b.Serialize(stream, (int)ac);
+            PlayerManager._instance.sck.Send(stream.ToArray());
+        }
+    }
+    public bool CreateCharacter(string nom, string classe)
+    {
+        string sender = nom + SPLITTER + classe;
+
+        SendAction(Controle.Actions.CREATE);
+        Send(sender);
+
+        int count = sck.ReceiveBufferSize;
+        byte[] buffer;
+        buffer = new byte[count];
+
+        sck.Receive(buffer);
+        byte[] formatted = new byte[count];
+        for (int i = 0; i < count; i++)
+        {
+            formatted[i] = buffer[i];
+        }
+        return Encoding.ASCII.GetString(formatted) == "True";
+    }
+    public string CheckUserInfos(string user, string pw)
+    {
+        byte[] data = Encoding.ASCII.GetBytes(user + SPLITTER + Controle.hashPassword(pw, null, System.Security.Cryptography.SHA256.Create()));
         sck.Send(data); //on envoie les infos du joueur au serveur        
 
         int count = sck.ReceiveBufferSize;
@@ -144,8 +174,11 @@ public class PlayerManager : MonoBehaviour
 
     public void LoadPersonnage(Personnages p)
     {
+        CharacterInventory invent = new CharacterInventory();
+
+
         PlayerManager._instance._selectedCharacter = Character.CreateCharacter(p.Nom, p.ClassName, p.Level, 3, 1,
-            p.Health, 100, null, p.PhysAtk, p.PhysDef, p.MagicAtk, p.MagicDef);
+            p.Health, 100, invent, p.PhysAtk, p.PhysDef, p.MagicAtk, p.MagicDef);
     }
     public void LoadPlayerinventory(List<Items> items)
     {
@@ -190,5 +223,45 @@ public class PlayerManager : MonoBehaviour
             characterInvent._invent.Add(PlayerManager._instance._characters[i]._characterInventory._invent[i]);
         }
         return characterInvent;
+    }
+    private string GetCharacterClass(int id)
+    {
+        string classe = "";
+        switch (id)
+        {
+            case 1:
+                classe = "Guerrier";
+                break;
+            case 2:
+                classe = "Archer";
+                break;
+            case 3:
+                classe = "Mage";
+                break;
+            case 4:
+                classe = "Prêtre";
+                break;
+        }
+        return classe;
+    }
+    private int GetCharacterClassId(string classe)
+    {
+        int id = 0;
+        switch (classe)
+        {
+            case "Guerrier":
+                id = 1;
+                break;
+            case "Archer":
+                id = 2;
+                break;
+            case "Mage":
+                id = 3;
+                break;
+            case "Prêtre":
+                id = 4;
+                break;
+        }
+        return id;
     }
 }

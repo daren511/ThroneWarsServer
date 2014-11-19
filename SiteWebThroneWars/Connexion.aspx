@@ -22,7 +22,12 @@
         }
         function MessageBoxErreur(textadaptatif) {
             $(document).ready(function () {
-                swal({ title: "Échec! ", text: textadaptatif, type: "error", confirmButtonText: "I'm sad" });
+                swal({ title: "Échec! ", text: textadaptatif, type: "error", confirmButtonText: "Ok" });
+            });
+        }
+        function MessageBoxWarning(textadaptatif) {
+            $(document).ready(function () {
+                swal({ title: "Attention! ", text: textadaptatif, type: "warning", confirmButtonText: "Ok" });
             });
         }
         </script>
@@ -52,7 +57,8 @@
             <asp:Button Text="Se connecter" OnClick="Connexion_Click" runat="server" /><br />
             <a href="ForgotPass.aspx">Mot de passe oublié?</a><br />
             <a href="ForgotUsername.aspx">Nom d'utilisateur oublié?</a><br />
-            <a href="ChangePassword.aspx">Changer son mot de passe</a>
+            <a href="ChangePassword.aspx">Changer son mot de passe</a><br />
+            <a href="SendConfirmation.aspx">Renvoyer le lien de confirmation</a>
         </div>
         <div class="Leaderboard">
             <asp:GridView runat="server" ID="GV_Leaderboard" EmptyDataText="No data found!" OnRowDataBound="GV_Leaderboard_OnRowDataBound">

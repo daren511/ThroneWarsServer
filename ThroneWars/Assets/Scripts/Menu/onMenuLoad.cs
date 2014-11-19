@@ -90,6 +90,13 @@ public class onMenuLoad : MonoBehaviour
             if (GUILayout.Button("Retour"))
             {
                 // Back to the login screen
+                onMainMenu.tabCharac.Clear();
+                onMainMenu.tabInvent.Clear();
+                onMainMenu.tabTeam.Clear();
+                onMainMenu.tabItem.Clear();
+                PlayerManager._instance._playerInventory._equips.Clear();
+                PlayerManager._instance._playerInventory._potions.Clear();
+               // PlayerManager._instance._chosenTeam
                 Application.LoadLevel("Login");
             }
         }
@@ -123,12 +130,14 @@ public class onMenuLoad : MonoBehaviour
 
     private static void doManagerWindow(int windowID)
     {
+        GUI.enabled = onMainMenu.tabCharac.Count < 8;
         if (GUILayout.Button("Créer"))
         {
             // Create a character
             wantToCreate = true;
             
         }
+        GUI.enabled = onMainMenu.tabCharac.Count > 0;
         if (GUILayout.Button("Supprimer"))
         {
             // Delete a character
@@ -161,9 +170,16 @@ public class onMenuLoad : MonoBehaviour
             // Create the character
             characClass = contents[cb.SelectedItemIndex].text;
 
-            //todo: verifier si le nom du peronnage est disponible, rafraichir la liste personnages
+            if(PlayerManager._instance.CreateCharacter(characName, characClass))
+            {
+                wantToCreate = false;
+                
+            }
+            else
+            {
+                //message d'erreur : nom de personnage déjà utilisé
+            }
 
-            wantToCreate = false;
         }
         GUI.enabled = true;
         if (GUILayout.Button("Annuler", GUILayout.Height(37)))
