@@ -60,6 +60,8 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Downloads\Thronewars_Setup.exe" />
+    <Content Include="favicon.ico" />
     <Content Include="Images\ThroneWars.zip" />
     <None Include="Properties\PublishProfiles\Throne.pubxml" />
     <None Include="Web.Debug.config">
@@ -118,6 +120,7 @@
     <Content Include="sweet-alert.css" />
     <Content Include="sweet-alert.js" />
     <Content Include="sweet-alert.min.js" />
+    <Content Include="Thronewars_Setup.exe" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
