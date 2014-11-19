@@ -13,14 +13,49 @@ Platform assembly: C:\Users\200777439\Source\Repos\ThroneWarsServer\ThroneWars\T
 Loading C:\Users\200777439\Source\Repos\ThroneWarsServer\ThroneWars\ThroneWars_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
 Platform assembly: C:\Users\200777439\Source\Repos\ThroneWarsServer\ThroneWars\ThroneWars_Data\Managed\ControleBD.dll (this message is harmless)
 Loading C:\Users\200777439\Source\Repos\ThroneWarsServer\ThroneWars\ThroneWars_Data\Managed\ControleBD.dll into Unity Child Domain
-Platform assembly: C:\Users\200777439\Source\Repos\ThroneWarsServer\ThroneWars\ThroneWars_Data\Managed\System.Data.dll (this message is harmless)
-Loading C:\Users\200777439\Source\Repos\ThroneWarsServer\ThroneWars\ThroneWars_Data\Managed\System.Data.dll into Unity Child Domain
+Platform assembly: C:\Users\200777439\Source\Repos\ThroneWarsServer\ThroneWars\ThroneWars_Data\Managed\Emails.dll (this message is harmless)
+Loading C:\Users\200777439\Source\Repos\ThroneWarsServer\ThroneWars\ThroneWars_Data\Managed\Emails.dll into Unity Child Domain
 Platform assembly: C:\Users\200777439\Source\Repos\ThroneWarsServer\ThroneWars\ThroneWars_Data\Managed\Oracle.DataAccess.dll (this message is harmless)
 Loading C:\Users\200777439\Source\Repos\ThroneWarsServer\ThroneWars\ThroneWars_Data\Managed\Oracle.DataAccess.dll into Unity Child Domain
+Platform assembly: C:\Users\200777439\Source\Repos\ThroneWarsServer\ThroneWars\ThroneWars_Data\Managed\System.Data.dll (this message is harmless)
+Loading C:\Users\200777439\Source\Repos\ThroneWarsServer\ThroneWars\ThroneWars_Data\Managed\System.Data.dll into Unity Child Domain
 Platform assembly: C:\Users\200777439\Source\Repos\ThroneWarsServer\ThroneWars\ThroneWars_Data\Managed\NGUI.dll (this message is harmless)
 Loading C:\Users\200777439\Source\Repos\ThroneWarsServer\ThroneWars\ThroneWars_Data\Managed\NGUI.dll into Unity Child Domain
-- Completed reload, in  0.091 seconds
-desktop: 1680x1050 60Hz; virtual: 1680x1050 at 0,0
+- Completed reload, in  0.063 seconds
 <RI> Initializing input.
 <RI> Input initialized.
+desktop: 1680x1050 60Hz; virtual: 1680x1050 at 0,0
+Platform assembly: C:\Users\200777439\Source\Repos\ThroneWarsServer\ThroneWars\ThroneWars_Data\Managed\System.dll (this message is harmless)
+Platform assembly: C:\Users\200777439\Source\Repos\ThroneWarsServer\ThroneWars\ThroneWars_Data\Managed\System.Xml.dll (this message is harmless)
+Platform assembly: C:\Users\200777439\Source\Repos\ThroneWarsServer\ThroneWars\ThroneWars_Data\Managed\System.Core.dll (this message is harmless)
+Profiler is only supported with Pro License
+ 
+(Filename: C:/BuildAgent/work/d63dfc6385190b60/Runtime/Profiler/ProfilerConnection.cpp Line: 218)
+
+Platform assembly: C:\Users\200777439\Source\Repos\ThroneWarsServer\ThroneWars\ThroneWars_Data\Managed\System.Configuration.dll (this message is harmless)
+CompareBaseObjectsInternal can only be called from the main thread.
+Constructors and field initializers will be executed from the loading thread when loading a scene.
+Don't use this function in the constructor or field initializers, instead move initialization code to the Awake or Start function.
+ 
+(Filename: C:/BuildAgent/work/d63dfc6385190b60/artifacts/StandalonePlayerGenerated/UnityEngineObject.cpp Line: 17)
+
+ArgumentException: CompareBaseObjectsInternal can only be called from the main thread.
+Constructors and field initializers will be executed from the loading thread when loading a scene.
+Don't use this function in the constructor or field initializers, instead move initialization code to the Awake or Start function.
+  at (wrapper managed-to-native) UnityEngine.Object:CompareBaseObjectsInternal (UnityEngine.Object,UnityEngine.Object)
+  at UnityEngine.Object.CompareBaseObjects (UnityEngine.Object lhs, UnityEngine.Object rhs) [0x00000] in C:\BuildAgent\work\d63dfc6385190b60\artifacts\StandalonePlayerGenerated\UnityEngineObject.cs:49 
+  at UnityEngine.Object.op_Equality (UnityEngine.Object x, UnityEngine.Object y) [0x00000] in C:\BuildAgent\work\d63dfc6385190b60\artifacts\StandalonePlayerGenerated\UnityEngineObject.cs:160 
+  at PlayerManager.get__instance () [0x00000] in C:\Users\200777439\Source\Repos\ThroneWarsServer\ThroneWars\Assets\Scripts\ModelLayer\PlayerManager.cs:40 
+  at onMainMenu..ctor () [0x00000] in <filename unknown>:0 
+ 
+(Filename: C Line: 0)
+
+UnloadTime: 0.277505 ms
+System memory in use before: 21.1 MB.
+Unloading 4 Unused Serialized files (Serialized files now loaded: 0 / Dirty serialized files: 0)
+System memory in use after: 20.9 MB.
+
+Unloading 2 unused Assets to reduce memory usage. Loaded Objects now: 300.
+Total: 1.065502 ms (FindLiveObjects: 0.016402 ms CreateObjectMapping: 0.015063 ms MarkObjects: 0.482036 ms  DeleteObjects: 0.007029 ms)
+
 Waiting for finish

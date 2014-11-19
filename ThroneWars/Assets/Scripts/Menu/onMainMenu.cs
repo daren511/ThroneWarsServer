@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using ControleBD;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.IO;
 
 /// <summary>
 /// Initialize the main menu screen
@@ -12,6 +14,7 @@ public class onMainMenu : MonoBehaviour
     GUIStyle mapStyle;
     private bool hasUpdatedGui = false;
     private bool[] tabMap = { false };
+    private List<bool> itemsToggles = new List<bool>();
     private static int selectedTeam;
     private static int selectedCharac;
     private static int selectedInvent;  // For the player inventory
@@ -100,7 +103,10 @@ public class onMainMenu : MonoBehaviour
         GUILayout.Window(6, rectItem, doItemWindow, "", ColoredGUISkin.Skin.box);
         GUILayout.Window(7, rectStats, doStatsWindow, "", ColoredGUISkin.Skin.box);
     }
+    void Update()
+    {
 
+    }
     void doTeamWindow(int windowID)
     {
         GUILayout.Space(25);
@@ -126,13 +132,15 @@ public class onMainMenu : MonoBehaviour
         GUILayout.FlexibleSpace();
         GUILayout.EndHorizontal();
 
-        GUI.enabled = chosenCharacters == PlayerManager._instance._chosenTeam.Length && tabMap[0];
+        //GUI.enabled = chosenCharacters == PlayerManager._instance._chosenTeam.Length && tabMap[0];
+        GUI.enabled = false;
         if (GUILayout.Button("Jouer"))
         {
             // Go to the place character screen
             GameControllerSample6.scene = "Map1";
             Application.LoadLevel("placement");
         }
+        GUI.enabled = true;
     }
 
     void doInventWindow(int windowID)
@@ -149,7 +157,7 @@ public class onMainMenu : MonoBehaviour
 
         GUILayout.EndHorizontal();
         
-        scrollPos = GUILayout.BeginScrollView(scrollPos, ColoredGUISkin.Skin.verticalScrollbar, ColoredGUISkin.Skin.toggle);
+        scrollPos = GUILayout.BeginScrollView(scrollPos, ColoredGUISkin.Skin.verticalScrollbar, ColoredGUISkin.Skin.scrollView);
         //selectedInvent = GUILayout.SelectionGrid(selectedInvent, tabInvent.ToArray(), 1);
 
         for (int i = 0; i < PlayerManager._instance._playerInventory._equips.Count; ++i )
@@ -157,12 +165,12 @@ public class onMainMenu : MonoBehaviour
             int offset = i * 25;
             EquipableItem item = PlayerManager._instance._playerInventory._equips[i];
             Rect itemButton = new Rect(0, 20 + offset, 100, 20);
-            if(GUI.Toggle(itemButton, i, true, new GUIContent(item._itemName), GUIStyle.none))
-            {
-                //ajouter l'item au personnage
-               // itemButton.
-            }
 
+            GUI.enabled = remainingPosition > 0 && tabCharac.Count > 0 && item.CanEquipUse(PlayerManager._instance._selectedCharacter);
+            if (GUILayout.Button(item._itemName, GUILayout.Height(30), GUILayout.Width(100)))
+            {
+                //ajouter item au personnage
+            }
             GUI.Label(new Rect(75, 20 + offset, 20, 20), item._bonusPhysAtk.ToString());
             GUI.Label(new Rect(125, 20 + offset, 20, 20), item._bonusPhysDef.ToString());
             GUI.Label(new Rect(175, 20 + offset, 20, 20), item._bonusMagicAtk.ToString());
@@ -171,17 +179,13 @@ public class onMainMenu : MonoBehaviour
         }
         GUILayout.EndScrollView();
 
-        GUI.enabled = remainingPosition > 0 && tabCharac.Count > 0;
-        if (GUILayout.Button("Ajouter", GUILayout.Height(35), GUILayout.Width(200)))
-        {
 
-        }
     }
 
     void doItemWindow(int windowID)
     {
         GUILayout.Space(25);
-        selectedItem = GUILayout.SelectionGrid(selectedItem, tabItem.ToArray(), 1);
+            //selectedItem = GUILayout.SelectionGrid(selectedItem, tabItem.ToArray(), 1);
 
         GUILayout.BeginHorizontal();
 
@@ -193,10 +197,22 @@ public class onMainMenu : MonoBehaviour
         GUILayout.EndHorizontal();
 
 
-        GUI.enabled = chosenCharacters > 0 && tabTeam.Count > 0;
-        if (GUILayout.Button("Retirer", GUILayout.Height(35), GUILayout.Width(200)))
+        for (int i = 0; i < PlayerManager._instance._selectedCharacter._characterInventory._invent.Count; ++i)
         {
+            int offset = i * 25;
+            EquipableItem item = PlayerManager._instance._selectedCharacter._characterInventory._invent[i];
+            Rect itemButton = new Rect(0, 20 + offset, 100, 20);
 
+            GUI.enabled = chosenCharacters > 0 && tabTeam.Count > 0;
+            if (GUILayout.Button(item._itemName, GUILayout.Height(30), GUILayout.Width(100)))
+            {
+
+            } 
+            GUI.Label(new Rect(75, 20 + offset, 20, 20), item._bonusPhysAtk.ToString());
+            GUI.Label(new Rect(125, 20 + offset, 20, 20), item._bonusPhysDef.ToString());
+            GUI.Label(new Rect(175, 20 + offset, 20, 20), item._bonusMagicAtk.ToString());
+            GUI.Label(new Rect(225, 20 + offset, 20, 20), item._bonusMagicDef.ToString());
+            GUI.Label(new Rect(275, 20 + offset, 20, 20), item._quantity.ToString());
         }
 
     }
@@ -300,9 +316,10 @@ public class onMainMenu : MonoBehaviour
     private void GetHighlightedCharacter()
     {
         PlayerManager._instance._selectedCharacter = null;
+        PlayerManager._instance.SendAction(Controle.Actions.CLICK);
+
         PlayerManager._instance.Send(tabCharac[selectedCharac]);
-        Personnages p = PlayerManager._instance.GetPersonnage();
-        
+        PlayerManager._instance.LoadPersonnage(PlayerManager._instance.GetPersonnage());        
     }
 
     private Texture2D GetSprite(string characterClass, int spriteID)

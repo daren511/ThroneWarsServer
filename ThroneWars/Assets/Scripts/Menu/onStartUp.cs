@@ -105,7 +105,7 @@ public class onStartUp : MonoBehaviour
                 if (PlayerManager._instance.sck.Connected)
                 {
                     // on vérifie les infos entrées par le joueur(usager, mot de passe)
-                    string ans = PlayerManager._instance.CheckPasswordUser(userValue, pwdvalue);
+                    string ans = PlayerManager._instance.CheckUserInfos(userValue, pwdvalue);
 
                     validInfos = ans.Split(SPLITTER)[0].Contains("True");
                     confirmed = ans.Split(SPLITTER)[1].Contains("True");
@@ -199,24 +199,5 @@ public class onStartUp : MonoBehaviour
     //    PlayerManager._instance._playerInventory = playerInvent;
     //}
 
-    private string GetCharacterClass(int id)
-    {
-        string classe = "";
-        switch (id)
-        {
-            case 1:
-                classe = "Guerrier";
-                break;
-            case 2:
-                classe = "Archer";
-                break;
-            case 3:
-                classe = "Mage";
-                break;
-            case 4:
-                classe = "Prêtre";
-                break;
-        }
-        return classe;
-    }
+
 }
