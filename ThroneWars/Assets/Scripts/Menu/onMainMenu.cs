@@ -134,7 +134,8 @@ public class onMainMenu : MonoBehaviour
         GUILayout.FlexibleSpace();
         GUILayout.EndHorizontal();
 
-        GUI.enabled = chosenCharacters == PlayerManager._instance._chosenTeam.Length && tabMap[0];
+        //GUI.enabled = chosenCharacters == PlayerManager._instance._chosenTeam.Length && tabMap[0];
+        GUI.enabled = false;
         if (GUILayout.Button("Jouer"))
         {
             // Go to the place character screen

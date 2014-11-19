@@ -173,6 +173,7 @@ public class onMenuLoad : MonoBehaviour
             if(PlayerManager._instance.CreateCharacter(characName, characClass))
             {
                 wantToCreate = false;
+                onMainMenu.tabCharac.Add(characName);
                 
             }
             else
@@ -210,7 +211,7 @@ public class onMenuLoad : MonoBehaviour
             if(PlayerManager._instance.DeleteCharacter(PlayerManager._instance._selectedCharacter._name))
             {
                 wantToDelete = false;
-                //remove character in game
+                onMainMenu.tabCharac.Remove(PlayerManager._instance._selectedCharacter._name);
             }
         }
         if (GUILayout.Button("Non", GUILayout.Height(37)))
