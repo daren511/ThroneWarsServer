@@ -15,7 +15,7 @@ public class onMainMenu : MonoBehaviour
     private bool[] tabMap = { false };
     private List<bool> itemsToggles = new List<bool>();
     private static int selectedTeam;
-    private static int selectedCharac;
+    public static int selectedCharac;
     private static int selectedInvent;  // For the player inventory
     private static int selectedItem;    // For the character inventory
     private static Vector2 scrollPos;
@@ -212,7 +212,7 @@ public class onMainMenu : MonoBehaviour
                 GUI.enabled = chosenCharacters > 0 && tabTeam.Count > 0;
                 if (GUILayout.Button(item._itemName, GUILayout.Height(30), GUILayout.Width(100)))
                 {
-
+                    //retirer item du personnage
                 }
                 GUI.Label(new Rect(75, 20 + offset, 20, 20), item._bonusPhysAtk.ToString());
                 GUI.Label(new Rect(125, 20 + offset, 20, 20), item._bonusPhysDef.ToString());
