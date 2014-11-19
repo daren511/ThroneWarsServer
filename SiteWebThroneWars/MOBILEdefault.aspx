@@ -12,14 +12,14 @@
 <body>
     <form id="form1" runat="server">
         <div class="Entete_Mobile">
-            <img src="./Images/Logo_Grand.png" style="max-height: 100%; max-width: 100%;" />
             <h4>MOBILE VERSION</h4>
+            <img src="./Images/Logo_Grand.png" style="max-height: 80%; max-width: 80%;" />
             <!-- A checker les dimensions ou plus grosse image -->
         </div>
         <br />
         <br />
         <div class="Table_Mobile">
-            <ul id="menu-bar">
+            <ul id="menu-bar_Mobile">
                 <li class="active">
                     <li><a href="MOBILEdefault.aspx">Accueil</a></li>
                     <li><a href="MOBILEInscription.aspx">Inscription</a></li>
