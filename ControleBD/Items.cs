@@ -9,8 +9,9 @@ namespace ControleBD
     [Serializable]
     public class Items
     {
-        public Items(string Nom, int Level, string Classe, int WAtk, int WDef, int MAtk, int MDef,int Quantite=1)
+        public Items(int id, string Nom, int Level, string Classe, int WAtk, int WDef, int MAtk, int MDef,int Quantite=1)
         {
+            this.IID = id;
             this.Nom = Nom;
             this.Level = Level;
             this.Classe = Classe;
@@ -20,6 +21,7 @@ namespace ControleBD
             this.MDef = MDef;
             this.Quantite = Quantite;
         }
+        public int IID { get; private set; }
         public int Quantite { get; private set; }
         public string Nom {get; private set;}
         public string Description { get; private set; }
