@@ -133,10 +133,10 @@ public class Log_GUI : MonoBehaviour
 
         //on génère l'inventaire du joueur, peut être mis dans la DLL commune au serveur, pour recevoir l'inventaire complet plutôt
         //que de le génèrer du côté client
-        uItem = new Potion(1, "", "Potion de soins", "Guérit de 20 points de vie", 0, 10, 0, 0, 0, 0, 20);
-        list.Add(uItem);
-        uItem = new Potion(2, "", "Potion d'attaque", "Augmente les capacités physiques", 3, 5, 10, 0, 0, 0, 0);
-        list.Add(uItem);
+        //uItem = new Potion(1, "", "Potion de soins", "Guérit de 20 points de vie", 0, 10, 0, 0, 0, 0, 20);
+        //list.Add(uItem);
+        //uItem = new Potion(2, "", "Potion d'attaque", "Augmente les capacités physiques", 3, 5, 10, 0, 0, 0, 0);
+        //list.Add(uItem);
 
         //on crée l'inventaire de chaque personnage, encore içi, peut être mis dans la DLL commune au serveur, pour reçevoir les infos
         //directement

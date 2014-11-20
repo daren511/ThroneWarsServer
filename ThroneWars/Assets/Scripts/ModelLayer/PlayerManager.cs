@@ -27,7 +27,7 @@ public class PlayerManager : MonoBehaviour
     // Connection
     public Socket sck;
     public IPEndPoint localEndPoint;
-    public string ip = "bd.thronewars.ca";
+    public string ip = "projet.thronewars.ca";
     public int port = 50053;
 
 
@@ -193,7 +193,7 @@ public class PlayerManager : MonoBehaviour
 
     public void LoadPersonnage(Personnages p)
     {
-        CharacterInventory invent = GetCharacterInventory(new List<Items>());
+        CharacterInventory invent = GetCharacterInventory(p.Item);
 
         PlayerManager._instance._selectedCharacter = Character.CreateCharacter(p.Nom, p.ClassName, p.Level, 3, 1,
             p.Health, 100, invent, p.PhysAtk, p.PhysDef, p.MagicAtk, p.MagicDef);
@@ -204,7 +204,7 @@ public class PlayerManager : MonoBehaviour
         for (int i = 0; i < items.Count; ++i)
         {
             Items it = items[i];
-            eItem = new EquipableItem(it.Level, it.Classe, it.Nom, it.Description, it.WAtk, it.WDef, it.MAtk, it.MDef, it.Quantite);
+            eItem = new EquipableItem(it.IID, it.Level, it.Classe, it.Nom, it.Description, it.WAtk, it.WDef, it.MAtk, it.MDef, it.Quantite);
             PlayerManager._instance._playerInventory._equips.Add(eItem);
         }
 
@@ -212,13 +212,24 @@ public class PlayerManager : MonoBehaviour
     public CharacterInventory GetCharacterInventory(List<Items> items)
     {
         CharacterInventory invent = new CharacterInventory();
-
         for (int i = 0; i < items.Count; ++i )
+
         {
-            Items it = items[i];
-            invent._invent.Add(new EquipableItem(it.Level, it.Classe, it.Nom, it.Description, it.WAtk, it.WDef, it.MAtk, it.MDef, it.Quantite));
+            Items it = items[i];            
+            invent._invent.Add(new EquipableItem(it.IID, it.Level, it.Classe, it.Nom, it.Description, it.WAtk, it.WDef, it.MAtk, it.MDef, it.Quantite));
         }
         return invent;
+    }
+    public void EquipItem(int itemId)
+    {
+        SendAction(Controle.Actions.EQUIP);
+        Send(_selectedCharacter._name + SPLITTER + itemId);
+       
+    }
+    public void UnequipItem(int itemId)
+    {
+        SendAction(Controle.Actions.UNEQUIP);
+        Send(_selectedCharacter._name + SPLITTER + itemId);
     }
     public List<Items> GetPlayerInventory()
     {

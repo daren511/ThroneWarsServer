@@ -84,6 +84,7 @@ public class onMainMenu : MonoBehaviour
             __spriteClass = PlayerManager._instance._selectedCharacter._characterClass._className;
             sprite1 = GetSprite(__spriteClass, 1);
             sprite2 = GetSprite(__spriteClass, 2);
+            ShowChosenCharacterInventory();
         }
     }
 
@@ -171,8 +172,7 @@ public class onMainMenu : MonoBehaviour
             GUI.enabled = remainingPosition > 0 && tabCharac.Count > 0 && item.CanEquipUse(PlayerManager._instance._selectedCharacter);
             if (GUILayout.Button(item._itemName, GUILayout.Height(30), GUILayout.Width(100)))
             {
-                //ajouter item au personnage
-
+                PlayerManager._instance.EquipItem(item._itemID);
             }
             GUI.Label(new Rect(75, 20 + offset, 20, 20), item._bonusPhysAtk.ToString());
             GUI.Label(new Rect(125, 20 + offset, 20, 20), item._bonusPhysDef.ToString());
@@ -201,8 +201,6 @@ public class onMainMenu : MonoBehaviour
 
         if (PlayerManager._instance._selectedCharacter != null && PlayerManager._instance._selectedCharacter._characterInventory._invent.Count > 0)
         {
-
-
             for (int i = 0; i < PlayerManager._instance._selectedCharacter._characterInventory._invent.Count; ++i)
             {
                 int offset = i * 25;
@@ -212,7 +210,7 @@ public class onMainMenu : MonoBehaviour
                 GUI.enabled = chosenCharacters > 0 && tabTeam.Count > 0;
                 if (GUILayout.Button(item._itemName, GUILayout.Height(30), GUILayout.Width(100)))
                 {
-                    //retirer item du personnage
+                    PlayerManager._instance.UnequipItem(item._itemID);
                 }
                 GUI.Label(new Rect(75, 20 + offset, 20, 20), item._bonusPhysAtk.ToString());
                 GUI.Label(new Rect(125, 20 + offset, 20, 20), item._bonusPhysDef.ToString());
@@ -406,11 +404,11 @@ public class onMainMenu : MonoBehaviour
     {
         tabItem.Clear();
         string name = tabCharac[selectedCharac].Remove(tabCharac[selectedCharac].LastIndexOf(','));
-        Character c = PlayerManager._instance._characters.Find(x => x._name == name);
+        Character c = PlayerManager._instance._selectedCharacter;
         EquipableItem item;
         for (int i = 0; i < c._characterInventory._invent.Count; ++i)
         {
-            item = PlayerManager._instance._characters[i]._characterInventory._invent[i];
+            item = PlayerManager._instance._selectedCharacter._characterInventory._invent[i];
             tabItem.Add(item._itemName);
         }
     }

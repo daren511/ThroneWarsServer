@@ -3,6 +3,7 @@ using System.Collections;
 
 public class Item
 {
+    public int _itemID { get; set; }
     public int _levelRequ { get;  set; }
     public string _classRequ { get;  set; }
     public string _itemName { get;  set; }
@@ -13,8 +14,9 @@ public class Item
     public int _bonusMagicAtk { get; set; }
     public int _bonusMagicDef { get; set; }
 
-    public Item(int lvlReq, string classReq, string name, int patk, int pdef, int matk, int mdef, string descr, int qte)
+    public Item(int id, int lvlReq, string classReq, string name, int patk, int pdef, int matk, int mdef, string descr, int qte)
     {
+        _itemID = id;
         _levelRequ = lvlReq;
         _classRequ = classReq;
         _itemName = name;
