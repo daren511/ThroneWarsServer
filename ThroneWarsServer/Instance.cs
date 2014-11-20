@@ -72,7 +72,7 @@ namespace ThroneWarsServer
                                 envoyerReponse(Controle.addItemPersonnages(requete.Remove(requete.LastIndexOf(Splitter)), Int32.Parse(requete.Substring(requete.LastIndexOf(Splitter) + 1)), Joueur.jid).ToString());
                                 break;
                             case Controle.Actions.UNEQUIP:
-
+                                envoyerReponse(Controle.deleteItemPersonnages(requete.Remove(requete.LastIndexOf(Splitter)), Int32.Parse(requete.Substring(requete.LastIndexOf(Splitter) + 1)), Joueur.jid).ToString());
                                 break;                          
                         }
                     }
