@@ -95,13 +95,9 @@ public class onMenuLoad : MonoBehaviour
                 wantToDelete = false;
                 wantToCreate = false;
                 characName = "";
-                onMainMenu.tabCharac.Clear();
-                onMainMenu.tabInvent.Clear();
-                onMainMenu.tabTeam.Clear();
-                onMainMenu.tabItem.Clear();
-                PlayerManager._instance._playerInventory._equips.Clear();
-                PlayerManager._instance._playerInventory._potions.Clear();
-               // PlayerManager._instance._chosenTeam
+
+                PlayerManager._instance.ClearPlayer();
+                // PlayerManager._instance._chosenTeam
                 Application.LoadLevel("Login");
             }
         }
@@ -141,7 +137,7 @@ public class onMenuLoad : MonoBehaviour
             // Create a character
             wantToCreate = true;
             wantToDelete = false;
-            
+
         }
         GUI.enabled = onMainMenu.tabCharac.Count > 0;
         if (GUILayout.Button("Supprimer"))
@@ -179,10 +175,10 @@ public class onMenuLoad : MonoBehaviour
             // Create the character
             characClass = contents[cb.SelectedItemIndex].text;
 
-            if(PlayerManager._instance.CreateCharacter(characName, characClass))
+            if (PlayerManager._instance.CreateCharacter(characName, characClass))
             {
                 wantToCreate = false;
-                onMainMenu.tabCharac.Add(characName);                
+                onMainMenu.tabCharac.Add(characName);
             }
             else
             {
@@ -190,7 +186,7 @@ public class onMenuLoad : MonoBehaviour
             }
         }
         GUI.enabled = true;
-        if (error) 
+        if (error)
         {
             lblError.normal.textColor = Color.red;
             GUI.Label(new Rect(rectCreate.width / 2 + (rectCreate.width * 0.03f), rectCreate.height / 2 - 53, 200, 40),
@@ -226,12 +222,12 @@ public class onMenuLoad : MonoBehaviour
         if (GUILayout.Button("Oui", GUILayout.Height(37)))
         {
             // Delete the character
-            if(PlayerManager._instance.DeleteCharacter(PlayerManager._instance._selectedCharacter._name))
+            if (PlayerManager._instance.DeleteCharacter(PlayerManager._instance._selectedCharacter._name))
             {
                 if (onMainMenu.tabCharac.IndexOf(PlayerManager._instance._selectedCharacter._name) == onMainMenu.tabCharac.Count - 1)
                 {
                     onMainMenu.selectedCharac = 0;
-                }                
+                }
                 onMainMenu.tabCharac.Remove(PlayerManager._instance._selectedCharacter._name);
                 wantToDelete = false;
             }
