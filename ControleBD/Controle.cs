@@ -1451,24 +1451,24 @@ namespace ControleBD
             }
         }
 
-        public static bool deleteItemPersonnages(int guid, int iid, int jid)
+        public static bool deleteItemPersonnages(string nom, int iid, int jid)
         {
             OracleConnection conn = Connection.getInstance().conn;
-            string sql = "DELETE FROM ITEMSPERSONNAGES WHERE GUID =:guid AND IID =:iid AND JID =:jid";
+            string sql = "DELETE FROM ITEMSPERSONNAGES WHERE GUID =(SELECT GUID FROM PERSONNAGES WHERE NOM =:nom) AND IID =:iid AND JID =:jid";
 
             try
             {
                 OracleCommand oraDelete = new OracleCommand(sql, conn);
 
-                OracleParameter OraParamGUID = new OracleParameter(":guid", OracleDbType.Int32, 10);
+                OracleParameter OraParamNom = new OracleParameter(":nom", OracleDbType.Varchar2, 12);
                 OracleParameter OraParamIID = new OracleParameter(":iid", OracleDbType.Int32, 10);
                 OracleParameter OraParamJID = new OracleParameter(":jid", OracleDbType.Int32, 10);
 
-                OraParamGUID.Value = guid;
+                OraParamNom.Value = nom;
                 OraParamIID.Value = iid;
                 OraParamJID.Value = jid;
 
-                oraDelete.Parameters.Add(OraParamGUID);
+                oraDelete.Parameters.Add(OraParamNom);
                 oraDelete.Parameters.Add(OraParamIID);
                 oraDelete.Parameters.Add(OraParamJID);
 
