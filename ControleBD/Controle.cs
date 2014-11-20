@@ -1930,13 +1930,14 @@ namespace ControleBD
             return listItem;
         }
 
-        public static List<string> fillPerso(int jid, string classe)
+        public static List<string> fillPerso(int jid, string classe, int lvl)
         {
             List<string> listPerso = new List<string>();
             OracleConnection conn = Connection.getInstance().conn;
             string sql = "SELECT NOM FROM PERSONNAGES WHERE JID =:jid";
             if (classe != "Tous")
                 sql += " AND CID =(SELECT CID FROM CLASSES WHERE CNAME=:classe)";
+            sql += " AND \"LEVEL\">=:lvl";
 
             OracleCommand oraSelect = new OracleCommand(sql, conn);
 
@@ -1950,6 +1951,9 @@ namespace ControleBD
                 OraParamClasse.Value = classe;
                 oraSelect.Parameters.Add(OraParamClasse);
             }
+            OracleParameter OraParamLevel = new OracleParameter("lvl", OracleDbType.Int32, 2);
+            OraParamLevel.Value = lvl;
+            oraSelect.Parameters.Add(OraParamLevel);
 
             using (OracleDataReader oraReader = oraSelect.ExecuteReader())
             {
