@@ -54,7 +54,7 @@ namespace ThroneWarsServer
                         switch (Choix)
                         {
                             case Controle.Actions.CLICK: 
-                                envoyerListe(Controle.returnPersonnage(recevoirString()));
+                                envoyerObjet(Controle.returnPersonnage(recevoirString()));
                                 break;
 
                             case Controle.Actions.CREATE:
@@ -93,16 +93,18 @@ namespace ThroneWarsServer
         private void startUP(Joueur j)
         {
             List<string> list = traiterDataSet(Controle.returnStats(j.jid));
-            envoyerListe(list);
+            envoyerObjet(list);
             recevoirString();
-            envoyerListe(Controle.getInventaireJoueurs(j.jid));
+            envoyerObjet(Controle.getInventaireJoueurs(j.jid));
             recevoirString();
             if (list.Count > 0)
             {
-                envoyerListe(Controle.returnPersonnage(list[0]));
+                envoyerObjet(Controle.returnPersonnage(list[0]).Item = Controle.getInventairePersonnage(Controle.getGUID(list[0])));
                 recevoirString();
             }            
         }
+
+        
 
         private Controle.Actions recevoirChoix()
         {
@@ -133,7 +135,7 @@ namespace ThroneWarsServer
             Liste.Capacity = Liste.Count;
             return Liste;
         }
-        private void envoyerListe<T>(T ds)
+        private void envoyerObjet<T>(T ds)
         {
             BinaryFormatter b = new BinaryFormatter();
             using (var stream = new MemoryStream())

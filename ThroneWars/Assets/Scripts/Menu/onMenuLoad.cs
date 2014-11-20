@@ -49,15 +49,14 @@ public class onMenuLoad : MonoBehaviour
     public static void createDeleteWindow()
     {
         if (wantToDelete)
-            GUILayout.Window(-3, rectDelete, doDeleteWindow, "Supprimer");   // Draw the delete window
+            GUILayout.Window(-4, rectDelete, doDeleteWindow, "Supprimer");   // Draw the delete window
     }
 
     public static void createCreationWindow()
     {
-        if(wantToCreate)
-        {
-            GUILayout.Window(-3, rectCreate, doCreateWindow, "Créer un personage");            
-        }
+        if (wantToCreate)
+            GUILayout.Window(-3, rectCreate, doCreateWindow, "Créer un personage");
+    }
     }
     public static void createMenuWindow(bool isMM)
     {
@@ -90,10 +89,19 @@ public class onMenuLoad : MonoBehaviour
         }
         else
         {
-            if (GUILayout.Button("Retour"))
+            if (GUILayout.Button("Déconnexion"))
             {
                 // Back to the login screen
-                PlayerManager._instance.ClearPlayer();
+                wantToDelete = false;
+                wantToCreate = false;
+                characName = "";
+                onMainMenu.tabCharac.Clear();
+                onMainMenu.tabInvent.Clear();
+                onMainMenu.tabTeam.Clear();
+                onMainMenu.tabItem.Clear();
+                PlayerManager._instance._playerInventory._equips.Clear();
+                PlayerManager._instance._playerInventory._potions.Clear();
+               // PlayerManager._instance._chosenTeam
                 Application.LoadLevel("Login");
             }
         }
@@ -132,26 +140,29 @@ public class onMenuLoad : MonoBehaviour
         {
             // Create a character
             wantToCreate = true;
+            wantToDelete = false;
             
         }
         GUI.enabled = onMainMenu.tabCharac.Count > 0;
         if (GUILayout.Button("Supprimer"))
         {
             // Delete a character
+            wantToCreate = false;
+            characName = "";
             wantToDelete = true;
         }
     }
 
     private static void doCreateWindow(int windowID)
     {
-        
+        GUI.BringWindowToFront(-3);
         // Ornament
         GUI.DrawTexture(new Rect(20, 4, 31, 40), ColoredGUISkin.Skin.customStyles[0].normal.background);
 
         GUILayout.Space(30);
         GUILayout.BeginHorizontal();
         GUILayout.Label("Nom:", ColoredGUISkin.Skin.label);
-        characName = GUILayout.TextField(characName, ColoredGUISkin.Skin.textField);
+        characName = GUILayout.TextField(characName, ColoredGUISkin.Skin.textField, GUILayout.Width(12));
         GUILayout.EndHorizontal();
 
         GUILayout.BeginHorizontal();
@@ -177,7 +188,6 @@ public class onMenuLoad : MonoBehaviour
             {
                 error = true;
             }
-
         }
         GUI.enabled = true;
         if (error) 
