@@ -99,12 +99,18 @@ namespace ThroneWarsServer
             recevoirString();
             if (list.Count > 0)
             {
-                envoyerObjet(Controle.returnPersonnage(list[0]).Item = Controle.getInventairePersonnage(Controle.getGUID(list[0])));
+                envoyerObjet(getPersonnage(list[0]));
                 recevoirString();
             }            
         }
 
-        
+        private Personnages getPersonnage(string nom)
+        {
+            Personnages p = Controle.returnPersonnage(nom);
+            p.Item = Controle.getInventairePersonnage(Controle.getGUID(nom));
+
+            return p;
+        }
 
         private Controle.Actions recevoirChoix()
         {
