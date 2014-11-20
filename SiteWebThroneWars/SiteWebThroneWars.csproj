@@ -62,9 +62,18 @@
   <ItemGroup>
     <Content Include="Downloads\Thronewars_Setup.exe" />
     <Content Include="favicon.ico" />
+    <Content Include="Images\menu.png" />
     <Content Include="Images\ThroneWars.zip" />
     <None Include="Properties\PublishProfiles\Francis Site Web.pubxml" />
     <None Include="Properties\PublishProfiles\Throne.pubxml" />
+    <Content Include="Menu\jquery.mmenu.all.css" />
+    <Content Include="Menu\jquery.mmenu.css" />
+    <Content Include="Menu\jquery.mmenu.debugger.js" />
+    <Content Include="Menu\jquery.mmenu.min.all.js" />
+    <Content Include="Menu\jquery.mmenu.min.js" />
+    <Content Include="Menu\jquery.mmenu.oncanvas.css" />
+    <Content Include="Menu\jquery.mmenu.oncanvas.js" />
+    <Content Include="Menu\jquery.mmenu.oncanvas.min.js" />
     <Content Include="ThroneWarsOutput\ThroneWars_Data\level0" />
     <Content Include="ThroneWarsOutput\ThroneWars_Data\level1" />
     <Content Include="ThroneWarsOutput\ThroneWars_Data\level2" />
