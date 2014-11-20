@@ -155,7 +155,7 @@ public class onMainMenu : MonoBehaviour
         GUI.DrawTexture(new Rect(145, 30, 20, 20), _defTexture, ScaleMode.StretchToFill, true, 0.0f);
         GUI.DrawTexture(new Rect(195, 30, 20, 20), _matkTexture, ScaleMode.StretchToFill, true, 0.0f);
         GUI.DrawTexture(new Rect(245, 30, 20, 20), _mdefTexture, ScaleMode.StretchToFill, true, 0.0f);
-        GUI.Label(new Rect(295, 30, 150, 25), "QTÉ");
+        GUI.Label(new Rect(295, 30, 150, 25), "QTE");
 
         GUILayout.EndHorizontal();
 

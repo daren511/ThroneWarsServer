@@ -79,7 +79,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(290, 106);
+            this.ClientSize = new System.Drawing.Size(299, 106);
             this.Controls.Add(this.LBL_Erreur);
             this.Controls.Add(this.BTN_Login);
             this.Controls.Add(this.TB_MDP);

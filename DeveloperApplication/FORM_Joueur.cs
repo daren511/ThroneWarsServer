@@ -236,11 +236,16 @@ namespace DeveloperApplication
             if (DGV_Inventaire.Rows.Count > 0)
             {
                 CB_Perso.Items.Clear();
+                CB_Perso.ResetText();
                 string classe = DGV_Inventaire.SelectedRows[0].Cells[2].Value.ToString();
-                List<string> perso = Controle.fillPerso(JID, classe);
-                for (int i = 0; i < perso.Count; ++i)
-                    CB_Perso.Items.Add(perso[i]);
-                CB_Perso.SelectedIndex = 0;
+                int level = int.Parse(DGV_Inventaire.SelectedRows[0].Cells[3].Value.ToString());
+                List<string> perso = Controle.fillPerso(JID, classe, level);
+                if (perso.Count > 0)
+                {
+                    for (int i = 0; i < perso.Count; ++i)
+                        CB_Perso.Items.Add(perso[i]);
+                    CB_Perso.SelectedIndex = 0;
+                }
             }
         }
 
