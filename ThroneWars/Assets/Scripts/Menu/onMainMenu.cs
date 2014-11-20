@@ -67,13 +67,15 @@ public class onMainMenu : MonoBehaviour
 
         ShowPlayerInventory();
 
+
         onMenuLoad.listStyle.normal.textColor = Color.white;
+        onMenuLoad.listStyle.alignment = TextAnchor.MiddleCenter;
         onMenuLoad.listStyle.onHover.background =
-        onMenuLoad.listStyle.hover.background = new Texture2D(2, 2);
-        onMenuLoad.listStyle.padding.left =
-        onMenuLoad.listStyle.padding.right =
-        onMenuLoad.listStyle.padding.top =
-        onMenuLoad.listStyle.padding.bottom = 4;
+        onMenuLoad.listStyle.hover.background = new Texture2D(20, 20);
+        //onMenuLoad.listStyle.padding.left =
+        //onMenuLoad.listStyle.padding.right =
+        //onMenuLoad.listStyle.padding.top =
+        //onMenuLoad.listStyle.padding.bottom = 1;
 
         onMenuLoad.cb = new ComboBox(new Rect(onMenuLoad.rectCreate.width / 2 + (onMenuLoad.rectCreate.width * 0.02f),
             onMenuLoad.rectCreate.height / 2 - 40, 185, 30), onMenuLoad.contents[0],
@@ -202,7 +204,8 @@ public class onMainMenu : MonoBehaviour
 
         GUILayout.EndHorizontal();
 
-        if (PlayerManager._instance._selectedCharacter != null && PlayerManager._instance._selectedCharacter._characterInventory._invent.Count > 0)
+        if (PlayerManager._instance._selectedCharacter != null && 
+            PlayerManager._instance._selectedCharacter._characterInventory._invent.Count > 0)
         {
             for (int i = 0; i < PlayerManager._instance._selectedCharacter._characterInventory._invent.Count; ++i)
             {
@@ -213,7 +216,7 @@ public class onMainMenu : MonoBehaviour
                 if (GUILayout.Button(item._itemName, GUILayout.Height(30), GUILayout.Width(100)))
                 {
                     PlayerManager._instance.UnequipItem(item._itemID);
-                    PlayerManager._instance._playerInventory._equips[i]._quantity += 1;
+                    PlayerManager._instance._playerInventory._equips[PlayerManager._instance._playerInventory._equips.IndexOf(item)]._quantity += 1;
                     PlayerManager._instance._selectedCharacter._characterInventory._invent.Remove(item);
                     tabItem.Remove(item._itemName);
                 }
@@ -324,9 +327,8 @@ public class onMainMenu : MonoBehaviour
 
     private void GetHighlightedCharacter()
     {
-        Destroy(PlayerManager._instance._selectedCharacter);
+        //  Destroy(PlayerManager._instance._selectedCharacter);
         PlayerManager._instance.SendAction(Controle.Actions.CLICK);
-
         PlayerManager._instance.Send(tabCharac[selectedCharac]);
         PlayerManager._instance.LoadPersonnage(PlayerManager._instance.GetPersonnage());
     }
@@ -396,23 +398,21 @@ public class onMainMenu : MonoBehaviour
     }
     private void ShowPlayerInventory()
     {
-        tabInvent.Clear();
         EquipableItem item;
         for (int i = 0; i < PlayerManager._instance._playerInventory._equips.Count; ++i)
         {
             item = PlayerManager._instance._playerInventory._equips[i];
-            tabInvent.Add(item._itemName + " " + item._quantity);
+            tabInvent.Add(item._itemName);
         }
     }
     private void ShowChosenCharacterInventory()
     {
-        tabItem.Clear();
-        string name = tabCharac[selectedCharac].Remove(tabCharac[selectedCharac].LastIndexOf(','));
+        string name = tabCharac[selectedCharac];
         Character c = PlayerManager._instance._selectedCharacter;
         EquipableItem item;
         for (int i = 0; i < c._characterInventory._invent.Count; ++i)
         {
-            item = PlayerManager._instance._selectedCharacter._characterInventory._invent[i];
+            item = c._characterInventory._invent[i];
             tabItem.Add(item._itemName);
         }
     }

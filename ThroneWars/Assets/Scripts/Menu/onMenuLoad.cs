@@ -158,7 +158,7 @@ public class onMenuLoad : MonoBehaviour
         GUILayout.Space(30);
         GUILayout.BeginHorizontal();
         GUILayout.Label("Nom:", ColoredGUISkin.Skin.label);
-        characName = GUILayout.TextField(characName, ColoredGUISkin.Skin.textField, GUILayout.Width(12));
+        characName = GUILayout.TextField(characName, 12, ColoredGUISkin.Skin.textField, GUILayout.Width(185f));
         GUILayout.EndHorizontal();
 
         GUILayout.BeginHorizontal();
@@ -179,6 +179,7 @@ public class onMenuLoad : MonoBehaviour
             {
                 wantToCreate = false;
                 onMainMenu.tabCharac.Add(characName);
+                characName = "";
             }
             else
             {
