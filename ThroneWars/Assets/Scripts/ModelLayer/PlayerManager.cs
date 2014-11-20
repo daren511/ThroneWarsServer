@@ -16,6 +16,7 @@ public class PlayerManager : MonoBehaviour
 {
     private const int MAX_TEAM_LENGTH = 4;
     private const char SPLITTER = '?';
+    private const int MAX_CHARACTER_EQUIPS = 6;
 
     public Character[] _chosenTeam { get; set; }
     public PlayerInventory _playerInventory = new PlayerInventory();
@@ -189,8 +190,6 @@ public class PlayerManager : MonoBehaviour
         }
         return Encoding.UTF8.GetString(formatted).ToString();
     }
-
-
     public void LoadPersonnage(Personnages p)
     {
         CharacterInventory invent = GetCharacterInventory(p.Item);
@@ -213,7 +212,6 @@ public class PlayerManager : MonoBehaviour
     {
         CharacterInventory invent = new CharacterInventory();
         for (int i = 0; i < items.Count; ++i )
-
         {
             Items it = items[i];            
             invent._invent.Add(new EquipableItem(it.IID, it.Level, it.Classe, it.Nom, it.Description, it.WAtk, it.WDef, it.MAtk, it.MDef, it.Quantite));
@@ -224,12 +222,55 @@ public class PlayerManager : MonoBehaviour
     {
         SendAction(Controle.Actions.EQUIP);
         Send(_selectedCharacter._name + SPLITTER + itemId);
+
+        int count = sck.ReceiveBufferSize;
+        byte[] buffer;
+        buffer = new byte[count];
+
+        sck.Receive(buffer);
+
+        //on lit au socket pour un vrai ou faux
+        byte[] formatted = new byte[count];
+        for (int i = 0; i < count; i++)
+        {
+            formatted[i] = buffer[i];
+        }
        
+    }
+    public bool VerifyCanEquip(EquipableItem item)
+    {
+        return _selectedCharacter._characterInventory._invent.Count < MAX_CHARACTER_EQUIPS && item.CanEquipUse(_selectedCharacter)
+            && !ItemInInventory(item._itemName);   
+    }
+    private bool ItemInInventory(string itemName)
+    {
+        for (int i = 0; i < _selectedCharacter._characterInventory._invent.Count; ++i)
+        {
+            EquipableItem it = _selectedCharacter._characterInventory._invent[i];
+            if(it._itemName == itemName)
+            {
+                return true;
+            }
+        }
+        return false;
     }
     public void UnequipItem(int itemId)
     {
         SendAction(Controle.Actions.UNEQUIP);
         Send(_selectedCharacter._name + SPLITTER + itemId);
+
+        int count = sck.ReceiveBufferSize;
+        byte[] buffer;
+        buffer = new byte[count];
+
+        sck.Receive(buffer);
+
+        //on lit au socket pour un vrai ou faux
+        byte[] formatted = new byte[count];
+        for (int i = 0; i < count; i++)
+        {
+            formatted[i] = buffer[i];
+        }
     }
     public List<Items> GetPlayerInventory()
     {
@@ -265,55 +306,6 @@ public class PlayerManager : MonoBehaviour
         {
             Destroy(_chosenTeam[i]);
         }
-    }
-    public CharacterInventory GetCharacterInventory(int pos)
-    {
-        CharacterInventory characterInvent = new CharacterInventory();
-
-        for (int i = 0; i < PlayerManager._instance._characters[i]._characterInventory._invent.Count; ++i)
-        {
-            characterInvent._invent.Add(PlayerManager._instance._characters[i]._characterInventory._invent[i]);
-        }
-        return characterInvent;
-    }
-    private string GetCharacterClass(int id)
-    {
-        string classe = "";
-        switch (id)
-        {
-            case 1:
-                classe = "Guerrier";
-                break;
-            case 2:
-                classe = "Archer";
-                break;
-            case 3:
-                classe = "Mage";
-                break;
-            case 4:
-                classe = "Prêtre";
-                break;
-        }
-        return classe;
-    }
-    private int GetCharacterClassId(string classe)
-    {
-        int id = 0;
-        switch (classe)
-        {
-            case "Guerrier":
-                id = 1;
-                break;
-            case "Archer":
-                id = 2;
-                break;
-            case "Mage":
-                id = 3;
-                break;
-            case "Prêtre":
-                id = 4;
-                break;
-        }
-        return id;
+        sck.Close();
     }
 }
