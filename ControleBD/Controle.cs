@@ -12,7 +12,7 @@ namespace ControleBD
     public class Controle
     {
         private static int SaltValueSize = 16;
-        public enum Actions { CLICK, CREATE, DELETE, START_GAME };
+        public enum Actions { CLICK, CREATE, DELETE, START_GAME , EQUIP, UNEQUIP };
 
         //-------------------------------------INSERT / UPDATE / DELETE PLAYER-------------------------------------------
 
@@ -920,7 +920,7 @@ namespace ControleBD
 
             while (read.Read())
             {
-                Liste.Add(new Items(read.GetString(0), read.GetInt32(1), read.GetString(2), read.GetInt32(3), read.GetInt32(4), read.GetInt32(5), read.GetInt32(6), read.GetInt32(7)));
+                Liste.Add(new Items(read.GetInt32(0), read.GetString(1), read.GetInt32(2), read.GetString(3), read.GetInt32(4), read.GetInt32(5), read.GetInt32(6), read.GetInt32(7)));
             }
             read.Close();
             Liste.Capacity = Liste.Count;
@@ -955,7 +955,7 @@ namespace ControleBD
 
             while (read.Read())
             {
-                Liste.Add(new Items(read.GetString(0), read.GetInt32(1), read.GetString(2), read.GetInt32(3), read.GetInt32(4), read.GetInt32(5), read.GetInt32(6)));
+                Liste.Add(new Items(read.GetInt32(0), read.GetString(1), read.GetInt32(2), read.GetString(3), read.GetInt32(4), read.GetInt32(5), read.GetInt32(6), read.GetInt32(7)));
             }
             read.Close();
             Liste.Capacity = Liste.Count;

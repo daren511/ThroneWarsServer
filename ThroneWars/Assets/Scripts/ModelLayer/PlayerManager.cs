@@ -172,7 +172,7 @@ public class PlayerManager : MonoBehaviour
     }
     public string CheckUserInfos(string user, string pw)
     {
-        byte[] data = Encoding.ASCII.GetBytes(user + SPLITTER + Controle.hashPassword(pw, null, System.Security.Cryptography.SHA256.Create()));
+        byte[] data = Encoding.UTF8.GetBytes(user + SPLITTER + Controle.hashPassword(pw, null, System.Security.Cryptography.SHA256.Create()));
         sck.Send(data); //on envoie les infos du joueur au serveur        
 
         int count = sck.ReceiveBufferSize;
@@ -242,7 +242,19 @@ public class PlayerManager : MonoBehaviour
         }
         return list;
     }
-
+    public void ClearPlayer()
+    {
+        onMainMenu.tabCharac.Clear();
+        onMainMenu.tabInvent.Clear();
+        onMainMenu.tabTeam.Clear();
+        onMainMenu.tabItem.Clear();
+        _playerInventory._equips.Clear();
+        _playerInventory._potions.Clear();
+        for (int i = 0; i < _chosenTeam.Length; ++i)
+        {
+            Destroy(_chosenTeam[i]);
+        }
+    }
     public CharacterInventory GetCharacterInventory(int pos)
     {
         CharacterInventory characterInvent = new CharacterInventory();

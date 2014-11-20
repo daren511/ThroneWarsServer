@@ -322,7 +322,7 @@ public class onMainMenu : MonoBehaviour
 
     private void GetHighlightedCharacter()
     {
-        PlayerManager._instance._selectedCharacter = null;
+        Destroy(PlayerManager._instance._selectedCharacter);
         PlayerManager._instance.SendAction(Controle.Actions.CLICK);
 
         PlayerManager._instance.Send(tabCharac[selectedCharac]);

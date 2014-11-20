@@ -401,10 +401,15 @@ div.Description_Mobile{
   min-width: 400px;
   min-height: 200px;
   height:30%;
-  width:25%;
+  width:46%;
+  
+  margin-left:21%;
+  margin-top:3%;
+  margin-right:6%;
+
   text-align: justify;
   padding-left: 1%;
-  padding-right: 1%;
+  padding-right: 3%;
 
   background-color: #219ac2;
   border-radius: 50px 50px 50px 50px;
@@ -416,13 +421,10 @@ div.Description_Mobile{
   box-shadow: 31px 7px 32px 3px rgba(0,0,0,0.75);
 }
 div.Membres_Mobile{
-  text-align: center;
-  vertical-align: text-top;
-  height: 30%;
-  width: 25%;
-  float:right;
-  margin-right: 10%;
-  padding-bottom: 2%;
+  width: 69%;
+  margin-right: 34%;
+  padding-bottom: 3%;
+  margin-top: 1%;
 
   background-color: #219ac2;
   border-radius: 50px 50px 50px 50px;
@@ -433,6 +435,10 @@ div.Membres_Mobile{
   -moz-box-shadow: 31px 7px 32px 3px rgba(0,0,0,0.75);
   box-shadow: 31px 7px 32px 3px rgba(0,0,0,0.75);
 
+}
+div.Membres_Mobile img{
+    margin-right: 52px;
+    padding-left: 33px;
 }
 /* DIV MÉDIA*/
 div.Photos_Mobile{
@@ -580,10 +586,10 @@ div.FormRecherche_Mobile{
 }
 /* BARRE D'ACCUEIL*/
 #menu-bar_Mobile {
-  margin-left:3%;
-  width: 85%;
+  margin-left:14%;
+  width: 50%;
   height: 25%;
-  line-height: 100%;
+  line-height: 260%;
   border-radius: 24px;
   -webkit-border-radius: 24px;
   -moz-border-radius: 24px;
@@ -599,10 +605,6 @@ div.FormRecherche_Mobile{
   z-index:999;
 }
 #menu-bar_Mobile li {
-   
-  /*margin: 0px 0px 0px 0px;
-  padding: 0px 0px 0px 0px;
-      */
   float: left;
   position: relative;
   list-style: none;
