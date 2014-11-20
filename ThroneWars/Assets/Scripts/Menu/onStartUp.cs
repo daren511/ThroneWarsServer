@@ -36,15 +36,7 @@ public class onStartUp : MonoBehaviour
 
     void OnGUI()
     {
-        if (Event.current.type == EventType.keyDown)
-        {            
-            Debug.Log("touche appuyée : " + Event.current.keyCode + " " + KeyCode.Return);
-            if(Event.current.keyCode == KeyCode.Return)
-            {
-                Debug.Log("enter");
-            }
-        }
-        if (Event.current.type == EventType.keyDown && Event.current.keyCode == KeyCode.Return 
+        if (Event.current.type == EventType.keyDown && Event.current.keyCode == KeyCode.Return
             && userValue.Trim() != "" && pwdvalue.Trim() != "")
         {
             Connection();
@@ -106,6 +98,9 @@ public class onStartUp : MonoBehaviour
         GUILayout.Label("Usager");
         GUILayout.FlexibleSpace();
         GUILayout.EndVertical();
+        checkEnter();
+        checkArrowDown();
+        GUI.SetNextControlName("User");
         userValue = GUILayout.TextField(userValue, GUILayout.Width(300));
         GUILayout.EndHorizontal();
 
@@ -116,8 +111,16 @@ public class onStartUp : MonoBehaviour
         GUILayout.Label("Mot de passe");
         GUILayout.FlexibleSpace();
         GUILayout.EndVertical();
+        checkEnter();
+        checkArrowUp();
+        GUI.SetNextControlName("PWD");
         pwdvalue = GUILayout.PasswordField(pwdvalue, '*', GUILayout.Width(300));
         GUILayout.EndHorizontal();
+
+        if (GUI.GetNameOfFocusedControl() == string.Empty)
+        {
+            GUI.FocusControl("PWD");
+        }
 
         // If the user can't connect
         GUILayout.BeginHorizontal();
@@ -149,6 +152,31 @@ public class onStartUp : MonoBehaviour
         }
         GUILayout.FlexibleSpace();
         GUILayout.EndHorizontal();
+    }
+
+    private void checkEnter()
+    {
+        if (Event.current.keyCode == KeyCode.Return)
+        {
+            if (userValue.Trim() != "" && pwdvalue.Trim() != "")
+                Connection();
+        }
+    }
+
+    private void checkArrowDown()
+    {
+        if (Event.current.keyCode == KeyCode.DownArrow)
+        {
+            GUI.FocusControl("PWD");
+        }
+    }
+
+    private void checkArrowUp()
+    {
+        if (Event.current.keyCode == KeyCode.UpArrow)
+        {
+            GUI.FocusControl("User");
+        }
     }
 
 

@@ -55,7 +55,9 @@ public class onMenuLoad : MonoBehaviour
     public static void createCreationWindow()
     {
         if(wantToCreate)
-            GUILayout.Window(-3, rectCreate, doCreateWindow, "Créer un personage");
+        {
+            GUILayout.Window(-3, rectCreate, doCreateWindow, "Créer un personage");            
+        }
     }
     public static void createMenuWindow(bool isMM)
     {
@@ -91,13 +93,7 @@ public class onMenuLoad : MonoBehaviour
             if (GUILayout.Button("Retour"))
             {
                 // Back to the login screen
-                onMainMenu.tabCharac.Clear();
-                onMainMenu.tabInvent.Clear();
-                onMainMenu.tabTeam.Clear();
-                onMainMenu.tabItem.Clear();
-                PlayerManager._instance._playerInventory._equips.Clear();
-                PlayerManager._instance._playerInventory._potions.Clear();
-               // PlayerManager._instance._chosenTeam
+                PlayerManager._instance.ClearPlayer();
                 Application.LoadLevel("Login");
             }
         }
@@ -148,7 +144,7 @@ public class onMenuLoad : MonoBehaviour
 
     private static void doCreateWindow(int windowID)
     {
-
+        
         // Ornament
         GUI.DrawTexture(new Rect(20, 4, 31, 40), ColoredGUISkin.Skin.customStyles[0].normal.background);
 
@@ -220,11 +216,14 @@ public class onMenuLoad : MonoBehaviour
         if (GUILayout.Button("Oui", GUILayout.Height(37)))
         {
             // Delete the character
-            //todo: mettre le personnage inactif, rafraichir la liste personnages
             if(PlayerManager._instance.DeleteCharacter(PlayerManager._instance._selectedCharacter._name))
             {
-                wantToDelete = false;
+                if (onMainMenu.tabCharac.IndexOf(PlayerManager._instance._selectedCharacter._name) == onMainMenu.tabCharac.Count - 1)
+                {
+                    onMainMenu.selectedCharac = 0;
+                }                
                 onMainMenu.tabCharac.Remove(PlayerManager._instance._selectedCharacter._name);
+                wantToDelete = false;
             }
         }
         if (GUILayout.Button("Non", GUILayout.Height(37)))

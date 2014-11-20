@@ -67,6 +67,13 @@ namespace ThroneWarsServer
                             case Controle.Actions.START_GAME:
 
                                 break;
+                            case Controle.Actions.EQUIP:
+                                string requete = recevoirString();
+                                envoyerReponse(Controle.addItemPersonnages(requete.Remove(requete.LastIndexOf(Splitter)), Int32.Parse(requete.Substring(requete.LastIndexOf(Splitter) + 1)), Joueur.jid).ToString());
+                                break;
+                            case Controle.Actions.UNEQUIP:
+
+                                break;                          
                         }
                     }
 
