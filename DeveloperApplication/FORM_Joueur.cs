@@ -90,8 +90,6 @@ namespace DeveloperApplication
             DGV_Potions.Columns[7].Visible = false;
 
             FillComboBox();
-            if (CB_Perso.Items.Count == 0 || DGV_Inventaire.Rows.Count == 0)
-                BTN_Ajouter.Enabled = false;
         }
 
         private void TB_Argent_KeyPress(object sender, KeyPressEventArgs e)
@@ -247,6 +245,10 @@ namespace DeveloperApplication
                     CB_Perso.SelectedIndex = 0;
                 }
             }
+            if (CB_Perso.Items.Count == 0 || DGV_Inventaire.Rows.Count == 0)
+                BTN_Ajouter.Enabled = false;
+            else
+                BTN_Ajouter.Enabled = true;
         }
 
         private void BTN_Ajouter_Click(object sender, EventArgs e)

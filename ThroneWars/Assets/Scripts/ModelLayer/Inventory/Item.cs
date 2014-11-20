@@ -13,7 +13,6 @@ public class Item
     public int _bonusPhysDef { get; set; }
     public int _bonusMagicAtk { get; set; }
     public int _bonusMagicDef { get; set; }
-
     public Item(int id, int lvlReq, string classReq, string name, int patk, int pdef, int matk, int mdef, string descr, int qte)
     {
         _itemID = id;
@@ -27,10 +26,8 @@ public class Item
         _bonusMagicDef = mdef;
         _quantity = qte;
     }
-
     public bool CanEquipUse(Character c)
     {
         return _levelRequ <= c._characterClass._classLevel && (c._characterClass._className == _classRequ || _classRequ == "");
-    }
-    
+    }    
 }

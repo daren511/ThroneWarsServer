@@ -27,6 +27,7 @@ public class onStartUp : MonoBehaviour
     private bool canConnect = true;
     private bool validInfos = true;
     private bool confirmed = true;
+    private bool alreadyConnected = false;
     private GUIStyle lblError = new GUIStyle();
 
     // Login window
@@ -61,10 +62,15 @@ public class onStartUp : MonoBehaviour
                 // on vérifie les infos entrées par le joueur(usager, mot de passe)
                 string ans = PlayerManager._instance.CheckUserInfos(userValue, pwdvalue);
 
-                validInfos = ans.Split(SPLITTER)[0].Contains("True");
-                confirmed = ans.Split(SPLITTER)[1].Contains("True");
+                string[] tab = ans.Split(SPLITTER);
 
-                if (validInfos && confirmed)
+                validInfos = tab[0].Contains("True");
+                if(validInfos)
+                    confirmed = tab[1].Contains("True");
+                //if(confirmed)
+                //    alreadyConnected = tab[2].Contains("True");
+
+                if (validInfos && confirmed && !alreadyConnected)
                 {
                     try
                     {
@@ -132,9 +138,11 @@ public class onStartUp : MonoBehaviour
             GUILayout.Label("Usager/Mot de passe invalide", lblError);
         else if (!confirmed)
             GUILayout.Label("Votre compte n'est pas confirmé", lblError);
-
+        else if(alreadyConnected)
+            GUILayout.Label("Ce compte est déjà connecté", lblError);
         else
             GUILayout.Label("");
+
         GUILayout.FlexibleSpace();
         GUILayout.EndHorizontal();
 

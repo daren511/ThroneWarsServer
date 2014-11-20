@@ -168,21 +168,24 @@ public class onMainMenu : MonoBehaviour
             int offset = i * 25;
             EquipableItem item = PlayerManager._instance._playerInventory._equips[i];
             Rect itemButton = new Rect(0, 20 + offset, 100, 20);
-
-            GUI.enabled = remainingPosition > 0 && tabCharac.Count > 0 && item.CanEquipUse(PlayerManager._instance._selectedCharacter);
-            if (GUILayout.Button(item._itemName, GUILayout.Height(30), GUILayout.Width(100)))
+            if(item._quantity > 0)
             {
-                PlayerManager._instance.EquipItem(item._itemID);
+                GUI.enabled = PlayerManager._instance.VerifyCanEquip(item);
+                if (GUILayout.Button(item._itemName, GUILayout.Height(30), GUILayout.Width(100)))
+                {
+                    PlayerManager._instance.EquipItem(item._itemID);
+                    PlayerManager._instance._selectedCharacter._characterInventory._invent.Add(item);
+                    tabItem.Add(item._itemName);
+                    item._quantity -= 1;
+                }
+                GUI.Label(new Rect(75, 20 + offset, 50, 20), item._bonusPhysAtk.ToString());
+                GUI.Label(new Rect(125, 20 + offset, 50, 20), item._bonusPhysDef.ToString());
+                GUI.Label(new Rect(175, 20 + offset, 50, 20), item._bonusMagicAtk.ToString());
+                GUI.Label(new Rect(225, 20 + offset, 50, 20), item._bonusMagicDef.ToString());
+                GUI.Label(new Rect(275, 20 + offset, 50, 20), item._quantity.ToString());
             }
-            GUI.Label(new Rect(75, 20 + offset, 20, 20), item._bonusPhysAtk.ToString());
-            GUI.Label(new Rect(125, 20 + offset, 20, 20), item._bonusPhysDef.ToString());
-            GUI.Label(new Rect(175, 20 + offset, 20, 20), item._bonusMagicAtk.ToString());
-            GUI.Label(new Rect(225, 20 + offset, 20, 20), item._bonusMagicDef.ToString());
-            GUI.Label(new Rect(275, 20 + offset, 20, 20), item._quantity.ToString());
         }
         GUILayout.EndScrollView();
-
-
     }
 
     void doItemWindow(int windowID)
@@ -207,16 +210,17 @@ public class onMainMenu : MonoBehaviour
                 EquipableItem item = PlayerManager._instance._selectedCharacter._characterInventory._invent[i];
                 Rect itemButton = new Rect(0, 20 + offset, 100, 20);
 
-                GUI.enabled = chosenCharacters > 0 && tabTeam.Count > 0;
                 if (GUILayout.Button(item._itemName, GUILayout.Height(30), GUILayout.Width(100)))
                 {
                     PlayerManager._instance.UnequipItem(item._itemID);
+                    PlayerManager._instance._playerInventory._equips[i]._quantity += 1;
+                    PlayerManager._instance._selectedCharacter._characterInventory._invent.Remove(item);
+                    tabItem.Remove(item._itemName);
                 }
-                GUI.Label(new Rect(75, 20 + offset, 20, 20), item._bonusPhysAtk.ToString());
-                GUI.Label(new Rect(125, 20 + offset, 20, 20), item._bonusPhysDef.ToString());
-                GUI.Label(new Rect(175, 20 + offset, 20, 20), item._bonusMagicAtk.ToString());
-                GUI.Label(new Rect(225, 20 + offset, 20, 20), item._bonusMagicDef.ToString());
-                GUI.Label(new Rect(275, 20 + offset, 20, 20), item._quantity.ToString());
+                GUI.Label(new Rect(125, 20 + offset, 50, 20), item._bonusPhysAtk.ToString());
+                GUI.Label(new Rect(175, 20 + offset, 50, 20), item._bonusPhysDef.ToString());
+                GUI.Label(new Rect(225, 20 + offset, 50, 20), item._bonusMagicAtk.ToString());
+                GUI.Label(new Rect(275, 20 + offset, 50, 20), item._bonusMagicDef.ToString());
             }
         }
     }
