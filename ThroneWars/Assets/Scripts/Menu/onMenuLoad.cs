@@ -57,7 +57,7 @@ public class onMenuLoad : MonoBehaviour
         if (wantToCreate)
             GUILayout.Window(-3, rectCreate, doCreateWindow, "Créer un personage");
     }
-    }
+
     public static void createMenuWindow(bool isMM)
     {
         isMainMenu = isMM;
