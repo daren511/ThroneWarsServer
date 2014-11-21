@@ -18,7 +18,7 @@ namespace SiteWebThroneWars
 
         protected void Rechercher_Click(object sender, EventArgs e)
         {
-            ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>changeVisibility();</script>", false);
+            
             //Textbox pas null
             bool ok = VerifChamps();
             string text = "";
@@ -51,6 +51,8 @@ namespace SiteWebThroneWars
                         GV_Stats.DataBind();
                     }
                     TB_UsernameSearch.Text = "";
+                    ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>changeVisibility();</script>", false);
+                    ViderTB();
 
                 }
                 else
@@ -59,6 +61,7 @@ namespace SiteWebThroneWars
                     text = "Usager inexistant";
                     //Textbox vide erreur
                     ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>MessageBoxErreur(\"" + text + "\");</script>", false);
+                    ViderTB();
                 }
             }
             else
@@ -140,6 +143,10 @@ namespace SiteWebThroneWars
         {
             GV_Leaderboard.PageIndex = e.NewPageIndex;
             GV_Leaderboard.DataBind();
+        }
+        protected void ViderTB()
+        {
+            TB_UsernameSearch.Text = "";
         }
     }
 }
