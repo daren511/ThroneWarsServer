@@ -12,7 +12,7 @@ public class ComboBox
     private GUIContent[] listContent;
     private string buttonStyle;
     private string boxStyle;
-    private GUIStyle listStyle;
+    public GUIStyle listStyle;
 
     public ComboBox(Rect rect, GUIContent buttonContent, GUIContent[] listContent, GUIStyle listStyle)
     {
@@ -76,7 +76,7 @@ public class ComboBox
         if (isClickedComboButton)
         {
             Rect listRect = new Rect(rect.x, rect.y + listStyle.CalcHeight(listContent[0], 1.0f),
-                      rect.width, listStyle.CalcHeight(listContent[0], 1.0f) * listContent.Length);
+                      rect.width, listStyle.CalcHeight(listContent[0], 1.0f) * listContent.Length + 50);
 
             GUI.Box(listRect, "", boxStyle);
             int newSelectedItemIndex = GUI.SelectionGrid(listRect, selectedItemIndex, listContent, 1, listStyle);

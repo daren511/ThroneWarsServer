@@ -18,7 +18,7 @@ namespace ControleBD
         public int jid;
         public int Position { get; private set; }
         public bool isConnected = false;
-        public Joueur(Socket sck, int position)
+        public Joueur(Socket sck, int position=0)
         {
             this.Socket = sck;
             this.Position = position;

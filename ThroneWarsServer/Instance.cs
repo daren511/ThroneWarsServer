@@ -14,7 +14,7 @@ namespace ThroneWarsServer
 {
     class Instance
     {
-        private const char Splitter = '?';
+        private const char SPLITTER = '?';
         public Thread T;
         private Joueur Joueur;
         public Instance(Joueur J)
@@ -33,14 +33,18 @@ namespace ThroneWarsServer
                 if (!Joueur.isConnected && Joueur.socketIsConnected())
                 {
                     string Login = recevoirString();
-                    Joueur.Username = Login.Remove(Login.LastIndexOf(Splitter));
-                    bool reponse = Controle.userPassCorrespondant(Joueur.Username, Login.Substring(Login.LastIndexOf(Splitter)+1));//verifie si les informations de login sont ok
+                    Joueur.Username = Login.Remove(Login.LastIndexOf(SPLITTER));
+                    bool reponse = Controle.userPassCorrespondant(Joueur.Username, Login.Substring(Login.LastIndexOf(SPLITTER)+1));//verifie si les informations de login sont ok
                     if (reponse)
                     {
-                        envoyerReponse(reponse.ToString() + Splitter + Controle.accountIsConfirmed(Joueur.Username).ToString());
+                        envoyerReponse(reponse.ToString() + SPLITTER + Controle.accountIsConfirmed(Joueur.Username).ToString() + SPLITTER +Program.checkConnected(Joueur).ToString());
                         Joueur.isConnected = true;
                     }
-                    else { envoyerReponse(reponse.ToString()); }
+                    else 
+                    { 
+                        envoyerReponse(reponse.ToString());
+                        
+                    }
                 }
                 if (Joueur.isConnected)
                 {
@@ -49,17 +53,26 @@ namespace ThroneWarsServer
                     Controle.Actions Choix = 0;
                     while (Joueur.socketIsConnected() && Choix != Controle.Actions.START_GAME)
                     {
-                        Choix = recevoirChoix();
+                        Joueur.Socket.Blocking = false;
+                        try
+                        {
+                            Choix = recevoirChoix();
+                        }
+                        catch(Exception)
+                        {
+                            Choix = Controle.Actions.NOTHING;
+                        }
+                        Joueur.Socket.Blocking = true;
                         //read le choix ici
                         switch (Choix)
                         {
                             case Controle.Actions.CLICK: 
-                                envoyerObjet(Controle.returnPersonnage(recevoirString()));
+                                envoyerObjet(getPersonnage(recevoirString()));
                                 break;
 
                             case Controle.Actions.CREATE:
                                 string Personnage = recevoirString();
-                                envoyerReponse(Controle.addPerso(Joueur.jid,Personnage.Remove(Personnage.LastIndexOf(Splitter)),Personnage.Substring(Personnage.LastIndexOf(Splitter)+1)).ToString());
+                                envoyerReponse(Controle.addPerso(Joueur.jid,Personnage.Remove(Personnage.LastIndexOf(SPLITTER)),Personnage.Substring(Personnage.LastIndexOf(SPLITTER)+1)).ToString());
                                 break;
                             case Controle.Actions.DELETE:
                                 envoyerReponse(Controle.updateStatePerso(Controle.getGUID(recevoirString()),"0").ToString());
@@ -68,12 +81,15 @@ namespace ThroneWarsServer
 
                                 break;
                             case Controle.Actions.EQUIP:
-                                string requete = recevoirString();
-                                envoyerReponse(Controle.addItemPersonnages(requete.Remove(requete.LastIndexOf(Splitter)), Int32.Parse(requete.Substring(requete.LastIndexOf(Splitter) + 1)), Joueur.jid).ToString());
+                                string requeteEquip = recevoirString();
+                                envoyerReponse(Controle.addItemPersonnages(requeteEquip.Remove(requeteEquip.LastIndexOf(SPLITTER)), Int32.Parse(requeteEquip.Substring(requeteEquip.LastIndexOf(SPLITTER) + 1)), Joueur.jid).ToString());
                                 break;
                             case Controle.Actions.UNEQUIP:
-
-                                break;                          
+                                string requeteUnequip = recevoirString();
+                                envoyerReponse(Controle.deleteItemPersonnages(requeteUnequip.Remove(requeteUnequip.LastIndexOf(SPLITTER)), Int32.Parse(requeteUnequip.Substring(requeteUnequip.LastIndexOf(SPLITTER) + 1)), Joueur.jid).ToString());
+                                break;   
+                            case Controle.Actions.NOTHING:
+                                break;
                         }
                     }
 
@@ -83,6 +99,11 @@ namespace ThroneWarsServer
             {
                 if (Joueur.socketIsConnected())
                     Console.WriteLine(e.Message);
+            }
+            if (!Joueur.isConnected)
+            {
+                Program.removePlayer(Joueur);
+                Joueur.Socket.Close();
             }
             this.T.Abort();//arret du thread
         }

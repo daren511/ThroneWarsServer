@@ -7,19 +7,14 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{2933AFD0-894D-919B-7229-715FA35CFB9E}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>
-    </RootNamespace>
+    <RootNamespace></RootNamespace>
     <AssemblyName>Assembly-CSharp</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Full v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile>
-    </CompilerResponseFile>
-    <UnityProjectType>Game:1</UnityProjectType>
-    <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
-    <UnityVersion>4.5.5f1</UnityVersion>
+    <CompilerResponseFile></CompilerResponseFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -51,6 +46,9 @@
       <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml.Linq" />
+    <Reference Include="ControleBD">
+      <HintPath>Assets\Assemblies\ControleBD.dll</HintPath>
+    </Reference>
     <Reference Include="Emails">
       <HintPath>Assets\Assemblies\Emails.dll</HintPath>
     </Reference>
@@ -190,8 +188,6 @@
     <Compile Include="Assets\Tile Based Map and Nav\Scripts\TMN\TileNode.cs" />
     <Compile Include="Assets\Tile Based Map and Nav\Scripts\TMN\x_test\hextest.cs" />
     <Compile Include="Assets\Water\Sources\Scripts\WaterSimple.cs" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Assets\ReadMe.txt" />
     <None Include="Assets\ThirdParty\NGUI\ReadMe.txt" />
     <None Include="Assets\ThirdParty\NGUI\Resources\Shaders\Depth.shader" />
@@ -205,12 +201,11 @@
     <None Include="Assets\ThirdParty\NGUI\Resources\Shaders\Unlit - Transparent Colored.shader" />
     <None Include="Assets\Tile Based Map and Nav\Documentation\readme.txt" />
     <None Include="Assets\Water\Sources\Shaders\FX-Water Simple.shader" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\ControleBD\ControleBD.csproj">
-      <Project>{93432e1c-1d64-4bd3-9c08-e1a5b260b6b9}</Project>
-      <Name>ControleBD</Name>
-    </ProjectReference>
+    <None Include="Assets\Assemblies\ControleBD.dll" />
+    <None Include="Assets\Assemblies\Emails.dll" />
+    <None Include="Assets\Assemblies\Oracle.DataAccess.dll" />
+    <None Include="Assets\Assemblies\System.Data.dll" />
+    <None Include="Assets\ThirdParty\NGUI\DLLs\NGUI.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2013\UnityVS.CSharp.targets" />
 </Project>

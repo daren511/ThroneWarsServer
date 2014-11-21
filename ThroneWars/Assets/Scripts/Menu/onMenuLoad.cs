@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using ControleBD;
 
 public class onMenuLoad : MonoBehaviour
 {
@@ -17,7 +18,7 @@ public class onMenuLoad : MonoBehaviour
     private static float hC = 80.0f;
     private static Rect rectManager = new Rect(8, Screen.height - hC - 10, wC, hC);
     // Quit window
-    private static float wQ = 240.0f;
+    private static float wQ = 275.0f;
     private static float hQ = 110.0f;
     private static Rect rectQuit = new Rect((Screen.width - wQ) / 2, (Screen.height - hQ) / 2, wQ, hQ);
     // Delete window
@@ -71,13 +72,10 @@ public class onMenuLoad : MonoBehaviour
 
     private static void doMenuWindow(int windowID)
     {
-        if (GUILayout.Button("Options"))
-        {
-            // Show the options
-        }
         if (GUILayout.Button("Crédits"))
         {
             // Show the credits
+            Application.OpenURL("www.thronewars.ca");
         }
         if (!isMainMenu)
         {
@@ -96,8 +94,7 @@ public class onMenuLoad : MonoBehaviour
                 wantToCreate = false;
                 characName = "";
 
-                PlayerManager._instance.ClearPlayer();
-                // PlayerManager._instance._chosenTeam
+                PlayerManager._instance.SendAction(Controle.Actions.QUIT);
                 Application.LoadLevel("Login");
             }
         }
@@ -110,9 +107,7 @@ public class onMenuLoad : MonoBehaviour
 
         GUILayout.Space(35);
         GUILayout.BeginHorizontal();
-        GUILayout.FlexibleSpace();
         GUILayout.Label("Voulez-vous vraiment quitter le jeu?");
-        GUILayout.FlexibleSpace();
         GUILayout.EndHorizontal();
         GUILayout.Space(7);
 
@@ -157,15 +152,20 @@ public class onMenuLoad : MonoBehaviour
 
         GUILayout.Space(30);
         GUILayout.BeginHorizontal();
-        GUILayout.Label("Nom:", ColoredGUISkin.Skin.label);
-        characName = GUILayout.TextField(characName, ColoredGUISkin.Skin.textField, GUILayout.Width(12));
-        GUILayout.EndHorizontal();
 
+        GUILayout.BeginVertical();
+        GUILayout.FlexibleSpace();
+        GUILayout.Label("Nom:", ColoredGUISkin.Skin.label);
+        characName = GUILayout.TextField(characName, 12, ColoredGUISkin.Skin.textField, GUILayout.MaxWidth(185));
+        GUILayout.FlexibleSpace();
+        GUILayout.EndVertical();
+
+        GUILayout.EndHorizontal();
         GUILayout.BeginHorizontal();
         GUILayout.Label("Classe:", ColoredGUISkin.Skin.label);
         cb.SelectedItemIndex = cb.Show();
-        GUILayout.EndHorizontal();
 
+        GUILayout.EndHorizontal();
         GUILayout.Space(100);
         GUILayout.BeginHorizontal();
         GUI.enabled = characName.Trim() != "";
@@ -179,6 +179,7 @@ public class onMenuLoad : MonoBehaviour
             {
                 wantToCreate = false;
                 onMainMenu.tabCharac.Add(characName);
+                characName = "";
             }
             else
             {
