@@ -84,9 +84,9 @@ public class ComboBox
             {
                 selectedItemIndex = newSelectedItemIndex;
                 buttonContent = listContent[selectedItemIndex];
+                useControlID = -1;
             }
         }
-
         if (done)
             isClickedComboButton = false;
 
