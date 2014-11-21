@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Connexion.aspx.cs" Inherits="SiteWebThroneWars.Connexion" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Connexion.aspx.cs" Inherits="SiteWebThroneWars.Connexion" EnableEventValidation="false" %>
 
 <!DOCTYPE html>
 

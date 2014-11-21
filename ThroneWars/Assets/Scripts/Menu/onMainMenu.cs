@@ -67,19 +67,19 @@ public class onMainMenu : MonoBehaviour
 
         ShowPlayerInventory();
 
-
+        // Combobox style
         onMenuLoad.listStyle.normal.textColor = Color.white;
         onMenuLoad.listStyle.alignment = TextAnchor.MiddleCenter;
-        onMenuLoad.listStyle.onHover.background =
-        onMenuLoad.listStyle.hover.background = new Texture2D(2, 2);
-        //onMenuLoad.listStyle.padding.left =
-        //onMenuLoad.listStyle.padding.right =
-        //onMenuLoad.listStyle.padding.top =
-        //onMenuLoad.listStyle.padding.bottom = 1;
+        onMenuLoad.listStyle.onHover.background = 
+            onMenuLoad.listStyle.hover.background = new Texture2D(1, 1);
+        onMenuLoad.listStyle.onHover.textColor = Color.yellow;
+        onMenuLoad.listStyle.hover.textColor = Color.yellow;
+        onMenuLoad.listStyle.padding.top = 5;
+        onMenuLoad.listStyle.padding.bottom = 5;
 
         onMenuLoad.cb = new ComboBox(new Rect(onMenuLoad.rectCreate.width / 2 + (onMenuLoad.rectCreate.width * 0.02f),
-            onMenuLoad.rectCreate.height / 2 - 40, 185, 30), onMenuLoad.contents[0],
-            onMenuLoad.contents, "button", "box", onMenuLoad.listStyle);
+            onMenuLoad.rectCreate.height / 2 - 40, 185, 40), onMenuLoad.contents[0],
+            onMenuLoad.contents, "box", "box", onMenuLoad.listStyle);
 
         if (PlayerManager._instance._selectedCharacter != null)
         {
@@ -181,6 +181,9 @@ public class onMainMenu : MonoBehaviour
                     PlayerManager._instance._selectedCharacter._characterInventory._invent.Add(item);
                     tabItem.Add(item._itemName);
                     item._quantity -= 1;
+
+                    PlayerManager._instance.Send("ok");
+                    PlayerManager._instance.LoadPersonnage(PlayerManager._instance.GetPersonnage());
                 }
                 GUI.Label(new Rect(75, 20 + offset, 50, 20), item._bonusPhysAtk.ToString());
                 GUI.Label(new Rect(125, 20 + offset, 50, 20), item._bonusPhysDef.ToString());
@@ -225,6 +228,9 @@ public class onMainMenu : MonoBehaviour
                         PlayerManager._instance._playerInventory._equips[index]._quantity += 1;
                         PlayerManager._instance._selectedCharacter._characterInventory._invent.Remove(item);
                         tabItem.Remove(item._itemName);
+
+                        PlayerManager._instance.Send("ok");
+                        PlayerManager._instance.LoadPersonnage(PlayerManager._instance.GetPersonnage());
                     }
 
                     GUI.Label(new Rect(125, 20 + offset, 50, 20), item._bonusPhysAtk.ToString());
@@ -238,6 +244,11 @@ public class onMainMenu : MonoBehaviour
 
     void doStatsWindow(int windowID)
     {
+        GUILayout.BeginVertical();
+        GUI.DrawTexture(new Rect(325f, 20f, 32, 32), _healthTexture, ScaleMode.StretchToFill, true, 0.0f);
+        GUI.DrawTexture(new Rect(325f, 70f, 32, 32), _magicTexture, ScaleMode.StretchToFill, true, 0.0f);
+        GUILayout.EndVertical();
+
         if (tabCharac.Count > 0)
         {
             string name = tabCharac[selectedCharac];
@@ -268,11 +279,6 @@ public class onMainMenu : MonoBehaviour
             GUILayout.EndVertical();
 
             GUILayout.BeginHorizontal();
-
-            GUILayout.BeginVertical();
-            GUI.DrawTexture(new Rect(325f, 20f, 32, 32), _healthTexture, ScaleMode.StretchToFill, true, 0.0f);
-            GUI.DrawTexture(new Rect(325f, 70f, 32, 32), _magicTexture, ScaleMode.StretchToFill, true, 0.0f);
-            GUILayout.EndVertical();
 
             GUILayout.BeginVertical();
             GUILayout.BeginArea(new Rect(360f, 20f, 100, 32));

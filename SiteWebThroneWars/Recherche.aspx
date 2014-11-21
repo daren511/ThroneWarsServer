@@ -8,7 +8,6 @@
     <title>Throne Wars -Projet FinDec - Stats</title>
     <link rel="stylesheet" type="text/css" href="FinDec.css" />
     <link rel="stylesheet" type="text/css" href="/sweet-alert.css" />
-    <link rel="shortcut icon" href="/Images/Icon.png" />
     <script src="/sweet-alert.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 </head>

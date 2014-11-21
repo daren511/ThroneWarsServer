@@ -652,7 +652,7 @@ namespace ControleBD
                 OracleParameter OraParamUsername = new OracleParameter(":userNonHash", OracleDbType.Varchar2, 32);
 
                 OraParamConfirmed.Value = '1';
-                OraParamUsername.Value = userNonHash;
+                OraParamUsername.Value = userNonHash.ToLower();
 
                 oraUpdate.Parameters.Add(OraParamConfirmed);
                 oraUpdate.Parameters.Add(OraParamUsername);
