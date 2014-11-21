@@ -157,15 +157,20 @@ public class onMenuLoad : MonoBehaviour
 
         GUILayout.Space(30);
         GUILayout.BeginHorizontal();
-        GUILayout.Label("Nom:", ColoredGUISkin.Skin.label);
-        characName = GUILayout.TextField(characName, ColoredGUISkin.Skin.textField, GUILayout.Width(12));
-        GUILayout.EndHorizontal();
 
+        GUILayout.BeginVertical();
+        GUILayout.FlexibleSpace();
+        GUILayout.Label("Nom:", ColoredGUISkin.Skin.label);
+        characName = GUILayout.TextField(characName, 12, ColoredGUISkin.Skin.textField, GUILayout.MaxWidth(185));
+        GUILayout.FlexibleSpace();
+        GUILayout.EndVertical();
+
+        GUILayout.EndHorizontal();
         GUILayout.BeginHorizontal();
         GUILayout.Label("Classe:", ColoredGUISkin.Skin.label);
         cb.SelectedItemIndex = cb.Show();
-        GUILayout.EndHorizontal();
 
+        GUILayout.EndHorizontal();
         GUILayout.Space(100);
         GUILayout.BeginHorizontal();
         GUI.enabled = characName.Trim() != "";
@@ -179,6 +184,7 @@ public class onMenuLoad : MonoBehaviour
             {
                 wantToCreate = false;
                 onMainMenu.tabCharac.Add(characName);
+                characName = "";
             }
             else
             {

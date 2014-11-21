@@ -99,6 +99,7 @@ public class ColoredGUISkin : MonoBehaviour {
 		// Label
 		actualSkin.label = new GUIStyle("label");
 		actualSkin.label.normal.textColor = Color.white;
+        actualSkin.label.fontSize = 16;
 		
 		// Scroll bar
 		actualSkin.verticalScrollbar = new GUIStyle("verticalscrollbar");
