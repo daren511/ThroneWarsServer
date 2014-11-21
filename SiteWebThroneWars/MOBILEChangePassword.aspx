@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="MOBILEResetPassword.aspx.cs" Inherits="SiteWebThroneWars.MOBILEResetPassword" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="MOBILEChangePassword.aspx.cs" Inherits="SiteWebThroneWars.MOBILEChangePassword" %>
 
 <!DOCTYPE html>
 
@@ -10,7 +10,7 @@
 <body>
     <form id="form1" runat="server">
     <div>
-        <p>ResetPassword en construction</p>
+    
     </div>
     </form>
 </body>

@@ -116,9 +116,9 @@
     <Content Include="Menu\jquery.mmenu.oncanvas.css" />
     <Content Include="Menu\jquery.mmenu.oncanvas.js" />
     <Content Include="Menu\jquery.mmenu.oncanvas.min.js" />
+    <Content Include="MOBILEChangePassword.aspx" />
     <Content Include="MOBILEForgotPass.aspx" />
     <Content Include="MOBILEForgotUsername.aspx" />
-    <Content Include="MOBILEResetPassword.aspx" />
     <Content Include="MOBILESendConfirmation.aspx" />
     <Content Include="ThroneWarsOutput\ThroneWars_Data\level0" />
     <Content Include="ThroneWarsOutput\ThroneWars_Data\level1" />
@@ -277,6 +277,13 @@
     <Compile Include="default.aspx.designer.cs">
       <DependentUpon>default.aspx</DependentUpon>
     </Compile>
+    <Compile Include="MOBILEChangePassword.aspx.cs">
+      <DependentUpon>MOBILEChangePassword.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MOBILEChangePassword.aspx.designer.cs">
+      <DependentUpon>MOBILEChangePassword.aspx</DependentUpon>
+    </Compile>
     <Compile Include="MOBILEConnexion.aspx.cs">
       <DependentUpon>MOBILEConnexion.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -325,13 +332,6 @@
     </Compile>
     <Compile Include="MOBILERecherche.aspx.designer.cs">
       <DependentUpon>MOBILERecherche.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="MOBILEResetPassword.aspx.cs">
-      <DependentUpon>MOBILEResetPassword.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="MOBILEResetPassword.aspx.designer.cs">
-      <DependentUpon>MOBILEResetPassword.aspx</DependentUpon>
     </Compile>
     <Compile Include="MOBILESendConfirmation.aspx.cs">
       <DependentUpon>MOBILESendConfirmation.aspx</DependentUpon>
