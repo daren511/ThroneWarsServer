@@ -1,0 +1,273 @@
+﻿body{
+  background: url(images/background1.jpg) no-repeat;
+  background-size:auto;
+  width: 1200px;
+  margin:0 auto;
+}
+
+/*//////////////////////////////////////////////////////////////////////////////// CSS MOBILE /////////////////  */
+
+/* MENU DE SÉLECTION */
+div.Table_Mobile{
+  text-align: center;
+}
+/*DIV PAGE PRINCIPALE*/
+div.DescTele_Mobile{
+  max-width: 650px;
+  display: inline-block;
+  margin-left:7%;
+}
+div.Description_Mobile{
+  padding:2%;
+  width:112%;
+  text-align: justify;
+  font-size:large;
+  background-color: #219ac2;
+  border-radius: 50px 50px 50px 50px;
+  -moz-border-radius: 50px 50px 50px 50px;
+  -webkit-border-radius: 50px 50px 50px 50px;
+  border: 4px solid #000000;
+  -webkit-box-shadow: 31px 7px 32px 3px rgba(0,0,0,0.75);
+  -moz-box-shadow: 31px 7px 32px 3px rgba(0,0,0,0.75);
+  box-shadow: 31px 7px 32px 3px rgba(0,0,0,0.75);
+}
+div.Membres_Mobile{
+  width: 63%;
+  margin-left:7%;
+  padding-bottom: 3%;
+  margin-top:2%;
+
+  background-color: #219ac2;
+  border-radius: 50px 50px 50px 50px;
+  -moz-border-radius: 50px 50px 50px 50px;
+  -webkit-border-radius: 50px 50px 50px 50px;
+  border: 4px solid #000000;
+  -webkit-box-shadow: 31px 7px 32px 3px rgba(0,0,0,0.75);
+  -moz-box-shadow: 31px 7px 32px 3px rgba(0,0,0,0.75);
+  box-shadow: 31px 7px 32px 3px rgba(0,0,0,0.75);
+
+}
+div.Membres_Mobile img{
+    margin-right: 5%;
+    padding-left: 13%;
+}
+/* DIV MÉDIA*/
+div.Photos_Mobile{
+    
+  background-color: #219ac2;
+  border-radius: 50px 50px 50px 50px;
+  -moz-border-radius: 50px 50px 50px 50px;
+  -webkit-border-radius: 50px 50px 50px 50px;
+  border: 4px solid #000000;
+  -webkit-box-shadow: 31px 7px 32px 3px rgba(0,0,0,0.75);
+  -moz-box-shadow: 31px 7px 32px 3px rgba(0,0,0,0.75);
+  box-shadow: 31px 7px 32px 3px rgba(0,0,0,0.75);
+  
+}
+div.Photos_Mobile img{
+    display: inline;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left:5%;
+    border:none;
+}
+/*DIV INSCRIPTION*/
+div.Inscription_Mobile{
+  padding-top: 1%;
+  padding-bottom: 1%;
+  text-align: center;
+  padding:4%;
+  width:73%;
+  font-size:50px;
+  
+  background-color: #219ac2;
+  border-radius: 50px 50px 50px 50px;
+  -moz-border-radius: 50px 50px 50px 50px;
+  -webkit-border-radius: 50px 50px 50px 50px;
+  border: 4px solid #000000;
+  -webkit-box-shadow: 31px 7px 32px 3px rgba(0,0,0,0.75);
+  -moz-box-shadow: 31px 7px 32px 3px rgba(0,0,0,0.75);
+  box-shadow: 31px 7px 32px 3px rgba(0,0,0,0.75);
+  display: inline-block;
+}
+
+div.FormForgot_Mobile{
+  padding-top: 1%;
+  padding-bottom: 1%;
+  padding-right: 1%;
+  text-align: center;
+  margin-left: 34%;
+  height:30%;
+  width:30%;
+
+  background-color: #219ac2;
+  border-radius: 50px 50px 50px 50px;
+  -moz-border-radius: 50px 50px 50px 50px;
+  -webkit-border-radius: 50px 50px 50px 50px;
+  border: 4px solid #000000;
+  -webkit-box-shadow: 31px 7px 32px 3px rgba(0,0,0,0.75);
+  -moz-box-shadow: 31px 7px 32px 3px rgba(0,0,0,0.75);
+  box-shadow: 31px 7px 32px 3px rgba(0,0,0,0.75);
+}
+div.Inscription_Mobile label{
+    display: inline-block;
+    clear: left;
+    width: 250px;
+}
+div.Inscription_Mobile input {
+  display: inline-block;
+}
+
+
+
+/*FORM STATS*/
+div.FormRecherche_Mobile{
+  padding-top: 1%;
+  padding-bottom:1%;
+  text-align: center;
+  background-color: #219ac2;
+  
+  border-radius: 50px 50px 50px 50px;
+  -moz-border-radius: 50px 50px 50px 50px;
+  -webkit-border-radius: 50px 50px 50px 50px;
+  border: 4px solid #000000;
+  -webkit-box-shadow: 31px 7px 32px 3px rgba(0,0,0,0.75);
+  -moz-box-shadow: 31px 7px 32px 3px rgba(0,0,0,0.75);
+  box-shadow: 31px 7px 32px 3px rgba(0,0,0,0.75);
+
+  margin-left: 38%;
+  height:25%;
+  width:24%;
+  display: inline-block;
+}
+
+.Leaderboard_Mobile{
+  margin-top:3%;
+  margin-left:38%;
+  min-height:50px;
+  max-height: 20%;
+  overflow-x:hidden; 
+  width:22%;
+
+  background-color: #219ac2;
+  border: 4px solid #000000;
+  -webkit-box-shadow: 31px 7px 32px 3px rgba(0,0,0,0.75);
+  -moz-box-shadow: 31px 7px 32px 3px rgba(0,0,0,0.75);
+  box-shadow: 31px 7px 32px 3px rgba(0,0,0,0.75);
+
+}
+.LeaderboardTable_Mobile table{
+  margin-top:3%;
+  margin-left:10%;
+}
+.LeaderboardTable_Mobile td{
+  vertical-align:middle;
+  text-align:center;
+  padding:7px;
+  font-size:15px;
+  font-family:Georgia, serif;
+  font-weight:normal;
+  color:#000000;
+}
+.Stats_Mobile{
+  margin-top:3%;
+  margin-left: 38%;
+  min-height:100px;
+  max-height:20%;
+  width:22%;
+
+  background-color: #219ac2;
+  border: 4px solid #000000;
+  -webkit-box-shadow: 31px 7px 32px 3px rgba(0,0,0,0.75);
+  -moz-box-shadow: 31px 7px 32px 3px rgba(0,0,0,0.75);
+  box-shadow: 31px 7px 32px 3px rgba(0,0,0,0.75);
+}
+.Stats_Mobile table{
+  margin-top:3%;
+  margin-left:10%;
+}
+.Stats_Mobile td{
+  vertical-align:middle;
+  text-align:center;
+  padding:7px;
+  font-size:15px;
+  font-family:Georgia, serif;
+  font-weight:normal;
+  color:#000000;
+}
+#Leaderboard_Conn_Mobile{
+  visibility:hidden;
+  width:81%;
+  margin-top:2%;
+
+  background-color: #219ac2;
+  border: 4px solid #000000;
+  -webkit-box-shadow: 31px 7px 32px 3px rgba(0,0,0,0.75);
+  -moz-box-shadow: 31px 7px 32px 3px rgba(0,0,0,0.75);
+  box-shadow: 31px 7px 32px 3px rgba(0,0,0,0.75);
+}
+#Leaderboard_Conn_Mobile table{
+}
+#Leaderboard_Conn_Mobile td{
+}
+#Stats_Conn_Mobile{
+  visibility:hidden;
+  width:81%;
+  margin-top:2%;
+
+  background-color: #219ac2;
+  border: 4px solid #000000;
+  -webkit-box-shadow: 31px 7px 32px 3px rgba(0,0,0,0.75);
+  -moz-box-shadow: 31px 7px 32px 3px rgba(0,0,0,0.75);
+  box-shadow: 31px 7px 32px 3px rgba(0,0,0,0.75);
+}
+#Stats_Conn table{
+}
+#Stats_Conn td{
+}
+
+/*/////////////////////////LEADERBOARD_CLASSEMENT/////////////////////////////*/
+#Leaderboard_Classement{
+
+  margin-top:3%;
+  margin-left:38%;
+  min-height:50px;
+  max-height: 20%;
+  overflow-x:hidden; 
+  width:22%;
+
+  background-color: #219ac2;
+  border: 4px solid #000000;
+  -webkit-box-shadow: 31px 7px 32px 3px rgba(0,0,0,0.75);
+  -moz-box-shadow: 31px 7px 32px 3px rgba(0,0,0,0.75);
+  box-shadow: 31px 7px 32px 3px rgba(0,0,0,0.75);
+
+}
+#Leaderboard_Classement table{
+}
+#Leaderboard_Classement td{
+}
+
+/*/////////////////////STATS_CLASSEMENT////////////////////////////////////*/
+#Stats_Classement{
+  margin-top:3%;
+  margin-left: 38%;
+  min-height:100px;
+  max-height:20%;
+  width:22%;
+  visibility:hidden;
+  background-color: #219ac2;
+  border: 4px solid #000000;
+  -webkit-box-shadow: 31px 7px 32px 3px rgba(0,0,0,0.75);
+  -moz-box-shadow: 31px 7px 32px 3px rgba(0,0,0,0.75);
+  box-shadow: 31px 7px 32px 3px rgba(0,0,0,0.75);
+}
+#Stats_Classement table{
+}
+#Stats_Classement td{
+}
+
+#menu{
+    margin-left:0%;
+}
+

@@ -40,12 +40,6 @@ public class onStartUp : MonoBehaviour
 
     void OnGUI()
     {
-        //if (Event.current.type == EventType.keyDown && Event.current.keyCode == KeyCode.Return
-        //    && userValue.Trim() != "" && pwdvalue.Trim() != "")
-        //{
-        //    Connection();
-        //}
-
         hasUpdatedGui = ResourceManager.GetInstance.UpdateGUI(hasUpdatedGui);
         ResourceManager.GetInstance.CreateBackground();
         ResourceManager.GetInstance.CreateLogo();
@@ -140,7 +134,7 @@ public class onStartUp : MonoBehaviour
 
         if (GUI.GetNameOfFocusedControl() == string.Empty)
         {
-            GUI.FocusControl("PWD");
+            GUI.FocusControl("User");
         }
 
         // If the user can't connect
