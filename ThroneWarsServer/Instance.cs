@@ -71,7 +71,6 @@ namespace ThroneWarsServer
                             case Controle.Actions.CLICK: 
                                 envoyerObjet(getPersonnage(recevoirString()));
                                 break;
-
                             case Controle.Actions.CREATE:
                                 string Personnage = recevoirString();
                                 envoyerReponse(Controle.addPerso(Joueur.jid,Personnage.Remove(Personnage.LastIndexOf(SPLITTER)),Personnage.Substring(Personnage.LastIndexOf(SPLITTER)+1)).ToString());
@@ -85,15 +84,22 @@ namespace ThroneWarsServer
                             case Controle.Actions.EQUIP:
                                 string requeteEquip = recevoirString();
                                 envoyerReponse(Controle.addItemPersonnages(requeteEquip.Remove(requeteEquip.LastIndexOf(SPLITTER)), Int32.Parse(requeteEquip.Substring(requeteEquip.LastIndexOf(SPLITTER) + 1)), Joueur.jid).ToString());
+                                recevoirString();
+                                envoyerObjet(getPersonnage(requeteEquip.Remove(requeteEquip.LastIndexOf(SPLITTER))));
                                 break;
                             case Controle.Actions.UNEQUIP:
                                 string requeteUnequip = recevoirString();
                                 envoyerReponse(Controle.deleteItemPersonnages(requeteUnequip.Remove(requeteUnequip.LastIndexOf(SPLITTER)), Int32.Parse(requeteUnequip.Substring(requeteUnequip.LastIndexOf(SPLITTER) + 1)), Joueur.jid).ToString());
+                                recevoirString();
+                                envoyerObjet(getPersonnage(requeteUnequip.Remove(requeteUnequip.LastIndexOf(SPLITTER))));
                                 break;   
                             case Controle.Actions.NOTHING:
                                 break;
                             case Controle.Actions.QUIT:
                                 Joueur.isConnected = false;
+                                break;
+                            case Controle.Actions.STATS:
+                                envoyerObjet(getPersonnage(recevoirString()));
                                 break;
                         }
                     }
