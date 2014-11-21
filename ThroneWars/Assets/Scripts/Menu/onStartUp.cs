@@ -29,6 +29,7 @@ public class onStartUp : MonoBehaviour
     private bool confirmed = true;
     private bool alreadyConnected = false;
     private bool hasEnter = false;  // Check fot the button enter (or return)
+    Mutex m = new Mutex();
     private GUIStyle lblError = new GUIStyle();
 
     // Login window
@@ -65,6 +66,7 @@ public class onStartUp : MonoBehaviour
                 if (PlayerManager._instance.sck.Connected)
                 {
                     // on vérifie les infos entrées par le joueur(usager, mot de passe)
+                    m.WaitOne();
                     string ans = PlayerManager._instance.CheckUserInfos(userValue, pwdvalue);
 
                     string[] tab = ans.Split(SPLITTER);
@@ -81,6 +83,7 @@ public class onStartUp : MonoBehaviour
                         {
                             PlayerManager._instance.LoadPlayer();
                             Application.LoadLevel("MainMenu");
+                            m.ReleaseMutex();
                         }
                         catch (Exception e)
                         {
