@@ -34,7 +34,7 @@ public class onStartUp : MonoBehaviour
     private static float wL = 430.0f;
     private static float hL = 210.0f;
     private Rect rectLogin = new Rect((Screen.width - wL) / 2, (Screen.height - hL) / 2, wL, hL);
-
+    
     void OnGUI()
     {
         if (Event.current.type == EventType.keyDown && Event.current.keyCode == KeyCode.Return
