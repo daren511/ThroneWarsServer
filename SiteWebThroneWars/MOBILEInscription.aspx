@@ -6,7 +6,7 @@
 <head runat="server">
 <title>Throne Wars -Projet FinDec - Inscription</title>
 <meta charset="utf-8"/> 
-<link rel="stylesheet" type="text/css" href="FinDec.css"/>
+<link rel="stylesheet" type="text/css" href="FinDec_Mobile.css"/>
 <link rel="stylesheet" type="text/css" href="/sweet-alert.css"/>
 <link rel="shortcut icon" href="/Images/Icon.png" />
 <script src="/sweet-alert.min.js"></script>
