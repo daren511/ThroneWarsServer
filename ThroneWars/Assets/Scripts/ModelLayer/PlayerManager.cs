@@ -29,7 +29,7 @@ public class PlayerManager : MonoBehaviour
     public Socket sck;
     public IPEndPoint localEndPoint;
     public string ip = "projet.thronewars.ca";
-    public int port = 50053;
+    public int port = 50052;
 
     void OnApplicationQuit()
     {
@@ -70,6 +70,7 @@ public class PlayerManager : MonoBehaviour
         sck = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
         localEndPoint = new IPEndPoint(Dns.GetHostAddresses(ip)[0], port);
         sck.Connect(localEndPoint);
+
     }
     public void Send(string reponse)
     {
@@ -317,7 +318,23 @@ public class PlayerManager : MonoBehaviour
         {
             Destroy(_chosenTeam[i]);
         }
+        onStartUp.alreadyConnected = false;
         if(sck.Connected)
+        {
             sck.Close();
+            sck = null;
+        }
+    }
+
+    public void GetDefaultsStats(string name)
+    {
+        Send(name);
+        Personnages p = GetPersonnage();
+
+        Debug.Log(p.Health);
+        Debug.Log(p.PhysAtk);
+        Debug.Log(p.PhysDef);
+        Debug.Log(p.MagicAtk);
+        Debug.Log(p.MagicDef);
     }
 }

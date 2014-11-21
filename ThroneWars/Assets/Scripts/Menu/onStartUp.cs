@@ -27,7 +27,7 @@ public class onStartUp : MonoBehaviour
     private bool canConnect = true;
     private bool validInfos = true;
     private bool confirmed = true;
-    private bool alreadyConnected = false;
+    public static bool alreadyConnected = false;
     private bool hasEnter = false;  // Check fot the button enter (or return)
     Mutex m = new Mutex();
     private GUIStyle lblError = new GUIStyle();
@@ -37,7 +37,7 @@ public class onStartUp : MonoBehaviour
     private static float hL = 210.0f;
     private Rect rectLogin = new Rect((Screen.width - wL) / 2, (Screen.height - hL) / 2, wL, hL);
 
- 
+
     void OnGUI()
     {
         //if (Event.current.type == EventType.keyDown && Event.current.keyCode == KeyCode.Return
@@ -57,48 +57,54 @@ public class onStartUp : MonoBehaviour
 
     void Connection()
     {
+        m.WaitOne();
         if (hasEnter)
         {
-        try
-        {
-            PlayerManager._instance.ConnectToServer();
-
-            if (PlayerManager._instance.sck.Connected)
+            try
             {
-                // on vérifie les infos entrées par le joueur(usager, mot de passe)
-                    m.WaitOne();
-                string ans = PlayerManager._instance.CheckUserInfos(userValue, pwdvalue);
 
-                string[] tab = ans.Split(SPLITTER);
+                PlayerManager._instance.ConnectToServer();
 
-                validInfos = tab[0].Contains("True");
-                    if (validInfos)
-                    confirmed = tab[1].Contains("True");
-                if (confirmed)
-                    alreadyConnected = tab[2].Contains("True");
-
-                if (validInfos && confirmed && !alreadyConnected)
+                if (PlayerManager._instance.sck.Connected)
                 {
-                    try
+                    // on vérifie les infos entrées par le joueur(usager, mot de passe)
+                    string ans = PlayerManager._instance.CheckUserInfos(userValue, pwdvalue);
+
+                    string[] tab = ans.Split(SPLITTER);
+
+                    validInfos = tab[0].Contains("True");
+                    if (validInfos)
+                        confirmed = tab[1].Contains("True");
+                    if (confirmed)
+                        alreadyConnected = tab[2].Contains("True");
+
+
+                    if (validInfos && confirmed && !alreadyConnected)
                     {
-                        PlayerManager._instance.LoadPlayer();
-                        Application.LoadLevel("MainMenu");
+                        try
+                        {
+                            hasEnter = true;
+                            PlayerManager._instance.LoadPlayer();
                             m.ReleaseMutex();
+                            Application.LoadLevel("MainMenu");
+                        }
+                        catch (Exception e)
+                        {
+                            Debug.Log(e.Message.ToString());
+                        }
                     }
-                    catch (Exception e)
-                    {
-                        Debug.Log(e.Message.ToString());
-                    }
+                    else
+                        m.ReleaseMutex();
+
                 }
             }
-        }
-        catch (SocketException ex)   // The user can't connect to the server
-        {
-            Debug.Log(ex.Message.ToString());
-            canConnect = false;
+            catch (SocketException ex)   // The user can't connect to the server
+            {
+                Debug.Log(ex.Message.ToString());
+                canConnect = false;
                 hasEnter = false;
+            }
         }
-    }
     }
     void doLoginWindow(int windowID)
     {
@@ -142,13 +148,25 @@ public class onStartUp : MonoBehaviour
         GUILayout.FlexibleSpace();
         lblError.normal.textColor = Color.red;
         if (!canConnect)
+        {
             GUILayout.Label("Erreur dans la connexion au serveur", lblError);
+            hasEnter = false;
+        }
         else if (!validInfos)
+        {
             GUILayout.Label("Usager/Mot de passe invalide", lblError);
+            hasEnter = false;
+        }
         else if (!confirmed)
+        {
             GUILayout.Label("Votre compte n'est pas confirmé", lblError);
-        else if(alreadyConnected)
+            hasEnter = false;
+        }
+        else if (alreadyConnected)
+        {
             GUILayout.Label("Ce compte est déjà connecté", lblError);
+            hasEnter = false;
+        }
         else
             GUILayout.Label("");
 
@@ -180,8 +198,8 @@ public class onStartUp : MonoBehaviour
             {
                 hasEnter = true;
                 Connection();
+            }
         }
-    }
     }
 
     private void checkArrowDown()

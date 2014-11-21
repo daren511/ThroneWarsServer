@@ -181,6 +181,9 @@ public class onMainMenu : MonoBehaviour
                     PlayerManager._instance._selectedCharacter._characterInventory._invent.Add(item);
                     tabItem.Add(item._itemName);
                     item._quantity -= 1;
+
+                    PlayerManager._instance.Send("ok");
+                    PlayerManager._instance.LoadPersonnage(PlayerManager._instance.GetPersonnage());
                 }
                 GUI.Label(new Rect(75, 20 + offset, 50, 20), item._bonusPhysAtk.ToString());
                 GUI.Label(new Rect(125, 20 + offset, 50, 20), item._bonusPhysDef.ToString());
@@ -225,6 +228,9 @@ public class onMainMenu : MonoBehaviour
                         PlayerManager._instance._playerInventory._equips[index]._quantity += 1;
                         PlayerManager._instance._selectedCharacter._characterInventory._invent.Remove(item);
                         tabItem.Remove(item._itemName);
+
+                        PlayerManager._instance.Send("ok");
+                        PlayerManager._instance.LoadPersonnage(PlayerManager._instance.GetPersonnage());
                     }
 
                     GUI.Label(new Rect(125, 20 + offset, 50, 20), item._bonusPhysAtk.ToString());
@@ -238,6 +244,11 @@ public class onMainMenu : MonoBehaviour
 
     void doStatsWindow(int windowID)
     {
+        GUILayout.BeginVertical();
+        GUI.DrawTexture(new Rect(325f, 20f, 32, 32), _healthTexture, ScaleMode.StretchToFill, true, 0.0f);
+        GUI.DrawTexture(new Rect(325f, 70f, 32, 32), _magicTexture, ScaleMode.StretchToFill, true, 0.0f);
+        GUILayout.EndVertical();
+
         if (tabCharac.Count > 0)
         {
             string name = tabCharac[selectedCharac];
@@ -268,11 +279,6 @@ public class onMainMenu : MonoBehaviour
             GUILayout.EndVertical();
 
             GUILayout.BeginHorizontal();
-
-            GUILayout.BeginVertical();
-            GUI.DrawTexture(new Rect(325f, 20f, 32, 32), _healthTexture, ScaleMode.StretchToFill, true, 0.0f);
-            GUI.DrawTexture(new Rect(325f, 70f, 32, 32), _magicTexture, ScaleMode.StretchToFill, true, 0.0f);
-            GUILayout.EndVertical();
 
             GUILayout.BeginVertical();
             GUILayout.BeginArea(new Rect(360f, 20f, 100, 32));

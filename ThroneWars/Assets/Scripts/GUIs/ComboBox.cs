@@ -84,11 +84,19 @@ public class ComboBox
             {
                 selectedItemIndex = newSelectedItemIndex;
                 buttonContent = listContent[selectedItemIndex];
+
+                PlayerManager._instance.GetDefaultsStats(buttonContent.ToString());
+
                 useControlID = -1;
+                selectedItemIndex = -1;
             }
         }
         if (done)
+        {
             isClickedComboButton = false;
+            useControlID = -1;
+            selectedItemIndex = -1;
+        }
 
         return selectedItemIndex;
     }
