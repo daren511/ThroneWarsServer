@@ -9,7 +9,6 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="/Menu/jquery.mmenu.min.js" type="text/javascript"></script>
     <link href="/Menu/jquery.mmenu.css" type="text/css" rel="stylesheet" />
-    <link rel="shortcut icon" href="/Images/Icon.png" />
     <title>Throne Wars -Projet FinDec - Page Principale</title>
 </head>
 <body>
@@ -26,16 +25,9 @@
                 $("#my-menu").trigger("close.mm");
             });
         });
+
 </script>
     <form id="form1" runat="server">
-        <div class="Entete_Mobile">
-            <a href="#my-menu"><img src="./Images/menu.png" width="50" height="50" /></a>
-            <img src="./Images/Logo_Grand.png" style="max-height: 80%; max-width: 80%;" />
-            <!-- A checker les dimensions ou plus grosse image -->
-        </div>
-        <br />
-        <br />
-        
         <nav id="my-menu">
             <ul>
                 
@@ -47,6 +39,19 @@
                 <li><a href="#my-page">Close the menu</a></li>
             </ul>
         </nav>
+        <div id="menu">
+                <a href="#my-menu"><img src="./Images/menu.png" width="100" height="100" /></a>
+            </div>
+        <div class="Entete_Mobile">
+            <img src="./Images/Logo_Grand.png" style="max-height: 80%; max-width: 80%;" />
+            <br />
+            
+            <!-- A checker les dimensions ou plus grosse image -->
+        </div>
+        <br />
+        <br />
+        
+        
 
         <div class="DescTele_Mobile">
             <div class="Description_Mobile">
@@ -71,18 +76,16 @@
         </div>
         <div class="Membres_Mobile">
             <h2>Équipe</h2>
-            <div>
-                <img src="./Images/Daren.jpg" width="200" height="200" />
-                <a href="mailto:Daren@thronewars.ca" target="_top">Daren Ken St-Laurent</a>
-                <img src="./Images/Tattoo.jpg" width="200" height="200" />
-                <a href="mailto:Francis@thronewars.ca" target="_top">Francis Côté</a>
+            <div id="Equipe">
+                <a href="mailto:Daren@thronewars.ca" target="_top"><img src="./Images/Daren.jpg" width="200" height="200" /></a>
+                <a href="mailto:Francis@thronewars.ca" target="_top"><img src="./Images/Tattoo.jpg" width="200" height="200" /></a>
             </div>
             <br />
             <br />
             <br />
-            <div>
-                <img src="./Images/Charles1.jpg" width="200" height="200" /><a href="mailto:Charles@thronewars.ca" target="_top">Charles Hunter-Roy</a>
-                <img src="./Images/Alexis2.jpg" width="200" height="200" /><a href="mailto:Alexis@thronewars.ca" target="_top">Alexis Lalonde</a>
+            <div id="Equipe">
+                <a href="mailto:Charles@thronewars.ca" target="_top"><img src="./Images/Charles1.jpg" width="200" height="200" /></a>
+                <a href="mailto:Alexis@thronewars.ca" target="_top"><img src="./Images/Alexis2.jpg" width="200" height="200" /></a>
             </div>
         </div>
     </form>

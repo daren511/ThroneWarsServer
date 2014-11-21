@@ -25,6 +25,12 @@
                     swal({ title: "Échec! ", text: textadaptatif, type: "error", confirmButtonText: "I'm sad" });
                 });
             }
+            function changeVisibility() {
+                $(document).ready(function () {
+                    document.getElementById("Leaderboard_Classement").style.visibility = "visible";
+                    document.getElementById("Stats_Classement").style.visibility = "visible";
+                });
+            }
         </script>
     <div class="Entete">
         <img src="./Images/Logo_Grand.png" style="max-height: 100%; max-width: 100%;" />
@@ -47,15 +53,14 @@
             <asp:TextBox ID="TB_UsernameSearch" TextMode="SingleLine" runat="server" /><br/><br />
             <asp:Button Text="Rechercher" runat="server" OnClick="Rechercher_Click" />
         </div>
-        <div class="Leaderboard">
+        <div id="Leaderboard_Classement">
             <asp:GridView runat="server" ID="GV_Leaderboard" OnRowDataBound="GV_Leaderboard_OnRowDataBound"  
                 AutoPostBack="true" OnSelectedIndexChanged="GV_Leaderboard_SelectedIndexChanged"
-                AllowPaging ="true" EmptyDataText="Aucun personnages dans ce joueur"
-                OnPageIndexChanging = "GV_Leaderboard_PageIndexChanging" PageSize = "5">     
+                AllowPaging ="true" OnPageIndexChanging = "GV_Leaderboard_PageIndexChanging" PageSize = "5">     
             </asp:GridView>
         </div>
 
-        <div class="Stats">
+        <div id="Stats_Classement">
            <asp:GridView runat="server" ID="GV_Stats">
            </asp:GridView>
         </div>
