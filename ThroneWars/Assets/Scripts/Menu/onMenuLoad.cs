@@ -18,7 +18,7 @@ public class onMenuLoad : MonoBehaviour
     private static float hC = 80.0f;
     private static Rect rectManager = new Rect(8, Screen.height - hC - 10, wC, hC);
     // Quit window
-    private static float wQ = 240.0f;
+    private static float wQ = 275.0f;
     private static float hQ = 110.0f;
     private static Rect rectQuit = new Rect((Screen.width - wQ) / 2, (Screen.height - hQ) / 2, wQ, hQ);
     // Delete window
@@ -72,13 +72,10 @@ public class onMenuLoad : MonoBehaviour
 
     private static void doMenuWindow(int windowID)
     {
-        if (GUILayout.Button("Options"))
-        {
-            // Show the options
-        }
         if (GUILayout.Button("Crédits"))
         {
             // Show the credits
+            Application.OpenURL("www.thronewars.ca");
         }
         if (!isMainMenu)
         {
@@ -110,9 +107,7 @@ public class onMenuLoad : MonoBehaviour
 
         GUILayout.Space(35);
         GUILayout.BeginHorizontal();
-        GUILayout.FlexibleSpace();
         GUILayout.Label("Voulez-vous vraiment quitter le jeu?");
-        GUILayout.FlexibleSpace();
         GUILayout.EndHorizontal();
         GUILayout.Space(7);
 
