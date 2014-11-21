@@ -15,6 +15,9 @@
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Full v3.5</TargetFrameworkProfile>
     <CompilerResponseFile></CompilerResponseFile>
+    <UnityProjectType>Editor:5</UnityProjectType>
+    <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
+    <UnityVersion>4.5.5f1</UnityVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -112,6 +115,8 @@
     <Compile Include="Assets\Tile Based Map and Nav\Editor\TMNEditorUtil.cs" />
     <Compile Include="Assets\Tile Based Map and Nav\Editor\TNELinksOnOffSwitch_Inspector.cs" />
     <Compile Include="Assets\Tile Based Map and Nav\Editor\TileNodeEditor.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <None Include="Assets\ReadMe.txt" />
     <None Include="Assets\ThirdParty\NGUI\ReadMe.txt" />
     <None Include="Assets\ThirdParty\NGUI\Resources\Shaders\Depth.shader" />
@@ -125,10 +130,6 @@
     <None Include="Assets\ThirdParty\NGUI\Resources\Shaders\Unlit - Transparent Colored.shader" />
     <None Include="Assets\Tile Based Map and Nav\Documentation\readme.txt" />
     <None Include="Assets\Water\Sources\Shaders\FX-Water Simple.shader" />
-    <None Include="Assets\ThirdParty\NGUI\DLLs\Editor\NGUI_Editor.dll" />
-    <None Include="Assets\UnityVS\Editor\SyntaxTree.VisualStudio.Unity.Bridge.dll" />
-    <None Include="Assets\UnityVS\Editor\SyntaxTree.VisualStudio.Unity.Messaging.dll" />
-    <None Include="Assets\UnityVS\Editor\UnityVS.VersionSpecific.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2013\UnityVS.CSharp.targets" />
 </Project>

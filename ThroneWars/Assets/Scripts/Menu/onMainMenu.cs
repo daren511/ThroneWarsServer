@@ -122,6 +122,8 @@ public class onMainMenu : MonoBehaviour
 
         if (tabCharac != null && PlayerManager._instance._selectedCharacter != null)
         {
+            if (selectedCharac > tabCharac.Count - 1)
+                selectedCharac = 0;
             if (PlayerManager._instance._selectedCharacter._name != tabCharac[selectedCharac])
             {
                 GetHighlightedCharacter();
@@ -170,7 +172,7 @@ public class onMainMenu : MonoBehaviour
             int offset = i * 25;
             EquipableItem item = PlayerManager._instance._playerInventory._equips[i];
             Rect itemButton = new Rect(0, 20 + offset, 100, 20);
-            if(item._quantity > 0)
+            if (item._quantity > 0)
             {
                 GUI.enabled = PlayerManager._instance.VerifyCanEquip(item);
                 if (GUILayout.Button(item._itemName, GUILayout.Height(30), GUILayout.Width(100)))
@@ -204,7 +206,7 @@ public class onMainMenu : MonoBehaviour
 
         GUILayout.EndHorizontal();
 
-        if (PlayerManager._instance._selectedCharacter != null && 
+        if (PlayerManager._instance._selectedCharacter != null &&
             PlayerManager._instance._selectedCharacter._characterInventory._invent.Count > 0)
         {
             for (int i = 0; i < PlayerManager._instance._selectedCharacter._characterInventory._invent.Count; ++i)
@@ -213,17 +215,23 @@ public class onMainMenu : MonoBehaviour
                 EquipableItem item = PlayerManager._instance._selectedCharacter._characterInventory._invent[i];
                 Rect itemButton = new Rect(0, 20 + offset, 100, 20);
 
-                if (GUILayout.Button(item._itemName, GUILayout.Height(30), GUILayout.Width(100)))
+                if (PlayerManager._instance._selectedCharacter._characterInventory._invent.Contains(item))
                 {
-                    PlayerManager._instance.UnequipItem(item._itemID);
-                    PlayerManager._instance._playerInventory._equips[PlayerManager._instance._playerInventory._equips.IndexOf(item)]._quantity += 1;
-                    PlayerManager._instance._selectedCharacter._characterInventory._invent.Remove(item);
-                    tabItem.Remove(item._itemName);
+                    if (GUILayout.Button(item._itemName, GUILayout.Height(30), GUILayout.Width(100)))
+                    {
+                        PlayerManager._instance.UnequipItem(item._itemID);
+                        int index = PlayerManager._instance._playerInventory._equips.IndexOf(
+                            PlayerManager._instance._playerInventory._equips.Find(x => x._itemName == item._itemName));
+                        PlayerManager._instance._playerInventory._equips[index]._quantity += 1;
+                        PlayerManager._instance._selectedCharacter._characterInventory._invent.Remove(item);
+                        tabItem.Remove(item._itemName);
+                    }
+
+                    GUI.Label(new Rect(125, 20 + offset, 50, 20), item._bonusPhysAtk.ToString());
+                    GUI.Label(new Rect(175, 20 + offset, 50, 20), item._bonusPhysDef.ToString());
+                    GUI.Label(new Rect(225, 20 + offset, 50, 20), item._bonusMagicAtk.ToString());
+                    GUI.Label(new Rect(275, 20 + offset, 50, 20), item._bonusMagicDef.ToString());
                 }
-                GUI.Label(new Rect(125, 20 + offset, 50, 20), item._bonusPhysAtk.ToString());
-                GUI.Label(new Rect(175, 20 + offset, 50, 20), item._bonusPhysDef.ToString());
-                GUI.Label(new Rect(225, 20 + offset, 50, 20), item._bonusMagicAtk.ToString());
-                GUI.Label(new Rect(275, 20 + offset, 50, 20), item._bonusMagicDef.ToString());
             }
         }
     }
