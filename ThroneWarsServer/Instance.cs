@@ -37,7 +37,9 @@ namespace ThroneWarsServer
                     bool reponse = Controle.userPassCorrespondant(Joueur.Username, Login.Substring(Login.LastIndexOf(SPLITTER)+1));//verifie si les informations de login sont ok
                     if (reponse)
                     {
-                        envoyerReponse(reponse.ToString() + SPLITTER + Controle.accountIsConfirmed(Joueur.Username).ToString() + SPLITTER +Program.checkConnected(Joueur).ToString());
+                        string rep = reponse.ToString() + SPLITTER + Controle.accountIsConfirmed(Joueur.Username).ToString() + SPLITTER + Program.checkConnected(Joueur).ToString();
+                        envoyerReponse(rep);
+                        if(rep == "True?True?False")
                         Joueur.isConnected = true;
                     }
                     else 
@@ -51,7 +53,7 @@ namespace ThroneWarsServer
                     Joueur.jid = Controle.getJID(Joueur.Username);
                     startUP(Joueur);
                     Controle.Actions Choix = 0;
-                    while (Joueur.socketIsConnected() && Choix != Controle.Actions.START_GAME)
+                    while (Joueur.socketIsConnected() && Choix != Controle.Actions.START_GAME && Choix != Controle.Actions.QUIT)
                     {
                         Joueur.Socket.Blocking = false;
                         try
@@ -89,6 +91,9 @@ namespace ThroneWarsServer
                                 envoyerReponse(Controle.deleteItemPersonnages(requeteUnequip.Remove(requeteUnequip.LastIndexOf(SPLITTER)), Int32.Parse(requeteUnequip.Substring(requeteUnequip.LastIndexOf(SPLITTER) + 1)), Joueur.jid).ToString());
                                 break;   
                             case Controle.Actions.NOTHING:
+                                break;
+                            case Controle.Actions.QUIT:
+                                Joueur.isConnected = false;
                                 break;
                         }
                     }

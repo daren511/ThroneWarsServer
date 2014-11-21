@@ -95,6 +95,7 @@ public class onMenuLoad : MonoBehaviour
                 characName = "";
 
                 PlayerManager._instance.SendAction(Controle.Actions.QUIT);
+                PlayerManager._instance.ClearPlayer();
                 Application.LoadLevel("Login");
             }
         }

@@ -38,7 +38,8 @@ public class PlayerManager : MonoBehaviour
     }
     void OnDestroy()
     {
-        SendAction(Controle.Actions.QUIT);
+        if(sck.Connected)
+            SendAction(Controle.Actions.QUIT);
         PlayerManager._instance.ClearPlayer();
     }
 
@@ -316,6 +317,7 @@ public class PlayerManager : MonoBehaviour
         {
             Destroy(_chosenTeam[i]);
         }
-        sck.Close();
+        if(sck.Connected)
+            sck.Close();
     }
 }
