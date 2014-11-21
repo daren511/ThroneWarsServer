@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="MOBILEConnexion.aspx.cs" Inherits="SiteWebThroneWars.MOBILEConnexion" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="MOBILEConnexion.aspx.cs" Inherits="SiteWebThroneWars.MOBILEConnexion" EnableEventValidation="false" %>
 
 <!DOCTYPE html>
 
@@ -15,8 +15,20 @@
     <title></title>
 </head>
 <body>
-   <form runat="server" action="Connexion.aspx" autocomplete="on">
+   <form runat="server" action="MOBILEConnexion.aspx" autocomplete="on">
     <script type="text/javascript">
+        $(document).ready(function () {
+            $("#my-menu").mmenu();
+        });
+        $("#my-button").click(function () {
+            $("#my-menu").trigger("open.mm");
+        });
+        $(document).ready(function () {
+            $("#my-menu").mmenu();
+            $("#my-button").click(function () {
+                $("#my-menu").trigger("close.mm");
+            });
+        });
         function MessageBoxReussi() {
             $(document).ready(function () {
                 swal({ title: "Bravo! ", text: "Vous êtes connecté", type: "success", confirmButtonText: "Ok" });
@@ -34,22 +46,10 @@
         }
         function changeVisibility() {
             $(document).ready(function () {
-                document.getElementById("Leaderboard_Conn").style.visibility = "visible";
-                document.getElementById("Stats_Conn").style.visibility = "visible";
+                document.getElementById("Leaderboard_Conn_Mobile").style.visibility = "visible";
+                document.getElementById("Stats_Conn_Mobile").style.visibility = "visible";
             });
         }
-        $(document).ready(function () {
-            $("#my-menu").mmenu();
-        });
-        $("#my-button").click(function () {
-            $("#my-menu").trigger("open.mm");
-        });
-        $(document).ready(function () {
-            $("#my-menu").mmenu();
-            $("#my-button").click(function () {
-                $("#my-menu").trigger("close.mm");
-            });
-        });
         </script>
         <nav id="my-menu">
             <ul>
@@ -77,10 +77,10 @@
         
         <div class="Inscription_Mobile">
             <asp:Label ID="usernameLB" runat="server">Nom d'utilisateur</asp:Label><br />
-            <asp:TextBox ID="username" TextMode="SingleLine" runat="server" /><br />
+            <asp:TextBox ID="username" TextMode="SingleLine" runat="server" style="width: 38%; font-size:30px;" /><br />
             <asp:Label ID="passwordLB" runat="server">Mot de Passe</asp:Label><br />
-            <asp:TextBox ID="password" TextMode="password" runat="server" /><br /><br />
-            <asp:Button Text="Se connecter" OnClick="Connexion_Click" runat="server" /><br />
+            <asp:TextBox ID="password" TextMode="password" runat="server" style="width: 38%; font-size:30px;" /><br /><br />
+            <asp:Button Text="Se connecter" OnClick="MOBILEConnexion_Click" runat="server"  style="width:31%; font-size:35px;" /><br />
             <a href="MOBILEForgotPass.aspx">Mot de passe oublié?</a><br />
             <a href="MOBILEForgotUsername.aspx">Nom d'utilisateur oublié?</a><br />
             <a href="MOBILEChangePassword.aspx">Changer son mot de passe</a><br />
@@ -92,7 +92,7 @@
             </asp:GridView>
         </div>
 
-        <div id="Stats_Conn">
+        <div id="Stats_Conn_Mobile">
           <asp:GridView runat="server" ID="GV_Stats">
           </asp:GridView>
         </div>

@@ -10,7 +10,7 @@
 <body>
     <form id="form1" runat="server">
     <div>
-    
+    <p>Page Changement mot de passe en cours</p>
     </div>
     </form>
 </body>
