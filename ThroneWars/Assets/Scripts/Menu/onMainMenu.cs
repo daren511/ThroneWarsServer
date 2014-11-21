@@ -71,7 +71,7 @@ public class onMainMenu : MonoBehaviour
         onMenuLoad.listStyle.normal.textColor = Color.white;
         onMenuLoad.listStyle.alignment = TextAnchor.MiddleCenter;
         onMenuLoad.listStyle.onHover.background =
-        onMenuLoad.listStyle.hover.background = new Texture2D(20, 20);
+        onMenuLoad.listStyle.hover.background = new Texture2D(2, 2);
         //onMenuLoad.listStyle.padding.left =
         //onMenuLoad.listStyle.padding.right =
         //onMenuLoad.listStyle.padding.top =

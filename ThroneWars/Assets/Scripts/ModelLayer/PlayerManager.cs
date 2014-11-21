@@ -31,6 +31,16 @@ public class PlayerManager : MonoBehaviour
     public string ip = "projet.thronewars.ca";
     public int port = 50053;
 
+    void OnApplicationQuit()
+    {
+        SendAction(Controle.Actions.QUIT);
+        PlayerManager._instance.ClearPlayer();
+    }
+    void OnDestroy()
+    {
+        SendAction(Controle.Actions.QUIT);
+        PlayerManager._instance.ClearPlayer();
+    }
 
     //singleton
     private static PlayerManager instance = null;

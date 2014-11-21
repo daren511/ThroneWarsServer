@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using ControleBD;
 
 public class onMenuLoad : MonoBehaviour
 {
@@ -93,8 +94,7 @@ public class onMenuLoad : MonoBehaviour
                 wantToCreate = false;
                 characName = "";
 
-                PlayerManager._instance.ClearPlayer();
-                // PlayerManager._instance._chosenTeam
+                PlayerManager._instance.SendAction(Controle.Actions.QUIT);
                 Application.LoadLevel("Login");
             }
         }
