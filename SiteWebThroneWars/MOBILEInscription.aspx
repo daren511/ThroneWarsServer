@@ -40,19 +40,7 @@
         }
 </script>
     <form id="form1" runat="server">
-    <div class="Entete_Mobile">
-            
-            <img src="./Images/Logo_Grand.png" style="max-height: 80%; max-width: 80%;" />
-            <br />
-            <div id="menu">
-                <a href="#my-menu"><img src="./Images/menu.png" width="50" height="50" /></a>
-            </div>
-            <!-- A checker les dimensions ou plus grosse image -->
-        </div>
-        <br />
-        <br />
-        
-        <nav id="my-menu">
+    <nav id="my-menu">
             <ul>
                 
                 <li><a href="MOBILEdefault.aspx">Accueil</a></li>
@@ -63,19 +51,33 @@
                 <li><a href="#my-page">Close the menu</a></li>
             </ul>
         </nav>
+        <div id="menu">
+                <a href="#my-menu"><img src="./Images/menu.png" width="100" height="100" /></a>
+            </div>
+        <div class="Entete_Mobile">
+            <img src="./Images/Logo_Grand.png" style="max-height: 80%; max-width: 80%;" />
+            <br />
+            
+            <!-- A checker les dimensions ou plus grosse image -->
+        </div>
+        <br />
+        <br />
+        
+        
+
         <div class="Inscription_Mobile">
   			<asp:label id="usernameLB" runat="server">Nom d'utilisateur</asp:label><br/>
-                <asp:Textbox ID="username" TextMode="SingleLine" runat="server" style="width: 200px; height: 25px;"/><br/>
+                <asp:Textbox ID="username" TextMode="SingleLine" runat="server" style="width: 38%; font-size:30px;"/><br/>
   			<asp:label id="PasswordLB" runat="server">Mot de Passe</asp:label><br/>
-                <asp:TextBox id="password" TextMode="password" runat="server" style="width: 200px; height: 25px;"/><br/>
+                <asp:TextBox id="password" TextMode="password" runat="server" style="width: 38%; font-size:30px;"/><br/>
   			<asp:label id="CPasswordLB" runat="server">Confirmer Mot de Passe</asp:label><br/>
-                <asp:TextBox id="cpassword" TextMode="password" runat="server" style="width: 200px; height: 25px;"/><br />
+                <asp:TextBox id="cpassword" TextMode="password" runat="server" style="width: 38%; font-size:30px;"/><br />
             <asp:label id="EmailLB" runat="server">Courriel</asp:label><br/>
-                <asp:Textbox ID="email" TextMode="Email" runat="server" style="width: 200px; height: 25px;"/><br/>
+                <asp:Textbox ID="email" TextMode="Email" runat="server" style="width: 38%; font-size:30px;"/><br/>
   			<asp:label id="CEmailLB" runat="server">Confirmer Courriel</asp:label><br/>
-                <asp:Textbox ID="cemail" TextMode="Email" runat="server" style="width: 200px; height: 25px;"/><br/><br />
-            <asp:Button Text="Valider" onClick="inscriptionJoueur_Click" runat="server"/>
-		
+                <asp:Textbox ID="cemail" TextMode="Email" runat="server" style="width: 38%; font-size:30px;"/><br/><br />
+            <asp:Button Text="Valider" ID="ButtonValider" onClick="inscriptionJoueur_Click" runat="server" style="width:20%; font-size:35px;"/>
+		    
 		</div>
     </form>
 </body>

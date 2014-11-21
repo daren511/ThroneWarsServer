@@ -37,12 +37,21 @@ namespace SiteWebThroneWars
 
                 string passHash = Controle.hashPassword(pass, null, System.Security.Cryptography.SHA256.Create());
                 Connecter = Controle.userPassCorrespondant(user, passHash);
-                siConfirmer = Controle.accountIsConfirmed(user);
-                if (!siConfirmer)
+                if (Connecter)
+                    siConfirmer = Controle.accountIsConfirmed(user);
+                else
+                {
+                    text = "Compte inexistant";
+                    // Pas connecté
+                    ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>MessageBoxWarning(\"" + text + "\");</script>", false);
+                    ViderTB();
+                }
+                if (!siConfirmer && Connecter)
                 {
                     text = "Veuillez visiter votre courriel pour confirmer votre compte";
                     // Pas connecté
                     ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>MessageBoxWarning(\"" + text + "\");</script>", false);
+                    ViderTB();
                 }
                     if (Connecter)
                     {
@@ -71,6 +80,7 @@ namespace SiteWebThroneWars
                                 GV_Stats.DataBind();
                             }
                             ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>changeVisibility();</script>", false);
+                            ViderTB();
 
                         }
                         else
@@ -78,6 +88,7 @@ namespace SiteWebThroneWars
                             text = "JID Invalide ";
                             //Textbox vide erreur
                             ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>MessageBoxErreur(\"" + text + "\");</script>", false);
+                            ViderTB();
                         }
                     }
                     else
@@ -85,6 +96,7 @@ namespace SiteWebThroneWars
                         text = "Le nom d'utilisateur et le mot de passe n'étaient pas correspondant";
                         // Pas connecté
                         ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>MessageBoxErreur(\"" + text + "\");</script>", false);
+                        ViderTB();
                     }
                 }  
         
