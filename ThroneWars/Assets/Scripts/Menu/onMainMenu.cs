@@ -67,19 +67,19 @@ public class onMainMenu : MonoBehaviour
 
         ShowPlayerInventory();
 
-
+        // Combobox style
         onMenuLoad.listStyle.normal.textColor = Color.white;
         onMenuLoad.listStyle.alignment = TextAnchor.MiddleCenter;
-        onMenuLoad.listStyle.onHover.background =
-        onMenuLoad.listStyle.hover.background = new Texture2D(2, 2);
-        //onMenuLoad.listStyle.padding.left =
-        //onMenuLoad.listStyle.padding.right =
-        //onMenuLoad.listStyle.padding.top =
-        //onMenuLoad.listStyle.padding.bottom = 1;
+        onMenuLoad.listStyle.onHover.background = 
+            onMenuLoad.listStyle.hover.background = new Texture2D(1, 1);
+        onMenuLoad.listStyle.onHover.textColor = Color.yellow;
+        onMenuLoad.listStyle.hover.textColor = Color.yellow;
+        onMenuLoad.listStyle.padding.top = 5;
+        onMenuLoad.listStyle.padding.bottom = 5;
 
         onMenuLoad.cb = new ComboBox(new Rect(onMenuLoad.rectCreate.width / 2 + (onMenuLoad.rectCreate.width * 0.02f),
-            onMenuLoad.rectCreate.height / 2 - 40, 185, 30), onMenuLoad.contents[0],
-            onMenuLoad.contents, "button", "box", onMenuLoad.listStyle);
+            onMenuLoad.rectCreate.height / 2 - 40, 185, 40), onMenuLoad.contents[0],
+            onMenuLoad.contents, "box", "box", onMenuLoad.listStyle);
 
         if (PlayerManager._instance._selectedCharacter != null)
         {
