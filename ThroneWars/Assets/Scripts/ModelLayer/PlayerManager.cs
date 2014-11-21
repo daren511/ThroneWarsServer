@@ -328,6 +328,7 @@ public class PlayerManager : MonoBehaviour
 
     public void GetDefaultsStats(string name)
     {
+        //SendAction(Controle.Actions)
         Send(name);
         Personnages p = GetPersonnage();
 
