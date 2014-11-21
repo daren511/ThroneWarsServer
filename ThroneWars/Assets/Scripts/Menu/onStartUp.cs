@@ -28,6 +28,8 @@ public class onStartUp : MonoBehaviour
     private bool validInfos = true;
     private bool confirmed = true;
     private bool alreadyConnected = false;
+    private bool hasEnter = false;  // Check fot the button enter (or return)
+    Mutex m = new Mutex();
     private GUIStyle lblError = new GUIStyle();
 
     // Login window
@@ -35,13 +37,14 @@ public class onStartUp : MonoBehaviour
     private static float hL = 210.0f;
     private Rect rectLogin = new Rect((Screen.width - wL) / 2, (Screen.height - hL) / 2, wL, hL);
 
+ 
     void OnGUI()
     {
-        if (Event.current.type == EventType.keyDown && Event.current.keyCode == KeyCode.Return
-            && userValue.Trim() != "" && pwdvalue.Trim() != "")
-        {
-            Connection();
-        }
+        //if (Event.current.type == EventType.keyDown && Event.current.keyCode == KeyCode.Return
+        //    && userValue.Trim() != "" && pwdvalue.Trim() != "")
+        //{
+        //    Connection();
+        //}
 
         hasUpdatedGui = ResourceManager.GetInstance.UpdateGUI(hasUpdatedGui);
         ResourceManager.GetInstance.CreateBackground();
@@ -51,8 +54,11 @@ public class onStartUp : MonoBehaviour
         GUILayout.Window(2, rectLogin, doLoginWindow, "Login");   // Draw the login window
         onMenuLoad.createMenuWindow(false);
     }
+
     void Connection()
     {
+        if (hasEnter)
+        {
         try
         {
             PlayerManager._instance.ConnectToServer();
@@ -60,12 +66,13 @@ public class onStartUp : MonoBehaviour
             if (PlayerManager._instance.sck.Connected)
             {
                 // on vérifie les infos entrées par le joueur(usager, mot de passe)
+                    m.WaitOne();
                 string ans = PlayerManager._instance.CheckUserInfos(userValue, pwdvalue);
 
                 string[] tab = ans.Split(SPLITTER);
 
                 validInfos = tab[0].Contains("True");
-                if(validInfos)
+                    if (validInfos)
                     confirmed = tab[1].Contains("True");
                 if (confirmed)
                     alreadyConnected = tab[2].Contains("True");
@@ -76,6 +83,7 @@ public class onStartUp : MonoBehaviour
                     {
                         PlayerManager._instance.LoadPlayer();
                         Application.LoadLevel("MainMenu");
+                            m.ReleaseMutex();
                     }
                     catch (Exception e)
                     {
@@ -88,7 +96,9 @@ public class onStartUp : MonoBehaviour
         {
             Debug.Log(ex.Message.ToString());
             canConnect = false;
+                hasEnter = false;
         }
+    }
     }
     void doLoginWindow(int windowID)
     {
@@ -153,8 +163,9 @@ public class onStartUp : MonoBehaviour
         // Login button
         GUILayout.BeginHorizontal();
         GUILayout.FlexibleSpace();
-        if (GUILayout.Button("Connexion", GUILayout.Width(170), GUILayout.Height(40)))
+        if (GUILayout.Button("Connexion", GUILayout.Width(170), GUILayout.Height(40)) && !hasEnter)
         {
+            hasEnter = true;
             Connection();
         }
         GUILayout.FlexibleSpace();
@@ -163,11 +174,14 @@ public class onStartUp : MonoBehaviour
 
     private void checkEnter()
     {
-        if (Event.current.keyCode == KeyCode.Return)
+        if (Event.current.keyCode == KeyCode.Return && !hasEnter)
         {
             if (userValue.Trim() != "" && pwdvalue.Trim() != "")
+            {
+                hasEnter = true;
                 Connection();
         }
+    }
     }
 
     private void checkArrowDown()

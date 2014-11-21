@@ -75,12 +75,12 @@
 .mm-list > li {
   list-style: none;
   display: block;
-  padding: 0;
+  padding: 26px;
   margin: 0; }
 
 .mm-list {
   font: inherit;
-  font-size: 14px; }
+  font-size: 40px; }
   .mm-list a,
   .mm-list a:hover {
     text-decoration: none; }

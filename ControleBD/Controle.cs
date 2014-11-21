@@ -972,7 +972,7 @@ namespace ControleBD
                 OracleConnection conn = Connection.getInstance().conn;
                 string sqlSelect = "";
                 sqlSelect = "select P.NOM,\"LEVEL\" as Niveau,CL.CNAME as Classe from Personnages P INNER JOIN CLASSES CL " +
-            "ON P.CID = CL.CID where JID = :JID";
+            "ON P.CID = CL.CID where JID = :JID and P.ISACTIVE=1";
 
                 oraDataAdapStats.SelectCommand = new OracleCommand(sqlSelect, conn);
 

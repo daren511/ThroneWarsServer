@@ -28,6 +28,13 @@
 				 </li>
 			</ul>
 			</div>
+            <div class="Membres_1">
+			    <h2>Équipe</h2>
+					<a href="mailto:Daren@thronewars.ca" target="_top">Daren Ken St-Laurent</a><br />
+					<img src="./Images/Daren.jpg" width="200" height="200"/><br /><br />
+					<a href="mailto:Francis@thronewars.ca" target="_top">Francis Côté</a><br />
+					<img src="./Images/Tattoo.jpg" width="200" height="200"/><br /><br />
+			</div>	
 
 				<div class="DescTele">
 					<div class="Description">
@@ -56,16 +63,12 @@
 					</div>
 					
 				</div>
-						<div class="Membres">
-								<h2>Équipe</h2>
-								<a href="mailto:Daren@thronewars.ca" target="_top">Daren Ken St-Laurent</a><br />
-									<img src="./Images/Daren.jpg" width="200" height="200"/><br /><br />
-								<a href="mailto:Francis@thronewars.ca" target="_top">Francis Côté</a><br />
-									<img src="./Images/Tattoo.jpg" width="200" height="200"/><br /><br />
+						<div class="Membres_2">
+                            <h2>Équipe</h2>
 								<a href="mailto:Charles@thronewars.ca" target="_top">Charles Hunter-Roy</a><br />
 									<img src="./Images/Charles1.jpg" width="200" height="200" /><br /><br />
 								<a href="mailto:Alexis@thronewars.ca" target="_top">Alexis Lalonde</a><br />
 									<img src="./Images/Alexis2.jpg" width="200" height="200" /><br /><br />
-							</div>						
+						</div>						
 </body>
 </html>
