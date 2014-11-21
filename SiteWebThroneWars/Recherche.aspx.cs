@@ -34,12 +34,6 @@ namespace SiteWebThroneWars
                 int JID = Controle.getJID(user);
                 if (UserExiste)
                 {
-
-                    //Random random = new Random();
-                    //int randomNumber = random.Next(1, 9);
-                    //string userHash = Controle.Phrase.Chiffrer(user, randomNumber);
-                    //Response.Redirect("www.thronewars.ca/Recherche?User="+userHash);
-
                     //Ramener la position du username dans le leaderboard
                     DSLeaderboard = Controle.getLeaderboard(user, true);
                     if (DSLeaderboard != null)
@@ -139,6 +133,7 @@ namespace SiteWebThroneWars
                 GV_Stats.DataSource = DSLeaderboardSelection;
                 GV_Stats.DataBind();
             }
+            ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>changeVisibility();</script>", false);
         }
 
         protected void GV_Leaderboard_PageIndexChanging(object sender, GridViewPageEventArgs e)
