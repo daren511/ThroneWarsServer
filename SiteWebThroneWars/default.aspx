@@ -59,7 +59,7 @@
 					<div class="Telechargement">
 						<h3>Téléchargement</h3>
 						<p>Client de téléchargement à venir</p>
-                        <p>Beta test login V0.04 : <a href="Downloads\Thronewars_Setup.exe">ici</a> </p>
+                        <p>Beta test login V0.10 : <a href="Downloads\Thronewars_Setup.exe">ici</a> </p>
 					</div>
 					
 				</div>
