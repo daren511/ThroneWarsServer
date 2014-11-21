@@ -30,6 +30,12 @@
                 swal({ title: "Attention! ", text: textadaptatif, type: "warning", confirmButtonText: "Ok" });
             });
         }
+        function changeVisibility() {
+            $(document).ready(function () {
+                document.getElementById("Leaderboard_Conn").style.visibility = "visible";
+                document.getElementById("Stats_Conn").style.visibility = "visible";
+            });
+        }
         </script>
     <div class="Entete">
         <img src="./Images/Logo_Grand.png" style="max-height: 100%; max-width: 100%;" />
@@ -60,16 +66,15 @@
             <a href="ChangePassword.aspx">Changer son mot de passe</a><br />
             <a href="SendConfirmation.aspx">Renvoyer le lien de confirmation</a>
         </div>
-        <div class="Leaderboard">
-            <asp:GridView runat="server" ID="GV_Leaderboard" EmptyDataText="No data found!" OnRowDataBound="GV_Leaderboard_OnRowDataBound">
+        <div id="Leaderboard_Conn">
+            <asp:GridView runat="server" ID="GV_Leaderboard" OnRowDataBound="GV_Leaderboard_OnRowDataBound">
                 
             </asp:GridView>
         </div>
 
-        <div class="Stats">
-
-                 <asp:GridView runat="server" ID="GV_Stats" EmptyDataText="No data found!">
-                 </asp:GridView>
+        <div id="Stats_Conn">
+          <asp:GridView runat="server" ID="GV_Stats">
+          </asp:GridView>
         </div>
     </form>
 </body>

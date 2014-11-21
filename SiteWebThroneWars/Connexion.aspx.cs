@@ -25,6 +25,7 @@ namespace SiteWebThroneWars
             DataSet DSLeaderboard = new DataSet();
             // Textbox non null
             bool ok = VerifChamps();
+
             bool Connecter = false;
             bool siConfirmer = false;
             // if Text box pas null
@@ -69,6 +70,7 @@ namespace SiteWebThroneWars
                                 GV_Stats.DataSource = DS;
                                 GV_Stats.DataBind();
                             }
+                            ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>changeVisibility();</script>", false);
 
                         }
                         else
@@ -93,7 +95,7 @@ namespace SiteWebThroneWars
                 ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>MessageBoxErreur(\"" + text + "\");</script>", false);
                 ViderTB();
             }
-
+            
         }
         protected bool VerifChamps()
         {

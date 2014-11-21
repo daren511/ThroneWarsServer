@@ -18,6 +18,7 @@ namespace SiteWebThroneWars
 
         protected void Rechercher_Click(object sender, EventArgs e)
         {
+            ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>changeVisibility();</script>", false);
             //Textbox pas null
             bool ok = VerifChamps();
             string text = "";
