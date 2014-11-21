@@ -67,20 +67,19 @@ public class onStartUp : MonoBehaviour
                 validInfos = tab[0].Contains("True");
                 if(validInfos)
                     confirmed = tab[1].Contains("True");
-                //if(confirmed)
-                //    alreadyConnected = tab[2].Contains("True");
+                if (confirmed)
+                    alreadyConnected = tab[2].Contains("True");
 
                 if (validInfos && confirmed && !alreadyConnected)
                 {
                     try
                     {
                         PlayerManager._instance.LoadPlayer();
-
                         Application.LoadLevel("MainMenu");
                     }
                     catch (Exception e)
                     {
-                        Debug.Log(e);
+                        Debug.Log(e.Message.ToString());
                     }
                 }
             }
