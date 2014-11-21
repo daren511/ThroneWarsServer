@@ -36,6 +36,11 @@ public class PlayerManager : MonoBehaviour
         SendAction(Controle.Actions.QUIT);
         PlayerManager._instance.ClearPlayer();
     }
+    void OnDestroy()
+    {
+        SendAction(Controle.Actions.QUIT);
+        PlayerManager._instance.ClearPlayer();
+    }
 
     //singleton
     private static PlayerManager instance = null;
