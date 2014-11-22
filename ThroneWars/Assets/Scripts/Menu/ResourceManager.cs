@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 /*
  * ResourceManager
@@ -16,6 +17,13 @@ public class ResourceManager : MonoBehaviour
     private Texture _background = Resources.Load("Menu/Background", typeof(Texture)) as Texture;
     private static Texture _logo = Resources.Load("Menu/Logo", typeof(Texture)) as Texture;
     private static Rect rectLogo = new Rect((Screen.width - _logo.width) / 2, 0, _logo.width, _logo.height);
+    // Textures
+    private Texture2D _healthTexture = Resources.Load("Menu/HEALTH", typeof(Texture2D)) as Texture2D;
+    private Texture2D _magicTexture = Resources.Load("Menu/MANA", typeof(Texture2D)) as Texture2D;
+    private Texture2D _atkTexture = Resources.Load("Menu/WATK", typeof(Texture2D)) as Texture2D;
+    private Texture2D _defTexture = Resources.Load("Menu/WDEF", typeof(Texture2D)) as Texture2D;
+    private Texture2D _matkTexture = Resources.Load("Menu/MATK", typeof(Texture2D)) as Texture2D;
+    private Texture2D _mdefTexture = Resources.Load("Menu/MDEF", typeof(Texture2D)) as Texture2D;
     // Instance
     private static ResourceManager _instance = null;
 
@@ -48,6 +56,11 @@ public class ResourceManager : MonoBehaviour
         }
         GUI.skin = ColoredGUISkin.Skin;
         return hasUpdatedGui;
+    }
+
+    public List<Texture2D> GetResourcesIcons()
+    {
+        return new List<Texture2D> { _healthTexture, _magicTexture, _atkTexture, _defTexture, _matkTexture, _mdefTexture };
     }
 
     public void CreateBackground()

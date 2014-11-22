@@ -29,7 +29,7 @@ public class ComboBox
         this.rect = rect;
         this.buttonContent = buttonContent;
         this.listContent = listContent;
-        this.buttonStyle = buttonStyle;
+        this.buttonStyle = boxStyle;
         this.boxStyle = boxStyle;
         this.listStyle = listStyle;
     }
@@ -75,8 +75,8 @@ public class ComboBox
 
         if (isClickedComboButton)
         {
-            Rect listRect = new Rect(rect.x, rect.y + listStyle.CalcHeight(listContent[0], 1.0f),
-                      rect.width, listStyle.CalcHeight(listContent[0], 1.0f) * listContent.Length + 50);
+            Rect listRect = new Rect(rect.x, rect.y + listStyle.CalcHeight(listContent[0], 1.0f) + 3,
+                      rect.width, listStyle.CalcHeight(listContent[0], 1.0f) * listContent.Length + 20);
 
             GUI.Box(listRect, "", boxStyle);
             int newSelectedItemIndex = GUI.SelectionGrid(listRect, selectedItemIndex, listContent, 1, listStyle);
@@ -84,11 +84,19 @@ public class ComboBox
             {
                 selectedItemIndex = newSelectedItemIndex;
                 buttonContent = listContent[selectedItemIndex];
+
+                PlayerManager._instance.GetDefaultsStats(buttonContent.text.ToString());
+
                 useControlID = -1;
+                selectedItemIndex = -1;
             }
         }
         if (done)
+        {
             isClickedComboButton = false;
+            useControlID = -1;
+            selectedItemIndex = -1;
+        }
 
         return selectedItemIndex;
     }

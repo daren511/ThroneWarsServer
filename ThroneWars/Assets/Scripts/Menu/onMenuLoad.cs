@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using ControleBD;
+using System.Collections.Generic;
 
 public class onMenuLoad : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class onMenuLoad : MonoBehaviour
     private static bool isMainMenu = false;
     private static bool wantToDelete = false;
     private static bool wantToCreate = false;
+    private static List<Texture2D> listIcons = ResourceManager.GetInstance.GetResourcesIcons();
     // Menu window
     private static float wM = 190.0f;
     private static float hM = 115.0f;
@@ -40,6 +42,7 @@ public class onMenuLoad : MonoBehaviour
     public static GUIStyle listStyle = new GUIStyle();
     private static GUIStyle lblError = new GUIStyle();
     private static bool error = false;
+
 
     public static void createQuitWindow()
     {
@@ -74,8 +77,13 @@ public class onMenuLoad : MonoBehaviour
     {
         if (GUILayout.Button("Crédits"))
         {
-            // Show the credits
+            // Show the credits (web site)
             Application.OpenURL("www.thronewars.ca");
+        }
+        if (GUILayout.Button("Inscription"))
+        {
+            // Sign up the player (web site)
+            Application.OpenURL("www.thronewars.ca/Inscription.aspx");
         }
         if (!isMainMenu)
         {
@@ -157,14 +165,35 @@ public class onMenuLoad : MonoBehaviour
         GUILayout.BeginVertical();
         GUILayout.FlexibleSpace();
         GUILayout.Label("Nom:", ColoredGUISkin.Skin.label);
-        characName = GUILayout.TextField(characName, 12, ColoredGUISkin.Skin.textField, GUILayout.MaxWidth(185));
         GUILayout.FlexibleSpace();
         GUILayout.EndVertical();
 
+        characName = GUILayout.TextField(characName, 12, ColoredGUISkin.Skin.textField, GUILayout.MaxWidth(185));
         GUILayout.EndHorizontal();
         GUILayout.BeginHorizontal();
+
+        GUILayout.BeginVertical();
+        GUILayout.FlexibleSpace();
         GUILayout.Label("Classe:", ColoredGUISkin.Skin.label);
+        GUILayout.FlexibleSpace();
+        GUILayout.EndVertical();
+
         cb.SelectedItemIndex = cb.Show();
+
+        GUILayout.BeginVertical();
+        GUILayout.BeginHorizontal();
+        GUI.DrawTexture(new Rect(15.0f, 145f, 32, 32), listIcons[0], ScaleMode.StretchToFill, true, 0.0f);
+        GUI.DrawTexture(new Rect(115.0f, 145f, 32, 32), listIcons[1], ScaleMode.StretchToFill, true, 0.0f);
+        GUILayout.EndHorizontal();
+        GUILayout.BeginHorizontal();
+        GUI.DrawTexture(new Rect(15.0f, 185f, 32, 32), listIcons[2], ScaleMode.StretchToFill, true, 0.0f);
+        GUI.DrawTexture(new Rect(115.0f, 185f, 32, 32), listIcons[3], ScaleMode.StretchToFill, true, 0.0f);
+        GUILayout.EndHorizontal();
+        GUILayout.BeginHorizontal();
+        GUI.DrawTexture(new Rect(15.0f, 220f, 32, 32), listIcons[4], ScaleMode.StretchToFill, true, 0.0f);
+        GUI.DrawTexture(new Rect(115.0f, 220f, 32, 32), listIcons[5], ScaleMode.StretchToFill, true, 0.0f);
+        GUILayout.EndHorizontal();
+        GUILayout.EndVertical();
 
         GUILayout.EndHorizontal();
         GUILayout.Space(100);

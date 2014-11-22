@@ -7,7 +7,7 @@
 ; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
 AppId={{DCCA69B6-E1EE-471B-91DC-2E5E50C89CB3}
 AppName=Throne Wars
-AppVersion=0.005
+AppVersion=0.010
 ;AppVerName=Throne Wars 0.002
 AppPublisher=Collège Lionel-Groulx
 AppPublisherURL=http://www.thronewars.ca
