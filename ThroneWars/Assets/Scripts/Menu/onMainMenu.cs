@@ -38,16 +38,17 @@ public class onMainMenu : MonoBehaviour
     private static float wP = Screen.width - wT - wC - 20;
     private static float hP = Screen.height - hC - 25;
     private static Rect rectPlay = new Rect((Screen.width - wP) / 2, Screen.height - hP - 10, wP, hP);
-    // Inventory window  (player)
-    private static float wI = wP / 2;
-    private static float hI = (Screen.height - hP) / 2;
-    private static Rect rectInvent = new Rect((Screen.width - wI) / 1.24f, (Screen.height - hI) / 1.2f, wI, hI);
+    // Item window  (character) (left side)
+    private static float hIt = (Screen.height - hP) / 1.35f;
+    private static Rect rectItem = new Rect((Screen.width - wP) / 2, rectPlay.yMin - hIt + 3, wP / 2, hIt);
     // Character stats window
     private static float wS = wP / 2;
-    private static float hS = (hI - 10) / 2;
-    private static Rect rectStats = new Rect((Screen.width - wS) / 2, (Screen.height - hS) / 4, wS, hS);
-    // Item window  (character)
-    private static Rect rectItem = new Rect((Screen.width - wP) / 2, (Screen.height - hI) / 1.2f, wP / 2, hI);
+    private static float hS = (((Screen.height - hP) / 2) - 10) / 2;
+    private static Rect rectStats = new Rect((Screen.width - wP) / 2, rectItem.yMin - hS, wS, hS);
+    // Inventory window  (player) (right side)
+    private static float hI = hT + (hP / 2);
+    private static float wI = wP / 2;
+    private static Rect rectInvent = new Rect(rectItem.xMax - 1, Screen.height - rectPlay.yMax, wI, hI);
     // Character stats icons
     public Texture2D _healthTexture;
     public Texture2D _magicTexture;
@@ -76,8 +77,8 @@ public class onMainMenu : MonoBehaviour
         // Combobox style
         onMenuLoad.listStyle.normal.textColor = Color.white;
         onMenuLoad.listStyle.alignment = TextAnchor.MiddleCenter;
-        onMenuLoad.listStyle.onHover.background = 
-            onMenuLoad.listStyle.hover.background = new Texture2D(1, 1);
+        onMenuLoad.listStyle.onHover.background =
+            onMenuLoad.listStyle.hover.background = (Texture2D)Resources.Load("Menu/img_invisible");
         onMenuLoad.listStyle.onHover.textColor = Color.yellow;
         onMenuLoad.listStyle.hover.textColor = Color.yellow;
         onMenuLoad.listStyle.padding.top = 5;
@@ -162,20 +163,26 @@ public class onMainMenu : MonoBehaviour
     void doPlayWindow(int windowID)
     {
         GUILayout.BeginHorizontal();
-        GUILayout.FlexibleSpace();
-        tabMap[0] = onMenuLoad.MyToggle(tabMap[0], "Map 1");
-        GUILayout.FlexibleSpace();
-        GUILayout.EndHorizontal();
 
+        GUILayout.BeginVertical();
+        GUILayout.FlexibleSpace();
+        GUILayout.Box("Sélectionner la carte", GUILayout.Width(rectItem.width));
+        tabMap[0] = onMenuLoad.MyToggle(tabMap[0], "Map 1");
+        GUILayout.EndVertical();
+
+        GUILayout.BeginVertical();
         //GUI.enabled = chosenCharacters == PlayerManager._instance._chosenTeam.Length && tabMap[0];
         GUI.enabled = false;
-        if (GUILayout.Button("Jouer"))
+        if (GUILayout.Button("Jouer", GUILayout.Width(rectInvent.width)))
         {
             // Go to the place character screen
             GameControllerSample6.scene = "Map1";
             Application.LoadLevel("placement");
         }
         GUI.enabled = true;
+        GUILayout.EndVertical();
+
+        GUILayout.EndHorizontal();
     }
 
     void doInventWindow(int windowID)
@@ -184,11 +191,16 @@ public class onMainMenu : MonoBehaviour
 
         GUILayout.BeginHorizontal();
 
+        //GUI.DrawTexture(new Rect(95, 30, 20, 20), _atkTexture, ScaleMode.StretchToFill, true, 0.0f);
+        //GUI.DrawTexture(new Rect(145, 30, 20, 20), _defTexture, ScaleMode.StretchToFill, true, 0.0f);
+        //GUI.DrawTexture(new Rect(195, 30, 20, 20), _matkTexture, ScaleMode.StretchToFill, true, 0.0f);
+        //GUI.DrawTexture(new Rect(245, 30, 20, 20), _mdefTexture, ScaleMode.StretchToFill, true, 0.0f);
+        //GUI.Label(new Rect(295, 30, 150, 25), "QTE");
         GUI.DrawTexture(new Rect(95, 30, 20, 20), _atkTexture, ScaleMode.StretchToFill, true, 0.0f);
-        GUI.DrawTexture(new Rect(145, 30, 20, 20), _defTexture, ScaleMode.StretchToFill, true, 0.0f);
-        GUI.DrawTexture(new Rect(195, 30, 20, 20), _matkTexture, ScaleMode.StretchToFill, true, 0.0f);
-        GUI.DrawTexture(new Rect(245, 30, 20, 20), _mdefTexture, ScaleMode.StretchToFill, true, 0.0f);
-        GUI.Label(new Rect(295, 30, 150, 25), "QTE");
+        GUI.DrawTexture(new Rect(165, 30, 20, 20), _defTexture, ScaleMode.StretchToFill, true, 0.0f);
+        GUI.DrawTexture(new Rect(215, 30, 20, 20), _matkTexture, ScaleMode.StretchToFill, true, 0.0f);
+        GUI.DrawTexture(new Rect(265, 30, 20, 20), _mdefTexture, ScaleMode.StretchToFill, true, 0.0f);
+        GUI.Label(new Rect(rectInvent.xMax - 5, 30, 150, 25), "QTE");
 
         GUILayout.EndHorizontal();
 
@@ -348,7 +360,7 @@ public class onMainMenu : MonoBehaviour
             GUILayout.EndHorizontal();
 
         }
-        GUILayout.BeginArea(new Rect(rectStats.width / 24, rectStats.height / 1.2f, rectStats.width, 40));
+        GUILayout.BeginArea(new Rect(rectStats.width / 24, rectStats.height / 1.3f, rectStats.width, 40));
         GUILayout.BeginHorizontal();
         GUILayout.FlexibleSpace();
 

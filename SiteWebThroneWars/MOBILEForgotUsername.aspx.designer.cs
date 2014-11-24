@@ -13,12 +13,12 @@ namespace SiteWebThroneWars {
     public partial class MOBILEForgotUsername {
         
         /// <summary>
-        /// Contrôle form1.
+        /// Contrôle TB_Email.
         /// </summary>
         /// <remarks>
         /// Champ généré automatiquement.
         /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
+        protected global::System.Web.UI.WebControls.TextBox TB_Email;
     }
 }
