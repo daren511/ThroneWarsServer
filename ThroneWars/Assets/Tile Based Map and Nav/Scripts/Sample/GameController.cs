@@ -119,7 +119,7 @@ public class GameController : TMNController
     }
     private void SpawnUnits()
     {
-        for (int i = 0; i < PlayerManager._instance._chosenTeam.Length; ++i)
+        for (int i = 0; i < PlayerManager._instance._chosenTeam.Count; ++i)
         {
             Character unitFab = unitsFabs[i].GetComponent<Character>();
 
@@ -298,7 +298,7 @@ public class GameController : TMNController
     {
         bool done = true;
 
-        for (int i = 0; i < PlayerManager._instance._chosenTeam.Length && done; ++i)
+        for (int i = 0; i < PlayerManager._instance._chosenTeam.Count && done; ++i)
         {
             if (!units[PlayerManager._instance._playerSide][i].TurnDone())
             {
@@ -332,9 +332,9 @@ public class GameController : TMNController
         int done = 0;
         bool stillActive = false;
 
-        while (done < PlayerManager._instance._chosenTeam.Length && !stillActive)
+        while (done < PlayerManager._instance._chosenTeam.Count && !stillActive)
         {
-            if (activeCharacterIndex == PlayerManager._instance._chosenTeam.Length - 1)
+            if (activeCharacterIndex == PlayerManager._instance._chosenTeam.Count - 1)
             {
                 activeCharacterIndex = 0;
             }
@@ -353,7 +353,7 @@ public class GameController : TMNController
                 stillActive = true;
             }
         }
-        if (done == PlayerManager._instance._chosenTeam.Length && PlayerManager._instance._playerSide == currPlayerTurn + 1)
+        if (done == PlayerManager._instance._chosenTeam.Count && PlayerManager._instance._playerSide == currPlayerTurn + 1)
         {
             //tour du joueur terminer
             Debug.Log("Tour terminé!");
