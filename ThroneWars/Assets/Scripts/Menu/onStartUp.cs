@@ -213,30 +213,6 @@ public class onStartUp : MonoBehaviour
     }
 
 
-    //private void GetPlayerInfo()
-    //{
-    //    Joueur joueur = GetJoueur();
-    //    PlayerInventory playerInvent = null;
-    //    List<Potion> list = new List<Potion>();
-    //    Potion uItem;
-    //    EquipableItem eItem;
-
-    //    Personnages perso;
-    //    string charClass;
-
-    //    for (int i = 0; i < joueur.Persos.Count; ++i)
-    //    {
-    //        perso = joueur.Persos[i];
-    //        charClass = GetCharacterClass(perso.ClassId);
-    //        //ici traiter l'inventaire du personnage
-    //        CharacterInventory characterInvent = GetCharacterInventory(i);
-
-    //        PlayerManager._instance._characters.Add(Character.CreateCharacter(perso.Nom, charClass, perso.Level, perso.Xp, perso.Moves,
-    //            perso.Range, perso.Health, perso.Magic, characterInvent, perso.PhysAtk, perso.PhysDef, perso.MagicAtk, perso.MagicDef));
-
-    //    }
-    //    PlayerManager._instance._playerInventory = playerInvent;
-    //}
 
     //public static void GetBidonPlayer()
     //{

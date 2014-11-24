@@ -14,16 +14,18 @@ using System.Runtime.Serialization.Formatters.Binary;
  * */
 public class PlayerManager : MonoBehaviour
 {
-    private const int MAX_TEAM_LENGTH = 4;
+    public const int MAX_TEAM_LENGTH = 4;
     private const char SPLITTER = '?';
     private const int MAX_CHARACTER_EQUIPS = 6;
 
-    public Character[] _chosenTeam { get; set; }
+    public List<Character> _chosenTeam = new List<Character>();
     public PlayerInventory _playerInventory = new PlayerInventory();
     public List<Character> _characters = new List<Character>();
     public Character _selectedCharacter;
     public int _playerSide;
     public int _gold;
+
+    public List<string> _characNames = new List<string>();
 
     // Connection
     public Socket sck;
@@ -62,7 +64,6 @@ public class PlayerManager : MonoBehaviour
     {
         DontDestroyOnLoad(this);
         instance = this;
-        _chosenTeam = new Character[MAX_TEAM_LENGTH];
     }
     public void ConnectToServer()
     {
@@ -81,8 +82,8 @@ public class PlayerManager : MonoBehaviour
     public void LoadPlayer()
     {
         //on envoie une réponse au serveur pour s'assurer que toutes les réceptions du client se fassent
-        List<string> charNames = GetAllPersonnages();
-        onMainMenu.tabCharac = charNames;
+        _characNames = GetAllPersonnages();
+        onMainMenu.tabCharac = _characNames;
         Send("ok");
 
         List<Items> list = GetPlayerInventory();
@@ -314,7 +315,7 @@ public class PlayerManager : MonoBehaviour
         onMainMenu.tabItem.Clear();
         _playerInventory._equips.Clear();
         _playerInventory._potions.Clear();
-        for (int i = 0; i < _chosenTeam.Length; ++i)
+        for (int i = 0; i < _chosenTeam.Count; ++i)
         {
             Destroy(_chosenTeam[i]);
         }
@@ -326,16 +327,10 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
-    public void GetDefaultsStats(string name)
+    public void GetDefaultStats(string name)
     {
         SendAction(Controle.Actions.STATS);
         Send(name);
         Personnages p = GetPersonnage();
-
-        Debug.Log(p.Health);
-        Debug.Log(p.PhysAtk);
-        Debug.Log(p.PhysDef);
-        Debug.Log(p.MagicAtk);
-        Debug.Log(p.MagicDef);
     }
 }
