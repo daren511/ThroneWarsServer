@@ -134,21 +134,28 @@ public class onMainMenu : MonoBehaviour
 
     void doPlayWindow(int windowID)
     {
-        GUILayout.BeginHorizontal();
-        GUILayout.FlexibleSpace();
-        tabMap[0] = onMenuLoad.MyToggle(tabMap[0], "Map 1");
-        GUILayout.FlexibleSpace();
-        GUILayout.EndHorizontal();
 
+        GUILayout.BeginHorizontal();
+
+        GUILayout.BeginVertical();
+        GUILayout.FlexibleSpace();
+        GUILayout.Box("Sélectionner la carte", GUILayout.Width(rectItem.width));
+        tabMap[0] = onMenuLoad.MyToggle(tabMap[0], "Map 1");
+        GUILayout.EndVertical();
+
+        GUILayout.BeginVertical();
         //GUI.enabled = chosenCharacters == PlayerManager._instance._chosenTeam.Length && tabMap[0];
         GUI.enabled = false;
-        if (GUILayout.Button("Jouer"))
+        if (GUILayout.Button("Jouer", GUILayout.Width(rectInvent.width)))
         {
             // Go to the place character screen
             GameControllerSample6.scene = "Map1";
             Application.LoadLevel("placement");
         }
         GUI.enabled = true;
+        GUILayout.EndVertical();
+
+        GUILayout.EndHorizontal();
     }
 
     void doInventWindow(int windowID)
@@ -321,7 +328,7 @@ public class onMainMenu : MonoBehaviour
             GUILayout.EndHorizontal();
 
         }
-        GUILayout.BeginArea(new Rect(rectStats.width / 24, rectStats.height / 1.2f, rectStats.width, 40));
+        GUILayout.BeginArea(new Rect(rectStats.width / 24, rectStats.height / 1.3f, rectStats.width, 40));
         GUILayout.BeginHorizontal();
         GUILayout.FlexibleSpace();
 
