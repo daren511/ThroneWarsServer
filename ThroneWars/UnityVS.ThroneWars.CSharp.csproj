@@ -90,6 +90,7 @@
     <Compile Include="Assets\Scripts\Menu\ResourceManager.cs" />
     <Compile Include="Assets\Scripts\Menu\ScrollBarButton.cs" />
     <Compile Include="Assets\Scripts\Menu\UITab.cs" />
+    <Compile Include="Assets\Scripts\Menu\onLoading.cs" />
     <Compile Include="Assets\Scripts\Menu\onMainMenu.cs" />
     <Compile Include="Assets\Scripts\Menu\onMenuLoad.cs" />
     <Compile Include="Assets\Scripts\Menu\onStartUp.cs" />
