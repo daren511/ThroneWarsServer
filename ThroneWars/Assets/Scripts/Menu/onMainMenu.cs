@@ -36,16 +36,17 @@ public class onMainMenu : MonoBehaviour
     private static float wP = Screen.width - wT - wC - 20;
     private static float hP = Screen.height - hC - 25;
     private static Rect rectPlay = new Rect((Screen.width - wP) / 2, Screen.height - hP - 10, wP, hP);
-    // Inventory window  (player)
-    private static float wI = wP / 2;
-    private static float hI = (Screen.height - hP) / 2;
-    private static Rect rectInvent = new Rect((Screen.width - wI) / 1.24f, (Screen.height - hI) / 1.2f, wI, hI);
+    // Item window  (character)
+    private static float hIt = (Screen.height - hP) / 1.35f;
+    private static Rect rectItem = new Rect((Screen.width - wP) / 2, rectPlay.yMin - hIt + 3, wP / 2, hIt);
     // Character stats window
     private static float wS = wP / 2;
-    private static float hS = (hI - 10) / 2;
-    private static Rect rectStats = new Rect((Screen.width - wS) / 2, (Screen.height - hS) / 4, wS, hS);
-    // Item window  (character)
-    private static Rect rectItem = new Rect((Screen.width - wP) / 2, (Screen.height - hI) / 1.2f, wP / 2, hI);
+    private static float hS = (((Screen.height - hP) / 2) - 10) / 2;
+    private static Rect rectStats = new Rect((Screen.width - wP) / 2, rectItem.yMin - hS, wS, hS);
+    // Inventory window  (player)
+    private static float hI = hT + (hP / 2);
+    private static float wI = wP / 2;
+    private static Rect rectInvent = new Rect(rectItem.xMax - 1, Screen.height - rectPlay.yMax, wI, hI);
     // Character stats icons
     public Texture2D _healthTexture;
     public Texture2D _magicTexture;
@@ -70,8 +71,8 @@ public class onMainMenu : MonoBehaviour
         // Combobox style
         onMenuLoad.listStyle.normal.textColor = Color.white;
         onMenuLoad.listStyle.alignment = TextAnchor.MiddleCenter;
-        onMenuLoad.listStyle.onHover.background = 
-            onMenuLoad.listStyle.hover.background = new Texture2D(1, 1);
+        onMenuLoad.listStyle.onHover.background =
+            onMenuLoad.listStyle.hover.background = (Texture2D)Resources.Load("Menu/img_invisible");
         onMenuLoad.listStyle.onHover.textColor = Color.yellow;
         onMenuLoad.listStyle.hover.textColor = Color.yellow;
         onMenuLoad.listStyle.padding.top = 5;
