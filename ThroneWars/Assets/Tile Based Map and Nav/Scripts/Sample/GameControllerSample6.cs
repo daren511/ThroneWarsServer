@@ -56,7 +56,7 @@ public class GameControllerSample6 : MonoBehaviour
 
         InitializeEnemyUnits();
 
-        for (int i = 0; i < PlayerManager._instance._chosenTeam.Length; ++i)
+        for (int i = 0; i < PlayerManager._instance._chosenTeam.Count; ++i)
         {
             AddCharacterPrefab(i);
         }
@@ -97,7 +97,7 @@ public class GameControllerSample6 : MonoBehaviour
 
     private void doPlayWindow(int windowID)
     {
-        GUI.enabled = placed == PlayerManager._instance._chosenTeam.Length;
+        GUI.enabled = placed == PlayerManager._instance._chosenTeam.Count;
         if (GUILayout.Button("Démarrer"))
         {
             Object[] allObjects = FindObjectsOfType(typeof(Character));
@@ -152,7 +152,7 @@ public class GameControllerSample6 : MonoBehaviour
 
     void InitializeStats()
     {
-        if (placed < PlayerManager._instance._chosenTeam.Length)
+        if (placed < PlayerManager._instance._chosenTeam.Count)
         {
             charName = unitFabs[placed].GetComponent<Character>()._name;
             //charClass = unitFabs[placed].GetComponent<Character>()._characterClass._className;
@@ -179,7 +179,7 @@ public class GameControllerSample6 : MonoBehaviour
             if (Physics.Raycast(ray, out hit, 100f, tilesLayer))
             {
                 // a tile gameobject was clicked on
-                if (placed < PlayerManager._instance._chosenTeam.Length)
+                if (placed < PlayerManager._instance._chosenTeam.Count)
                 {
                     // get the TileNode
                     TileNode node = hit.collider.GetComponent<TileNode>();

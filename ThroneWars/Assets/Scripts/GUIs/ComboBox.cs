@@ -85,7 +85,7 @@ public class ComboBox
                 selectedItemIndex = newSelectedItemIndex;
                 buttonContent = listContent[selectedItemIndex];
 
-                PlayerManager._instance.GetDefaultsStats(buttonContent.text.ToString());
+                PlayerManager._instance.GetDefaultStats(buttonContent.text.ToString());
 
                 useControlID = -1;
                 selectedItemIndex = -1;
