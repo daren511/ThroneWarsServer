@@ -55,20 +55,11 @@
     <Reference Include="Emails">
       <HintPath>Assets\Assemblies\Emails.dll</HintPath>
     </Reference>
-    <Reference Include="NGUI">
-      <HintPath>Assets\Assemblies\NGUI.dll</HintPath>
-    </Reference>
     <Reference Include="Oracle.DataAccess">
       <HintPath>Assets\Assemblies\Oracle.DataAccess.dll</HintPath>
     </Reference>
     <Reference Include="System.Data">
       <HintPath>Assets\Assemblies\System.Data.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEditor">
-      <HintPath>Assets\Assemblies\UnityEditor.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine">
-      <HintPath>Assets\Assemblies\UnityEngine.dll</HintPath>
     </Reference>
     <Reference Include="Oracle.DataAccess">
       <HintPath>Assets\Plugins\Oracle.DataAccess.dll</HintPath>
@@ -121,8 +112,6 @@
     <Compile Include="Assets\Tile Based Map and Nav\Editor\TMNEditorUtil.cs" />
     <Compile Include="Assets\Tile Based Map and Nav\Editor\TNELinksOnOffSwitch_Inspector.cs" />
     <Compile Include="Assets\Tile Based Map and Nav\Editor\TileNodeEditor.cs" />
-    <None Include="Assets\Assemblies\UnityEditor.xml" />
-    <None Include="Assets\Assemblies\UnityEngine.xml" />
     <None Include="Assets\ReadMe.txt" />
     <None Include="Assets\ThirdParty\NGUI\ReadMe.txt" />
     <None Include="Assets\ThirdParty\NGUI\Resources\Shaders\Depth.shader" />

@@ -108,6 +108,7 @@
     <Content Include="highslide\graphics\outlines\Outlines.psd" />
     <None Include="Properties\PublishProfiles\Francis Site Web.pubxml" />
     <None Include="Properties\PublishProfiles\Throne.pubxml" />
+    <Content Include="Magasin.aspx" />
     <Content Include="Menu\jquery.mmenu.all.css" />
     <Content Include="Menu\jquery.mmenu.css" />
     <Content Include="Menu\jquery.mmenu.debugger.js" />
@@ -263,6 +264,13 @@
     </Compile>
     <Compile Include="Inscription.aspx.designer.cs">
       <DependentUpon>Inscription.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Magasin.aspx.cs">
+      <DependentUpon>Magasin.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Magasin.aspx.designer.cs">
+      <DependentUpon>Magasin.aspx</DependentUpon>
     </Compile>
     <Compile Include="Media.aspx.cs">
       <DependentUpon>Media.aspx</DependentUpon>

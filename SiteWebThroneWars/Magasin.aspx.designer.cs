@@ -10,7 +10,7 @@
 namespace SiteWebThroneWars {
     
     
-    public partial class MOBILERecherche {
+    public partial class Magasin {
         
         /// <summary>
         /// Contrôle form1.
@@ -22,30 +22,30 @@ namespace SiteWebThroneWars {
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
         
         /// <summary>
-        /// Contrôle TB_UsernameSearch.
+        /// Contrôle usernameLB.
         /// </summary>
         /// <remarks>
         /// Champ généré automatiquement.
         /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TB_UsernameSearch;
+        protected global::System.Web.UI.WebControls.Label usernameLB;
         
         /// <summary>
-        /// Contrôle GV_Leaderboard.
+        /// Contrôle username.
         /// </summary>
         /// <remarks>
         /// Champ généré automatiquement.
         /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView GV_Leaderboard;
+        protected global::System.Web.UI.WebControls.TextBox username;
         
         /// <summary>
-        /// Contrôle GV_Stats.
+        /// Contrôle GV_Magasin.
         /// </summary>
         /// <remarks>
         /// Champ généré automatiquement.
         /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView GV_Stats;
+        protected global::System.Web.UI.WebControls.GridView GV_Magasin;
     }
 }
