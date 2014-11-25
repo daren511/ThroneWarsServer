@@ -76,4 +76,25 @@ public class ResourceManager : MonoBehaviour
         GUILayout.FlexibleSpace();
         GUILayout.EndHorizontal();
     }
+
+    public static Texture2D GetSprite(string characterClass, int spriteID)
+    {
+        string classPrefab = "";
+        switch (characterClass)
+        {
+            case "Guerrier":
+                classPrefab = "Textures/MenuSprites/MenuWarrior" + spriteID;
+                break;
+            case "Prêtre":
+                classPrefab = "Textures/MenuSprites/MenuPriest" + spriteID;
+                break;
+            case "Mage":
+                classPrefab = "Textures/MenuSprites/MenuMage" + spriteID;
+                break;
+            case "Archer":
+                classPrefab = "Textures/MenuSprites/MenuArcher" + spriteID;
+                break;
+        }
+        return Resources.Load(classPrefab, typeof(Texture2D)) as Texture2D;
+    }
 }

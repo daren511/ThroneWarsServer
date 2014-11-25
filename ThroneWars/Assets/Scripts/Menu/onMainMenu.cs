@@ -91,8 +91,8 @@ public class onMainMenu : MonoBehaviour
         if (PlayerManager._instance._selectedCharacter != null)
         {
             __spriteClass = PlayerManager._instance._selectedCharacter._characterClass._className;
-            sprite1 = GetSprite(__spriteClass, 1);
-            sprite2 = GetSprite(__spriteClass, 2);
+            sprite1 = ResourceManager.GetSprite(__spriteClass, 1);
+            sprite2 = ResourceManager.GetSprite(__spriteClass, 2);
             ShowChosenCharacterInventory();
         }
         _storedSelection = "perso";
@@ -203,10 +203,10 @@ public class onMainMenu : MonoBehaviour
 
         scrollPos = GUILayout.BeginScrollView(scrollPos, ColoredGUISkin.Skin.verticalScrollbar, ColoredGUISkin.Skin.scrollView);
         //selectedInvent = GUILayout.SelectionGrid(selectedInvent, tabInvent.ToArray(), 1);
-
+        int compteur = 0;
         for (int i = 0; i < PlayerManager._instance._playerInventory._equips.Count; ++i)
         {
-            int offset = i * 25;
+            int offset = compteur * 25;
             EquipableItem item = PlayerManager._instance._playerInventory._equips[i];
             Rect itemButton = new Rect(0, 20 + offset, rectInvent.width - 295, 30);
             if (item._quantity > 0)
@@ -228,6 +228,7 @@ public class onMainMenu : MonoBehaviour
                 GUI.Label(new Rect(rectInvent.width - 185, 20 + offset, 50, 20), item._bonusMagicAtk.ToString());
                 GUI.Label(new Rect(rectInvent.width - 135, 20 + offset, 50, 20), item._bonusMagicDef.ToString());
                 GUI.Label(new Rect(rectInvent.width - 85, 20 + offset, 50, 20), item._quantity.ToString());
+                compteur++;
             }
         }
         GUILayout.EndScrollView();
@@ -298,8 +299,8 @@ public class onMainMenu : MonoBehaviour
             if (__spriteClass != c._characterClass._className)
             {
                 __spriteClass = c._characterClass._className;
-                sprite1 = GetSprite(c._characterClass._className, 1);
-                sprite2 = GetSprite(c._characterClass._className, 2);
+                sprite1 = ResourceManager.GetSprite(c._characterClass._className, 1);
+                sprite2 = ResourceManager.GetSprite(c._characterClass._className, 2);
             }
 
             GUILayout.BeginHorizontal();
@@ -394,27 +395,6 @@ public class onMainMenu : MonoBehaviour
         PlayerManager._instance.SendAction(Controle.Actions.CLICK);
         PlayerManager._instance.Send(name);
         PlayerManager._instance.LoadPersonnage(PlayerManager._instance.GetPersonnage());
-    }
-
-    private Texture2D GetSprite(string characterClass, int spriteID)
-    {
-        string classPrefab = "";
-        switch (characterClass)
-        {
-            case "Guerrier":
-                classPrefab = "Textures/MenuSprites/MenuWarrior" + spriteID;
-                break;
-            case "Prêtre":
-                classPrefab = "Textures/MenuSprites/MenuPriest" + spriteID;
-                break;
-            case "Mage":
-                classPrefab = "Textures/MenuSprites/MenuMage" + spriteID;
-                break;
-            case "Archer":
-                classPrefab = "Textures/MenuSprites/MenuArcher" + spriteID;
-                break;
-        }
-        return Resources.Load(classPrefab, typeof(Texture2D)) as Texture2D;
     }
 
     void SelectCharacter(int pos)

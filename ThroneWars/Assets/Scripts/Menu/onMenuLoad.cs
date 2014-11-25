@@ -11,6 +11,8 @@ public class onMenuLoad : MonoBehaviour
     private static bool wantToDelete = false;
     private static bool wantToCreate = false;
     private static List<Texture2D> listIcons = ResourceManager.GetInstance.GetResourcesIcons();
+    private static Texture2D sprite1 = null;
+    private static Texture2D sprite2 = null;
     // Menu window
     private static float wM = 190.0f;
     private static float hM = 115.0f;
@@ -42,6 +44,7 @@ public class onMenuLoad : MonoBehaviour
     public static GUIStyle listStyle = new GUIStyle();
     private static GUIStyle lblError = new GUIStyle();
     private static bool error = false;
+    private static Personnages perso;
 
 
     public static void createQuitWindow()
@@ -106,6 +109,7 @@ public class onMenuLoad : MonoBehaviour
                 wantToDelete = false;
                 wantToCreate = false;
                 characName = "";
+                cb.ResetContent();
 
                 PlayerManager._instance.SendAction(Controle.Actions.QUIT);
                 PlayerManager._instance.ClearPlayer();
@@ -185,21 +189,40 @@ public class onMenuLoad : MonoBehaviour
         GUILayout.EndVertical();
 
         cb.SelectedItemIndex = cb.Show();
+        perso = cb.GetStats();
 
         GUILayout.BeginVertical();
         GUILayout.BeginHorizontal();
-        GUI.DrawTexture(new Rect(15.0f, 145f, 32, 32), listIcons[0], ScaleMode.StretchToFill, true, 0.0f);
-        GUI.DrawTexture(new Rect(115.0f, 145f, 32, 32), listIcons[1], ScaleMode.StretchToFill, true, 0.0f);
+        GUI.DrawTexture(new Rect(15.0f, 145f, 32, 32), listIcons[0], ScaleMode.StretchToFill, true, 0.0f);  // Health
+        GUI.Label(new Rect(50.0f, 150f, 32, 32), ": " + perso.Health);
+        GUI.DrawTexture(new Rect(115.0f, 145f, 32, 32), listIcons[1], ScaleMode.StretchToFill, true, 0.0f); // Magic
+        GUI.Label(new Rect(150.0f, 150f, 32, 32), ": " + perso.Magic);
         GUILayout.EndHorizontal();
         GUILayout.BeginHorizontal();
-        GUI.DrawTexture(new Rect(15.0f, 185f, 32, 32), listIcons[2], ScaleMode.StretchToFill, true, 0.0f);
-        GUI.DrawTexture(new Rect(115.0f, 185f, 32, 32), listIcons[3], ScaleMode.StretchToFill, true, 0.0f);
+        GUI.DrawTexture(new Rect(15.0f, 185f, 32, 32), listIcons[2], ScaleMode.StretchToFill, true, 0.0f);  // Watk
+        GUI.Label(new Rect(50.0f, 190f, 32, 32), ": " + perso.PhysAtk);
+        GUI.DrawTexture(new Rect(115.0f, 185f, 32, 32), listIcons[3], ScaleMode.StretchToFill, true, 0.0f); // Wdef
+        GUI.Label(new Rect(150.0f, 190f, 32, 32), ": " + perso.PhysDef);
         GUILayout.EndHorizontal();
         GUILayout.BeginHorizontal();
-        GUI.DrawTexture(new Rect(15.0f, 220f, 32, 32), listIcons[4], ScaleMode.StretchToFill, true, 0.0f);
-        GUI.DrawTexture(new Rect(115.0f, 220f, 32, 32), listIcons[5], ScaleMode.StretchToFill, true, 0.0f);
+        GUI.DrawTexture(new Rect(15.0f, 220f, 32, 32), listIcons[4], ScaleMode.StretchToFill, true, 0.0f);  // Matk
+        GUI.Label(new Rect(50.0f, 225f, 32, 32), ": " + perso.MagicAtk);
+        GUI.DrawTexture(new Rect(115.0f, 220f, 32, 32), listIcons[5], ScaleMode.StretchToFill, true, 0.0f); // Mdef
+        GUI.Label(new Rect(150.0f, 225f, 32, 32), ": " + perso.MagicDef);
         GUILayout.EndHorizontal();
         GUILayout.EndVertical();
+
+        sprite1 = ResourceManager.GetSprite(perso.ClassName, 1);
+        sprite2 = ResourceManager.GetSprite(perso.ClassName, 2);
+
+        GUILayout.BeginHorizontal();
+        GUILayout.BeginArea(new Rect(200f, 165f, 150, 150));
+        GUI.DrawTexture(new Rect(20f, 10f, 50, 50), sprite1, ScaleMode.StretchToFill, true, 0.0f);
+        GUILayout.EndArea();
+        GUILayout.BeginArea(new Rect(270f, 165f, 150, 150));
+        GUI.DrawTexture(new Rect(60f, 10f, 50, 50), sprite2, ScaleMode.StretchToFill, true, 0.0f);
+        GUILayout.EndArea();
+        GUILayout.EndHorizontal();
 
         GUILayout.EndHorizontal();
         GUILayout.Space(100);
@@ -216,6 +239,7 @@ public class onMenuLoad : MonoBehaviour
                 wantToCreate = false;
                 onMainMenu.tabCharac.Add(characName);
                 characName = "";
+                cb.ResetContent();
             }
             else
             {
@@ -238,6 +262,8 @@ public class onMenuLoad : MonoBehaviour
         if (GUILayout.Button("Annuler", GUILayout.Height(37)))
         {
             wantToCreate = false;
+            characName = "";
+            cb.ResetContent();
         }
         GUILayout.EndHorizontal();
     }

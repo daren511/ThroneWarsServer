@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using ControleBD;
 
 public class ComboBox
 {
@@ -13,6 +14,7 @@ public class ComboBox
     private string buttonStyle;
     private string boxStyle;
     public GUIStyle listStyle;
+    private Personnages perso;
 
     public ComboBox(Rect rect, GUIContent buttonContent, GUIContent[] listContent, GUIStyle listStyle)
     {
@@ -85,7 +87,7 @@ public class ComboBox
                 selectedItemIndex = newSelectedItemIndex;
                 buttonContent = listContent[selectedItemIndex];
 
-                PlayerManager._instance.GetDefaultStats(buttonContent.text.ToString());
+                perso = PlayerManager._instance.GetDefaultStats(buttonContent.text.ToString());
                 useControlID = -1;
             }
         }
@@ -108,5 +110,17 @@ public class ComboBox
         {
             selectedItemIndex = value;
         }
+    }
+
+    public Personnages GetStats()
+    {
+        if (perso == null)
+            perso = PlayerManager._instance.GetDefaultStats(listContent[0].text.ToString());
+        return perso;
+    }
+
+    public void ResetContent()
+    {
+        buttonContent = listContent[0];
     }
 }
