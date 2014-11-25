@@ -13,7 +13,7 @@ namespace ControleBD
     {
         private static int SaltValueSize = 16;
         public enum Actions { CLICK, CREATE, DELETE, START_GAME , EQUIP, UNEQUIP , NOTHING, QUIT, STATS};
-
+        public enum Game {FOUND, ATTAQUE }
         //-------------------------------------INSERT / UPDATE / DELETE PLAYER-------------------------------------------
 
         public static bool insertPlayer(string username, string email, string password)

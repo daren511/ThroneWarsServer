@@ -119,29 +119,29 @@ public class GameController : TMNController
     }
     private void SpawnUnits()
     {
-        for (int i = 0; i < PlayerManager._instance._chosenTeam.Length; ++i)
+        for (int i = 0; i < PlayerManager._instance._chosenTeam.Count; ++i)
         {
             Character unitFab = unitsFabs[i].GetComponent<Character>();
 
             TileNode node = null;
 
-            unitFab._name = PlayerManager._instance._chosenTeam[i]._name;
-            unitFab._maxHealth = PlayerManager._instance._chosenTeam[i]._maxHealth;
-            unitFab._currHealth = PlayerManager._instance._chosenTeam[i]._currHealth - 20;
-            unitFab._isAlive = unitFab._currHealth > 0;
-            unitFab._maxMagic = PlayerManager._instance._chosenTeam[i]._maxMagic;
-            unitFab._currMagic = PlayerManager._instance._chosenTeam[i]._currMagic;
+            //unitFab._name = PlayerManager._instance._chosenTeam[i]._name;
+            //unitFab._maxHealth = PlayerManager._instance._chosenTeam[i]._maxHealth;
+            //unitFab._currHealth = PlayerManager._instance._chosenTeam[i]._currHealth - 20;
+            //unitFab._isAlive = unitFab._currHealth > 0;
+            //unitFab._maxMagic = PlayerManager._instance._chosenTeam[i]._maxMagic;
+            //unitFab._currMagic = PlayerManager._instance._chosenTeam[i]._currMagic;
 
-            unitFab._magicAttack = PlayerManager._instance._chosenTeam[i]._magicAttack;
-            unitFab._magicDefense = PlayerManager._instance._chosenTeam[i]._magicDefense;
-            unitFab._currMagicAttack = PlayerManager._instance._chosenTeam[i]._magicAttack;
-            unitFab._currMagicDefense = PlayerManager._instance._chosenTeam[i]._magicDefense;
-            unitFab._moves = PlayerManager._instance._chosenTeam[i]._moves;
-            unitFab.attackRange = PlayerManager._instance._chosenTeam[i].attackRange;
-            unitFab._physAttack = PlayerManager._instance._chosenTeam[i]._physAttack;
-            unitFab._physDefense = PlayerManager._instance._chosenTeam[i]._physDefense;
-            unitFab._currPhysAttack = PlayerManager._instance._chosenTeam[i]._physAttack;
-            unitFab._currPhysDefense = PlayerManager._instance._chosenTeam[i]._physDefense;
+            //unitFab._magicAttack = PlayerManager._instance._chosenTeam[i]._magicAttack;
+            //unitFab._magicDefense = PlayerManager._instance._chosenTeam[i]._magicDefense;
+            //unitFab._currMagicAttack = PlayerManager._instance._chosenTeam[i]._magicAttack;
+            //unitFab._currMagicDefense = PlayerManager._instance._chosenTeam[i]._magicDefense;
+            //unitFab._moves = PlayerManager._instance._chosenTeam[i]._moves;
+            //unitFab.attackRange = PlayerManager._instance._chosenTeam[i].attackRange;
+            //unitFab._physAttack = PlayerManager._instance._chosenTeam[i]._physAttack;
+            //unitFab._physDefense = PlayerManager._instance._chosenTeam[i]._physDefense;
+            //unitFab._currPhysAttack = PlayerManager._instance._chosenTeam[i]._physAttack;
+            //unitFab._currPhysDefense = PlayerManager._instance._chosenTeam[i]._physDefense;
 
             while (node == null)
             {
@@ -153,8 +153,8 @@ public class GameController : TMNController
             
             // spawn the unit
             Character unit = (Character)Character.SpawnUnit(unitFab.gameObject, map, node);
-            unit._characterClass = PlayerManager._instance._chosenTeam[i]._characterClass.GetCharacterClass();
-            unit._characterInventory = PlayerManager._instance._chosenTeam[i]._characterInventory;
+            //unit._characterClass = PlayerManager._instance._chosenTeam[i]._characterClass.GetCharacterClass();
+            //unit._characterInventory = PlayerManager._instance._chosenTeam[i]._characterInventory;
             unit.Init(OnUnitEvent);
             unit.playerSide = PlayerManager._instance._playerSide;
             unit.name = "unit-" + i;
@@ -177,23 +177,23 @@ public class GameController : TMNController
 
             TileNode node = null;
 
-            unitFab._name = GameManager._instance._enemyTeam[i]._name;
-            unitFab._maxHealth = GameManager._instance._enemyTeam[i]._maxHealth;
-            unitFab._currHealth = 1;//GameManager._instance._enemyTeam[i]._currHealth;
-            unitFab._isAlive = unitFab._currHealth > 0;
-            unitFab._maxMagic = GameManager._instance._enemyTeam[i]._maxMagic;
-            unitFab._currMagic = GameManager._instance._enemyTeam[i]._currMagic;
+            //unitFab._name = GameManager._instance._enemyTeam[i]._name;
+            //unitFab._maxHealth = GameManager._instance._enemyTeam[i]._maxHealth;
+            //unitFab._currHealth = 1;//GameManager._instance._enemyTeam[i]._currHealth;
+            //unitFab._isAlive = unitFab._currHealth > 0;
+            //unitFab._maxMagic = GameManager._instance._enemyTeam[i]._maxMagic;
+            //unitFab._currMagic = GameManager._instance._enemyTeam[i]._currMagic;
 
-            unitFab._magicAttack = GameManager._instance._enemyTeam[i]._magicAttack;
-            unitFab._magicDefense = GameManager._instance._enemyTeam[i]._magicDefense;
-            unitFab._currMagicAttack = GameManager._instance._enemyTeam[i]._magicAttack;
-            unitFab._currMagicDefense = GameManager._instance._enemyTeam[i]._magicDefense;
-            unitFab._moves = GameManager._instance._enemyTeam[i]._moves;
-            unitFab.attackRange = GameManager._instance._enemyTeam[i].attackRange;
-            unitFab._physAttack = GameManager._instance._enemyTeam[i]._physAttack;
-            unitFab._physDefense = GameManager._instance._enemyTeam[i]._physDefense;
-            unitFab._currPhysAttack = GameManager._instance._enemyTeam[i]._physAttack;
-            unitFab._currPhysDefense = GameManager._instance._enemyTeam[i]._physDefense;
+            //unitFab._magicAttack = GameManager._instance._enemyTeam[i]._magicAttack;
+            //unitFab._magicDefense = GameManager._instance._enemyTeam[i]._magicDefense;
+            //unitFab._currMagicAttack = GameManager._instance._enemyTeam[i]._magicAttack;
+            //unitFab._currMagicDefense = GameManager._instance._enemyTeam[i]._magicDefense;
+            //unitFab._moves = GameManager._instance._enemyTeam[i]._moves;
+            //unitFab.attackRange = GameManager._instance._enemyTeam[i].attackRange;
+            //unitFab._physAttack = GameManager._instance._enemyTeam[i]._physAttack;
+            //unitFab._physDefense = GameManager._instance._enemyTeam[i]._physDefense;
+            //unitFab._currPhysAttack = GameManager._instance._enemyTeam[i]._physAttack;
+            //unitFab._currPhysDefense = GameManager._instance._enemyTeam[i]._physDefense;
 
             while (node == null)
             {
@@ -205,8 +205,8 @@ public class GameController : TMNController
 
             // spawn the unit
             Character unit = (Character)Character.SpawnUnit(unitFab.gameObject, map, node);
-            unit._characterClass = GameManager._instance._enemyTeam[i]._characterClass.GetCharacterClass();
-            unit._characterInventory = GameManager._instance._enemyTeam[i]._characterInventory;
+            //unit._characterClass = GameManager._instance._enemyTeam[i]._characterClass.GetCharacterClass();
+            //unit._characterInventory = GameManager._instance._enemyTeam[i]._characterInventory;
             unit.Init(OnUnitEvent);
             unit.name = "enemy-" + i;
             unit.playerSide = GameManager._instance._enemySide;
@@ -298,7 +298,7 @@ public class GameController : TMNController
     {
         bool done = true;
 
-        for (int i = 0; i < PlayerManager._instance._chosenTeam.Length && done; ++i)
+        for (int i = 0; i < PlayerManager._instance._chosenTeam.Count && done; ++i)
         {
             if (!units[PlayerManager._instance._playerSide][i].TurnDone())
             {
@@ -332,9 +332,9 @@ public class GameController : TMNController
         int done = 0;
         bool stillActive = false;
 
-        while (done < PlayerManager._instance._chosenTeam.Length && !stillActive)
+        while (done < PlayerManager._instance._chosenTeam.Count && !stillActive)
         {
-            if (activeCharacterIndex == PlayerManager._instance._chosenTeam.Length - 1)
+            if (activeCharacterIndex == PlayerManager._instance._chosenTeam.Count - 1)
             {
                 activeCharacterIndex = 0;
             }
@@ -353,7 +353,7 @@ public class GameController : TMNController
                 stillActive = true;
             }
         }
-        if (done == PlayerManager._instance._chosenTeam.Length && PlayerManager._instance._playerSide == currPlayerTurn + 1)
+        if (done == PlayerManager._instance._chosenTeam.Count && PlayerManager._instance._playerSide == currPlayerTurn + 1)
         {
             //tour du joueur terminer
             Debug.Log("Tour terminé!");

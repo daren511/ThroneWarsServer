@@ -88,7 +88,7 @@ public class Log_GUI : MonoBehaviour
                 if (ConnectToServer())
                 {
                     //récupération du joueur
-                    GetPlayerInfo();
+                   // GetPlayerInfo();
 
                     //chargement du menu principal
                     Application.LoadLevel("placement");

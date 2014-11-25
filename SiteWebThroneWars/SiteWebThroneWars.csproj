@@ -140,6 +140,7 @@
     <Content Include="ThroneWarsOutput\ThroneWars_Data\sharedassets1.assets" />
     <Content Include="ThroneWarsOutput\ThroneWars_Data\sharedassets2.assets" />
     <Content Include="ThroneWarsOutput\ThroneWars_Data\sharedassets3.assets" />
+    <Content Include="ThroneWarsOutput\ThroneWars.zip" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
