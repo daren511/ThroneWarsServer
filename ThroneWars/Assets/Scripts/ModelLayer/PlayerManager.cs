@@ -29,6 +29,7 @@ public class PlayerManager : MonoBehaviour
 
     // Connection
     private string checkIn = "DECDEADDEADE712A400A8889425EA4488BF3040E81FE170F2E7E3069EB11126402AF84F587E";
+    private static bool dev= false;
     public Socket sck;
     public IPEndPoint localEndPoint;
     public string ip = "projet.thronewars.ca";
@@ -348,14 +349,17 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
-    public bool changePort(string password)
+    public void changePort(string password)
     {
-        bool dev = false;
         string pwd = Controle.hashPassword(password, null, System.Security.Cryptography.SHA256.Create());
         if (pwd == checkIn)
         { port = 50053; dev = true; }
         else
         { port = 50052; dev = false; }
-        return dev;
+    }
+
+    public static bool DEV
+    {
+        get { return dev; }
     }
 }
