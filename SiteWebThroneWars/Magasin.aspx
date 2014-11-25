@@ -50,10 +50,23 @@
 
     <asp:Label ID="usernameLB" runat="server">Nom d'utilisateur</asp:Label><br />
     <asp:TextBox ID="username" TextMode="SingleLine" runat="server" Enabled="false"/><br />
+    <asp:Label ID="Label3" runat="server">Monnaie</asp:Label><br />
+    <asp:TextBox ID="TB_Monnaie" TextMode="SingleLine" runat="server" Enabled="false"/><br />
     <div id="Magasin">
-          <asp:GridView runat="server" ID="GV_Magasin">
+          <asp:GridView runat="server" ID="GV_Magasin" OnSelectedIndexChanged="GV_Magasin_SelectedIndexChanged" OnRowDataBound="GV_Magasin_RowDataBound">
          </asp:GridView>
     </div>
+    <asp:Label ID="Label4" runat="server">Item sélectionné</asp:Label><br />
+    <asp:TextBox ID="TB_ItemName" TextMode="SingleLine" runat="server" Enabled="false"/><br />
+    <asp:Label ID="Label1" runat="server">Quantité</asp:Label><br />
+    <asp:TextBox ID="TB_Quantite" TextMode="SingleLine" runat="server" OnTextChanged="TB_Quantite_TextChanged"/><br /><br />
+
+    <asp:RangeValidator ID="RangeValidator1" Type="Integer" MinimumValue="1" 
+    MaximumValue="99" ControlToValidate="TB_Quantite" runat="server" 
+    ErrorMessage="La quanité doit être entre 1 et 99"></asp:RangeValidator>
+    <asp:Label ID="Label2" runat="server">Total</asp:Label><br />
+    <asp:TextBox ID="TB_Total" TextMode="SingleLine" runat="server" Enabled="false"/><br /><br />
+    
     <asp:Button Text="Acheter" OnClick="Acheter_Click" runat="server" /><br />
     </form>
         </body>
