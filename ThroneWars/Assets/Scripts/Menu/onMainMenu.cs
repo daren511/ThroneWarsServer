@@ -171,13 +171,15 @@ public class onMainMenu : MonoBehaviour
         GUILayout.EndVertical();
 
         GUILayout.BeginVertical();
-        //GUI.enabled = chosenCharacters == PlayerManager._instance._chosenTeam.Length && tabMap[0];
-        GUI.enabled = false;
+        GUI.enabled = chosenCharacters == MAX_TEAM_LENGTH && tabMap[0];
         if (GUILayout.Button("Jouer", GUILayout.Width(rectInvent.width)))
         {
+            PlayerManager._instance.SendAction(Controle.Actions.START_GAME);
+
+
             // Go to the place character screen
             GameControllerSample6.scene = "Map1";
-            Application.LoadLevel("placement");
+            Application.LoadLevel("Loading");
         }
         GUI.enabled = true;
         GUILayout.EndVertical();
@@ -345,7 +347,7 @@ public class onMainMenu : MonoBehaviour
 
             GUILayout.BeginVertical();
             GUI.DrawTexture(new Rect(525f, 20f, 32, 32), _matkTexture, ScaleMode.StretchToFill, true, 0.0f);
-            GUI.DrawTexture(new Rect(525f, 70f, 32, 32), _mdefTexture, ScaleMode.StretchToFill, true, 0.0f);
+            GUI.DrawTexture(new Rect(525f, 70f, 32, 32), _mdefTexture, ScaleMode.StretchToFill, true , 0.0f);
             GUILayout.EndVertical();
 
             GUILayout.BeginVertical();

@@ -31,7 +31,7 @@ public class PlayerManager : MonoBehaviour
     public Socket sck;
     public IPEndPoint localEndPoint;
     public string ip = "projet.thronewars.ca";
-    public int port = 50053;
+    public int port = 50052;
 
     void OnApplicationQuit()
     {
@@ -332,5 +332,18 @@ public class PlayerManager : MonoBehaviour
         SendAction(Controle.Actions.STATS);
         Send(name);
         Personnages p = GetPersonnage();
+    }
+     public void LookForPlayer()
+    {
+
+    }
+    public void SendObject<T>(T obj)
+    {
+        BinaryFormatter b = new BinaryFormatter();
+        using(var stream = new MemoryStream())
+        {
+            b.Serialize(stream, obj);
+            sck.Send(stream.ToArray());
+        }
     }
 }

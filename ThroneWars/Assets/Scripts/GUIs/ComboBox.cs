@@ -86,16 +86,13 @@ public class ComboBox
                 buttonContent = listContent[selectedItemIndex];
 
                 PlayerManager._instance.GetDefaultStats(buttonContent.text.ToString());
-
                 useControlID = -1;
-                selectedItemIndex = -1;
             }
         }
         if (done)
         {
             isClickedComboButton = false;
             useControlID = -1;
-            selectedItemIndex = -1;
         }
 
         return selectedItemIndex;
