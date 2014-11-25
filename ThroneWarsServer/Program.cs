@@ -14,7 +14,7 @@ namespace ThroneWarsServer
 {
     class Program
     {
-        const int PORT = 50052;
+        const int PORT = 50053;
         static List<Joueur> v = new List<Joueur>();
         static List<Joueur> queue = new List<Joueur>();
         static List<Partie> games = new List<Partie>();
@@ -113,7 +113,19 @@ namespace ThroneWarsServer
                         games.Add(new Partie(queue[0]));
                         queue.RemoveAt(0);
                     }
-                }   
+                }
+                if(v.Count != 0)
+                {
+                    //foreach(Joueur j in v)
+                    //{
+                    //    if(!j.isConnected)
+                    //    {
+                    //        Console.WriteLine("[" + System.DateTime.Now + "] Joueur déconnecter : " + j.Username);
+                    //        v.Remove(j);
+
+                    //    }
+                    //}
+                }
             }
         }
     }

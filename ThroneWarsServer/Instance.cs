@@ -46,7 +46,6 @@ namespace ThroneWarsServer
                     else 
                     { 
                         envoyerReponse(reponse.ToString());
-                        
                     }
                     if(Joueur.isConnected)
                     {
@@ -63,6 +62,7 @@ namespace ThroneWarsServer
                         try
                         {
                             Choix = recevoirChoix();
+                            Timer = 0;
                         }
                         catch(Exception)
                         {
@@ -119,11 +119,7 @@ namespace ThroneWarsServer
                 if (Joueur.socketIsConnected())
                     Console.WriteLine(e.Message);
             }
-            if (!Joueur.isConnected)
-            {
-                Program.removePlayer(Joueur);
-                Joueur.Socket.Close();
-            }
+            
             this.T.Abort();//arret du thread
         }
         /// <summary>
