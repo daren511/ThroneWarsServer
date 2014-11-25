@@ -14,6 +14,7 @@ namespace ThroneWarsServer
 {
     class Instance
     {
+        private int Timer;
         private const char SPLITTER = '?';
         public Thread T;
         private Joueur Joueur;
@@ -47,13 +48,16 @@ namespace ThroneWarsServer
                         envoyerReponse(reponse.ToString());
                         
                     }
+                    if(Joueur.isConnected)
+                    {
+                        Joueur.jid = Controle.getJID(Joueur.Username);
+                        startUP(Joueur);
+                    }
                 }
                 if (Joueur.isConnected)
-                {
-                    Joueur.jid = Controle.getJID(Joueur.Username);
-                    startUP(Joueur);
+                {                    
                     Controle.Actions Choix = 0;
-                    while (Joueur.socketIsConnected() && Choix != Controle.Actions.START_GAME && Choix != Controle.Actions.QUIT)
+                    while (Joueur.socketIsConnected() && Choix != Controle.Actions.START_GAME && Choix != Controle.Actions.QUIT && Timer < 10000)
                     {
                         Joueur.Socket.Blocking = false;
                         try
@@ -79,7 +83,7 @@ namespace ThroneWarsServer
                                 envoyerReponse(Controle.updateStatePerso(Controle.getGUID(recevoirString()),"0").ToString());
                                 break;
                             case Controle.Actions.START_GAME:
-
+                                Program.ajouterQueue(Joueur);
                                 break;
                             case Controle.Actions.EQUIP:
                                 string requeteEquip = recevoirString();
@@ -94,6 +98,11 @@ namespace ThroneWarsServer
                                 envoyerObjet(getPersonnage(requeteUnequip.Remove(requeteUnequip.LastIndexOf(SPLITTER))));
                                 break;   
                             case Controle.Actions.NOTHING:
+                                Timer++;
+                                if(Timer >= 10000)
+                                {
+                                    Joueur.isConnected = false;
+                                }
                                 break;
                             case Controle.Actions.QUIT:
                                 Joueur.isConnected = false;
@@ -103,7 +112,6 @@ namespace ThroneWarsServer
                                 break;
                         }
                     }
-
                 }
             }
             catch (Exception e)
@@ -182,16 +190,7 @@ namespace ThroneWarsServer
                 Joueur.Socket.Send(stream.ToArray());
             }
         }
-        //private void envoyerPersonnage(string nom)
-        //{
-
-        //    BinaryFormatter b = new BinaryFormatter();
-        //    using (var stream = new MemoryStream())
-        //    {
-        //        b.Serialize(stream, p);
-        //        Joueur.Socket.Send(stream.ToArray());
-        //    }
-        //} 
+        
         private void envoyerReponse(string reponse)
         {
             byte[] data = Encoding.ASCII.GetBytes(reponse);
