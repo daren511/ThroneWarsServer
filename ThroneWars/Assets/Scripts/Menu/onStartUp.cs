@@ -17,21 +17,24 @@ using System.Runtime.Serialization;
 /// </summary>
 public class onStartUp : MonoBehaviour
 {
+    //---------- CONSTANTES
     private const char SPLITTER = '?';
-
 
     //---------- VARIABLES
     private bool hasUpdatedGui = false;
     private string userValue = "";
     private string pwdvalue = "";
+    private string txt = "";
     private bool canConnect = true;
     private bool validInfos = true;
     private bool confirmed = true;
     public static bool alreadyConnected = false;
     private bool hasEnter = false;  // Check fot the button enter (or return)
+    private bool show = false;
+    private static bool dev = false;
     Mutex m = new Mutex();
     private GUIStyle lblError = new GUIStyle();
-
+    private GUIStyle lblDev = new GUIStyle();
     // Login window
     private static float wL = 430.0f;
     private static float hL = 210.0f;
@@ -43,10 +46,14 @@ public class onStartUp : MonoBehaviour
         hasUpdatedGui = ResourceManager.GetInstance.UpdateGUI(hasUpdatedGui);
         ResourceManager.GetInstance.CreateBackground();
         ResourceManager.GetInstance.CreateLogo();
+        if (dev) { lblDev.normal.textColor = Color.red; GUI.Label(new Rect(10, 10, 200, 30), "DEV", lblDev); }
 
         onMenuLoad.createQuitWindow();
         GUILayout.Window(2, rectLogin, doLoginWindow, "Login");   // Draw the login window
         onMenuLoad.createMenuWindow(false);
+        showWindow();
+        if (show)
+            GUILayout.Window(-100, new Rect((Screen.width - 200) / 2, Screen.height - 50, 200, 30), doSomething, "", GUIStyle.none);
     }
 
     void Connection()
@@ -132,7 +139,7 @@ public class onStartUp : MonoBehaviour
         pwdvalue = GUILayout.PasswordField(pwdvalue, '*', GUILayout.Width(300));
         GUILayout.EndHorizontal();
 
-        if (GUI.GetNameOfFocusedControl() == string.Empty)
+        if (GUI.GetNameOfFocusedControl() == string.Empty && !show)
         {
             GUI.FocusControl("User");
         }
@@ -212,6 +219,25 @@ public class onStartUp : MonoBehaviour
         }
     }
 
+    private void showWindow()
+    {
+        if (GUI.Button(new Rect(0, Screen.height - 10, 10, 10), "", GUIStyle.none))
+            show = !show;
+    }
+
+    private void doSomething(int windowID)
+    {
+        GUILayout.BeginHorizontal();
+        GUI.SetNextControlName("secret");
+        txt = GUILayout.PasswordField(txt, '*', GUILayout.Width(100));
+        if (GUILayout.Button("OK", GUILayout.Height(40)))
+        {
+            dev = PlayerManager._instance.changePort(txt);
+            show = false;
+        }
+        GUILayout.EndHorizontal();
+        GUI.FocusControl("secret");
+    }
 
 
     //public static void GetBidonPlayer()
