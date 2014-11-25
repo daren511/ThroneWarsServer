@@ -78,7 +78,7 @@
         <div class="Inscription_Mobile">
             <asp:Label ID="usernameLB" runat="server">Nom d'utilisateur</asp:Label><br />
             <asp:TextBox ID="username" TextMode="SingleLine" runat="server" style="width: 38%; font-size:30px;" /><br />
-            <asp:Label ID="passwordLB" runat="server">Mot de Passe</asp:Label><br />
+            <asp:Label ID="passwordLB" runat="server">Mot de passe</asp:Label><br />
             <asp:TextBox ID="password" TextMode="password" runat="server" style="width: 38%; font-size:30px;" /><br /><br />
             <asp:Button Text="Se connecter" OnClick="MOBILEConnexion_Click" runat="server"  style="width:31%; font-size:35px;" /><br />
             <a href="MOBILEForgotPass.aspx">Mot de passe oublié?</a><br />

@@ -57,9 +57,9 @@
             <div class="Description_Mobile">
                 <h1>Description</h1>
                 <p>
-                    Throne Wars est un jeu de stratégie fantastique tour-par-tour impliquant 2 joueurs opposés dont le but 
+                    Throne Wars est un jeu de stratégie fantastique tour par tour impliquant 2 joueurs opposés dont le but 
                         est d’éliminer tous les personnages du joueur adverse. 
-                        Une équipe est composée de 4 personnages pouvant être membre d’une des classes suivantes : 
+                        Une équipe est composée de 4 personnages, membres d’une des classes suivantes : 
                         Guerrier, Archer, Magicien et Prêtre. 
                         Chaque classe possède des habiletés et statistiques différentes. 
                         Les personnages possèdent leur propre inventaire et ceux-ci peuvent évoluer de niveau au fil des 
@@ -68,7 +68,7 @@
                 </p>
                 <br />
                 <p style="text-align: center">
-                    Supervisé par Francois Jean
+                    Supervisé par François Jean
                 </p>
 
 

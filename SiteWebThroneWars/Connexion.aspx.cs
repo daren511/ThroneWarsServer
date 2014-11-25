@@ -80,6 +80,7 @@ namespace SiteWebThroneWars
                                 GV_Stats.DataBind();
                             }
                             ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>changeVisibility();</script>", false);
+                            Session["username"] = username.Text;
                             ViderTB();
 
                         }
