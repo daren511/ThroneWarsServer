@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using ControleBD;
+using System.Threading;
 
 public class onLoading : MonoBehaviour
 {
@@ -24,4 +25,9 @@ public class onLoading : MonoBehaviour
         GUILayout.Space(25);
         GUILayout.Label(message);
     }
+    private void FindPlayer()
+    {
+        Thread t = new Thread(new ThreadStart(PlayerManager._instance.LookForPlayer));
+    }
+
 }
