@@ -22,8 +22,8 @@ public class onStartUp : MonoBehaviour
 
     //---------- VARIABLES
     private bool hasUpdatedGui = false;
-    private string userValue = "";
-    private string pwdvalue = "";
+    private static string userValue = "";
+    private static string pwdvalue = "";
     private string txt = "";
     private bool canConnect = true;
     private bool validInfos = true;
@@ -85,6 +85,8 @@ public class onStartUp : MonoBehaviour
                         {
                             hasEnter = true;
                             PlayerManager._instance.LoadPlayer();
+                            PlayerManager.USERNAME = userValue;
+                            PlayerManager.PASSWORD = pwdvalue;
                             m.ReleaseMutex();
                             Application.LoadLevel("MainMenu");
                         }
@@ -240,6 +242,11 @@ public class onStartUp : MonoBehaviour
         GUILayout.EndHorizontal();
     }
 
+    public static void SetInfos(string username, string password)
+    {
+        userValue = username;
+        pwdvalue = password;
+    }
 
     //public static void GetBidonPlayer()
     //{

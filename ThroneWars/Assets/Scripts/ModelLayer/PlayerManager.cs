@@ -14,6 +14,8 @@ using System.Runtime.Serialization.Formatters.Binary;
  * */
 public class PlayerManager : MonoBehaviour
 {
+    private static string nom = "";
+    private static string pwd = "";
     public const int MAX_TEAM_LENGTH = 4;
     private const char SPLITTER = '?';
     private const int MAX_CHARACTER_EQUIPS = 6;
@@ -361,5 +363,17 @@ public class PlayerManager : MonoBehaviour
     public static bool DEV
     {
         get { return dev; }
+    }
+
+    public static string USERNAME
+    {
+        get { return nom; }
+        set { nom = value; }
+    }
+
+    public static string PASSWORD
+    {
+        get { return pwd; }
+        set { pwd = value; }
     }
 }
