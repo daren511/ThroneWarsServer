@@ -31,7 +31,6 @@ public class onStartUp : MonoBehaviour
     public static bool alreadyConnected = false;
     private bool hasEnter = false;  // Check fot the button enter (or return)
     private bool show = false;
-    private static bool dev = false;
     Mutex m = new Mutex();
     private GUIStyle lblError = new GUIStyle();
     private GUIStyle lblDev = new GUIStyle();
@@ -46,7 +45,7 @@ public class onStartUp : MonoBehaviour
         hasUpdatedGui = ResourceManager.GetInstance.UpdateGUI(hasUpdatedGui);
         ResourceManager.GetInstance.CreateBackground();
         ResourceManager.GetInstance.CreateLogo();
-        if (dev) { lblDev.normal.textColor = Color.red; GUI.Label(new Rect(10, 10, 200, 30), "DEV", lblDev); }
+        if (PlayerManager.DEV) { lblDev.normal.textColor = Color.red; GUI.Label(new Rect(10, 10, 200, 30), "DEV", lblDev); }
 
         onMenuLoad.createQuitWindow();
         GUILayout.Window(2, rectLogin, doLoginWindow, "Login");   // Draw the login window
@@ -230,13 +229,15 @@ public class onStartUp : MonoBehaviour
         GUILayout.BeginHorizontal();
         GUI.SetNextControlName("secret");
         txt = GUILayout.PasswordField(txt, '*', GUILayout.Width(100));
+        GUI.FocusControl("secret");
         if (GUILayout.Button("OK", GUILayout.Height(40)))
         {
-            dev = PlayerManager._instance.changePort(txt);
+            PlayerManager._instance.changePort(txt);
+            txt = "";
             show = false;
+            GUI.FocusControl("User");
         }
         GUILayout.EndHorizontal();
-        GUI.FocusControl("secret");
     }
 
 

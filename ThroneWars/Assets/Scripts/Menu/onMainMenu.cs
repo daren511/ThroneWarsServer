@@ -21,6 +21,7 @@ public class onMainMenu : MonoBehaviour
     private static int selectedInvent;  // For the player inventory
     private static int selectedItem;    // For the character inventory
     private static Vector2 scrollPos;
+    private GUIStyle lblDev = new GUIStyle();
     // Lists
     public static List<string> tabTeam = new List<string>();
     public static List<string> tabCharac = new List<string>();
@@ -103,6 +104,7 @@ public class onMainMenu : MonoBehaviour
     {
         hasUpdatedGui = ResourceManager.GetInstance.UpdateGUI(hasUpdatedGui);
         ResourceManager.GetInstance.CreateBackground();
+        if (PlayerManager.DEV) { lblDev.normal.textColor = Color.red; GUI.Label(new Rect(10, 10, 200, 30), "DEV", lblDev); }
 
         onMenuLoad.createCreationWindow();
         onMenuLoad.createDeleteWindow();
