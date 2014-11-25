@@ -40,6 +40,7 @@
                 <li><a href="Connexion.aspx">Connexion</a></li>
                 <li><a href="Recherche.aspx">Classement</a></li>
                 <li><a href="Media.aspx">Média</a></li>
+                <li><a href="Magasin.aspx">Magasin</a></li>
             </li>
         </ul>
     </div>
