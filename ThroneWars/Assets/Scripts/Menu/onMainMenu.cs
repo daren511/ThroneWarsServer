@@ -370,7 +370,14 @@ public class onMainMenu : MonoBehaviour
             if (GUILayout.Button("Ajouter", GUILayout.Height(35), GUILayout.Width(200)))
             {
                 SelectCharacter(selectedCharac);
+
+                if (tabCharac[selectedCharac - 1] != null)
+                    GetHighlightedCharacter(tabCharac[selectedCharac - 1]);
+                else
+                    GetHighlightedCharacter(tabTeam[0]);
+
                 _charSelection = -1;
+
             }
         }
         else if (_storedSelection == "team") //clicked in team characters

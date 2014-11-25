@@ -315,7 +315,7 @@ public class PlayerManager : MonoBehaviour
         onMainMenu.tabItem.Clear();
         _playerInventory._equips.Clear();
         _playerInventory._potions.Clear();
-        for (int i = 0; i < _chosenTeam.Count; ++i)
+        for (int i = 0; i < _chosenTeam.Count; ++i) 
         {
             Destroy(_chosenTeam[i]);
         }
