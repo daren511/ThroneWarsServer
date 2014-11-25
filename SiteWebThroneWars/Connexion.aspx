@@ -58,7 +58,7 @@
         <div class="Inscription">
             <asp:Label ID="usernameLB" runat="server">Nom d'utilisateur</asp:Label><br />
             <asp:TextBox ID="username" TextMode="SingleLine" runat="server" /><br />
-            <asp:Label ID="passwordLB" runat="server">Mot de Passe</asp:Label><br />
+            <asp:Label ID="passwordLB" runat="server">Mot de passe</asp:Label><br />
             <asp:TextBox ID="password" TextMode="password" runat="server" /><br /><br />
             <asp:Button Text="Se connecter" OnClick="Connexion_Click" runat="server" /><br />
             <a href="ForgotPass.aspx">Mot de passe oublié?</a><br />

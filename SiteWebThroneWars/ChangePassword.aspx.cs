@@ -62,17 +62,30 @@ namespace SiteWebThroneWars
 
                 }
             }
+            text = "Vous devez remplir tout les champs requis";
+            ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>MessageBoxErreur(\"" + text + "\");</script>", false);
+            ViderTB();
         }
         protected bool VerifChamps()
         {
             bool Valide = true;
-            if (string.IsNullOrWhiteSpace(username.Text)  ||
-                string.IsNullOrWhiteSpace(apassword.Text) ||
-                string.IsNullOrWhiteSpace(npassword.Text) ||
-                string.IsNullOrWhiteSpace(ncpassword.Text))
-                Valide = false;
+            if (string.IsNullOrWhiteSpace(username.Text) || string.IsNullOrEmpty(username.Text))
+                 Valide = false;
+            if (string.IsNullOrWhiteSpace(apassword.Text) || string.IsNullOrEmpty(apassword.Text))
+                 Valide = false;
+            if (string.IsNullOrWhiteSpace(npassword.Text) || string.IsNullOrEmpty(npassword.Text))
+                 Valide = false;
+            if(string.IsNullOrWhiteSpace(ncpassword.Text) || string.IsNullOrEmpty(ncpassword.Text))
+                 Valide = false;
             
             return Valide;
+        }
+        protected void ViderTB()
+        {
+            username.Text = "";
+            apassword.Text = "";
+            npassword.Text = "";
+            ncpassword.Text = "";
         }
     }
 }
