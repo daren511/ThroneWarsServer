@@ -80,13 +80,13 @@ public class onMenuLoad : MonoBehaviour
             // Show the credits (web site)
             Application.OpenURL("www.thronewars.ca");
         }
-        if (GUILayout.Button("Inscription"))
-        {
-            // Sign up the player (web site)
-            Application.OpenURL("www.thronewars.ca/Inscription.aspx");
-        }
         if (!isMainMenu)
         {
+            if (GUILayout.Button("Inscription"))
+            {
+                // Sign up the player (web site)
+                Application.OpenURL("www.thronewars.ca/Inscription.aspx");
+            }
             if (GUILayout.Button("Quitter"))
             {
                 // Show the option to quit or not
@@ -95,6 +95,11 @@ public class onMenuLoad : MonoBehaviour
         }
         else
         {
+            if (GUILayout.Button("Magasin"))
+            {
+                // Go to the online store
+                Application.OpenURL("www.thronewars.ca");
+            }
             if (GUILayout.Button("Déconnexion"))
             {
                 // Back to the login screen
@@ -111,6 +116,7 @@ public class onMenuLoad : MonoBehaviour
 
     private static void doQuitWindow(int windowID)
     {
+        GUI.BringWindowToFront(windowID);
         // Ornament
         GUI.DrawTexture(new Rect(20, 4, 31, 40), ColoredGUISkin.Skin.customStyles[0].normal.background);
 
@@ -155,7 +161,7 @@ public class onMenuLoad : MonoBehaviour
 
     private static void doCreateWindow(int windowID)
     {
-        GUI.BringWindowToFront(-3);
+        GUI.BringWindowToFront(windowID);
         // Ornament
         GUI.DrawTexture(new Rect(20, 4, 31, 40), ColoredGUISkin.Skin.customStyles[0].normal.background);
 

@@ -16,10 +16,13 @@ namespace ThroneWarsServer
     {
         const int PORT = 50052;
         static List<Joueur> v = new List<Joueur>();
-        //static List<Instance> i = new List<Instance>();
+        static List<Joueur> queue = new List<Joueur>();
+        static List<Partie> games = new List<Partie>();
         static Socket sckserver;
         static Socket sck1;
-        static Mutex m = new Mutex();
+        static Mutex mJoueur = new Mutex();
+        static Mutex mQueue = new Mutex();
+        static Mutex mGame = new Mutex();
 
         public static bool SocketConnected(Socket s)
         {
@@ -28,20 +31,41 @@ namespace ThroneWarsServer
 
         public static void removePlayer(Joueur j)
         {
-            m.WaitOne();
+            mJoueur.WaitOne();
             v.Remove(j);
-            m.ReleaseMutex();
+            mJoueur.ReleaseMutex();
         }
         public static bool checkConnected(Joueur j)
         {
             int count = 0;
-            m.WaitOne();
+            mJoueur.WaitOne();
             foreach(Joueur player in v)
             {
                 if (player.Username == j.Username) { count++; }
             }
-            m.ReleaseMutex();
+            mJoueur.ReleaseMutex();
             return count != 1;
+        }
+
+        public static void ajouterQueue(Joueur j)
+        {
+            mQueue.WaitOne();
+            queue.Add(j);
+            mQueue.ReleaseMutex();
+        }
+
+        static public int trouverPositionLibre()
+        {
+            int index = -1;
+            foreach(Partie p in games)
+            {
+                if(!p.isFull)
+                {
+                    index = games.IndexOf(p);
+                    break;
+                }
+            }
+            return index;
         }
 
         static void Main(string[] args)
@@ -73,11 +97,24 @@ namespace ThroneWarsServer
                     new Instance(v[v.Count-1]).T.Start();
                     System.Threading.Thread.Sleep(100);
                     Console.WriteLine("["+ System.DateTime.Now +"] Joueur connecté : " + ip + " Joueur: " + v[v.Count-1].Username) ;
-                    
                 }
                 sck1 = null;
-            }
 
+                if(queue.Count != 0)
+                {
+                    int index = trouverPositionLibre();
+                    if(games.Count > 0 && index != -1)
+                    {
+                        games[index].addJoueur(queue[0]);
+                        queue.RemoveAt(0);
+                    }
+                    else
+                    {
+                        games.Add(new Partie(queue[0]));
+                        queue.RemoveAt(0);
+                    }
+                }   
+            }
         }
     }
 }

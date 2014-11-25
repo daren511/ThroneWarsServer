@@ -15,9 +15,6 @@
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Full v3.5</TargetFrameworkProfile>
     <CompilerResponseFile></CompilerResponseFile>
-    <UnityProjectType>Game:1</UnityProjectType>
-    <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
-    <UnityVersion>4.5.5f1</UnityVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -55,11 +52,20 @@
     <Reference Include="Emails">
       <HintPath>Assets\Assemblies\Emails.dll</HintPath>
     </Reference>
+    <Reference Include="NGUI">
+      <HintPath>Assets\Assemblies\NGUI.dll</HintPath>
+    </Reference>
     <Reference Include="Oracle.DataAccess">
       <HintPath>Assets\Assemblies\Oracle.DataAccess.dll</HintPath>
     </Reference>
     <Reference Include="System.Data">
       <HintPath>Assets\Assemblies\System.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor">
+      <HintPath>Assets\Assemblies\UnityEditor.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine">
+      <HintPath>Assets\Assemblies\UnityEngine.dll</HintPath>
     </Reference>
     <Reference Include="Oracle.DataAccess">
       <HintPath>Assets\Plugins\Oracle.DataAccess.dll</HintPath>
@@ -192,8 +198,8 @@
     <Compile Include="Assets\Tile Based Map and Nav\Scripts\TMN\TileNode.cs" />
     <Compile Include="Assets\Tile Based Map and Nav\Scripts\TMN\x_test\hextest.cs" />
     <Compile Include="Assets\Water\Sources\Scripts\WaterSimple.cs" />
-  </ItemGroup>
-  <ItemGroup>
+    <None Include="Assets\Assemblies\UnityEditor.xml" />
+    <None Include="Assets\Assemblies\UnityEngine.xml" />
     <None Include="Assets\ReadMe.txt" />
     <None Include="Assets\ThirdParty\NGUI\ReadMe.txt" />
     <None Include="Assets\ThirdParty\NGUI\Resources\Shaders\Depth.shader" />
@@ -207,6 +213,14 @@
     <None Include="Assets\ThirdParty\NGUI\Resources\Shaders\Unlit - Transparent Colored.shader" />
     <None Include="Assets\Tile Based Map and Nav\Documentation\readme.txt" />
     <None Include="Assets\Water\Sources\Shaders\FX-Water Simple.shader" />
+    <None Include="Assets\Assemblies\ControleBD.dll" />
+    <None Include="Assets\Assemblies\Emails.dll" />
+    <None Include="Assets\Assemblies\NGUI.dll" />
+    <None Include="Assets\Assemblies\Oracle.DataAccess.dll" />
+    <None Include="Assets\Assemblies\System.Data.dll" />
+    <None Include="Assets\Assemblies\UnityEditor.dll" />
+    <None Include="Assets\Assemblies\UnityEngine.dll" />
+    <None Include="Assets\ThirdParty\NGUI\DLLs\NGUI.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2013\UnityVS.CSharp.targets" />
 </Project>

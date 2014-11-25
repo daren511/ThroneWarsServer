@@ -193,16 +193,11 @@ public class onMainMenu : MonoBehaviour
 
         GUILayout.BeginHorizontal();
 
-        //GUI.DrawTexture(new Rect(95, 30, 20, 20), _atkTexture, ScaleMode.StretchToFill, true, 0.0f);
-        //GUI.DrawTexture(new Rect(145, 30, 20, 20), _defTexture, ScaleMode.StretchToFill, true, 0.0f);
-        //GUI.DrawTexture(new Rect(195, 30, 20, 20), _matkTexture, ScaleMode.StretchToFill, true, 0.0f);
-        //GUI.DrawTexture(new Rect(245, 30, 20, 20), _mdefTexture, ScaleMode.StretchToFill, true, 0.0f);
-        //GUI.Label(new Rect(295, 30, 150, 25), "QTE");
-        GUI.DrawTexture(new Rect(95, 30, 20, 20), _atkTexture, ScaleMode.StretchToFill, true, 0.0f);
-        GUI.DrawTexture(new Rect(165, 30, 20, 20), _defTexture, ScaleMode.StretchToFill, true, 0.0f);
-        GUI.DrawTexture(new Rect(215, 30, 20, 20), _matkTexture, ScaleMode.StretchToFill, true, 0.0f);
-        GUI.DrawTexture(new Rect(265, 30, 20, 20), _mdefTexture, ScaleMode.StretchToFill, true, 0.0f);
-        GUI.Label(new Rect(rectInvent.xMax - 5, 30, 150, 25), "QTE");
+        GUI.DrawTexture(new Rect(rectInvent.width - 265, 30, 20, 20), _atkTexture, ScaleMode.StretchToFill, true, 0.0f);
+        GUI.DrawTexture(new Rect(rectInvent.width - 215, 30, 20, 20), _defTexture, ScaleMode.StretchToFill, true, 0.0f);
+        GUI.DrawTexture(new Rect(rectInvent.width - 165, 30, 20, 20), _matkTexture, ScaleMode.StretchToFill, true, 0.0f);
+        GUI.DrawTexture(new Rect(rectInvent.width - 115, 30, 20, 20), _mdefTexture, ScaleMode.StretchToFill, true, 0.0f);
+        GUI.Label(new Rect(rectInvent.width - 65, 30, 150, 25), "QTE");
 
         GUILayout.EndHorizontal();
 
@@ -213,11 +208,12 @@ public class onMainMenu : MonoBehaviour
         {
             int offset = i * 25;
             EquipableItem item = PlayerManager._instance._playerInventory._equips[i];
-            Rect itemButton = new Rect(0, 20 + offset, 100, 20);
+            Rect itemButton = new Rect(0, 20 + offset, rectInvent.width - 295, 30);
             if (item._quantity > 0)
             {
                 GUI.enabled = PlayerManager._instance.VerifyCanEquip(item);
-                if (GUILayout.Button(item._itemName, GUILayout.Height(30), GUILayout.Width(100)))
+                //if (GUILayout.Button(item._itemName, GUILayout.Height(30), GUILayout.Width(100)))
+                if (GUI.Button(itemButton, item._itemName))
                 {
                     PlayerManager._instance.EquipItem(item._itemID);
                     PlayerManager._instance._selectedCharacter._characterInventory._invent.Add(item);
@@ -227,11 +223,11 @@ public class onMainMenu : MonoBehaviour
                     PlayerManager._instance.Send("ok");
                     PlayerManager._instance.LoadPersonnage(PlayerManager._instance.GetPersonnage());
                 }
-                GUI.Label(new Rect(75, 20 + offset, 50, 20), item._bonusPhysAtk.ToString());
-                GUI.Label(new Rect(125, 20 + offset, 50, 20), item._bonusPhysDef.ToString());
-                GUI.Label(new Rect(175, 20 + offset, 50, 20), item._bonusMagicAtk.ToString());
-                GUI.Label(new Rect(225, 20 + offset, 50, 20), item._bonusMagicDef.ToString());
-                GUI.Label(new Rect(275, 20 + offset, 50, 20), item._quantity.ToString());
+                GUI.Label(new Rect(rectInvent.width - 285, 20 + offset, 50, 20), item._bonusPhysAtk.ToString());
+                GUI.Label(new Rect(rectInvent.width - 235, 20 + offset, 50, 20), item._bonusPhysDef.ToString());
+                GUI.Label(new Rect(rectInvent.width - 185, 20 + offset, 50, 20), item._bonusMagicAtk.ToString());
+                GUI.Label(new Rect(rectInvent.width - 135, 20 + offset, 50, 20), item._bonusMagicDef.ToString());
+                GUI.Label(new Rect(rectInvent.width - 85, 20 + offset, 50, 20), item._quantity.ToString());
             }
         }
         GUILayout.EndScrollView();
@@ -244,12 +240,13 @@ public class onMainMenu : MonoBehaviour
 
         GUILayout.BeginHorizontal();
 
-        GUI.DrawTexture(new Rect(125, 20, 20, 20), _atkTexture, ScaleMode.StretchToFill, true, 0.0f);
-        GUI.DrawTexture(new Rect(175, 20, 20, 20), _defTexture, ScaleMode.StretchToFill, true, 0.0f);
-        GUI.DrawTexture(new Rect(225, 20, 20, 20), _matkTexture, ScaleMode.StretchToFill, true, 0.0f);
-        GUI.DrawTexture(new Rect(275, 20, 20, 20), _mdefTexture, ScaleMode.StretchToFill, true, 0.0f);
+        GUI.DrawTexture(new Rect(rectItem.width - 215, 20, 20, 20), _atkTexture, ScaleMode.StretchToFill, true, 0.0f);
+        GUI.DrawTexture(new Rect(rectItem.width - 165, 20, 20, 20), _defTexture, ScaleMode.StretchToFill, true, 0.0f);
+        GUI.DrawTexture(new Rect(rectItem.width - 115, 20, 20, 20), _matkTexture, ScaleMode.StretchToFill, true, 0.0f);
+        GUI.DrawTexture(new Rect(rectItem.width - 65, 20, 20, 20), _mdefTexture, ScaleMode.StretchToFill, true, 0.0f);
 
         GUILayout.EndHorizontal();
+        scrollPos = GUILayout.BeginScrollView(scrollPos, ColoredGUISkin.Skin.verticalScrollbar, ColoredGUISkin.Skin.scrollView);
 
         if (PlayerManager._instance._selectedCharacter != null &&
             PlayerManager._instance._selectedCharacter._characterInventory._invent.Count > 0)
@@ -258,11 +255,11 @@ public class onMainMenu : MonoBehaviour
             {
                 int offset = i * 25;
                 EquipableItem item = PlayerManager._instance._selectedCharacter._characterInventory._invent[i];
-                Rect itemButton = new Rect(0, 20 + offset, 100, 20);
+                Rect itemButton = new Rect(0, 20 + offset, rectItem.width - 245, 30);
 
                 if (PlayerManager._instance._selectedCharacter._characterInventory._invent.Contains(item))
                 {
-                    if (GUILayout.Button(item._itemName, GUILayout.Height(30), GUILayout.Width(100)))
+                    if (GUI.Button(itemButton, item._itemName))
                     {
                         PlayerManager._instance.UnequipItem(item._itemID);
                         int index = PlayerManager._instance._playerInventory._equips.IndexOf(
@@ -275,13 +272,14 @@ public class onMainMenu : MonoBehaviour
                         PlayerManager._instance.LoadPersonnage(PlayerManager._instance.GetPersonnage());
                     }
 
-                    GUI.Label(new Rect(125, 20 + offset, 50, 20), item._bonusPhysAtk.ToString());
-                    GUI.Label(new Rect(175, 20 + offset, 50, 20), item._bonusPhysDef.ToString());
-                    GUI.Label(new Rect(225, 20 + offset, 50, 20), item._bonusMagicAtk.ToString());
-                    GUI.Label(new Rect(275, 20 + offset, 50, 20), item._bonusMagicDef.ToString());
+                    GUI.Label(new Rect(rectInvent.width - 235, 20 + offset, 50, 20), item._bonusPhysAtk.ToString());
+                    GUI.Label(new Rect(rectInvent.width - 185, 20 + offset, 50, 20), item._bonusPhysDef.ToString());
+                    GUI.Label(new Rect(rectInvent.width - 135, 20 + offset, 50, 20), item._bonusMagicAtk.ToString());
+                    GUI.Label(new Rect(rectInvent.width - 85, 20 + offset, 50, 20), item._bonusMagicDef.ToString());
                 }
             }
         }
+        GUILayout.EndScrollView();
     }
 
     void doStatsWindow(int windowID)
