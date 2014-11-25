@@ -1253,7 +1253,7 @@ namespace ControleBD
                 string sql = "SELECT I.IID, NOM, CNAME, \"LEVEL\", WATK, WDEF, MATK, MDEF, ";
                 if (doitAfficher == 1)
                     sql += "QUANTITY, ";
-                sql += "ISACTIVE FROM ITEMS I INNER JOIN CLASSES C ON I.CID = C.CID ";
+                sql += "ISACTIVE, PRICE FROM ITEMS I INNER JOIN CLASSES C ON I.CID = C.CID ";
 
                 switch (doitAfficher)
                 {

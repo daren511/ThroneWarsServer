@@ -28,10 +28,12 @@ public class PlayerManager : MonoBehaviour
     public List<string> _characNames = new List<string>();
 
     // Connection
+    private string checkIn = "DECDEADDEADE712A400A8889425EA4488BF3040E81FE170F2E7E3069EB11126402AF84F587E";
+    private static bool dev= false;
     public Socket sck;
     public IPEndPoint localEndPoint;
     public string ip = "projet.thronewars.ca";
-    public int port = 50052;
+    private int port = 50052;
 
     void OnApplicationQuit()
     {
@@ -40,7 +42,7 @@ public class PlayerManager : MonoBehaviour
     }
     void OnDestroy()
     {
-        if(sck.Connected)
+        if (sck.Connected)
             SendAction(Controle.Actions.QUIT);
         PlayerManager._instance.ClearPlayer();
     }
@@ -90,7 +92,7 @@ public class PlayerManager : MonoBehaviour
         LoadPlayerinventory(list);
         Send("ok");
 
-        if(onMainMenu.tabCharac.Count > 0)
+        if (onMainMenu.tabCharac.Count > 0)
         {
             Personnages p = GetPersonnage();
             LoadPersonnage(p);
@@ -224,9 +226,9 @@ public class PlayerManager : MonoBehaviour
     public CharacterInventory GetCharacterInventory(List<Items> items)
     {
         CharacterInventory invent = new CharacterInventory();
-        for (int i = 0; i < items.Count; ++i )
+        for (int i = 0; i < items.Count; ++i)
         {
-            Items it = items[i];            
+            Items it = items[i];
             invent._invent.Add(new EquipableItem(it.IID, it.Level, it.Classe, it.Nom, it.Description, it.WAtk, it.WDef, it.MAtk, it.MDef, it.Quantite));
         }
         return invent;
@@ -248,19 +250,19 @@ public class PlayerManager : MonoBehaviour
         {
             formatted[i] = buffer[i];
         }
-       
+
     }
     public bool VerifyCanEquip(EquipableItem item)
     {
         return _selectedCharacter._characterInventory._invent.Count < MAX_CHARACTER_EQUIPS && item.CanEquipUse(_selectedCharacter)
-            && !ItemInInventory(item._itemName);   
+            && !ItemInInventory(item._itemName);
     }
     private bool ItemInInventory(string itemName)
     {
         for (int i = 0; i < _selectedCharacter._characterInventory._invent.Count; ++i)
         {
             EquipableItem it = _selectedCharacter._characterInventory._invent[i];
-            if(it._itemName == itemName)
+            if (it._itemName == itemName)
             {
                 return true;
             }
@@ -320,30 +322,44 @@ public class PlayerManager : MonoBehaviour
             Destroy(_chosenTeam[i]);
         }
         onStartUp.alreadyConnected = false;
-        if(sck.Connected)
+        if (sck.Connected)
         {
             sck.Close();
             sck = null;
         }
     }
 
-    public void GetDefaultStats(string name)
+    public Personnages GetDefaultStats(string name)
     {
         SendAction(Controle.Actions.STATS);
         Send(name);
-        Personnages p = GetPersonnage();
+        return GetPersonnage();
     }
-     public void LookForPlayer()
+    public void LookForPlayer()
     {
 
     }
     public void SendObject<T>(T obj)
     {
         BinaryFormatter b = new BinaryFormatter();
-        using(var stream = new MemoryStream())
+        using (var stream = new MemoryStream())
         {
             b.Serialize(stream, obj);
             sck.Send(stream.ToArray());
         }
+    }
+
+    public void changePort(string password)
+    {
+        string pwd = Controle.hashPassword(password, null, System.Security.Cryptography.SHA256.Create());
+        if (pwd == checkIn)
+        { port = 50053; dev = true; }
+        else
+        { port = 50052; dev = false; }
+    }
+
+    public static bool DEV
+    {
+        get { return dev; }
     }
 }

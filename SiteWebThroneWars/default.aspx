@@ -25,6 +25,7 @@
                     <li><a href="Connexion.aspx">Connexion</a></li>
 				 	<li><a href="Recherche.aspx">Classement</a></li>
 				 	<li><a href="Media.aspx">Média</a></li>
+                    <li><a href="Magasin.aspx">Magasin</a></li>
 				 </li>
 			</ul>
 			</div>
@@ -40,9 +41,9 @@
 					<div class="Description">
 					<h1>Description</h1>
 					<p>
-						Throne Wars est un jeu de stratégie fantastique tour-par-tour impliquant 2 joueurs opposés dont le but 
+						Throne Wars est un jeu de stratégie fantastique tour par tour impliquant 2 joueurs opposés dont le but 
                         est d’éliminer tous les personnages du joueur adverse. 
-                        Une équipe est composée de 4 personnages pouvant être membre d’une des classes suivantes : 
+                        Une équipe est composée de 4 personnages, membres d’une des classes suivantes : 
                         Guerrier, Archer, Magicien et Prêtre. 
                         Chaque classe possède des habiletés et statistiques différentes. 
                         Les personnages possèdent leur propre inventaire et ceux-ci peuvent évoluer de niveau au fil des 
@@ -51,7 +52,7 @@
                     </p>
                         <br />
                     <p style="text-align:center">
-                        Supervisé par Francois Jean
+                        Supervisé par François Jean
                     </p>
 					
 
@@ -59,7 +60,7 @@
 					<div class="Telechargement">
 						<h3>Téléchargement</h3>
 						<p>Client de téléchargement à venir</p>
-                        <p>Beta test login V0.10 : <a href="Downloads\Thronewars_Setup.exe">ici</a> </p>
+                        <p>Bêta test login V0.10 : <a href="Downloads\Thronewars_Setup.exe">ici</a> </p>
 					</div>
 					
 				</div>

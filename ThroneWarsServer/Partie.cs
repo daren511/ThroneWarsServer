@@ -22,8 +22,22 @@ namespace ThroneWarsServer
         }
         public void addJoueur(Joueur j)
         {
-            Joueur2 = j;
-            isFull = true;
+            if (!Joueur2.socketIsConnected() && Joueur2 != null)
+            {
+                Joueur2.isConnected = false;
+                Joueur2 = j;
+
+            }
+            else
+            {
+                Joueur1.isConnected = false;
+                Joueur1 = j;
+            }
+            if (Joueur1.socketIsConnected() && Joueur2.socketIsConnected())
+            {
+                isFull = true;
+                this.T.Start();
+            }
         }
         /// <summary>
         /// Cette fonction est la fonction principale de la class instance c'est la fonction qui est appelée au moment ou 

@@ -41,19 +41,20 @@
                     <li><a href="Connexion.aspx">Connexion</a></li>
 				 	<li><a href="Recherche.aspx">Classement</a></li>
 				 	<li><a href="Media.aspx">Média</a></li>
+                    <li><a href="Magasin.aspx">Magasin</a></li>
 				 </li>
 			</ul>
 		</div>
 		<div class="Inscription">
   			<asp:label id="usernameLB" runat="server">Nom d'utilisateur</asp:label><br/>
                 <asp:Textbox ID="username" TextMode="SingleLine" runat="server"/><br/>
-  			<asp:label id="PasswordLB" runat="server">Mot de Passe</asp:label><br/>
+  			<asp:label id="PasswordLB" runat="server">Mot de passe</asp:label><br/>
                 <asp:TextBox id="password" TextMode="password" runat="server"/><br/>
-  			<asp:label id="CPasswordLB" runat="server">Confirmer Mot de Passe</asp:label><br/>
+  			<asp:label id="CPasswordLB" runat="server">Confirmer mot de passe</asp:label><br/>
                 <asp:TextBox id="cpassword" TextMode="password" runat="server"/><br />
             <asp:label id="EmailLB" runat="server">Courriel</asp:label><br/>
                 <asp:Textbox ID="email" TextMode="Email" runat="server"/><br/>
-  			<asp:label id="CEmailLB" runat="server">Confirmer Courriel</asp:label><br/>
+  			<asp:label id="CEmailLB" runat="server">Confirmer courriel</asp:label><br/>
                 <asp:Textbox ID="cemail" TextMode="Email" runat="server"/><br/><br />
             <asp:Button Text="Valider" onClick="inscriptionJoueur_Click" runat="server"/>
 		
