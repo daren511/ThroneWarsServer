@@ -11,13 +11,18 @@ public class onLoading : MonoBehaviour
     private string message = "En attente d'un autre joueur...";
     private Rect rect = new Rect((Screen.width - 400) / 2, (Screen.height - 75) / 2, 400, 90);
 
-
+    void Start()
+    {
+        FindPlayer();
+    }
     void OnGUI()
     {
         hasUpdatedGui = ResourceManager.GetInstance.UpdateGUI(hasUpdatedGui);
         ResourceManager.GetInstance.CreateBackground();
         ResourceManager.GetInstance.CreateLogo();
         GUI.Window(-10, rect, doDisplayMessage, title);
+        if (GUI.Button(new Rect(Screen.width - 200, Screen.height - 50, 200, 50), "Annuler"))
+            cancelLoading();
     }
 
     private void doDisplayMessage(int windowID)
@@ -25,9 +30,17 @@ public class onLoading : MonoBehaviour
         GUILayout.Space(25);
         GUILayout.Label(message);
     }
+
+    private void cancelLoading()
+    {
+        PlayerManager._instance.LoadPlayer();
+        Application.LoadLevel("MainMenu");
+    }
+
     private void FindPlayer()
     {
         Thread t = new Thread(new ThreadStart(PlayerManager._instance.LookForPlayer));
-    }
+        t.Start();
 
+    }
 }

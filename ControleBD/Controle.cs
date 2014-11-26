@@ -1204,6 +1204,35 @@ namespace ControleBD
                 return false;
             }
         }
+        public static int GetJoueurMoney(string username)
+        {
+            
+            OracleConnection conn = Connection.getInstance().conn;
+            string sql = "select MONEY from JOUEURS where USERNAME=:username";
+
+            try
+            {
+                OracleCommand oraSelect = new OracleCommand(sql, conn);
+                OracleParameter OraParamName = new OracleParameter(":username", OracleDbType.Varchar2, 32);
+                OraParamName.Value = username.ToLower();
+                oraSelect.Parameters.Add(OraParamName);
+
+                using (OracleDataReader objRead = oraSelect.ExecuteReader())
+                {
+                    if (objRead.Read())
+                        return objRead.GetInt32(0);
+                }
+
+            }
+            catch (OracleException ex)
+            {
+                Erreur.ErrorMessage(ex);
+                
+            }
+            return 0;
+            
+        }
+
 
 
 

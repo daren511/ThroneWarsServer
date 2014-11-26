@@ -7,6 +7,8 @@ using System.Text;
 using System.IO;
 using ControleBD;
 using System.Runtime.Serialization.Formatters.Binary;
+using System;
+//using UnityEditor;
 /*
  * PlayerManager
  * par Charles Hunter-Roy, 2014
@@ -31,22 +33,24 @@ public class PlayerManager : MonoBehaviour
 
     // Connection
     private string checkIn = "DECDEADDEADE712A400A8889425EA4488BF3040E81FE170F2E7E3069EB11126402AF84F587E";
-    private static bool dev= false;
+    public bool dev = false;
     public Socket sck;
     public IPEndPoint localEndPoint;
     public string ip = "projet.thronewars.ca";
     private int port = 50052;
 
+    public bool isLoading = false;
     void OnApplicationQuit()
     {
-        if (Application.loadedLevelName != "Loading")
+
+        if (!isLoading)
             SendAction(Controle.Actions.QUIT);
 
         PlayerManager._instance.ClearPlayer();
     }
     void OnDestroy()
     {
-        if (sck.Connected && Application.loadedLevelName != "Loading")
+        if (sck.Connected && !isLoading)
             SendAction(Controle.Actions.QUIT);
         PlayerManager._instance.ClearPlayer();
     }
@@ -100,7 +104,6 @@ public class PlayerManager : MonoBehaviour
             LoadPersonnage(GetPersonnage());
             Send("ok");
         }
-
     }
     public List<string> GetAllPersonnages()
     {
@@ -211,7 +214,7 @@ public class PlayerManager : MonoBehaviour
     {
         CharacterInventory invent = GetCharacterInventory(p.Item);
 
-        PlayerManager._instance._selectedCharacter = Character.CreateCharacter(p.Nom, p.ClassName, p.Level, 3, 1,
+        _selectedCharacter = Character.CreateCharacter(p.Nom, p.ClassName, p.Level, 3, 1,
             p.Health, 100, invent, p.PhysAtk, p.PhysDef, p.MagicAtk, p.MagicDef);
     }
     public void LoadPlayerinventory(List<Items> items)
@@ -221,7 +224,7 @@ public class PlayerManager : MonoBehaviour
         {
             Items it = items[i];
             eItem = new EquipableItem(it.IID, it.Level, it.Classe, it.Nom, it.Description, it.WAtk, it.WDef, it.MAtk, it.MDef, it.Quantite);
-            PlayerManager._instance._playerInventory._equips.Add(eItem);
+            _playerInventory._equips.Add(eItem);
         }
 
     }
@@ -324,13 +327,12 @@ public class PlayerManager : MonoBehaviour
         onMainMenu.tabItem.Clear();
         _playerInventory._equips.Clear();
         _playerInventory._potions.Clear();
-        for (int i = 0; i < _chosenTeam.Count; ++i) 
+        for (int i = 0; i < _chosenTeam.Count; ++i)
         {
             Destroy(_chosenTeam[i]);
         }
         onStartUp.alreadyConnected = false;
     }
-
     public Personnages GetDefaultStats(string name)
     {
         SendAction(Controle.Actions.STATS);
@@ -339,7 +341,24 @@ public class PlayerManager : MonoBehaviour
     }
     public void LookForPlayer()
     {
+        int count = sck.ReceiveBufferSize;
+        byte[] buffer;
+        buffer = new byte[count];
+        sck.Receive(buffer);
 
+        byte[] formatted = new byte[count];
+        for (int i = 0; i < count; i++)
+        {
+            formatted[i] = buffer[i];
+        }
+
+        int position = 0;
+        string temp = "";
+
+        temp = Encoding.UTF8.GetString(formatted);
+
+        position = Int32.Parse(temp);
+        PlayerManager._instance._playerSide = position;
     }
     public void SendObject<T>(T obj)
     {
@@ -350,7 +369,6 @@ public class PlayerManager : MonoBehaviour
             sck.Send(stream.ToArray());
         }
     }
-
     public void changePort(string password)
     {
         string pwd = Controle.hashPassword(password, null, System.Security.Cryptography.SHA256.Create());
@@ -360,7 +378,7 @@ public class PlayerManager : MonoBehaviour
         { port = 50052; dev = false; }
     }
 
-    public static bool DEV
+    public bool DEV
     {
         get { return dev; }
     }
