@@ -351,14 +351,61 @@ public class PlayerManager : MonoBehaviour
         {
             formatted[i] = buffer[i];
         }
+        _playerSide = Int32.Parse(Encoding.UTF8.GetString(formatted));
+        GameManager._instance._enemySide = _playerSide == 1 ? 2 : 1;
+        onLoading.mutex.ReleaseMutex();
+        onLoading.thread.Abort();
+    }
+    public void PrepareGame()
+    {
+        SendTeam();
+        PopulateEnemy(ReceiveEnemy());
+    }
+    public void SendTeam()
+    {
+        List<Personnages> list = new List<Personnages>();
+        Character c;
 
-        int position = 0;
-        string temp = "";
+        for(int i = 0; i < _chosenTeam.Count; ++i)
+        {
+            c = _chosenTeam[i];
+            list.Add(new Personnages(c._name, c._characterClass._classLevel, c._characterClass._className, c._maxHealth, c._maxMagic,
+                c._physAttack, c._physDefense, c._magicAttack, c._magicDefense));
+        }
+        SendObject(list);
+    }
+    public List<Personnages> ReceiveEnemy()
+    {
+        List<Personnages> list = new List<Personnages>();
 
-        temp = Encoding.UTF8.GetString(formatted);
+        int count = sck.ReceiveBufferSize;
+        byte[] buffer;
+        buffer = new byte[count];
+        sck.Receive(buffer);
 
-        position = Int32.Parse(temp);
-        PlayerManager._instance._playerSide = position;
+        byte[] formatted = new byte[count];
+        for (int i = 0; i < count; i++)
+        {
+            formatted[i] = buffer[i];
+        }
+        BinaryFormatter receive = new BinaryFormatter();
+        using (var recstream = new MemoryStream(formatted))
+        {
+            list = receive.Deserialize(recstream) as List<Personnages>;
+        }
+        return list;
+    }
+    public void PopulateEnemy(List<Personnages> list)
+    {
+        List<Character> enemyTeam = new List<Character>();
+        Personnages p;
+        for(int i = 0; i < list.Count; ++i)
+        {
+            p = list[i];
+            enemyTeam.Add(Character.CreateCharacter(p.Nom, p.ClassName, p.Level, p.Moves, p.Range, p.Health, p.Magic,
+                null, p.PhysAtk, p.PhysDef, p.MagicAtk, p.MagicDef));
+        }
+        GameManager._instance._enemyTeam = enemyTeam;
     }
     public void SendObject<T>(T obj)
     {

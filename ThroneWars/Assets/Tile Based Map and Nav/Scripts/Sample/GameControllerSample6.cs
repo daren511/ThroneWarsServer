@@ -60,7 +60,7 @@ public class GameControllerSample6 : MonoBehaviour
         {
             AddCharacterPrefab(i);
         }
-        for (int i = 0; i < GameManager._instance._enemyTeam.Length; ++i)
+        for (int i = 0; i < GameManager._instance._enemyTeam.Count; ++i)
         {
             AddEnemyPrefab(i);
         }
@@ -234,9 +234,6 @@ public class GameControllerSample6 : MonoBehaviour
     private void InitializeEnemyUnits()
     {
         //BIDON, À MODIFIER AVEC LES INFOS DU SERVEUR
-
-        GameManager._instance._enemySide = 2;
-        PlayerManager._instance._playerSide = 1;
 
         CharacterInventory characterInvent = new CharacterInventory();
 

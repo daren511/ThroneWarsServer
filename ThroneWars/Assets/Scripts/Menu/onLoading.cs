@@ -10,7 +10,8 @@ public class onLoading : MonoBehaviour
     private string title = "Veuillez patienter";
     private string message = "En attente d'un autre joueur...";
     private Rect rect = new Rect((Screen.width - 400) / 2, (Screen.height - 75) / 2, 400, 90);
-
+    public static Thread thread;
+    public static Mutex mutex = new Mutex();
     void Start()
     {
         FindPlayer();
@@ -39,8 +40,15 @@ public class onLoading : MonoBehaviour
 
     private void FindPlayer()
     {
-        Thread t = new Thread(new ThreadStart(PlayerManager._instance.LookForPlayer));
-        t.Start();
+        thread = new Thread(new ThreadStart(PlayerManager._instance.LookForPlayer));
+        mutex.WaitOne();
+        thread.Start();
+        mutex.WaitOne();
+
+        PlayerManager._instance.isLoading = false;
+
+        PlayerManager._instance.PrepareGame();
+        Application.LoadLevel("placement");
 
     }
 }

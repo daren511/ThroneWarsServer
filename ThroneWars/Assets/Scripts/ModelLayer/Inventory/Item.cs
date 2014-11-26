@@ -28,6 +28,6 @@ public class Item
     }
     public bool CanEquipUse(Character c)
     {
-        return _levelRequ <= c._characterClass._classLevel && (c._characterClass._className == _classRequ || _classRequ == "");
+        return _levelRequ <= c._characterClass._classLevel && (c._characterClass._className == _classRequ || _classRequ == "Tous");
     }    
 }
