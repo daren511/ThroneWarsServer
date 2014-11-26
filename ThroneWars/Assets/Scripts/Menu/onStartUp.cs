@@ -45,7 +45,7 @@ public class onStartUp : MonoBehaviour
         hasUpdatedGui = ResourceManager.GetInstance.UpdateGUI(hasUpdatedGui);
         ResourceManager.GetInstance.CreateBackground();
         ResourceManager.GetInstance.CreateLogo();
-        if (PlayerManager.DEV) { lblDev.normal.textColor = Color.red; GUI.Label(new Rect(10, 10, 200, 30), "DEV", lblDev); }
+        if (PlayerManager._instance.DEV) { lblDev.normal.textColor = Color.red; GUI.Label(new Rect(10, 10, 200, 30), "DEV", lblDev); }
 
         onMenuLoad.createQuitWindow();
         GUILayout.Window(2, rectLogin, doLoginWindow, "Login");   // Draw the login window

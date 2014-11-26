@@ -105,7 +105,7 @@ public class onMainMenu : MonoBehaviour
     {
         hasUpdatedGui = ResourceManager.GetInstance.UpdateGUI(hasUpdatedGui);
         ResourceManager.GetInstance.CreateBackground();
-        if (PlayerManager.DEV) { lblDev.normal.textColor = Color.red; GUI.Label(new Rect(10, 10, 200, 30), "DEV", lblDev); }
+        if (PlayerManager._instance.DEV) { lblDev.normal.textColor = Color.red; GUI.Label(new Rect(10, 10, 200, 30), "DEV", lblDev); }
 
         onMenuLoad.createCreationWindow();
         onMenuLoad.createDeleteWindow();
@@ -124,44 +124,45 @@ public class onMainMenu : MonoBehaviour
     {
         GUILayout.Space(25);
         selectedTeam = GUILayout.SelectionGrid(selectedTeam, tabTeam.ToArray(), 1);
-        //try
+        try
+        {
+            if (_teamSelection != selectedTeam && tabTeam.Count > 0)
+            {
+                if (tabTeam != null && PlayerManager._instance._selectedCharacter != null)
+                {
+                    if (PlayerManager._instance._selectedCharacter._name != tabTeam[selectedTeam])
+                    {
+                        GetHighlightedCharacter(tabTeam[selectedTeam]);
+                        _storedSelection = "team";
+                        _charSelection = selectedTeam = -1;
+                    }
+                }
+                _teamSelection = selectedTeam;
+            }
+        }
+        catch (Exception e)
+        {
+            if (PlayerManager._instance._selectedCharacter._name != tabTeam[0])
+            {
+                GetHighlightedCharacter(tabTeam[0]);
+                _storedSelection = "team";
+                _teamSelection = -1;
+            }
+        }
+        //if (_teamSelection != selectedTeam && tabTeam.Count > 0)
         //{
-        //    if (_teamSelection != selectedTeam && tabTeam.Count > 0)
+        //    if (tabTeam != null && PlayerManager._instance._selectedCharacter != null && tabTeam.Count > 0)
         //    {
-        //        if (tabTeam != null && PlayerManager._instance._selectedCharacter != null)
+        //        if (selectedTeam > tabTeam.Count - 1)
+        //            selectedTeam = 0;
+        //        if (PlayerManager._instance._selectedCharacter._name != tabTeam[selectedTeam])
         //        {
-        //            if (PlayerManager._instance._selectedCharacter._name != tabTeam[selectedTeam])
-        //            {
-        //                GetHighlightedCharacter(tabTeam[selectedTeam]);
-        //            }
+        //            GetHighlightedCharacter(tabTeam[selectedTeam]);
         //        }
+        //        _storedSelection = "team";
         //    }
         //    _teamSelection = selectedTeam;
-        //    _storedSelection = "team";
         //}
-        //catch(Exception e)
-        //{
-        //    if (PlayerManager._instance._selectedCharacter._name != tabTeam[selectedTeam])
-        //    {
-        //        GetHighlightedCharacter(tabTeam[0]);
-        //    } 
-        //    _teamSelection = 0;
-        //    _storedSelection = "team";
-        //}
-        if (_teamSelection != selectedTeam && tabTeam.Count > 0)
-        {
-            if (tabTeam != null && PlayerManager._instance._selectedCharacter != null)
-            {
-                if (selectedTeam > tabTeam.Count - 1)
-                    selectedTeam = 0;
-                if (PlayerManager._instance._selectedCharacter._name != tabTeam[selectedTeam])
-                {
-                    GetHighlightedCharacter(tabTeam[selectedTeam]);
-                }
-                _storedSelection = "team";
-            }
-            _teamSelection = selectedTeam;
-        }
     }
 
     void doCharacWindow(int windowID)
@@ -178,6 +179,7 @@ public class onMainMenu : MonoBehaviour
                     {
                         GetHighlightedCharacter(tabCharac[selectedCharac]);
                         _storedSelection = "perso";
+                        _teamSelection = selectedCharac = -1;
                     }
                 }
                 _charSelection = selectedCharac;
@@ -220,11 +222,11 @@ public class onMainMenu : MonoBehaviour
         GUILayout.EndVertical();
 
         GUILayout.BeginVertical();
-        GUI.enabled = chosenCharacters == MAX_TEAM_LENGTH && tabMap[0];
+        GUI.enabled = chosenCharacters == MAX_TEAM_LENGTH && tabMap[0] && PlayerManager._instance.dev;
         if (GUILayout.Button("Jouer", GUILayout.Width(rectInvent.width)))
         {
             PlayerManager._instance.SendAction(Controle.Actions.START_GAME);
-            // Go to the place character screen
+            // Go to matchmaking
             GameControllerSample6.scene = "Map1";
             PlayerManager._instance.isLoading = true;
             Application.LoadLevel("Loading");
@@ -419,13 +421,17 @@ public class onMainMenu : MonoBehaviour
             GUI.enabled = remainingPosition > 0 && tabCharac.Count > 0;
             if (GUILayout.Button("Ajouter", GUILayout.Height(35), GUILayout.Width(200)))
             {
-                SelectCharacter(selectedCharac);
-                _charSelection = -1;
+                if(selectedCharac > 0)
+                    SelectCharacter(selectedCharac);
+                else
+                    SelectCharacter(0);                
 
                 if(tabCharac.Count != 0)
+                {
                     GetHighlightedCharacter(tabCharac[0]);
-                else
-                    GetHighlightedCharacter(tabTeam[0]);
+                }
+                selectedCharac = -1;
+                _charSelection = -1;
             }
         }
         else if (_storedSelection == "team") //clicked in team characters
@@ -433,16 +439,19 @@ public class onMainMenu : MonoBehaviour
             GUI.enabled = chosenCharacters > 0 && tabTeam.Count > 0;
             if (GUILayout.Button("Retirer", GUILayout.Height(35), GUILayout.Width(200)))
             {
-                UnselectCharacter(selectedTeam);
-                _teamSelection = -1;
+                if(selectedTeam > 0)
+                    UnselectCharacter(selectedTeam);
+                else
+                    UnselectCharacter(0);
 
                 if (tabTeam.Count != 0)
+                {
                     GetHighlightedCharacter(tabTeam[0]);
-                else
-                    GetHighlightedCharacter(tabCharac[0]);
+                }
+                _teamSelection = -1;
+                selectedTeam = -1;
             }
-        }
- 
+        } 
         GUILayout.FlexibleSpace();
         GUILayout.EndHorizontal();
         GUILayout.EndArea();
@@ -450,7 +459,7 @@ public class onMainMenu : MonoBehaviour
 
     private void GetHighlightedCharacter(string name)
     {
-        //  Destroy(PlayerManager._instance._selectedCharacter);
+        PlayerManager._instance._selectedCharacter = null;
         PlayerManager._instance.SendAction(Controle.Actions.CLICK);
         PlayerManager._instance.Send(name);
         PlayerManager._instance.LoadPersonnage(PlayerManager._instance.GetPersonnage());
@@ -458,24 +467,24 @@ public class onMainMenu : MonoBehaviour
 
     void SelectCharacter(int pos)
     {
-        string name = tabCharac[selectedCharac];
+        tabCharac.Remove(PlayerManager._instance._selectedCharacter._name);
         PlayerManager._instance._chosenTeam.Add(PlayerManager._instance._selectedCharacter);
-
-        tabCharac.RemoveAt(pos);
         remainingPosition--;
         chosenCharacters++;
         ShowSelectedCharacters();
     }
     void UnselectCharacter(int pos)
     {
-        string name = tabTeam[selectedTeam];
-        tabCharac.Add(tabTeam[pos]);
-
-        tabTeam.RemoveAt(pos);
+        PlayerManager._instance._chosenTeam.Remove(PlayerManager._instance._selectedCharacter);
+        tabTeam.Remove(PlayerManager._instance._selectedCharacter._name);
+        tabCharac.Add(PlayerManager._instance._selectedCharacter._name);
+        if (tabTeam.Count == 0)
+        {
+            PlayerManager._instance._chosenTeam.Clear();
+            tabTeam.Clear();
+        }
         remainingPosition++;
         chosenCharacters--;
-
-        PlayerManager._instance._chosenTeam.RemoveAt(pos);
     }
     void ShowAllCharacters()
     {
@@ -507,7 +516,6 @@ public class onMainMenu : MonoBehaviour
     }
     private void ShowChosenCharacterInventory()
     {
-        string name = tabCharac[selectedCharac];
         Character c = PlayerManager._instance._selectedCharacter;
         EquipableItem item;
         for (int i = 0; i < c._characterInventory._invent.Count; ++i)
