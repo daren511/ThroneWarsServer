@@ -7,7 +7,7 @@ using System.Text;
 using System.IO;
 using ControleBD;
 using System.Runtime.Serialization.Formatters.Binary;
-using UnityEditor;
+//using UnityEditor;
 /*
  * PlayerManager
  * par Charles Hunter-Roy, 2014
@@ -357,7 +357,7 @@ public class PlayerManager : MonoBehaviour
         using (var recstream = new MemoryStream(formatted))
         {
             perso = receive.Deserialize(recstream) as Personnages;
-        }
+    }
     }
     public void SendObject<T>(T obj)
     {

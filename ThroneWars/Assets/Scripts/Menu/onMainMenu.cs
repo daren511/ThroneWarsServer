@@ -126,20 +126,20 @@ public class onMainMenu : MonoBehaviour
         selectedTeam = GUILayout.SelectionGrid(selectedTeam, tabTeam.ToArray(), 1);
         try
         {
-            if (_teamSelection != selectedTeam && tabTeam.Count > 0)
+        if (_teamSelection != selectedTeam && tabTeam.Count > 0)
+        {
+            if (tabTeam != null && PlayerManager._instance._selectedCharacter != null)
             {
-                if (tabTeam != null && PlayerManager._instance._selectedCharacter != null)
+                if (PlayerManager._instance._selectedCharacter._name != tabTeam[selectedTeam])
                 {
-                    if (PlayerManager._instance._selectedCharacter._name != tabTeam[selectedTeam])
-                    {
-                        GetHighlightedCharacter(tabTeam[selectedTeam]);
+                    GetHighlightedCharacter(tabTeam[selectedTeam]);
                         _storedSelection = "team";
                         _charSelection = selectedTeam = -1;
                     }
                 }
                 _teamSelection = selectedTeam;
             }
-        }
+                }
         catch (Exception e)
         {
             if (PlayerManager._instance._selectedCharacter._name != tabTeam[0])
@@ -338,8 +338,18 @@ public class onMainMenu : MonoBehaviour
     void doStatsWindow(int windowID)
     {
         GUILayout.BeginVertical();
-        GUI.DrawTexture(new Rect(325f, 20f, 32, 32), _healthTexture, ScaleMode.StretchToFill, true, 0.0f);
-        GUI.DrawTexture(new Rect(325f, 70f, 32, 32), _magicTexture, ScaleMode.StretchToFill, true, 0.0f);
+        GUI.DrawTexture(new Rect(rectStats.xMax - 570, 20f, 32, 32), _healthTexture, ScaleMode.StretchToFill, true, 0.0f);
+        GUI.DrawTexture(new Rect(rectStats.xMax - 570, 70f, 32, 32), _magicTexture, ScaleMode.StretchToFill, true, 0.0f);
+        GUILayout.EndVertical();
+
+        GUILayout.BeginVertical();
+        GUI.DrawTexture(new Rect(rectStats.xMax - 470, 20f, 32, 32), _atkTexture, ScaleMode.StretchToFill, true, 0.0f);
+        GUI.DrawTexture(new Rect(rectStats.xMax - 470, 70f, 32, 32), _defTexture, ScaleMode.StretchToFill, true, 0.0f);
+        GUILayout.EndHorizontal();
+
+        GUILayout.BeginVertical();
+        GUI.DrawTexture(new Rect(rectStats.xMax - 370, 20f, 32, 32), _matkTexture, ScaleMode.StretchToFill, true, 0.0f);
+        GUI.DrawTexture(new Rect(rectStats.xMax - 370, 70f, 32, 32), _mdefTexture, ScaleMode.StretchToFill, true, 0.0f);
         GUILayout.EndVertical();
 
         List<string> tab = _storedSelection == "perso" ? tabCharac : tabTeam;
@@ -363,7 +373,6 @@ public class onMainMenu : MonoBehaviour
             GUILayout.EndArea();
             GUILayout.EndHorizontal();
 
-
             GUILayout.BeginVertical();
             GUILayout.BeginArea(new Rect(30f, 80f, 200, 32));
             GUILayout.Label(c._name + ", " + c._characterClass._className + " niveau " + c._characterClass._classLevel);
@@ -373,38 +382,28 @@ public class onMainMenu : MonoBehaviour
             GUILayout.BeginHorizontal();
 
             GUILayout.BeginVertical();
-            GUILayout.BeginArea(new Rect(360f, 20f, 100, 32));
+            GUILayout.BeginArea(new Rect(rectStats.xMax - 535, 25f, 100, 32));
             GUILayout.Label(": " + c._maxHealth);
             GUILayout.EndArea();
-            GUILayout.BeginArea(new Rect(360f, 75f, 100, 32));
+            GUILayout.BeginArea(new Rect(rectStats.xMax - 535, 75f, 100, 32));
             GUILayout.Label(": " + c._maxMagic);
             GUILayout.EndArea();
             GUILayout.EndVertical();
 
             GUILayout.BeginVertical();
-            GUI.DrawTexture(new Rect(425f, 20f, 32, 32), _atkTexture, ScaleMode.StretchToFill, true, 0.0f);
-            GUI.DrawTexture(new Rect(425f, 70f, 32, 32), _defTexture, ScaleMode.StretchToFill, true, 0.0f);
-            GUILayout.EndHorizontal();
-
-            GUILayout.BeginVertical();
-            GUILayout.BeginArea(new Rect(460f, 20f, 100, 32));
+            GUILayout.BeginArea(new Rect(rectStats.xMax - 435, 25f, 100, 32));
             GUILayout.Label(": " + c._physAttack);
             GUILayout.EndArea();
-            GUILayout.BeginArea(new Rect(460f, 75f, 100, 32));
+            GUILayout.BeginArea(new Rect(rectStats.xMax - 435, 75f, 100, 32));
             GUILayout.Label(": " + c._physDefense);
             GUILayout.EndArea();
             GUILayout.EndVertical();
 
             GUILayout.BeginVertical();
-            GUI.DrawTexture(new Rect(525f, 20f, 32, 32), _matkTexture, ScaleMode.StretchToFill, true, 0.0f);
-            GUI.DrawTexture(new Rect(525f, 70f, 32, 32), _mdefTexture, ScaleMode.StretchToFill, true , 0.0f);
-            GUILayout.EndVertical();
-
-            GUILayout.BeginVertical();
-            GUILayout.BeginArea(new Rect(560f, 20f, 100, 32));
+            GUILayout.BeginArea(new Rect(rectStats.xMax - 335, 25f, 100, 32));
             GUILayout.Label(": " + c._magicAttack);
             GUILayout.EndArea();
-            GUILayout.BeginArea(new Rect(560f, 75f, 100, 32));
+            GUILayout.BeginArea(new Rect(rectStats.xMax - 335, 75f, 100, 32));
             GUILayout.Label(": " + c._magicDefense);
             GUILayout.EndArea();
             GUILayout.EndVertical();
@@ -412,9 +411,9 @@ public class onMainMenu : MonoBehaviour
             GUILayout.EndHorizontal();
 
         }
-        GUILayout.BeginArea(new Rect(rectStats.width / 24, rectStats.height / 1.3f, rectStats.width, 40));
+        GUILayout.BeginArea(new Rect(rectStats.width / 2, rectStats.height / 1.25f, rectStats.width, 40));
         GUILayout.BeginHorizontal();
-        GUILayout.FlexibleSpace();
+        //GUILayout.FlexibleSpace();
 
         if (_storedSelection == "perso") //clicked in player characters
         {
@@ -422,17 +421,17 @@ public class onMainMenu : MonoBehaviour
             if (GUILayout.Button("Ajouter", GUILayout.Height(35), GUILayout.Width(200)))
             {
                 if(selectedCharac > 0)
-                    SelectCharacter(selectedCharac);
+                SelectCharacter(selectedCharac);
                 else
                     SelectCharacter(0);                
 
                 if(tabCharac.Count != 0)
                 {
                     GetHighlightedCharacter(tabCharac[0]);
-                }
+            }
                 selectedCharac = -1;
                 _charSelection = -1;
-            }
+        }
         }
         else if (_storedSelection == "team") //clicked in team characters
         {
@@ -440,7 +439,7 @@ public class onMainMenu : MonoBehaviour
             if (GUILayout.Button("Retirer", GUILayout.Height(35), GUILayout.Width(200)))
             {
                 if(selectedTeam > 0)
-                    UnselectCharacter(selectedTeam);
+                UnselectCharacter(selectedTeam);
                 else
                     UnselectCharacter(0);
 
@@ -451,8 +450,9 @@ public class onMainMenu : MonoBehaviour
                 _teamSelection = -1;
                 selectedTeam = -1;
             }
-        } 
-        GUILayout.FlexibleSpace();
+        }
+ 
+        //GUILayout.FlexibleSpace();
         GUILayout.EndHorizontal();
         GUILayout.EndArea();
     }
