@@ -13,6 +13,14 @@
 <body>
     <form id="form1" runat="server">
     <script type="text/javascript">
+        $(document).ready(function () {
+            $('#TB_Quantite').keyup(function () {
+                calculate();
+            });
+        });
+        function calculate(e) {
+            $('#TB_Total').val($('#TB_Quantite').val() * $('#TB_Prix').val());
+        }
         function MessageBoxReussi() {
             $(document).ready(function () {
                 swal({ title: "Bravo! ", text: "Vous êtes connecté", type: "success", confirmButtonText: "Ok" });
@@ -57,24 +65,24 @@
          </asp:GridView>
     </div>
 
-    <asp:Label ID="Label4" runat="server">Item sélectionné</asp:Label>
+    <asp:Label ID="Label4" runat="server">Item sélectionné</asp:Label><br />
     <asp:TextBox ID="TB_ItemName" TextMode="SingleLine" runat="server" Enabled="false"/><br />
     
-    <asp:Label ID="Label1" runat="server">Quantité</asp:Label>
-    <asp:TextBox ID="TB_Quantite" TextMode="SingleLine" runat="server" /><br /><br />
+    <asp:Label ID="Label1" runat="server">Quantité</asp:Label><br />
+    <asp:TextBox ID="TB_Quantite" TextMode="SingleLine" runat="server"/>
     <asp:RangeValidator ID="RangeValidator1" Type="Integer" MinimumValue="1" 
     MaximumValue="99" ControlToValidate="TB_Quantite" runat="server" 
-    ErrorMessage="La quanité doit être entre 1 et 99"></asp:RangeValidator>
+    ErrorMessage="La quanité doit être entre 1 et 99"></asp:RangeValidator><br />
     
-    <asp:Label ID="Label5" runat="server">Prix</asp:Label>
-    <asp:TextBox ID="TB_Prix" TextMode="SingleLine" runat="server" Enabled="false"/><br /><br />
+    <asp:Label ID="Label5" runat="server">Prix</asp:Label><br />
+    <asp:TextBox ID="TB_Prix" TextMode="SingleLine" runat="server" Enabled="false"/><br />
     
-    <asp:Button Text="Calculer" OnClick="Calculer_Click" runat="server" /><br />
+    <asp:Button Text="Calculer" ID="BTN_Calculer" OnClick="Calculer_Click" runat="server" /><br /><br />
     
-    <asp:Label ID="Label2" runat="server">Total</asp:Label>
+    <asp:Label ID="Label2" runat="server">Total</asp:Label><br />
     <asp:TextBox ID="TB_Total" TextMode="SingleLine" runat="server" Enabled="false"/><br /><br />
     
-    <asp:Button Text="Acheter" OnClick="Acheter_Click" runat="server" /><br />
+    <asp:Button Text="Acheter" ID="BTN_Acheter" OnClick="Acheter_Click" runat="server"/><br />
     </form>
         </body>
 </html>

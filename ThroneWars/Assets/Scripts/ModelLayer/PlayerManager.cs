@@ -32,7 +32,7 @@ public class PlayerManager : MonoBehaviour
 
     // Connection
     private string checkIn = "DECDEADDEADE712A400A8889425EA4488BF3040E81FE170F2E7E3069EB11126402AF84F587E";
-    private static bool dev = false;
+    public bool dev= false;
     public Socket sck;
     public IPEndPoint localEndPoint;
     public string ip = "projet.thronewars.ca";
@@ -103,7 +103,6 @@ public class PlayerManager : MonoBehaviour
             LoadPersonnage(GetPersonnage());
             Send("ok");
         }
-
     }
     public List<string> GetAllPersonnages()
     {
@@ -214,7 +213,7 @@ public class PlayerManager : MonoBehaviour
     {
         CharacterInventory invent = GetCharacterInventory(p.Item);
 
-        PlayerManager._instance._selectedCharacter = Character.CreateCharacter(p.Nom, p.ClassName, p.Level, 3, 1,
+        _selectedCharacter = Character.CreateCharacter(p.Nom, p.ClassName, p.Level, 3, 1,
             p.Health, 100, invent, p.PhysAtk, p.PhysDef, p.MagicAtk, p.MagicDef);
     }
     public void LoadPlayerinventory(List<Items> items)
@@ -224,7 +223,7 @@ public class PlayerManager : MonoBehaviour
         {
             Items it = items[i];
             eItem = new EquipableItem(it.IID, it.Level, it.Classe, it.Nom, it.Description, it.WAtk, it.WDef, it.MAtk, it.MDef, it.Quantite);
-            PlayerManager._instance._playerInventory._equips.Add(eItem);
+            _playerInventory._equips.Add(eItem);
         }
 
     }
@@ -327,7 +326,7 @@ public class PlayerManager : MonoBehaviour
         onMainMenu.tabItem.Clear();
         _playerInventory._equips.Clear();
         _playerInventory._potions.Clear();
-        for (int i = 0; i < _chosenTeam.Count; ++i)
+        for (int i = 0; i < _chosenTeam.Count; ++i) 
         {
             Destroy(_chosenTeam[i]);
         }
@@ -342,7 +341,23 @@ public class PlayerManager : MonoBehaviour
     }
     public void LookForPlayer()
     {
+        int count = sck.ReceiveBufferSize;
+        byte[] buffer;
+        buffer = new byte[count];
+        sck.Receive(buffer);
 
+        byte[] formatted = new byte[count];
+        for (int i = 0; i < count; i++)
+        {
+            formatted[i] = buffer[i];
+        }
+        Personnages perso = new Personnages();
+        BinaryFormatter receive = new BinaryFormatter();
+
+        using (var recstream = new MemoryStream(formatted))
+        {
+            perso = receive.Deserialize(recstream) as Personnages;
+    }
     }
     public void SendObject<T>(T obj)
     {
@@ -363,7 +378,7 @@ public class PlayerManager : MonoBehaviour
         { port = 50052; dev = false; }
     }
 
-    public static bool DEV
+    public bool DEV
     {
         get { return dev; }
     }

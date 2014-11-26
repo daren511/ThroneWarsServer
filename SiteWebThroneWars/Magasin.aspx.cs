@@ -23,6 +23,7 @@ namespace SiteWebThroneWars
             if (Session["username"] != null)
             {
                 username.Text = Session["username"].ToString();
+                TB_Monnaie.Text = Controle.GetJoueurMoney(username.Text).ToString();
                 ListerItems();
             }
 
@@ -75,13 +76,5 @@ namespace SiteWebThroneWars
                 e.Row.Attributes["onclick"] = ClientScript.GetPostBackEventReference(GV_Magasin, "Select$" + e.Row.RowIndex.ToString());
             }
         }
-
-
-        protected void Calculer_Click(object sender, EventArgs e)
-        {
-            int total = ((Int32.Parse(TB_Prix.Text)) * Int32.Parse(TB_Quantite.Text));
-            TB_Total.Text = total.ToString();
-        }
-
     }
 }
