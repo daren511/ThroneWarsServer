@@ -106,6 +106,7 @@
     <Content Include="Images\menu.png" />
     <Content Include="Images\ThroneWars.zip" />
     <Content Include="highslide\graphics\outlines\Outlines.psd" />
+    <Content Include="Downloads\CHACHAsecret.zip" />
     <None Include="Properties\PublishProfiles\Francis Site Web.pubxml" />
     <None Include="Properties\PublishProfiles\Throne.pubxml" />
     <Content Include="Magasin.aspx" />

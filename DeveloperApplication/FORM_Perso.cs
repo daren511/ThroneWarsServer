@@ -72,22 +72,24 @@ namespace DeveloperApplication
                 LBL_GUID.Text = "";
             }
             else
+            {
                 Lister_Items();
+                DGV_Inventaire.Columns[0].Visible = false;
+                DGV_Inventaire.Columns[2].Visible = false;
+                DGV_Inventaire.Columns[3].Visible = false;
+                DGV_Inventaire.Columns[4].Visible = false;
+                DGV_Inventaire.Columns[5].Visible = false;
+                DGV_Inventaire.Columns[6].Visible = false;
+                DGV_Inventaire.Columns[7].Visible = false;
+                DGV_Inventaire.Columns[9].Visible = false;
+            }
             FillComboBox();
             UpdateControls(sender, e);
-
-            DGV_Inventaire.Columns[0].Visible = false;
-            DGV_Inventaire.Columns[2].Visible = false;
-            DGV_Inventaire.Columns[3].Visible = false;
-            DGV_Inventaire.Columns[4].Visible = false;
-            DGV_Inventaire.Columns[5].Visible = false;
-            DGV_Inventaire.Columns[6].Visible = false;
-            DGV_Inventaire.Columns[7].Visible = false;
         }
 
         private void FillComboBox()
         {
-            List<string> classes = Controle.fillClasses();
+            List<string> classes = Controle.fillClasses(false);
             for (int i = 0; i < classes.Count; ++i)
                 CB_Classe.Items.Add(classes[i]);
         }
@@ -138,6 +140,7 @@ namespace DeveloperApplication
             FI.MATK = int.Parse(DGV_Inventaire.SelectedRows[0].Cells[6].Value.ToString());
             FI.MDEF = int.Parse(DGV_Inventaire.SelectedRows[0].Cells[7].Value.ToString());
             FI.ISACTIVE = DGV_Inventaire.SelectedRows[0].Cells[8].Value.ToString();
+            FI.PRIX = int.Parse(DGV_Inventaire.SelectedRows[0].Cells[9].Value.ToString());
             FI.VISIBLE = false;
             FI.ShowDialog();
         }

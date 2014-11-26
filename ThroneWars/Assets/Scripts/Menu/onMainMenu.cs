@@ -23,6 +23,7 @@ public class onMainMenu : MonoBehaviour
     private static int selectedItem;    // For the character inventory
     private static Vector2 scrollPos;
     private GUIStyle lblDev = new GUIStyle();
+    private Texture refresh;
     // Lists
     public static List<string> tabTeam = new List<string>();
     public static List<string> tabCharac = new List<string>();
@@ -98,6 +99,7 @@ public class onMainMenu : MonoBehaviour
             ShowChosenCharacterInventory();
         }
         _storedSelection = "perso";
+        refresh = (Texture) Resources.Load("Menu/refresh");
     }
 
 
@@ -149,20 +151,6 @@ public class onMainMenu : MonoBehaviour
                 _teamSelection = -1;
             }
         }
-        //if (_teamSelection != selectedTeam && tabTeam.Count > 0)
-        //{
-        //    if (tabTeam != null && PlayerManager._instance._selectedCharacter != null && tabTeam.Count > 0)
-        //    {
-        //        if (selectedTeam > tabTeam.Count - 1)
-        //            selectedTeam = 0;
-        //        if (PlayerManager._instance._selectedCharacter._name != tabTeam[selectedTeam])
-        //        {
-        //            GetHighlightedCharacter(tabTeam[selectedTeam]);
-        //        }
-        //        _storedSelection = "team";
-        //    }
-        //    _teamSelection = selectedTeam;
-        //}
     }
 
     void doCharacWindow(int windowID)
@@ -194,21 +182,6 @@ public class onMainMenu : MonoBehaviour
                 _charSelection = -1;
             }
         }
-
-        //if (_charSelection != selectedCharac && tabCharac.Count > 0)
-        //{
-        //    if (tabCharac != null && PlayerManager._instance._selectedCharacter != null)
-        //    {
-        //        if (selectedCharac > tabCharac.Count - 1)
-        //            selectedCharac = 0;
-        //        if (PlayerManager._instance._selectedCharacter._name != tabCharac[selectedCharac])
-        //        {
-        //            GetHighlightedCharacter(tabCharac[selectedCharac]);
-        //        }
-        //    }
-        //    _charSelection = selectedCharac;
-        //    _storedSelection = "perso";
-        //}
     }
 
     void doPlayWindow(int windowID)
@@ -225,8 +198,8 @@ public class onMainMenu : MonoBehaviour
         GUI.enabled = chosenCharacters == MAX_TEAM_LENGTH && tabMap[0] && PlayerManager._instance.dev;
         if (GUILayout.Button("Jouer", GUILayout.Width(rectInvent.width)))
         {
-            PlayerManager._instance.SendAction(Controle.Actions.START_GAME);
             // Go to matchmaking
+            PlayerManager._instance.SendAction(Controle.Actions.START_GAME);
             GameControllerSample6.scene = "Map1";
             PlayerManager._instance.isLoading = true;
             Application.LoadLevel("Loading");
@@ -240,9 +213,14 @@ public class onMainMenu : MonoBehaviour
     void doInventWindow(int windowID)
     {
         GUILayout.Space(25);
-
         GUILayout.BeginHorizontal();
 
+        if (GUI.Button(new Rect(20, 25, 35, 35), refresh))
+        {
+            PlayerManager._instance.SendAction(Controle.Actions.ITEMS);
+            PlayerManager._instance._playerInventory._equips.Clear();
+            PlayerManager._instance.LoadPlayerinventory(PlayerManager._instance.GetPlayerInventory());
+        }
         GUI.DrawTexture(new Rect(rectInvent.width - 265, 30, 20, 20), _atkTexture, ScaleMode.StretchToFill, true, 0.0f);
         GUI.DrawTexture(new Rect(rectInvent.width - 215, 30, 20, 20), _defTexture, ScaleMode.StretchToFill, true, 0.0f);
         GUI.DrawTexture(new Rect(rectInvent.width - 165, 30, 20, 20), _matkTexture, ScaleMode.StretchToFill, true, 0.0f);
@@ -262,7 +240,6 @@ public class onMainMenu : MonoBehaviour
             if (item._quantity > 0)
             {
                 GUI.enabled = PlayerManager._instance.VerifyCanEquip(item);
-                //if (GUILayout.Button(item._itemName, GUILayout.Height(30), GUILayout.Width(100)))
                 if (GUI.Button(itemButton, item._itemName))
                 {
                     PlayerManager._instance.EquipItem(item._itemID);

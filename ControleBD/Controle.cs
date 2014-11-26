@@ -12,7 +12,7 @@ namespace ControleBD
     public class Controle
     {
         private static int SaltValueSize = 16;
-        public enum Actions { CLICK, CREATE, DELETE, START_GAME , EQUIP, UNEQUIP , NOTHING, QUIT, STATS};
+        public enum Actions { CLICK, CREATE, DELETE, START_GAME , EQUIP, UNEQUIP , NOTHING, QUIT, STATS, ITEMS};
         public enum Game {FOUND, ATTAQUE }
         //-------------------------------------INSERT / UPDATE / DELETE PLAYER-------------------------------------------
 
@@ -1279,10 +1279,10 @@ namespace ControleBD
             using (OracleDataAdapter oraDataAdapItems = new OracleDataAdapter())
             {
                 OracleConnection conn = Connection.getInstance().conn;
-                string sql = "SELECT I.IID, NOM, CNAME, \"LEVEL\", WATK, WDEF, MATK, MDEF, ";
+                string sql = "SELECT I.IID, NOM, CNAME AS CLASSE, \"LEVEL\" AS NIVEAU, WATK, WDEF, MATK, MDEF, ";
                 if (doitAfficher == 1)
                     sql += "QUANTITY, ";
-                sql += "ISACTIVE, PRICE FROM ITEMS I INNER JOIN CLASSES C ON I.CID = C.CID ";
+                sql += "ISACTIVE, PRICE AS PRIX FROM ITEMS I INNER JOIN CLASSES C ON I.CID = C.CID ";
 
                 switch (doitAfficher)
                 {
@@ -1337,9 +1337,9 @@ namespace ControleBD
 
                 string sql = "SELECT P.PID, NOM, DESCRIPTION, DURATION, WATK, WDEF, MATK, MDEF";
                 if (doitAfficher != 0)
-                    sql += ", QUANTITY FROM POTIONS P INNER JOIN POTIONJOUEURS J ON P.PID = J.PID WHERE JID = :jid ";
+                    sql += ", QUANTITY, PRICE FROM POTIONS P INNER JOIN POTIONJOUEURS J ON P.PID = J.PID WHERE JID = :jid ";
                 else
-                    sql += " FROM POTIONS P ";
+                    sql += " PRICE FROM POTIONS P ";
                 sql += "ORDER BY PID";
 
                 oraDataAdapPotions.SelectCommand = new OracleCommand(sql, conn);
@@ -1356,15 +1356,15 @@ namespace ControleBD
             return monDataSet;
         }
 
-        public static bool addItem(string nom, string classe, int level, int watk, int wdef, int matk, int mdef, string actif)
+        public static bool addItem(string nom, string classe, int level, int watk, int wdef, int matk, int mdef, string actif, int price)
         {
             OracleConnection conn = Connection.getInstance().conn;
-            string sql = "INSERT INTO ITEMS(NOM,CID,\"LEVEL\",WATK,WDEF,MATK,MDEF,ISACTIVE) " +
-                   "VALUES(:nom, (SELECT CID FROM CLASSES WHERE CNAME =:classe), :lvl, :watk, :wdef, :matk, :mdef, :actif)";
+            string sql = "INSERT INTO ITEMS(NOM,CID,\"LEVEL\",WATK,WDEF,MATK,MDEF,ISACTIVE,PRICE) " +
+                   "VALUES(:nom, (SELECT CID FROM CLASSES WHERE CNAME =:classe), :lvl, :watk, :wdef, :matk, :mdef, :actif, :price)";
 
             try
             {
-                OracleCommand oraUpdate = new OracleCommand(sql, conn);
+                OracleCommand oraInsert = new OracleCommand(sql, conn);
 
                 OracleParameter OraParamNom = new OracleParameter(":nom", OracleDbType.Varchar2, 40);
                 OracleParameter OraParamClasse = new OracleParameter(":classe", OracleDbType.Varchar2, 40);
@@ -1374,6 +1374,7 @@ namespace ControleBD
                 OracleParameter OraParamMATK = new OracleParameter(":matk", OracleDbType.Int32, 4);
                 OracleParameter OraParamMDEF = new OracleParameter(":mdef", OracleDbType.Int32, 4);
                 OracleParameter OraParamActif = new OracleParameter(":actif", OracleDbType.Char, 1);
+                OracleParameter OraParamPrice = new OracleParameter(":price", OracleDbType.Int32, 4);
 
                 OraParamNom.Value = nom;
                 OraParamClasse.Value = classe;
@@ -1383,17 +1384,19 @@ namespace ControleBD
                 OraParamMATK.Value = matk;
                 OraParamMDEF.Value = mdef;
                 OraParamActif.Value = actif;
+                OraParamPrice.Value = price;
 
-                oraUpdate.Parameters.Add(OraParamNom);
-                oraUpdate.Parameters.Add(OraParamClasse);
-                oraUpdate.Parameters.Add(OraParamLevel);
-                oraUpdate.Parameters.Add(OraParamWATK);
-                oraUpdate.Parameters.Add(OraParamWDEF);
-                oraUpdate.Parameters.Add(OraParamMATK);
-                oraUpdate.Parameters.Add(OraParamMDEF);
-                oraUpdate.Parameters.Add(OraParamActif);
+                oraInsert.Parameters.Add(OraParamNom);
+                oraInsert.Parameters.Add(OraParamClasse);
+                oraInsert.Parameters.Add(OraParamLevel);
+                oraInsert.Parameters.Add(OraParamWATK);
+                oraInsert.Parameters.Add(OraParamWDEF);
+                oraInsert.Parameters.Add(OraParamMATK);
+                oraInsert.Parameters.Add(OraParamMDEF);
+                oraInsert.Parameters.Add(OraParamActif);
+                oraInsert.Parameters.Add(OraParamPrice);
 
-                oraUpdate.ExecuteNonQuery();
+                oraInsert.ExecuteNonQuery();
                 return true;
             }
             catch (OracleException ex)
@@ -1403,10 +1406,11 @@ namespace ControleBD
             }
         }
 
-        public static bool updateItem(int iid, string nom, int level, int watk, int wdef, int matk, int mdef, string actif)
+        public static bool updateItem(int iid, string nom, int level, int watk, int wdef, int matk, int mdef, string actif, int price)
         {
             OracleConnection conn = Connection.getInstance().conn;
-            string sql = "UPDATE ITEMS SET NOM =:nom, \"LEVEL\" =:lvl, WATK =:watk, WDEF =:wdef, MATK =:matk, MDEF =:mdef, ISACTIVE =:actif WHERE IID =:iid";
+            string sql = "UPDATE ITEMS SET NOM =:nom, \"LEVEL\" =:lvl, WATK =:watk, WDEF =:wdef, MATK =:matk, MDEF =:mdef " + 
+                ", ISACTIVE =:actif, PRICE =:price WHERE IID =:iid";
 
             try
             {
@@ -1419,6 +1423,7 @@ namespace ControleBD
                 OracleParameter OraParamMATK = new OracleParameter(":matk", OracleDbType.Int32, 4);
                 OracleParameter OraParamMDEF = new OracleParameter(":mdef", OracleDbType.Int32, 4);
                 OracleParameter OraParamActif = new OracleParameter(":actif", OracleDbType.Char, 1);
+                OracleParameter OraParamPrice = new OracleParameter(":price", OracleDbType.Int32, 4);
                 OracleParameter OraParamIID = new OracleParameter(":iid", OracleDbType.Int32, 10);
 
                 OraParamNom.Value = nom;
@@ -1428,6 +1433,7 @@ namespace ControleBD
                 OraParamMATK.Value = matk;
                 OraParamMDEF.Value = mdef;
                 OraParamActif.Value = actif;
+                OraParamPrice.Value = price;
                 OraParamIID.Value = iid;
 
                 oraUpdate.Parameters.Add(OraParamNom);
@@ -1437,6 +1443,7 @@ namespace ControleBD
                 oraUpdate.Parameters.Add(OraParamMATK);
                 oraUpdate.Parameters.Add(OraParamMDEF);
                 oraUpdate.Parameters.Add(OraParamActif);
+                oraUpdate.Parameters.Add(OraParamPrice);
                 oraUpdate.Parameters.Add(OraParamIID);
 
                 oraUpdate.ExecuteNonQuery();
@@ -1633,10 +1640,11 @@ namespace ControleBD
             }
         }
 
-        public static bool addPotion(string nom, string description, int duration, int watk, int wdef, int matk, int mdef)
+        public static bool addPotion(string nom, string description, int duration, int watk, int wdef, int matk, int mdef, int price)
         {
             OracleConnection conn = Connection.getInstance().conn;
-            string sql = "INSERT INTO POTIONS(NOM,DESCRIPTION,DURATION,WATK,WDEF,MATK,MDEF) VALUES(:nom,:description,:duration,:watk,:wdef,:matk,:mdef)";
+            string sql = "INSERT INTO POTIONS(NOM,DESCRIPTION,DURATION,WATK,WDEF,MATK,MDEF,PRICE) " + 
+                "VALUES(:nom, :description, :duration, :watk, :wdef, :matk, :mdef, :price)";
 
             try
             {
@@ -1649,6 +1657,7 @@ namespace ControleBD
                 OracleParameter OraParamWDEF = new OracleParameter(":wdef", OracleDbType.Int32, 4);
                 OracleParameter OraParamMATK = new OracleParameter(":matk", OracleDbType.Int32, 4);
                 OracleParameter OraParamMDEF = new OracleParameter(":mdef", OracleDbType.Int32, 4);
+                OracleParameter OraParamPrice = new OracleParameter(":price", OracleDbType.Int32, 4);
 
                 OraParamNom.Value = nom;
                 OraParamDesc.Value = description;
@@ -1657,6 +1666,7 @@ namespace ControleBD
                 OraParamWDEF.Value = wdef;
                 OraParamMATK.Value = matk;
                 OraParamMDEF.Value = mdef;
+                OraParamPrice.Value = price;
 
                 oraInsert.Parameters.Add(OraParamNom);
                 oraInsert.Parameters.Add(OraParamDesc);
@@ -1665,6 +1675,7 @@ namespace ControleBD
                 oraInsert.Parameters.Add(OraParamWDEF);
                 oraInsert.Parameters.Add(OraParamMATK);
                 oraInsert.Parameters.Add(OraParamMDEF);
+                oraInsert.Parameters.Add(OraParamPrice);
 
                 oraInsert.ExecuteNonQuery();
                 return true;
@@ -1707,10 +1718,11 @@ namespace ControleBD
             }
         }
 
-        public static bool updatePotion(int pid, string nom, string description, int duration, int watk, int wdef, int matk, int mdef)
+        public static bool updatePotion(int pid, string nom, string description, int duration, int watk, int wdef, int matk, int mdef, int price)
         {
             OracleConnection conn = Connection.getInstance().conn;
-            string sql = "UPDATE POTIONS SET NOM =:nom, DESCRIPTION =:description, DURATION =:duration, WATK =:watk, WDEF =:wdef, MATK =:matk, MDEF =:mdef WHERE PID =:pid";
+            string sql = "UPDATE POTIONS SET NOM =:nom, DESCRIPTION =:description, DURATION =:duration, WATK =:watk, " + 
+                "WDEF =:wdef, MATK =:matk, MDEF =:mdef, PRICE =:price WHERE PID =:pid";
 
             try
             {
@@ -1723,6 +1735,7 @@ namespace ControleBD
                 OracleParameter OraParamWDEF = new OracleParameter(":wdef", OracleDbType.Int32, 4);
                 OracleParameter OraParamMATK = new OracleParameter(":matk", OracleDbType.Int32, 4);
                 OracleParameter OraParamMDEF = new OracleParameter(":mdef", OracleDbType.Int32, 4);
+                OracleParameter OraParamPrice = new OracleParameter(":price", OracleDbType.Int32, 4);
                 OracleParameter OraParamPID = new OracleParameter(":pid", OracleDbType.Int32, 10);
 
                 OraParamNom.Value = nom;
@@ -1732,6 +1745,7 @@ namespace ControleBD
                 OraParamWDEF.Value = wdef;
                 OraParamMATK.Value = matk;
                 OraParamMDEF.Value = mdef;
+                OraParamPrice.Value = price;
                 OraParamPID.Value = pid;
 
                 oraUpdate.Parameters.Add(OraParamNom);
@@ -1741,6 +1755,7 @@ namespace ControleBD
                 oraUpdate.Parameters.Add(OraParamWDEF);
                 oraUpdate.Parameters.Add(OraParamMATK);
                 oraUpdate.Parameters.Add(OraParamMDEF);
+                oraUpdate.Parameters.Add(OraParamPrice);
                 oraUpdate.Parameters.Add(OraParamPID);
 
                 oraUpdate.ExecuteNonQuery();
@@ -1945,7 +1960,7 @@ namespace ControleBD
             }
         }
 
-        public static List<string> fillClasses()
+        public static List<string> fillClasses(bool estItem = true)
         {
             List<string> listItem = new List<string>();
             OracleConnection conn = Connection.getInstance().conn;
@@ -1953,6 +1968,8 @@ namespace ControleBD
             OracleCommand oraSelect = new OracleCommand(sql, conn);
             using (OracleDataReader oraReader = oraSelect.ExecuteReader())
             {
+                if (!estItem)
+                    oraReader.Read();
                 while (oraReader.Read())
                     listItem.Add(oraReader.GetString(0));
             }

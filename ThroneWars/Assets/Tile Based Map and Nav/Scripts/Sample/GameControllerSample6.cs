@@ -54,16 +54,16 @@ public class GameControllerSample6 : MonoBehaviour
         // wait for a frame for everything else to start and then enable the colliders for the TielNodes
         yield return null;
 
-        InitializeEnemyUnits();
+        //InitializeEnemyUnits();
 
         for (int i = 0; i < PlayerManager._instance._chosenTeam.Count; ++i)
         {
             AddCharacterPrefab(i);
         }
-        for (int i = 0; i < GameManager._instance._enemyTeam.Length; ++i)
-        {
-            AddEnemyPrefab(i);
-        }
+        //for (int i = 0; i < GameManager._instance._enemyTeam.Count; ++i)
+        //{
+        //    AddEnemyPrefab(i);
+        //}
 
         // now enable the colliders of the TileNodes.
         // they are disabled by default, but for this sample to work I need the player to be able to click on any tile.
@@ -234,9 +234,6 @@ public class GameControllerSample6 : MonoBehaviour
     private void InitializeEnemyUnits()
     {
         //BIDON, À MODIFIER AVEC LES INFOS DU SERVEUR
-
-        GameManager._instance._enemySide = 2;
-        PlayerManager._instance._playerSide = 1;
 
         CharacterInventory characterInvent = new CharacterInventory();
 

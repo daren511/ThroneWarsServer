@@ -7,6 +7,7 @@ using System.Text;
 using System.IO;
 using ControleBD;
 using System.Runtime.Serialization.Formatters.Binary;
+using System;
 //using UnityEditor;
 /*
  * PlayerManager
@@ -32,7 +33,7 @@ public class PlayerManager : MonoBehaviour
 
     // Connection
     private string checkIn = "DECDEADDEADE712A400A8889425EA4488BF3040E81FE170F2E7E3069EB11126402AF84F587E";
-    public bool dev= false;
+    public bool dev = false;
     public Socket sck;
     public IPEndPoint localEndPoint;
     public string ip = "projet.thronewars.ca";
@@ -326,13 +327,12 @@ public class PlayerManager : MonoBehaviour
         onMainMenu.tabItem.Clear();
         _playerInventory._equips.Clear();
         _playerInventory._potions.Clear();
-        for (int i = 0; i < _chosenTeam.Count; ++i) 
+        for (int i = 0; i < _chosenTeam.Count; ++i)
         {
             Destroy(_chosenTeam[i]);
         }
         onStartUp.alreadyConnected = false;
     }
-
     public Personnages GetDefaultStats(string name)
     {
         SendAction(Controle.Actions.STATS);
@@ -351,13 +351,61 @@ public class PlayerManager : MonoBehaviour
         {
             formatted[i] = buffer[i];
         }
-        Personnages perso = new Personnages();
-        BinaryFormatter receive = new BinaryFormatter();
+        _playerSide = Int32.Parse(Encoding.UTF8.GetString(formatted));
+        GameManager._instance._enemySide = _playerSide == 1 ? 2 : 1;
+        onLoading.mutex.ReleaseMutex();
+        onLoading.thread.Abort();
+    }
+    public void PrepareGame()
+    {
+        SendTeam();
+       // PopulateEnemy(ReceiveEnemy());
+    }
+    public void SendTeam()
+    {
+        List<Personnages> list = new List<Personnages>();
+        Character c;
 
+        for(int i = 0; i < _chosenTeam.Count; ++i)
+        {
+            c = _chosenTeam[i];
+            list.Add(new Personnages(c._name, c._characterClass._classLevel, c._characterClass._className, c._maxHealth, c._maxMagic,
+                c._physAttack, c._physDefense, c._magicAttack, c._magicDefense));
+        }
+        SendObject(list);
+    }
+    public List<Personnages> ReceiveEnemy()
+    {
+        List<Personnages> list = new List<Personnages>();
+
+        int count = sck.ReceiveBufferSize;
+        byte[] buffer;
+        buffer = new byte[count];
+        sck.Receive(buffer);
+
+        byte[] formatted = new byte[count];
+        for (int i = 0; i < count; i++)
+        {
+            formatted[i] = buffer[i];
+        }
+        BinaryFormatter receive = new BinaryFormatter();
         using (var recstream = new MemoryStream(formatted))
         {
-            perso = receive.Deserialize(recstream) as Personnages;
+            list = receive.Deserialize(recstream) as List<Personnages>;
+        }
+        return list;
     }
+    public void PopulateEnemy(List<Personnages> list)
+    {
+        List<Character> enemyTeam = new List<Character>();
+        Personnages p;
+        for(int i = 0; i < list.Count; ++i)
+        {
+            p = list[i];
+            enemyTeam.Add(Character.CreateCharacter(p.Nom, p.ClassName, p.Level, p.Moves, p.Range, p.Health, p.Magic,
+                null, p.PhysAtk, p.PhysDef, p.MagicAtk, p.MagicDef));
+        }
+        GameManager._instance._enemyTeam = enemyTeam;
     }
     public void SendObject<T>(T obj)
     {
@@ -368,7 +416,6 @@ public class PlayerManager : MonoBehaviour
             sck.Send(stream.ToArray());
         }
     }
-
     public void changePort(string password)
     {
         string pwd = Controle.hashPassword(password, null, System.Security.Cryptography.SHA256.Create());

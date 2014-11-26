@@ -128,10 +128,11 @@ namespace DeveloperApplication
             FI.MATK = int.Parse(DGV_Liste.SelectedRows[0].Cells[6].Value.ToString());
             FI.MDEF = int.Parse(DGV_Liste.SelectedRows[0].Cells[7].Value.ToString());
             FI.ISACTIVE = DGV_Liste.SelectedRows[0].Cells[8].Value.ToString();
+            FI.PRIX = int.Parse(DGV_Liste.SelectedRows[0].Cells[9].Value.ToString());
 
             if (FI.ShowDialog() == DialogResult.OK)
             {
-                if (Controle.updateItem(FI.IID, FI.NOM, FI.LEVEL, FI.WATK, FI.WDEF, FI.MATK, FI.MDEF, FI.ISACTIVE))
+                if (Controle.updateItem(FI.IID, FI.NOM, FI.LEVEL, FI.WATK, FI.WDEF, FI.MATK, FI.MDEF, FI.ISACTIVE, FI.PRIX))
                     Lister_Items();
             }
         }
@@ -149,10 +150,11 @@ namespace DeveloperApplication
             FP.WDEF = int.Parse(DGV_Liste.SelectedRows[0].Cells[5].Value.ToString());
             FP.MATK = int.Parse(DGV_Liste.SelectedRows[0].Cells[6].Value.ToString());
             FP.MDEF = int.Parse(DGV_Liste.SelectedRows[0].Cells[7].Value.ToString());
+            FP.PRIX = int.Parse(DGV_Liste.SelectedRows[0].Cells[8].Value.ToString());
 
             if (FP.ShowDialog() == DialogResult.OK)
             {
-                if (Controle.updatePotion(FP.PID, FP.NOM, FP.DESCRIPTION, FP.DURATION, FP.WATK, FP.WDEF, FP.MATK, FP.MDEF))
+                if (Controle.updatePotion(FP.PID, FP.NOM, FP.DESCRIPTION, FP.DURATION, FP.WATK, FP.WDEF, FP.MATK, FP.MDEF, FP.PRIX))
                     Lister_Potions();
             }
         }
@@ -223,7 +225,7 @@ namespace DeveloperApplication
 
             if (FI.ShowDialog() == DialogResult.OK)
             {
-                if (Controle.addItem(FI.NOM, FI.CLASSE, FI.LEVEL, FI.WATK, FI.WDEF, FI.MATK, FI.MDEF, FI.ISACTIVE))
+                if (Controle.addItem(FI.NOM, FI.CLASSE, FI.LEVEL, FI.WATK, FI.WDEF, FI.MATK, FI.MDEF, FI.ISACTIVE, FI.PRIX))
                     Lister_Items();
             }
         }
@@ -236,7 +238,7 @@ namespace DeveloperApplication
 
             if (FP.ShowDialog() == DialogResult.OK)
             {
-                if (Controle.addPotion(FP.NOM, FP.DESCRIPTION, FP.DURATION, FP.WATK, FP.WDEF, FP.MATK, FP.MDEF))
+                if (Controle.addPotion(FP.NOM, FP.DESCRIPTION, FP.DURATION, FP.WATK, FP.WDEF, FP.MATK, FP.MDEF, FP.PRIX))
                     Lister_Potions();
             }
         }

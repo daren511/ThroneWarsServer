@@ -22,6 +22,18 @@ namespace ControleBD
             this.Level = level;
             this.ClassId = classid;
         }
+        public Personnages(string nom, int level, string className, int hp, int mp, int patk, int pdef, int matk, int mdef)
+        {
+            Nom = nom;
+            Level = level;
+            ClassName = className;
+            Health = hp;
+            Magic = mp;
+            PhysAtk = patk;
+            PhysDef = pdef;
+            MagicAtk = matk;
+            MagicDef = mdef;
+        }
         public int ClassId { get;  set; }
 
         public string ClassName {get; set;}

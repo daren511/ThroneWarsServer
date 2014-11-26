@@ -171,7 +171,7 @@ public class GameController : TMNController
         GameManager._instance._enemyPositions.Add(403);
         GameManager._instance._enemyPositions.Add(379);
 
-        for (int i = 0; i < GameManager._instance._enemyTeam.Length; ++i)
+        for (int i = 0; i < GameManager._instance._enemyTeam.Count; ++i)
         {
             Character unitFab = enemyFabs[i].GetComponent<Character>();
 
