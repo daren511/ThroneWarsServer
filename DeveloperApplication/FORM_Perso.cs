@@ -72,17 +72,18 @@ namespace DeveloperApplication
                 LBL_GUID.Text = "";
             }
             else
+            {
                 Lister_Items();
+                DGV_Inventaire.Columns[0].Visible = false;
+                DGV_Inventaire.Columns[2].Visible = false;
+                DGV_Inventaire.Columns[3].Visible = false;
+                DGV_Inventaire.Columns[4].Visible = false;
+                DGV_Inventaire.Columns[5].Visible = false;
+                DGV_Inventaire.Columns[6].Visible = false;
+                DGV_Inventaire.Columns[7].Visible = false;
+            }
             FillComboBox();
             UpdateControls(sender, e);
-
-            DGV_Inventaire.Columns[0].Visible = false;
-            DGV_Inventaire.Columns[2].Visible = false;
-            DGV_Inventaire.Columns[3].Visible = false;
-            DGV_Inventaire.Columns[4].Visible = false;
-            DGV_Inventaire.Columns[5].Visible = false;
-            DGV_Inventaire.Columns[6].Visible = false;
-            DGV_Inventaire.Columns[7].Visible = false;
         }
 
         private void FillComboBox()
