@@ -22,21 +22,31 @@ namespace ThroneWarsServer
         }
         public void addJoueur(Joueur j)
         {
-            if (!Joueur2.socketIsConnected() && Joueur2 != null)
+            if (Joueur2 == null)
             {
-                Joueur2.isConnected = false;
                 Joueur2 = j;
-
             }
             else
             {
                 Joueur1.isConnected = false;
                 Joueur1 = j;
             }
-            if (Joueur1.socketIsConnected() && Joueur2.socketIsConnected())
+            bool test = Joueur1.socketIsConnected();
+            bool test2 = Joueur2.socketIsConnected();
+            if (test && test2 )
             {
                 isFull = true;
                 this.T.Start();
+            }
+            else if (!Joueur1.socketIsConnected())
+            {
+                Joueur1.isConnected = false;
+                Joueur1 = null;
+            }
+            else
+            {
+                Joueur2.isConnected = false;
+                Joueur2 = null;
             }
         }
         /// <summary>
