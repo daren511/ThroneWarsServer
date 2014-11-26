@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Magasin.aspx.cs" Inherits="SiteWebThroneWars.Magasin" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Magasin.aspx.cs" Inherits="SiteWebThroneWars.Magasin" EnableEventValidation="false"%>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
@@ -56,15 +56,22 @@
           <asp:GridView runat="server" ID="GV_Magasin" OnSelectedIndexChanged="GV_Magasin_SelectedIndexChanged" OnRowDataBound="GV_Magasin_RowDataBound">
          </asp:GridView>
     </div>
-    <asp:Label ID="Label4" runat="server">Item sélectionné</asp:Label><br />
-    <asp:TextBox ID="TB_ItemName" TextMode="SingleLine" runat="server" Enabled="false"/><br />
-    <asp:Label ID="Label1" runat="server">Quantité</asp:Label><br />
-    <asp:TextBox ID="TB_Quantite" TextMode="SingleLine" runat="server" OnTextChanged="TB_Quantite_TextChanged"/><br /><br />
 
+    <asp:Label ID="Label4" runat="server">Item sélectionné</asp:Label>
+    <asp:TextBox ID="TB_ItemName" TextMode="SingleLine" runat="server" Enabled="false"/><br />
+    
+    <asp:Label ID="Label1" runat="server">Quantité</asp:Label>
+    <asp:TextBox ID="TB_Quantite" TextMode="SingleLine" runat="server" /><br /><br />
     <asp:RangeValidator ID="RangeValidator1" Type="Integer" MinimumValue="1" 
     MaximumValue="99" ControlToValidate="TB_Quantite" runat="server" 
     ErrorMessage="La quanité doit être entre 1 et 99"></asp:RangeValidator>
-    <asp:Label ID="Label2" runat="server">Total</asp:Label><br />
+    
+    <asp:Label ID="Label5" runat="server">Prix</asp:Label>
+    <asp:TextBox ID="TB_Prix" TextMode="SingleLine" runat="server" Enabled="false"/><br /><br />
+    
+    <asp:Button Text="Calculer" OnClick="Calculer_Click" runat="server" /><br />
+    
+    <asp:Label ID="Label2" runat="server">Total</asp:Label>
     <asp:TextBox ID="TB_Total" TextMode="SingleLine" runat="server" Enabled="false"/><br /><br />
     
     <asp:Button Text="Acheter" OnClick="Acheter_Click" runat="server" /><br />
