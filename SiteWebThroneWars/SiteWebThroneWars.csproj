@@ -120,6 +120,7 @@
     <Content Include="MOBILEChangePassword.aspx" />
     <Content Include="MOBILEForgotPass.aspx" />
     <Content Include="MOBILEForgotUsername.aspx" />
+    <Content Include="MOBILEMagasin.aspx" />
     <Content Include="MOBILESendConfirmation.aspx" />
     <Content Include="ThroneWarsOutput\ThroneWars_Data\level0" />
     <Content Include="ThroneWarsOutput\ThroneWars_Data\level1" />
@@ -327,6 +328,13 @@
     </Compile>
     <Compile Include="MOBILEInscription.aspx.designer.cs">
       <DependentUpon>MOBILEInscription.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MOBILEMagasin.aspx.cs">
+      <DependentUpon>MOBILEMagasin.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MOBILEMagasin.aspx.designer.cs">
+      <DependentUpon>MOBILEMagasin.aspx</DependentUpon>
     </Compile>
     <Compile Include="MOBILEMedia.aspx.cs">
       <DependentUpon>MOBILEMedia.aspx</DependentUpon>

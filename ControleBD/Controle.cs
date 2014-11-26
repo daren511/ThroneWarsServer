@@ -1215,7 +1215,7 @@ namespace ControleBD
                 OracleCommand oraSelect = new OracleCommand(sql, conn);
                 OracleParameter OraParamName = new OracleParameter(":username", OracleDbType.Varchar2, 32);
                 OraParamName.Value = username.ToLower();
-                oraSelect.Parameters.Add(OraParamName);
+                oraSelect.Parameters.Add(OraParamName); 
 
                 using (OracleDataReader objRead = oraSelect.ExecuteReader())
                 {

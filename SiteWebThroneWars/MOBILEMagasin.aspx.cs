@@ -10,7 +10,7 @@ using System.Text;
 
 namespace SiteWebThroneWars
 {
-    public partial class Magasin : System.Web.UI.Page
+    public partial class MOBILEMagasin : System.Web.UI.Page
     {
         int ItemID = 0;
         int Prix = 0;
@@ -41,8 +41,8 @@ namespace SiteWebThroneWars
             if (TB_Quantite != null)
             {
                 int test = 0;
-                
-                if (test != 0 )//changer juste paour pas compilé
+
+                if (test != 0)//changer juste paour pas compilé
                 {
                     int JID = Controle.getJID(Session["username"].ToString());
                     int ItemID = Int32.Parse(Session["ItemID"].ToString());
@@ -57,15 +57,15 @@ namespace SiteWebThroneWars
                     ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>MessageBoxErreur(\"" + text + "\");</script>", false);
                     ViderTB();
                 }
-             
+
             }
-            else 
+            else
             {
                 string text = "Veuillez indiquer une quantité";
                 ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>MessageBoxErreur(\"" + text + "\");</script>", false);
-                
+
             }
-                 
+
         }
         protected void ListerItems()
         {
