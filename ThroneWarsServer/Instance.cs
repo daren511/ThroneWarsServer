@@ -33,6 +33,7 @@ namespace ThroneWarsServer
             {
                 if (!Joueur.isConnected && Joueur.socketIsConnected())
                 {
+                    Joueur.hasConnected = true;
                     string Login = recevoirString();
                     Joueur.Username = Login.Remove(Login.LastIndexOf(SPLITTER));
                     bool reponse = Controle.userPassCorrespondant(Joueur.Username, Login.Substring(Login.LastIndexOf(SPLITTER)+1));//verifie si les informations de login sont ok
@@ -46,7 +47,6 @@ namespace ThroneWarsServer
                     else 
                     { 
                         envoyerReponse(reponse.ToString());
-                        
                     }
                     if(Joueur.isConnected)
                     {
@@ -63,6 +63,7 @@ namespace ThroneWarsServer
                         try
                         {
                             Choix = recevoirChoix();
+                            Timer = 0;
                         }
                         catch(Exception)
                         {
@@ -119,11 +120,7 @@ namespace ThroneWarsServer
                 if (Joueur.socketIsConnected())
                     Console.WriteLine(e.Message);
             }
-            if (!Joueur.isConnected)
-            {
-                Program.removePlayer(Joueur);
-                Joueur.Socket.Close();
-            }
+            
             this.T.Abort();//arret du thread
         }
         /// <summary>
