@@ -33,6 +33,7 @@ namespace ThroneWarsServer
             {
                 if (!Joueur.isConnected && Joueur.socketIsConnected())
                 {
+                    Joueur.hasConnected = true;
                     string Login = recevoirString();
                     Joueur.Username = Login.Remove(Login.LastIndexOf(SPLITTER));
                     bool reponse = Controle.userPassCorrespondant(Joueur.Username, Login.Substring(Login.LastIndexOf(SPLITTER)+1));//verifie si les informations de login sont ok

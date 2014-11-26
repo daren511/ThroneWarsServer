@@ -116,15 +116,14 @@ namespace ThroneWarsServer
                 }
                 if(v.Count != 0)
                 {
-                    //foreach(Joueur j in v)
-                    //{
-                    //    if(!j.isConnected)
-                    //    {
-                    //        Console.WriteLine("[" + System.DateTime.Now + "] Joueur déconnecter : " + j.Username);
-                    //        v.Remove(j);
-
-                    //    }
-                    //}
+                    for (int i = 0; i < v.Count;++i)
+                    {
+                        if (!v[i].isConnected && v[i].hasConnected)
+                        {
+                            Console.WriteLine("[" + System.DateTime.Now + "] Joueur déconnecté : " + v[i].Username);
+                            v.Remove(v[i]);
+                        }
+                    }
                 }
             }
         }
