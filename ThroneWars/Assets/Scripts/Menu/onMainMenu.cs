@@ -246,6 +246,8 @@ public class onMainMenu : MonoBehaviour
 
         if (GUI.Button(new Rect(20, 25, 35, 35), refresh))
         {
+            PlayerManager._instance.SendAction(Controle.Actions.ITEMS);
+            PlayerManager._instance._playerInventory._equips.Clear();
             PlayerManager._instance.LoadPlayerinventory(PlayerManager._instance.GetPlayerInventory());
         }
         GUI.DrawTexture(new Rect(rectInvent.width - 265, 30, 20, 20), _atkTexture, ScaleMode.StretchToFill, true, 0.0f);

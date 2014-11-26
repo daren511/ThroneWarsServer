@@ -203,6 +203,7 @@
             this.Controls.Add(this.TB_Nom);
             this.Controls.Add(this.LBL_GUID);
             this.Name = "FORM_Perso";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Load += new System.EventHandler(this.FORM_Perso_Load);
             ((System.ComponentModel.ISupportInitialize)(this.DGV_Inventaire)).EndInit();
             this.ResumeLayout(false);
