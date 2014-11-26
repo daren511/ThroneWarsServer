@@ -26,7 +26,7 @@ public class onMenuLoad : MonoBehaviour
     private static float hQ = 110.0f;
     private static Rect rectQuit = new Rect((Screen.width - wQ) / 2, (Screen.height - hQ) / 2, wQ, hQ);
     // Delete window
-    private static float wD = 305.0f;
+    private static float wD = 370.0f;
     private static float hD = 110.0f;
     private static Rect rectDelete = new Rect((Screen.width - wD) / 2, (Screen.height - hD) / 2, wD, hD);
     // Create window
@@ -147,7 +147,7 @@ public class onMenuLoad : MonoBehaviour
 
     private static void doManagerWindow(int windowID)
     {
-        GUI.enabled = PlayerManager._instance._characNames.Count < 8;
+        GUI.enabled = (onMainMenu.tabCharac.Count + onMainMenu.tabTeam.Count) < 8;
         if (GUILayout.Button("Créer"))
         {
             // Create a character
@@ -180,7 +180,9 @@ public class onMenuLoad : MonoBehaviour
         GUILayout.FlexibleSpace();
         GUILayout.EndVertical();
 
-        characName = GUILayout.TextField(characName, 12, ColoredGUISkin.Skin.textField, GUILayout.MaxWidth(185));
+        GUI.SetNextControlName("name");
+        GUI.FocusControl("name");
+        characName = GUILayout.TextField(characName, 12, ColoredGUISkin.Skin.textField, GUILayout.MaxWidth(185)).Replace("\n", "");
         GUILayout.EndHorizontal();
         GUILayout.BeginHorizontal();
 
@@ -280,9 +282,7 @@ public class onMenuLoad : MonoBehaviour
 
         GUILayout.Space(35);
         GUILayout.BeginHorizontal();
-        GUILayout.FlexibleSpace();
         GUILayout.Label("Voulez-vous vraiment supprimer ce personnage?");
-        GUILayout.FlexibleSpace();
         GUILayout.EndHorizontal();
         GUILayout.Space(7);
 
