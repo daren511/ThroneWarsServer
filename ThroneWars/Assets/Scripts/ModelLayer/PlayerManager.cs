@@ -359,7 +359,7 @@ public class PlayerManager : MonoBehaviour
     public void PrepareGame()
     {
         SendTeam();
-        PopulateEnemy(ReceiveEnemy());
+       // PopulateEnemy(ReceiveEnemy());
     }
     public void SendTeam()
     {

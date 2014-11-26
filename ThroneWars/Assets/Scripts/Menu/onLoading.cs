@@ -48,6 +48,7 @@ public class onLoading : MonoBehaviour
         PlayerManager._instance.isLoading = false;
 
         PlayerManager._instance.PrepareGame();
+
         Application.LoadLevel("placement");
 
     }
