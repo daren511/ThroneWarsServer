@@ -7,6 +7,7 @@ using System.Text;
 using System.IO;
 using ControleBD;
 using System.Runtime.Serialization.Formatters.Binary;
+using System;
 //using UnityEditor;
 /*
  * PlayerManager
@@ -32,7 +33,7 @@ public class PlayerManager : MonoBehaviour
 
     // Connection
     private string checkIn = "DECDEADDEADE712A400A8889425EA4488BF3040E81FE170F2E7E3069EB11126402AF84F587E";
-    public bool dev= false;
+    public bool dev = false;
     public Socket sck;
     public IPEndPoint localEndPoint;
     public string ip = "projet.thronewars.ca";
@@ -326,13 +327,12 @@ public class PlayerManager : MonoBehaviour
         onMainMenu.tabItem.Clear();
         _playerInventory._equips.Clear();
         _playerInventory._potions.Clear();
-        for (int i = 0; i < _chosenTeam.Count; ++i) 
+        for (int i = 0; i < _chosenTeam.Count; ++i)
         {
             Destroy(_chosenTeam[i]);
         }
         onStartUp.alreadyConnected = false;
     }
-
     public Personnages GetDefaultStats(string name)
     {
         SendAction(Controle.Actions.STATS);
@@ -351,13 +351,14 @@ public class PlayerManager : MonoBehaviour
         {
             formatted[i] = buffer[i];
         }
-        Personnages perso = new Personnages();
-        BinaryFormatter receive = new BinaryFormatter();
 
-        using (var recstream = new MemoryStream(formatted))
-        {
-            perso = receive.Deserialize(recstream) as Personnages;
-    }
+        int position = 0;
+        string temp = "";
+
+        temp = Encoding.UTF8.GetString(formatted);
+
+        position = Int32.Parse(temp);
+        PlayerManager._instance._playerSide = position;
     }
     public void SendObject<T>(T obj)
     {
@@ -368,7 +369,6 @@ public class PlayerManager : MonoBehaviour
             sck.Send(stream.ToArray());
         }
     }
-
     public void changePort(string password)
     {
         string pwd = Controle.hashPassword(password, null, System.Security.Cryptography.SHA256.Create());
