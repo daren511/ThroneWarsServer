@@ -109,6 +109,7 @@ public class onMenuLoad : MonoBehaviour
                 wantToDelete = false;
                 wantToCreate = false;
                 characName = "";
+                error = false;
                 cb.ResetContent();
 
                 PlayerManager._instance.SendAction(Controle.Actions.QUIT);
@@ -242,6 +243,7 @@ public class onMenuLoad : MonoBehaviour
                 onMainMenu.tabCharac = PlayerManager._instance._characNames;
                 characName = "";
                 cb.ResetContent();
+                error = false;
             }
             else
             {
@@ -266,6 +268,7 @@ public class onMenuLoad : MonoBehaviour
             wantToCreate = false;
             characName = "";
             cb.ResetContent();
+            error = false;
         }
         GUILayout.EndHorizontal();
     }
