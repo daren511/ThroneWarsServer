@@ -62,7 +62,6 @@ public class onStartUp : MonoBehaviour
         {
             try
             {
-
                 PlayerManager._instance.ConnectToServer();
 
                 if (PlayerManager._instance.sck.Connected)

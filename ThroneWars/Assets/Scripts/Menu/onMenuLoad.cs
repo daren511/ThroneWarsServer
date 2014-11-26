@@ -145,7 +145,7 @@ public class onMenuLoad : MonoBehaviour
 
     private static void doManagerWindow(int windowID)
     {
-        GUI.enabled = onMainMenu.tabCharac.Count < 8;
+        GUI.enabled = PlayerManager._instance._characNames.Count < 8;
         if (GUILayout.Button("Créer"))
         {
             // Create a character
@@ -237,7 +237,8 @@ public class onMenuLoad : MonoBehaviour
             if (PlayerManager._instance.CreateCharacter(characName, characClass))
             {
                 wantToCreate = false;
-                onMainMenu.tabCharac.Add(characName);
+                PlayerManager._instance._characNames.Add(characName);
+                onMainMenu.tabCharac = PlayerManager._instance._characNames;
                 characName = "";
                 cb.ResetContent();
             }

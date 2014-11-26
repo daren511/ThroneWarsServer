@@ -37,12 +37,14 @@ public class PlayerManager : MonoBehaviour
 
     void OnApplicationQuit()
     {
-        SendAction(Controle.Actions.QUIT);
+        if (Application.loadedLevelName != "Loading")
+            SendAction(Controle.Actions.QUIT);
+
         PlayerManager._instance.ClearPlayer();
     }
     void OnDestroy()
     {
-        if (sck.Connected)
+        if (sck.Connected && Application.loadedLevelName != "Loading")
             SendAction(Controle.Actions.QUIT);
         PlayerManager._instance.ClearPlayer();
     }
@@ -88,14 +90,12 @@ public class PlayerManager : MonoBehaviour
         onMainMenu.tabCharac = _characNames;
         Send("ok");
 
-        List<Items> list = GetPlayerInventory();
-        LoadPlayerinventory(list);
+        LoadPlayerinventory(GetPlayerInventory());
         Send("ok");
 
         if (onMainMenu.tabCharac.Count > 0)
         {
-            Personnages p = GetPersonnage();
-            LoadPersonnage(p);
+            LoadPersonnage(GetPersonnage());
             Send("ok");
         }
 
@@ -311,6 +311,11 @@ public class PlayerManager : MonoBehaviour
     }
     public void ClearPlayer()
     {
+        if (sck.Connected)
+        {
+            sck.Close();
+            sck = null;
+        }
         onMainMenu.tabCharac.Clear();
         onMainMenu.tabInvent.Clear();
         onMainMenu.tabTeam.Clear();
@@ -322,11 +327,6 @@ public class PlayerManager : MonoBehaviour
             Destroy(_chosenTeam[i]);
         }
         onStartUp.alreadyConnected = false;
-        if (sck.Connected)
-        {
-            sck.Close();
-            sck = null;
-        }
     }
 
     public Personnages GetDefaultStats(string name)
