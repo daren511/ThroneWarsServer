@@ -162,7 +162,6 @@ public class onMainMenu : MonoBehaviour
             }
             _teamSelection = selectedTeam;
         }
-
     }
 
     void doCharacWindow(int windowID)
