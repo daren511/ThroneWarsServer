@@ -69,6 +69,12 @@ namespace DeveloperApplication
             set { TB_Quantite.Text = value.ToString(); }
         }
 
+        public int PRIX
+        {
+            get { return int.Parse(TB_Prix.Text); }
+            set { TB_Prix.Text = value.ToString(); }
+        }
+
 
         public FORM_Potion()
         {
@@ -85,6 +91,7 @@ namespace DeveloperApplication
             ToolTip.SetToolTip(TB_WDEF, "Défense physique");
             ToolTip.SetToolTip(TB_MATK, "Attaque magique");
             ToolTip.SetToolTip(TB_MDEF, "Défense magique");
+            ToolTip.SetToolTip(TB_Prix, "Prix");
 
             if (!VISIBLE)
                 TB_Quantite.Visible = false;
@@ -98,6 +105,7 @@ namespace DeveloperApplication
                 TB_WDEF.ReadOnly = false;
                 TB_MATK.ReadOnly = false;
                 TB_MDEF.ReadOnly = false;
+                TB_Prix.ReadOnly = false;
             }
             if (this.Text == "Ajout")
                 LBL_PID.Text = "";
@@ -117,7 +125,7 @@ namespace DeveloperApplication
                 if (string.IsNullOrWhiteSpace(TB_Nom.Text) || string.IsNullOrWhiteSpace(TB_Desc.Text) ||
                     string.IsNullOrWhiteSpace(TB_Duration.Text) ||string.IsNullOrWhiteSpace(TB_WATK.Text) || 
                     string.IsNullOrWhiteSpace(TB_WDEF.Text) || string.IsNullOrWhiteSpace(TB_MATK.Text) || 
-                    string.IsNullOrWhiteSpace(TB_MDEF.Text))
+                    string.IsNullOrWhiteSpace(TB_MDEF.Text) || string.IsNullOrWhiteSpace(TB_Prix.Text))
                     BTN_OK.Enabled = false;
                 else
                     BTN_OK.Enabled = true;

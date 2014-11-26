@@ -79,6 +79,7 @@ namespace DeveloperApplication
             DGV_Inventaire.Columns[5].Visible = false;
             DGV_Inventaire.Columns[6].Visible = false;
             DGV_Inventaire.Columns[7].Visible = false;
+            DGV_Inventaire.Columns[10].Visible = false;
 
             ListerPotions();
             DGV_Potions.Columns[0].Visible = false;
@@ -88,6 +89,7 @@ namespace DeveloperApplication
             DGV_Potions.Columns[5].Visible = false;
             DGV_Potions.Columns[6].Visible = false;
             DGV_Potions.Columns[7].Visible = false;
+            DGV_Potions.Columns[9].Visible = false;
 
             FillComboBox();
         }
@@ -150,6 +152,7 @@ namespace DeveloperApplication
             FI.MDEF = int.Parse(DGV_Inventaire.SelectedRows[0].Cells[7].Value.ToString());
             FI.QUANTITE = int.Parse(DGV_Inventaire.SelectedRows[0].Cells[8].Value.ToString());
             FI.ISACTIVE = DGV_Inventaire.SelectedRows[0].Cells[9].Value.ToString();
+            FI.PRIX = int.Parse(DGV_Inventaire.SelectedRows[0].Cells[10].Value.ToString());
 
             if (FI.ShowDialog() == DialogResult.OK)
             {
@@ -193,6 +196,7 @@ namespace DeveloperApplication
             FP.MATK = int.Parse(DGV_Potions.SelectedRows[0].Cells[6].Value.ToString());
             FP.MDEF = int.Parse(DGV_Potions.SelectedRows[0].Cells[7].Value.ToString());
             FP.QUANTITE = int.Parse(DGV_Potions.SelectedRows[0].Cells[8].Value.ToString());
+            FP.PRIX = int.Parse(DGV_Potions.SelectedRows[0].Cells[9].Value.ToString());
 
             if (FP.ShowDialog() == DialogResult.OK)
             {
