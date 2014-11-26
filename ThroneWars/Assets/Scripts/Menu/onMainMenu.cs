@@ -336,8 +336,18 @@ public class onMainMenu : MonoBehaviour
     void doStatsWindow(int windowID)
     {
         GUILayout.BeginVertical();
-        GUI.DrawTexture(new Rect(325f, 20f, 32, 32), _healthTexture, ScaleMode.StretchToFill, true, 0.0f);
-        GUI.DrawTexture(new Rect(325f, 70f, 32, 32), _magicTexture, ScaleMode.StretchToFill, true, 0.0f);
+        GUI.DrawTexture(new Rect(rectStats.xMax - 570, 20f, 32, 32), _healthTexture, ScaleMode.StretchToFill, true, 0.0f);
+        GUI.DrawTexture(new Rect(rectStats.xMax - 570, 70f, 32, 32), _magicTexture, ScaleMode.StretchToFill, true, 0.0f);
+        GUILayout.EndVertical();
+
+        GUILayout.BeginVertical();
+        GUI.DrawTexture(new Rect(rectStats.xMax - 470, 20f, 32, 32), _atkTexture, ScaleMode.StretchToFill, true, 0.0f);
+        GUI.DrawTexture(new Rect(rectStats.xMax - 470, 70f, 32, 32), _defTexture, ScaleMode.StretchToFill, true, 0.0f);
+        GUILayout.EndHorizontal();
+
+        GUILayout.BeginVertical();
+        GUI.DrawTexture(new Rect(rectStats.xMax - 370, 20f, 32, 32), _matkTexture, ScaleMode.StretchToFill, true, 0.0f);
+        GUI.DrawTexture(new Rect(rectStats.xMax - 370, 70f, 32, 32), _mdefTexture, ScaleMode.StretchToFill, true, 0.0f);
         GUILayout.EndVertical();
 
         List<string> tab = _storedSelection == "perso" ? tabCharac : tabTeam;
@@ -361,7 +371,6 @@ public class onMainMenu : MonoBehaviour
             GUILayout.EndArea();
             GUILayout.EndHorizontal();
 
-
             GUILayout.BeginVertical();
             GUILayout.BeginArea(new Rect(30f, 80f, 200, 32));
             GUILayout.Label(c._name + ", " + c._characterClass._className + " niveau " + c._characterClass._classLevel);
@@ -371,38 +380,28 @@ public class onMainMenu : MonoBehaviour
             GUILayout.BeginHorizontal();
 
             GUILayout.BeginVertical();
-            GUILayout.BeginArea(new Rect(360f, 20f, 100, 32));
+            GUILayout.BeginArea(new Rect(rectStats.xMax - 535, 25f, 100, 32));
             GUILayout.Label(": " + c._maxHealth);
             GUILayout.EndArea();
-            GUILayout.BeginArea(new Rect(360f, 75f, 100, 32));
+            GUILayout.BeginArea(new Rect(rectStats.xMax - 535, 75f, 100, 32));
             GUILayout.Label(": " + c._maxMagic);
             GUILayout.EndArea();
             GUILayout.EndVertical();
 
             GUILayout.BeginVertical();
-            GUI.DrawTexture(new Rect(425f, 20f, 32, 32), _atkTexture, ScaleMode.StretchToFill, true, 0.0f);
-            GUI.DrawTexture(new Rect(425f, 70f, 32, 32), _defTexture, ScaleMode.StretchToFill, true, 0.0f);
-            GUILayout.EndHorizontal();
-
-            GUILayout.BeginVertical();
-            GUILayout.BeginArea(new Rect(460f, 20f, 100, 32));
+            GUILayout.BeginArea(new Rect(rectStats.xMax - 435, 25f, 100, 32));
             GUILayout.Label(": " + c._physAttack);
             GUILayout.EndArea();
-            GUILayout.BeginArea(new Rect(460f, 75f, 100, 32));
+            GUILayout.BeginArea(new Rect(rectStats.xMax - 435, 75f, 100, 32));
             GUILayout.Label(": " + c._physDefense);
             GUILayout.EndArea();
             GUILayout.EndVertical();
 
             GUILayout.BeginVertical();
-            GUI.DrawTexture(new Rect(525f, 20f, 32, 32), _matkTexture, ScaleMode.StretchToFill, true, 0.0f);
-            GUI.DrawTexture(new Rect(525f, 70f, 32, 32), _mdefTexture, ScaleMode.StretchToFill, true , 0.0f);
-            GUILayout.EndVertical();
-
-            GUILayout.BeginVertical();
-            GUILayout.BeginArea(new Rect(560f, 20f, 100, 32));
+            GUILayout.BeginArea(new Rect(rectStats.xMax - 335, 25f, 100, 32));
             GUILayout.Label(": " + c._magicAttack);
             GUILayout.EndArea();
-            GUILayout.BeginArea(new Rect(560f, 75f, 100, 32));
+            GUILayout.BeginArea(new Rect(rectStats.xMax - 335, 75f, 100, 32));
             GUILayout.Label(": " + c._magicDefense);
             GUILayout.EndArea();
             GUILayout.EndVertical();
@@ -410,9 +409,9 @@ public class onMainMenu : MonoBehaviour
             GUILayout.EndHorizontal();
 
         }
-        GUILayout.BeginArea(new Rect(rectStats.width / 24, rectStats.height / 1.3f, rectStats.width, 40));
+        GUILayout.BeginArea(new Rect(rectStats.width / 2, rectStats.height / 1.25f, rectStats.width, 40));
         GUILayout.BeginHorizontal();
-        GUILayout.FlexibleSpace();
+        //GUILayout.FlexibleSpace();
 
         if (_storedSelection == "perso") //clicked in player characters
         {
@@ -443,7 +442,7 @@ public class onMainMenu : MonoBehaviour
             }
         }
  
-        GUILayout.FlexibleSpace();
+        //GUILayout.FlexibleSpace();
         GUILayout.EndHorizontal();
         GUILayout.EndArea();
     }

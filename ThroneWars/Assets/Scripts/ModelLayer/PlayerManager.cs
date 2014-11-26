@@ -7,7 +7,7 @@ using System.Text;
 using System.IO;
 using ControleBD;
 using System.Runtime.Serialization.Formatters.Binary;
-using UnityEditor;
+//using UnityEditor;
 /*
  * PlayerManager
  * par Charles Hunter-Roy, 2014
@@ -32,7 +32,7 @@ public class PlayerManager : MonoBehaviour
 
     // Connection
     private string checkIn = "DECDEADDEADE712A400A8889425EA4488BF3040E81FE170F2E7E3069EB11126402AF84F587E";
-    private static bool dev= false;
+    private static bool dev = false;
     public Socket sck;
     public IPEndPoint localEndPoint;
     public string ip = "projet.thronewars.ca";
@@ -327,7 +327,7 @@ public class PlayerManager : MonoBehaviour
         onMainMenu.tabItem.Clear();
         _playerInventory._equips.Clear();
         _playerInventory._potions.Clear();
-        for (int i = 0; i < _chosenTeam.Count; ++i) 
+        for (int i = 0; i < _chosenTeam.Count; ++i)
         {
             Destroy(_chosenTeam[i]);
         }
