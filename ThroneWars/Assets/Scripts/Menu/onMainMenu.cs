@@ -226,6 +226,7 @@ public class onMainMenu : MonoBehaviour
             PlayerManager._instance.SendAction(Controle.Actions.START_GAME);
             // Go to the place character screen
             GameControllerSample6.scene = "Map1";
+            PlayerManager._instance.isLoading = true;
             Application.LoadLevel("Loading");
         }
         GUI.enabled = true;

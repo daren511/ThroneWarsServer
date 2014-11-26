@@ -7,6 +7,7 @@ using System.Text;
 using System.IO;
 using ControleBD;
 using System.Runtime.Serialization.Formatters.Binary;
+using UnityEditor;
 /*
  * PlayerManager
  * par Charles Hunter-Roy, 2014
@@ -37,16 +38,18 @@ public class PlayerManager : MonoBehaviour
     public string ip = "projet.thronewars.ca";
     private int port = 50052;
 
+    public bool isLoading = false;
     void OnApplicationQuit()
     {
-        if (Application.loadedLevelName != "Loading")
+
+        if (!isLoading)
             SendAction(Controle.Actions.QUIT);
 
         PlayerManager._instance.ClearPlayer();
     }
     void OnDestroy()
     {
-        if (sck.Connected && Application.loadedLevelName != "Loading")
+        if (sck.Connected && !isLoading)
             SendAction(Controle.Actions.QUIT);
         PlayerManager._instance.ClearPlayer();
     }
