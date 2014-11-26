@@ -23,6 +23,7 @@ public class onMainMenu : MonoBehaviour
     private static int selectedItem;    // For the character inventory
     private static Vector2 scrollPos;
     private GUIStyle lblDev = new GUIStyle();
+    private Texture refresh;
     // Lists
     public static List<string> tabTeam = new List<string>();
     public static List<string> tabCharac = new List<string>();
@@ -98,6 +99,7 @@ public class onMainMenu : MonoBehaviour
             ShowChosenCharacterInventory();
         }
         _storedSelection = "perso";
+        refresh = (Texture) Resources.Load("Menu/refresh");
     }
 
 
@@ -211,9 +213,14 @@ public class onMainMenu : MonoBehaviour
     void doInventWindow(int windowID)
     {
         GUILayout.Space(25);
-
         GUILayout.BeginHorizontal();
 
+        if (GUI.Button(new Rect(20, 25, 35, 35), refresh))
+        {
+            PlayerManager._instance.SendAction(Controle.Actions.ITEMS);
+            PlayerManager._instance._playerInventory._equips.Clear();
+            PlayerManager._instance.LoadPlayerinventory(PlayerManager._instance.GetPlayerInventory());
+        }
         GUI.DrawTexture(new Rect(rectInvent.width - 265, 30, 20, 20), _atkTexture, ScaleMode.StretchToFill, true, 0.0f);
         GUI.DrawTexture(new Rect(rectInvent.width - 215, 30, 20, 20), _defTexture, ScaleMode.StretchToFill, true, 0.0f);
         GUI.DrawTexture(new Rect(rectInvent.width - 165, 30, 20, 20), _matkTexture, ScaleMode.StretchToFill, true, 0.0f);

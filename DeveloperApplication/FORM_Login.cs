@@ -31,6 +31,7 @@ namespace DeveloperApplication
             string pwd = Controle.hashPassword(TB_MDP.Text, null, System.Security.Cryptography.SHA256.Create());
             if (pwd == checkIn)
             {
+                this.Visible = false;
                 FORM_Main FM = new FORM_Main();
                 FM.ShowDialog();
             }

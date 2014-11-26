@@ -111,6 +111,9 @@ namespace ThroneWarsServer
                             case Controle.Actions.STATS:
                                 envoyerObjet(getPersonnage(recevoirString()));
                                 break;
+                            case Controle.Actions.ITEMS:
+                                envoyerObjet(Controle.getInventaireJoueurs(Joueur.jid));
+                                break;
                         }
                     }
                 }

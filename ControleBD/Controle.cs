@@ -12,7 +12,7 @@ namespace ControleBD
     public class Controle
     {
         private static int SaltValueSize = 16;
-        public enum Actions { CLICK, CREATE, DELETE, START_GAME , EQUIP, UNEQUIP , NOTHING, QUIT, STATS};
+        public enum Actions { CLICK, CREATE, DELETE, START_GAME , EQUIP, UNEQUIP , NOTHING, QUIT, STATS, ITEMS};
         public enum Game {FOUND, ATTAQUE }
         //-------------------------------------INSERT / UPDATE / DELETE PLAYER-------------------------------------------
 
@@ -1279,10 +1279,10 @@ namespace ControleBD
             using (OracleDataAdapter oraDataAdapItems = new OracleDataAdapter())
             {
                 OracleConnection conn = Connection.getInstance().conn;
-                string sql = "SELECT I.IID, NOM, CNAME, \"LEVEL\", WATK, WDEF, MATK, MDEF, ";
+                string sql = "SELECT I.IID, NOM, CNAME AS CLASSE, \"LEVEL\", WATK, WDEF, MATK, MDEF, ";
                 if (doitAfficher == 1)
                     sql += "QUANTITY, ";
-                sql += "ISACTIVE, PRICE FROM ITEMS I INNER JOIN CLASSES C ON I.CID = C.CID ";
+                sql += "ISACTIVE, PRICE AS PRIX FROM ITEMS I INNER JOIN CLASSES C ON I.CID = C.CID ";
 
                 switch (doitAfficher)
                 {
@@ -1945,7 +1945,7 @@ namespace ControleBD
             }
         }
 
-        public static List<string> fillClasses()
+        public static List<string> fillClasses(bool estItem = true)
         {
             List<string> listItem = new List<string>();
             OracleConnection conn = Connection.getInstance().conn;
@@ -1953,6 +1953,8 @@ namespace ControleBD
             OracleCommand oraSelect = new OracleCommand(sql, conn);
             using (OracleDataReader oraReader = oraSelect.ExecuteReader())
             {
+                if (!estItem)
+                    oraReader.Read();
                 while (oraReader.Read())
                     listItem.Add(oraReader.GetString(0));
             }

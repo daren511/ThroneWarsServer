@@ -209,6 +209,32 @@ namespace DeveloperApplication
                 else
                     BTN_DESAC_Perso.Text = "Activer";
             }
+
+            int nbActive = 0;
+            if (CHECK_CFM_Perso.Checked)
+            {
+                for (int i = 0; i < DGV_Personnages.Rows.Count; ++i)
+                {
+                    if (DGV_Personnages.Rows[i].Cells[5].Value.ToString() == "1")
+                        nbActive++;
+                }
+            }
+            else
+                nbActive = DGV_Personnages.Rows.Count;
+
+            if (nbActive < 8)
+            {
+                BTN_AJT_Perso.Enabled = true;
+                BTN_DESAC_Perso.Enabled = true;
+            }
+            else
+            {
+                BTN_AJT_Perso.Enabled = false;
+                if (BTN_DESAC_Perso.Text == "Activer")
+                    BTN_DESAC_Perso.Enabled = false;
+                else
+                    BTN_DESAC_Perso.Enabled = true;
+            }
         }
 
         private void ConsulterPerso()
