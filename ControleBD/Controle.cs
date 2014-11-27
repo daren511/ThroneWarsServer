@@ -211,12 +211,12 @@ namespace ControleBD
         /// </summary>
         /// <param name="mID">Match ID</param>
         /// <param name="jID">Player ID</param>
-        /// <param name="guID1">Character1 ID</param>
-        /// <param name="guID2">Character2 ID</param>
-        /// <param name="guID3">Character3 ID</param>
-        /// <param name="guID4">Character4 ID</param>
+        /// <param name="nom1">Character1 name</param>
+        /// <param name="nom2">Character2 name</param>
+        /// <param name="nom3">Character3 name</param>
+        /// <param name="nom4">Character4 name</param>
         /// <returns>True if the function worked</returns>
-        public static bool addPlayerMatch(int mID, int jID, int guID1, int guID2, int guID3, int guID4)
+        public static bool addPlayerMatch(int mID, int jID, string nom1, string nom2, string nom3, string nom4)
         {
             OracleConnection conn = Connection.getInstance().conn;
             try
@@ -235,25 +235,25 @@ namespace ControleBD
                 oraParamJID.Value = jID;
                 oraAdd.Parameters.Add(oraParamJID);
 
-                OracleParameter oraParamGUID1 = new OracleParameter("pGUID1", OracleDbType.Int32);
-                oraParamGUID1.Direction = ParameterDirection.Input;
-                oraParamGUID1.Value = guID1;
-                oraAdd.Parameters.Add(oraParamGUID1);
+                OracleParameter oraParamNOM1 = new OracleParameter("pNOM1", OracleDbType.Varchar2, 12);
+                oraParamNOM1.Direction = ParameterDirection.Input;
+                oraParamNOM1.Value = nom1;
+                oraAdd.Parameters.Add(oraParamNOM1);
 
-                OracleParameter oraParamGUID2 = new OracleParameter("pGUID2", OracleDbType.Int32);
-                oraParamGUID2.Direction = ParameterDirection.Input;
-                oraParamGUID2.Value = guID2;
-                oraAdd.Parameters.Add(oraParamGUID2);
+                OracleParameter oraParamNOM2 = new OracleParameter("pNOM2", OracleDbType.Varchar2, 12);
+                oraParamNOM2.Direction = ParameterDirection.Input;
+                oraParamNOM2.Value = nom2;
+                oraAdd.Parameters.Add(oraParamNOM2);
 
-                OracleParameter oraParamGUID3 = new OracleParameter("pGUID3", OracleDbType.Int32);
-                oraParamGUID3.Direction = ParameterDirection.Input;
-                oraParamGUID3.Value = guID3;
-                oraAdd.Parameters.Add(oraParamGUID3);
+                OracleParameter oraParamNOM3 = new OracleParameter("pNOM3", OracleDbType.Varchar2, 12);
+                oraParamNOM3.Direction = ParameterDirection.Input;
+                oraParamNOM3.Value = nom3;
+                oraAdd.Parameters.Add(oraParamNOM3);
 
-                OracleParameter oraParamGUID4 = new OracleParameter("pGUID4", OracleDbType.Int32);
-                oraParamGUID4.Direction = ParameterDirection.Input;
-                oraParamGUID4.Value = guID4;
-                oraAdd.Parameters.Add(oraParamGUID4);
+                OracleParameter oraParamNOM4 = new OracleParameter("pNOM4", OracleDbType.Varchar2, 12);
+                oraParamNOM4.Direction = ParameterDirection.Input;
+                oraParamNOM4.Value = nom4;
+                oraAdd.Parameters.Add(oraParamNOM4);
 
                 oraAdd.ExecuteNonQuery();
                 return true;
