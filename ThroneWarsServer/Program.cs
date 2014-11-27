@@ -114,6 +114,10 @@ namespace ThroneWarsServer
                         queue.RemoveAt(0);
                     }
                 }
+                if (games.Count > 0 && trouverPositionLibre() != -1)
+                {
+                    games[trouverPositionLibre()].deconnecterJoueurInactif();
+                }
                 if(v.Count != 0)
                 {
                     for (int i = 0; i < v.Count;++i)

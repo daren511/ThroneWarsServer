@@ -51,11 +51,12 @@ namespace ThroneWarsServer
                     if(Joueur.isConnected)
                     {
                         Joueur.jid = Controle.getJID(Joueur.Username);
-                        startUP(Joueur);
+                        
                     }
                 }
                 if (Joueur.isConnected)
-                {                    
+                {
+                    startUP(Joueur);
                     Controle.Actions Choix = 0;
                     while (Joueur.socketIsConnected() && Choix != Controle.Actions.START_GAME && Choix != Controle.Actions.QUIT && Timer < 10000)
                     {

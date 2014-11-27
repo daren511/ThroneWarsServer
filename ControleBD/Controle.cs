@@ -216,7 +216,7 @@ namespace ControleBD
         /// <param name="guID3">Character3 ID</param>
         /// <param name="guID4">Character4 ID</param>
         /// <returns>True if the function worked</returns>
-        private static bool addPlayerMatch(int mID, int jID, int guID1, int guID2, int guID3, int guID4)
+        public static bool addPlayerMatch(int mID, int jID, int guID1, int guID2, int guID3, int guID4)
         {
             OracleConnection conn = Connection.getInstance().conn;
             try
@@ -1219,7 +1219,7 @@ namespace ControleBD
                 OracleCommand oraSelect = new OracleCommand(sql, conn);
                 OracleParameter OraParamName = new OracleParameter(":username", OracleDbType.Varchar2, 32);
                 OraParamName.Value = username.ToLower();
-                oraSelect.Parameters.Add(OraParamName); 
+                oraSelect.Parameters.Add(OraParamName);
 
                 using (OracleDataReader objRead = oraSelect.ExecuteReader())
                 {
