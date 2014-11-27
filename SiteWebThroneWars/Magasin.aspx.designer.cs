@@ -58,6 +58,24 @@ namespace SiteWebThroneWars {
         protected global::System.Web.UI.WebControls.TextBox TB_Monnaie;
         
         /// <summary>
+        /// Contrôle BTN_Items.
+        /// </summary>
+        /// <remarks>
+        /// Champ généré automatiquement.
+        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button BTN_Items;
+        
+        /// <summary>
+        /// Contrôle BTN_Potions.
+        /// </summary>
+        /// <remarks>
+        /// Champ généré automatiquement.
+        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button BTN_Potions;
+        
+        /// <summary>
         /// Contrôle GV_Magasin.
         /// </summary>
         /// <remarks>
@@ -128,15 +146,6 @@ namespace SiteWebThroneWars {
         /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox TB_Total;
-        
-        /// <summary>
-        /// Contrôle Label4.
-        /// </summary>
-        /// <remarks>
-        /// Champ généré automatiquement.
-        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label4;
         
         /// <summary>
         /// Contrôle BTN_Acheter.

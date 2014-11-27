@@ -1232,10 +1232,34 @@ namespace ControleBD
             return 0;
             
         }
+        public static void RetirerTotalFromMoney(int total,int monnaie,int jid)
+        {
+            int nouveauSolde = monnaie - total;
+            OracleConnection conn = Connection.getInstance().conn;
+            string sql = "UPDATE JOUEURS SET MONEY =:nouveauSolde WHERE JID =:jid";
+
+            try
+            {
+                OracleCommand oraUpdate = new OracleCommand(sql, conn);
+
+                OracleParameter OraParamSolde = new OracleParameter(":nouveauSolde", OracleDbType.Int32, 20);
+                OracleParameter OraParamJID = new OracleParameter(":jid", OracleDbType.Int32, 10);
 
 
+                OraParamSolde.Value = nouveauSolde;
+                OraParamJID.Value = jid;
 
 
+                oraUpdate.Parameters.Add(OraParamSolde);
+                oraUpdate.Parameters.Add(OraParamJID);
+                oraUpdate.ExecuteNonQuery();
+                
+            }
+            catch (OracleException ex)
+            {
+                Erreur.ErrorMessage(ex);
+            }
+        }
         //------------------------------ À ALEXIS ------------------------------//
         // J'VOUS TOUCHE LE RECTUM SI VOUS MODIFIER QUELQUE CHOSE
         public static DataSet listPlayers(bool afficherTout)
