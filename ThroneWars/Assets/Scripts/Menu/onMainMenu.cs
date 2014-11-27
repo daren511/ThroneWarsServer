@@ -201,7 +201,10 @@ public class onMainMenu : MonoBehaviour
             // Go to matchmaking
             PlayerManager._instance.SendAction(Controle.Actions.START_GAME);
             GameControllerSample6.scene = "Map1";
+
             PlayerManager._instance.isLoading = true;
+            PlayerManager._instance.isWaitingPlayer = true;
+
             Application.LoadLevel("Loading");
         }
         GUI.enabled = true;

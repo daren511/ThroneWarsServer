@@ -11,10 +11,9 @@ public class onLoading : MonoBehaviour
     private string message = "En attente d'un autre joueur...";
     private Rect rect = new Rect((Screen.width - 400) / 2, (Screen.height - 75) / 2, 400, 90);
     public static Thread thread;
-    public static Mutex mutex = new Mutex();
     void Start()
     {
-        FindPlayer();
+        //FindPlayer();
     }
     void OnGUI()
     {
@@ -41,15 +40,22 @@ public class onLoading : MonoBehaviour
     private void FindPlayer()
     {
         thread = new Thread(new ThreadStart(PlayerManager._instance.LookForPlayer));
-        mutex.WaitOne();
+
         thread.Start();
-        mutex.WaitOne();
+        StartCoroutine(WaitForPlayer());
 
         PlayerManager._instance.isLoading = false;
 
         PlayerManager._instance.PrepareGame();
-
         Application.LoadLevel("placement");
 
+    }
+    IEnumerator WaitForPlayer()
+    {
+        while (PlayerManager._instance.isWaitingPlayer)
+        {
+            Debug.Log("En attente d'un joueur");
+            yield return 0;
+        }
     }
 }

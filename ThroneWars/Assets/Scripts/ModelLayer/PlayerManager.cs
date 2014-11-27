@@ -40,6 +40,7 @@ public class PlayerManager : MonoBehaviour
     private int port = 50052;
 
     public bool isLoading = false;
+    public bool isWaitingPlayer = false;
     void OnApplicationQuit()
     {
 
@@ -353,7 +354,9 @@ public class PlayerManager : MonoBehaviour
         }
         _playerSide = Int32.Parse(Encoding.UTF8.GetString(formatted));
         GameManager._instance._enemySide = _playerSide == 1 ? 2 : 1;
-        onLoading.mutex.ReleaseMutex();
+
+        isWaitingPlayer = false;
+
         onLoading.thread.Abort();
     }
     public void PrepareGame()
