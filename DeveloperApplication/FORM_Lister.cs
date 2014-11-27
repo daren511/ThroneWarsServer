@@ -33,6 +33,7 @@ namespace DeveloperApplication
             else
             {
                 BTN_Ajouter.Text = "Ajouter une potion";
+                BTN_AJT_FixhierTxt.Visible = false;
                 BTN_Etat.Visible = false;
                 CHECK_AfficherTout.Visible = false;
                 ChangerPositionPotion();
@@ -271,6 +272,13 @@ namespace DeveloperApplication
                 LBL_Envoyer.ForeColor = Color.Red;
                 LBL_Envoyer.Text = "Envoi impossible";
             }
+        }
+
+        private void BTN_AJT_FixhierTxt_Click(object sender, EventArgs e)
+        {
+            FORM_FichierTxt FFT = new FORM_FichierTxt();
+            if (FFT.ShowDialog() == DialogResult.OK)
+                Lister_Items();
         }
     }
 }

@@ -17,12 +17,13 @@ namespace ControleBD
         public bool hasConnected = false;
         public string Username;
         public int jid;
-        public int Position { get; private set; }
+        
         public bool isConnected = false;
-        public Joueur(Socket sck, int position=0)
+        public List<int> positionsPersonnages = new List<int>();
+        public Joueur(Socket sck)
         {
             this.Socket = sck;
-            this.Position = position;
+
         }
 
         public bool socketIsConnected()
