@@ -13,7 +13,7 @@ public class onLoading : MonoBehaviour
     public static Thread thread;
     void Start()
     {
-        //FindPlayer();
+        FindPlayer();
     }
     void OnGUI()
     {
