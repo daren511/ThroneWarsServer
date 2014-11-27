@@ -42,6 +42,7 @@
             this.CB_Classe = new System.Windows.Forms.ComboBox();
             this.ToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.TB_Quantite = new System.Windows.Forms.TextBox();
+            this.TB_Prix = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // LBL_IID
@@ -70,17 +71,17 @@
             this.TB_Nom.MaxLength = 40;
             this.TB_Nom.Name = "TB_Nom";
             this.TB_Nom.ReadOnly = true;
-            this.TB_Nom.Size = new System.Drawing.Size(178, 20);
+            this.TB_Nom.Size = new System.Drawing.Size(145, 20);
             this.TB_Nom.TabIndex = 10;
             this.TB_Nom.TextChanged += new System.EventHandler(this.UpdateControls);
             // 
             // TB_Level
             // 
-            this.TB_Level.Location = new System.Drawing.Point(264, 6);
+            this.TB_Level.Location = new System.Drawing.Point(231, 6);
             this.TB_Level.MaxLength = 2;
             this.TB_Level.Name = "TB_Level";
             this.TB_Level.ReadOnly = true;
-            this.TB_Level.Size = new System.Drawing.Size(44, 20);
+            this.TB_Level.Size = new System.Drawing.Size(30, 20);
             this.TB_Level.TabIndex = 11;
             this.TB_Level.TextChanged += new System.EventHandler(this.UpdateControls);
             this.TB_Level.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.CheckKeyPress);
@@ -175,6 +176,17 @@
             this.TB_Quantite.TextChanged += new System.EventHandler(this.UpdateControls);
             this.TB_Quantite.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.CheckKeyPress);
             // 
+            // TB_Prix
+            // 
+            this.TB_Prix.Location = new System.Drawing.Point(267, 6);
+            this.TB_Prix.MaxLength = 4;
+            this.TB_Prix.Name = "TB_Prix";
+            this.TB_Prix.ReadOnly = true;
+            this.TB_Prix.Size = new System.Drawing.Size(41, 20);
+            this.TB_Prix.TabIndex = 20;
+            this.TB_Prix.TextChanged += new System.EventHandler(this.UpdateControls);
+            this.TB_Prix.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.CheckKeyPress);
+            // 
             // FORM_Item
             // 
             this.AcceptButton = this.BTN_OK;
@@ -182,6 +194,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.BTN_Annuler;
             this.ClientSize = new System.Drawing.Size(320, 171);
+            this.Controls.Add(this.TB_Prix);
             this.Controls.Add(this.TB_Quantite);
             this.Controls.Add(this.CB_Classe);
             this.Controls.Add(this.BTN_Annuler);
@@ -217,5 +230,6 @@
         private System.Windows.Forms.ComboBox CB_Classe;
         private System.Windows.Forms.ToolTip ToolTip;
         private System.Windows.Forms.TextBox TB_Quantite;
+        private System.Windows.Forms.TextBox TB_Prix;
     }
 }

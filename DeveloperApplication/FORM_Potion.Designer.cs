@@ -41,6 +41,7 @@
             this.BTN_Annuler = new System.Windows.Forms.Button();
             this.BTN_OK = new System.Windows.Forms.Button();
             this.ToolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.TB_Prix = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // LBL_PID
@@ -58,7 +59,7 @@
             this.TB_Nom.MaxLength = 40;
             this.TB_Nom.Name = "TB_Nom";
             this.TB_Nom.ReadOnly = true;
-            this.TB_Nom.Size = new System.Drawing.Size(220, 20);
+            this.TB_Nom.Size = new System.Drawing.Size(175, 20);
             this.TB_Nom.TabIndex = 1;
             this.TB_Nom.TextChanged += new System.EventHandler(this.UpdateControls);
             // 
@@ -69,7 +70,7 @@
             this.TB_Desc.Multiline = true;
             this.TB_Desc.Name = "TB_Desc";
             this.TB_Desc.ReadOnly = true;
-            this.TB_Desc.Size = new System.Drawing.Size(220, 78);
+            this.TB_Desc.Size = new System.Drawing.Size(222, 78);
             this.TB_Desc.TabIndex = 2;
             this.TB_Desc.TextChanged += new System.EventHandler(this.UpdateControls);
             // 
@@ -160,6 +161,17 @@
             this.BTN_OK.Text = "OK";
             this.BTN_OK.UseVisualStyleBackColor = true;
             // 
+            // TB_Prix
+            // 
+            this.TB_Prix.Location = new System.Drawing.Point(233, 6);
+            this.TB_Prix.MaxLength = 4;
+            this.TB_Prix.Name = "TB_Prix";
+            this.TB_Prix.ReadOnly = true;
+            this.TB_Prix.Size = new System.Drawing.Size(41, 20);
+            this.TB_Prix.TabIndex = 11;
+            this.TB_Prix.TextChanged += new System.EventHandler(this.UpdateControls);
+            this.TB_Prix.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.CheckKeyPress);
+            // 
             // FORM_Potion
             // 
             this.AcceptButton = this.BTN_OK;
@@ -167,6 +179,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.BTN_Annuler;
             this.ClientSize = new System.Drawing.Size(284, 257);
+            this.Controls.Add(this.TB_Prix);
             this.Controls.Add(this.BTN_OK);
             this.Controls.Add(this.BTN_Annuler);
             this.Controls.Add(this.TB_MDEF);
@@ -200,5 +213,6 @@
         private System.Windows.Forms.Button BTN_Annuler;
         private System.Windows.Forms.Button BTN_OK;
         private System.Windows.Forms.ToolTip ToolTip;
+        private System.Windows.Forms.TextBox TB_Prix;
     }
 }

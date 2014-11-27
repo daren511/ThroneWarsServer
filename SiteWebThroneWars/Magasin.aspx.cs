@@ -6,6 +6,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using ControleBD;
 using System.Data;
+using System.Text;
 
 namespace SiteWebThroneWars
 {
@@ -13,7 +14,6 @@ namespace SiteWebThroneWars
     {
         int ItemID = 0;
         int Prix = 0;
-        string ItemName = "";
         protected void Page_Load(object sender, EventArgs e)
         {
             isSessionOn();
@@ -38,9 +38,34 @@ namespace SiteWebThroneWars
 
         protected void Acheter_Click(object sender, EventArgs e)
         {
-            int JID = Controle.getJID(Session["username"].ToString());
-            //Fonction dans controle qui ajouter au compte l'item ID dans ItemID
-            Controle.addItemInventaire(ItemID, JID, Int32.Parse(TB_Quantite.Text));
+            if (TB_Quantite != null)
+            {
+                int test = 0;
+                
+                if (test != 0 )//changer juste paour pas compilé
+                {
+                    int JID = Controle.getJID(Session["username"].ToString());
+                    int ItemID = Int32.Parse(Session["ItemID"].ToString());
+                    //Fonction dans controle qui ajouter au compte l'item ID dans ItemID
+                    Controle.addItemInventaire(ItemID, JID, Int32.Parse(TB_Quantite.Text));
+                    ViderTB();
+                    ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>MessageBoxReussi();</script>", false);
+                }
+                else
+                {
+                    string text = "Vous n'avez pas assez de monnaie";
+                    ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>MessageBoxErreur(\"" + text + "\");</script>", false);
+                    ViderTB();
+                }
+             
+            }
+            else 
+            {
+                string text = "Veuillez indiquer une quantité";
+                ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>MessageBoxErreur(\"" + text + "\");</script>", false);
+                
+            }
+                 
         }
         protected void ListerItems()
         {
@@ -56,13 +81,12 @@ namespace SiteWebThroneWars
 
         protected void GV_Magasin_SelectedIndexChanged(object sender, EventArgs e)
         {
+            ViderTB();
             GridViewRow IDItem = GV_Magasin.SelectedRow;
-            string test = IDItem.Cells[0].Text;
             ItemID = Int32.Parse(IDItem.Cells[0].Text);
+            Session["ItemID"] = ItemID;
             Prix = Int32.Parse(IDItem.Cells[9].Text);
-            ItemName = IDItem.Cells[1].Text;
             TB_Prix.Text = Prix.ToString();
-            TB_ItemName.Text = ItemName;
         }
         protected void GV_Magasin_RowDataBound(object sender, GridViewRowEventArgs e)
         {
@@ -75,6 +99,12 @@ namespace SiteWebThroneWars
                 e.Row.Attributes["style"] = "cursor:pointer";
                 e.Row.Attributes["onclick"] = ClientScript.GetPostBackEventReference(GV_Magasin, "Select$" + e.Row.RowIndex.ToString());
             }
+        }
+        protected void ViderTB()
+        {
+            TB_Quantite.Text = "";
+            TB_Total.Text = "";
+            TB_Prix.Text = "";
         }
     }
 }

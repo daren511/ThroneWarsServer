@@ -40,6 +40,7 @@ public class PlayerManager : MonoBehaviour
     private int port = 50052;
 
     public bool isLoading = false;
+    public bool isWaitingPlayer = false;
     void OnApplicationQuit()
     {
 
@@ -341,11 +342,22 @@ public class PlayerManager : MonoBehaviour
     }
     public void LookForPlayer()
     {
+
         int count = sck.ReceiveBufferSize;
         byte[] buffer;
         buffer = new byte[count];
-        sck.Receive(buffer);
+        while(isWaitingPlayer)
+        {
+            try
+            {
+                sck.Receive(buffer);
 
+
+                isWaitingPlayer = false;
+            }
+            catch(Exception e) {}
+
+        }
         byte[] formatted = new byte[count];
         for (int i = 0; i < count; i++)
         {
@@ -353,8 +365,12 @@ public class PlayerManager : MonoBehaviour
         }
         _playerSide = Int32.Parse(Encoding.UTF8.GetString(formatted));
         GameManager._instance._enemySide = _playerSide == 1 ? 2 : 1;
-        onLoading.mutex.ReleaseMutex();
-        onLoading.thread.Abort();
+
+        sck.Blocking = true;
+        isLoading = false;
+
+        PrepareGame();
+        Application.LoadLevel("placement");
     }
     public void PrepareGame()
     {

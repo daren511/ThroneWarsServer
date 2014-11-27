@@ -54,6 +54,7 @@
                 <li><a href="MOBILEConnexion.aspx">Connexion</a></li>
                 <li><a href="MOBILERecherche.aspx">Classement</a></li>
                 <li><a href="MOBILEMedia.aspx">Média</a></li>
+                <li><a href="MOBILEMagasin.aspx">Magasin</a></li>
                 <li><a href="#my-page">Close the menu</a></li>
             </ul>
         </nav>

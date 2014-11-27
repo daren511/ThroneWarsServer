@@ -78,6 +78,12 @@ namespace DeveloperApplication
             set { CHECK_IsActive.Checked = Convert.ToBoolean(Int32.Parse(value)); }
         }
 
+        public int PRIX
+        {
+            get { return Int32.Parse(TB_Prix.Text); }
+            set { TB_Prix.Text = value.ToString(); }
+        }
+
 
         public FORM_Item()
         {
@@ -94,6 +100,7 @@ namespace DeveloperApplication
             ToolTip.SetToolTip(TB_MDEF, "Défense magique");
             ToolTip.SetToolTip(CB_Classe, "Classe");
             ToolTip.SetToolTip(TB_Quantite, "Quantité");
+            ToolTip.SetToolTip(TB_Prix, "Prix");
             FillComboBox();
 
             if (!VISIBLE)
@@ -106,6 +113,7 @@ namespace DeveloperApplication
                 TB_WDEF.ReadOnly = false;
                 TB_MATK.ReadOnly = false;
                 TB_MDEF.ReadOnly = false;
+                TB_Prix.ReadOnly = false;
                 CHECK_IsActive.Enabled = true;
             }
             if (this.Text == "Ajout")
@@ -136,7 +144,7 @@ namespace DeveloperApplication
                 if (string.IsNullOrWhiteSpace(TB_Nom.Text) || string.IsNullOrWhiteSpace(TB_Level.Text) ||
                     string.IsNullOrWhiteSpace(TB_WATK.Text) || string.IsNullOrWhiteSpace(TB_WDEF.Text) ||
                     string.IsNullOrWhiteSpace(TB_MATK.Text) || string.IsNullOrWhiteSpace(TB_MDEF.Text) ||
-                    string.IsNullOrWhiteSpace(CB_Classe.Text))
+                    string.IsNullOrWhiteSpace(CB_Classe.Text) || string.IsNullOrWhiteSpace(TB_Prix.Text))
                     BTN_OK.Enabled = false;
                 else
                     BTN_OK.Enabled = true;
