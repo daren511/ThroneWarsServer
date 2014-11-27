@@ -89,7 +89,7 @@ namespace SiteWebThroneWars
             DataSet DSMagasin = new DataSet();
 
             if (Session["GV"].ToString() == "Items")
-                DSMagasin = Controle.listItems(false);
+                DSMagasin = Controle.listItems(false,0,0,0,false);
             else if (Session["GV"].ToString() == "Potions")
                 DSMagasin = Controle.listPotions(0, 0);
             if (DSMagasin != null)
@@ -106,7 +106,7 @@ namespace SiteWebThroneWars
             GridViewRow IDItem = GV_Magasin.SelectedRow;
             ItemID = Int32.Parse(IDItem.Cells[0].Text);
             Session["ItemID"] = ItemID;
-            Prix = Int32.Parse(IDItem.Cells[9].Text);
+            Prix = Int32.Parse(IDItem.Cells[8].Text);
             TB_Prix.Text = Prix.ToString();
         }
         protected void GV_Magasin_RowDataBound(object sender, GridViewRowEventArgs e)
@@ -116,11 +116,8 @@ namespace SiteWebThroneWars
                 e.Row.Attributes.Add("onmouseover", "this.style.backgroundColor='#D2E6F8'");
                 e.Row.Attributes.Add("onmouseout", "this.style.backgroundColor='#219ac2'");
                 e.Row.Attributes["style"] = "cursor:pointer";
-                e.Row.Attributes["onclick"] = ClientScript.GetPostBackEventReference(GV_Magasin, "Select$" + e.Row.RowIndex.ToString());
-                //if(GV_Magasin.Rows.Count > 8)
-                  // this.GV_Magasin.Columns[8].Visible = false;               
+                e.Row.Attributes["onclick"] = ClientScript.GetPostBackEventReference(GV_Magasin, "Select$" + e.Row.RowIndex.ToString());             
             }
-            //string count = GV_Magasin.Rows.Count.ToString();
 
         }
         protected void ViderTB()
