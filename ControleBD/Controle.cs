@@ -216,7 +216,7 @@ namespace ControleBD
         /// <param name="guID3">Character3 ID</param>
         /// <param name="guID4">Character4 ID</param>
         /// <returns>True if the function worked</returns>
-        private static bool addPlayerMatch(int mID, int jID, int guID1, int guID2, int guID3, int guID4)
+        public static bool addPlayerMatch(int mID, int jID, int guID1, int guID2, int guID3, int guID4)
         {
             OracleConnection conn = Connection.getInstance().conn;
             try
@@ -278,7 +278,7 @@ namespace ControleBD
         /// <param name="guID3">Character3 ID</param>
         /// <param name="guID4">Character4 ID</param>
         /// <returns>True if the function worked</returns>
-        private static bool createMatch(int mID, int jID, int map, int guID1, int guID2, int guID3, int guID4)
+        public static bool createMatch(int mID, int jID, int map, int guID1, int guID2, int guID3, int guID4)
         {
             OracleConnection conn = Connection.getInstance().conn;
             try
