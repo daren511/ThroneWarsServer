@@ -1345,7 +1345,7 @@ namespace ControleBD
                 if (doitAfficher != 0)
                     sql += ", QUANTITY, PRICE FROM POTIONS P INNER JOIN POTIONJOUEURS J ON P.PID = J.PID WHERE JID = :jid ";
                 else
-                    sql += " PRICE FROM POTIONS P ";
+                    sql += ", PRICE FROM POTIONS P ";
                 sql += "ORDER BY PID";
 
                 oraDataAdapPotions.SelectCommand = new OracleCommand(sql, conn);
