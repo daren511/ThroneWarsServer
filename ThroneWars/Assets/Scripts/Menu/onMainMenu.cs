@@ -201,7 +201,10 @@ public class onMainMenu : MonoBehaviour
             // Go to matchmaking
             PlayerManager._instance.SendAction(Controle.Actions.START_GAME);
             GameControllerSample6.scene = "Map1";
+
             PlayerManager._instance.isLoading = true;
+            PlayerManager._instance.isWaitingPlayer = true;
+
             Application.LoadLevel("Loading");
         }
         GUI.enabled = true;
@@ -351,8 +354,10 @@ public class onMainMenu : MonoBehaviour
             GUILayout.EndHorizontal();
 
             GUILayout.BeginVertical();
-            GUILayout.BeginArea(new Rect(30f, 80f, 200, 32));
-            GUILayout.Label(c._name + ", " + c._characterClass._className + " niveau " + c._characterClass._classLevel);
+            GUILayout.BeginArea(new Rect(50f, 80f, 200, 100));
+            GUILayout.Label(c._name);
+            GUILayout.Label(c._characterClass._className);
+            GUILayout.Label("Niveau " + c._characterClass._classLevel);
             GUILayout.EndArea();
             GUILayout.EndVertical();
 

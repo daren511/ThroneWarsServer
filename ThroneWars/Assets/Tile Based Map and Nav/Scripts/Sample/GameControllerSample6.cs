@@ -47,7 +47,7 @@ public class GameControllerSample6 : MonoBehaviour
     private int placed = 0;
     List<GameObject> table = new List<GameObject>();
 
-    private Rect _containerBox = new Rect(Screen.width - 100, 0, 100, Screen.height);
+    private Rect _containerBox = new Rect(Screen.width - 300, 0, 100, Screen.height);
     private Rect rectPlay = new Rect(Screen.width / 3, Screen.height - 50, Screen.width / 3, 50);
     IEnumerator Start()
     {

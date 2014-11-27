@@ -31,6 +31,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>icon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Oracle.DataAccess, Version=2.121.1.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=AMD64" />
     <Reference Include="System" />
@@ -45,6 +48,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FORM_FichierTxt.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FORM_FichierTxt.Designer.cs">
+      <DependentUpon>FORM_FichierTxt.cs</DependentUpon>
+    </Compile>
     <Compile Include="FORM_Item.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -89,6 +98,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="FORM_FichierTxt.resx">
+      <DependentUpon>FORM_FichierTxt.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FORM_Item.resx">
       <DependentUpon>FORM_Item.cs</DependentUpon>
     </EmbeddedResource>
@@ -140,6 +152,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="DeveloperApplication.exe" />
+    <Content Include="icon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
