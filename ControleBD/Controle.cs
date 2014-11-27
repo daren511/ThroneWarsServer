@@ -277,8 +277,8 @@ namespace ControleBD
         /// <param name="guID2">Character2 ID</param>
         /// <param name="guID3">Character3 ID</param>
         /// <param name="guID4">Character4 ID</param>
-        /// <returns>True if the function worked</returns>
-        private static bool createMatch(int mID, int jID, int map, int guID1, int guID2, int guID3, int guID4)
+        /// <returns>The match ID</returns>
+        private static int createMatch(int mID, int jID, int map, int guID1, int guID2, int guID3, int guID4)
         {
             OracleConnection conn = Connection.getInstance().conn;
             try
@@ -322,13 +322,17 @@ namespace ControleBD
                 oraParamGUID4.Value = guID4;
                 oraCreate.Parameters.Add(oraParamGUID4);
 
-                oraCreate.ExecuteNonQuery();
-                return true;
+                OracleParameter OraParamID = new OracleParameter("MATCH_ID", OracleDbType.Int32);
+                OraParamID.Direction = ParameterDirection.ReturnValue;
+                oraCreate.Parameters.Add(OraParamID);
+
+                oraCreate.ExecuteScalar();
+                return int.Parse(OraParamID.Value.ToString()); ;
             }
             catch (OracleException ex)
             {
                 Erreur.ErrorMessage(ex);
-                return false;
+                return 0;
             }
         }
 
