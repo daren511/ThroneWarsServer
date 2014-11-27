@@ -278,7 +278,7 @@ namespace ControleBD
         /// <param name="nom3">Character3 name</param>
         /// <param name="nom4">Character4 name</param>
         /// <returns>The match ID</returns>
-        private static int createMatch(int mID, int jID, int map, string nom1, string nom2, string nom3, string nom4)
+        public static int createMatch(int jID, int map, string nom1, string nom2, string nom3, string nom4)
         {
             OracleConnection conn = Connection.getInstance().conn;
             try
@@ -286,11 +286,6 @@ namespace ControleBD
                 OracleCommand oraCreate = new OracleCommand("PACK_MATCHS", conn);
                 oraCreate.CommandText = "PACK_MATCHS.CREATE_MATCH";
                 oraCreate.CommandType = CommandType.StoredProcedure;
-
-                OracleParameter oraParamMID = new OracleParameter("pMID", OracleDbType.Int32);
-                oraParamMID.Direction = ParameterDirection.Input;
-                oraParamMID.Value = mID;
-                oraCreate.Parameters.Add(oraParamMID);
 
                 OracleParameter oraParamJID = new OracleParameter("pJID", OracleDbType.Int32);
                 oraParamJID.Direction = ParameterDirection.Input;
