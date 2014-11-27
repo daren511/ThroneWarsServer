@@ -11,9 +11,13 @@ public class onLoading : MonoBehaviour
     private string message = "En attente d'un autre joueur...";
     private Rect rect = new Rect((Screen.width - 400) / 2, (Screen.height - 75) / 2, 400, 90);
     public static Thread thread;
+    private bool coroutineStarted = false;
     void Start()
     {
-        FindPlayer();
+        PlayerManager._instance.sck.Blocking = false;
+        //FindPlayer();
+        PlayerManager._instance.LookForPlayer();
+
     }
     void OnGUI()
     {
@@ -39,23 +43,30 @@ public class onLoading : MonoBehaviour
 
     private void FindPlayer()
     {
-        thread = new Thread(new ThreadStart(PlayerManager._instance.LookForPlayer));
+        //thread = new Thread(new ThreadStart(PlayerManager._instance.LookForPlayer));
+        //thread.Start();
 
-        thread.Start();
-        StartCoroutine(WaitForPlayer());
-
-        PlayerManager._instance.isLoading = false;
-
-        PlayerManager._instance.PrepareGame();
-        Application.LoadLevel("placement");
+        //if (!coroutineStarted)
+        //{
+        //    StartCoroutine(WaitForPlayer());
+        //    coroutineStarted = true;
+        //}
 
     }
+
     IEnumerator WaitForPlayer()
     {
         while (PlayerManager._instance.isWaitingPlayer)
         {
             Debug.Log("En attente d'un joueur");
-            yield return 0;
+            Debug.Log(PlayerManager._instance.isWaitingPlayer);
+            if ( ReferenceEquals(PlayerManager._instance.isWaitingPlayer, false))
+            {
+                //Debug.Log("J'vais trouver un joueur...wait for it");
+                yield break;
+            }
+            Debug.Log("minute , je t'attends");
+            yield return this;
         }
     }
-}
+} 
