@@ -40,6 +40,7 @@
             this.BTN_Ajouter_Au_Joueur = new System.Windows.Forms.Button();
             this.LBL_Qte = new System.Windows.Forms.Label();
             this.LBL_Envoyer = new System.Windows.Forms.Label();
+            this.BTN_AJT_FixhierTxt = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.DGV_Liste)).BeginInit();
             this.SuspendLayout();
             // 
@@ -176,12 +177,24 @@
             this.LBL_Envoyer.TabIndex = 11;
             this.LBL_Envoyer.Text = "Envoi effectué";
             // 
+            // BTN_AJT_FixhierTxt
+            // 
+            this.BTN_AJT_FixhierTxt.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BTN_AJT_FixhierTxt.Location = new System.Drawing.Point(330, 332);
+            this.BTN_AJT_FixhierTxt.Name = "BTN_AJT_FixhierTxt";
+            this.BTN_AJT_FixhierTxt.Size = new System.Drawing.Size(184, 23);
+            this.BTN_AJT_FixhierTxt.TabIndex = 12;
+            this.BTN_AJT_FixhierTxt.Text = "Ajouter avec un fichier texte";
+            this.BTN_AJT_FixhierTxt.UseVisualStyleBackColor = true;
+            this.BTN_AJT_FixhierTxt.Click += new System.EventHandler(this.BTN_AJT_FixhierTxt_Click);
+            // 
             // FORM_Lister
             // 
             this.AcceptButton = this.BTN_Fermer;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(716, 390);
+            this.Controls.Add(this.BTN_AJT_FixhierTxt);
             this.Controls.Add(this.LBL_Envoyer);
             this.Controls.Add(this.LBL_Qte);
             this.Controls.Add(this.BTN_Ajouter_Au_Joueur);
@@ -217,5 +230,6 @@
         private System.Windows.Forms.Button BTN_Ajouter_Au_Joueur;
         private System.Windows.Forms.Label LBL_Qte;
         private System.Windows.Forms.Label LBL_Envoyer;
+        private System.Windows.Forms.Button BTN_AJT_FixhierTxt;
     }
 }

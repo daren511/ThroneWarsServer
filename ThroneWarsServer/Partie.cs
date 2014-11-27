@@ -74,8 +74,8 @@ namespace ThroneWarsServer
                 envoyerReponse("2", Joueur2);
                 Joueur1.Persos = RecevoirObjet<Personnages>(Joueur1);
                 Joueur2.Persos = RecevoirObjet<Personnages>(Joueur2);
-                //this.mId = Controle.createMatch(Joueur1.jid, 1, Joueur1.Persos[0], Joueur1.Persos[1], Joueur1.Persos[2], Joueur1.Persos[3]);
-                //Controle.addPlayerMatch(this.mId, Joueur2.jid, Joueur2.Persos[0], Joueur2.Persos[1], Joueur2.Persos[2], Joueur2.Persos[3]);
+                this.mId = Controle.createMatch(Joueur1.jid, 1, Joueur1.Persos[0].Nom, Joueur1.Persos[1].Nom, Joueur1.Persos[2].Nom, Joueur1.Persos[3].Nom);
+                Controle.addPlayerMatch(this.mId, Joueur2.jid, Joueur2.Persos[0].Nom, Joueur2.Persos[1].Nom, Joueur2.Persos[2].Nom, Joueur2.Persos[3].Nom);
                 envoyerObjet(Joueur1.Persos, Joueur2);
                 envoyerObjet(Joueur2.Persos, Joueur1);
                 Joueur1.positionsPersonnages = RecevoirObjet<int>(Joueur1);
