@@ -273,12 +273,12 @@ namespace ControleBD
         /// <param name="mID">Match ID</param>
         /// <param name="jID">Player ID</param>
         /// <param name="map">Map ID</param>
-        /// <param name="guID1">Character1 ID</param>
-        /// <param name="guID2">Character2 ID</param>
-        /// <param name="guID3">Character3 ID</param>
-        /// <param name="guID4">Character4 ID</param>
+        /// <param name="nom1">Character1 name</param>
+        /// <param name="nom2">Character2 name</param>
+        /// <param name="nom3">Character3 name</param>
+        /// <param name="nom4">Character4 name</param>
         /// <returns>The match ID</returns>
-        private static int createMatch(int mID, int jID, int map, int guID1, int guID2, int guID3, int guID4)
+        private static int createMatch(int mID, int jID, int map, string nom1, string nom2, string nom3, string nom4)
         {
             OracleConnection conn = Connection.getInstance().conn;
             try
@@ -302,25 +302,25 @@ namespace ControleBD
                 oraParamMap.Value = map;
                 oraCreate.Parameters.Add(oraParamMap);
 
-                OracleParameter oraParamGUID1 = new OracleParameter("pGUID1", OracleDbType.Int32);
-                oraParamGUID1.Direction = ParameterDirection.Input;
-                oraParamGUID1.Value = guID1;
-                oraCreate.Parameters.Add(oraParamGUID1);
+                OracleParameter oraParamNOM1 = new OracleParameter("pNOM1", OracleDbType.Varchar2, 12);
+                oraParamNOM1.Direction = ParameterDirection.Input;
+                oraParamNOM1.Value = nom1;
+                oraCreate.Parameters.Add(oraParamNOM1);
 
-                OracleParameter oraParamGUID2 = new OracleParameter("pGUID2", OracleDbType.Int32);
-                oraParamGUID2.Direction = ParameterDirection.Input;
-                oraParamGUID2.Value = guID2;
-                oraCreate.Parameters.Add(oraParamGUID2);
+                OracleParameter oraParamNOM2 = new OracleParameter("pNOM2", OracleDbType.Varchar2, 12);
+                oraParamNOM2.Direction = ParameterDirection.Input;
+                oraParamNOM2.Value = nom2;
+                oraCreate.Parameters.Add(oraParamNOM2);
 
-                OracleParameter oraParamGUID3 = new OracleParameter("pGUID3", OracleDbType.Int32);
-                oraParamGUID3.Direction = ParameterDirection.Input;
-                oraParamGUID3.Value = guID3;
-                oraCreate.Parameters.Add(oraParamGUID3);
+                OracleParameter oraParamNOM3 = new OracleParameter("pNOM3", OracleDbType.Varchar2, 12);
+                oraParamNOM3.Direction = ParameterDirection.Input;
+                oraParamNOM3.Value = nom3;
+                oraCreate.Parameters.Add(oraParamNOM3);
 
-                OracleParameter oraParamGUID4 = new OracleParameter("pGUID4", OracleDbType.Int32);
-                oraParamGUID4.Direction = ParameterDirection.Input;
-                oraParamGUID4.Value = guID4;
-                oraCreate.Parameters.Add(oraParamGUID4);
+                OracleParameter oraParamNOM4 = new OracleParameter("pNOM4", OracleDbType.Varchar2, 12);
+                oraParamNOM4.Direction = ParameterDirection.Input;
+                oraParamNOM4.Value = nom4;
+                oraCreate.Parameters.Add(oraParamNOM4);
 
                 OracleParameter OraParamID = new OracleParameter("MATCH_ID", OracleDbType.Int32);
                 OraParamID.Direction = ParameterDirection.ReturnValue;
@@ -342,43 +342,43 @@ namespace ControleBD
         /// <param name="mID">Match ID</param>
         /// <param name="winner">Winner ID</param>
         /// <param name="jID1">Player1 ID</param>
-        /// <param name="guID1">Character1 ID</param>
+        /// <param name="nom1">Character1 name</param>
         /// <param name="kills1">Character1 kills</param>
         /// <param name="isDead1">If player1's first character is dead</param>
-        /// <param name="guID2">Character2 ID</param>
+        /// <param name="nom2">Character2 name</param>
         /// <param name="kills2">Character2 kills</param>
         /// <param name="isDead2">If player1's second character is dead</param>
-        /// <param name="guID3">Character3 ID</param>
+        /// <param name="nom3">Character3 name</param>
         /// <param name="kills3">Character3 kills</param>
         /// <param name="isDead3">If player1's third character is dead</param>
-        /// <param name="guID4">Character4 ID</param>
+        /// <param name="nom4">Character4 name</param>
         /// <param name="kills4">Character4 kills</param>
         /// <param name="isDead4">If player1's fourth character is dead</param>
         /// <param name="jID2">Player2 ID</param>
-        /// <param name="guID5">Character5 ID</param>
+        /// <param name="nom5">Character5 name</param>
         /// <param name="kills5">Character5 kills</param>
         /// <param name="isDead5">If player2's first character is dead</param>
-        /// <param name="guID6">Character6 ID</param>
+        /// <param name="nom6">Character6 name</param>
         /// <param name="kills6">Character6 kills</param>
         /// <param name="isDead6">If player2's second character is dead</param>
-        /// <param name="guID7">Character7 ID</param>
+        /// <param name="nom7">Character7 name</param>
         /// <param name="kills7">Character7 kills</param>
         /// <param name="isDead7">If player2's third character is dead</param>
-        /// <param name="guID8">Character8 ID</param>
+        /// <param name="nom8">Character8 name</param>
         /// <param name="kills8">Character8 kills</param>
         /// <param name="isDead8">If player2's fourth character is dead</param>
         /// <returns>True if the function worked</returns>
         private static bool updateMatch(int mID, int winner,
                                         int jID1,
-                                        int guID1, int kills1, char isDead1,
-                                        int guID2, int kills2, char isDead2,
-                                        int guID3, int kills3, char isDead3,
-                                        int guID4, int kills4, char isDead4,
+                                        string nom1, int kills1, char isDead1,
+                                        string nom2, int kills2, char isDead2,
+                                        string nom3, int kills3, char isDead3,
+                                        string nom4, int kills4, char isDead4,
                                         int jID2,
-                                        int guID5, int kills5, char isDead5,
-                                        int guID6, int kills6, char isDead6,
-                                        int guID7, int kills7, char isDead7,
-                                        int guID8, int kills8, char isDead8)
+                                        string nom5, int kills5, char isDead5,
+                                        string nom6, int kills6, char isDead6,
+                                        string nom7, int kills7, char isDead7,
+                                        string nom8, int kills8, char isDead8)
         {
             OracleConnection conn = Connection.getInstance().conn;
             try
@@ -403,10 +403,10 @@ namespace ControleBD
                 oraParamJID1.Value = jID1;
                 oraAdd.Parameters.Add(oraParamJID1);
                 // Character 1
-                OracleParameter oraParamGUID1 = new OracleParameter("pGUID1", OracleDbType.Int32);
-                oraParamGUID1.Direction = ParameterDirection.Input;
-                oraParamGUID1.Value = guID1;
-                oraAdd.Parameters.Add(oraParamGUID1);
+                OracleParameter oraParamNOM1 = new OracleParameter("pNOM1", OracleDbType.Varchar2, 12);
+                oraParamNOM1.Direction = ParameterDirection.Input;
+                oraParamNOM1.Value = nom1;
+                oraAdd.Parameters.Add(oraParamNOM1);
 
                 OracleParameter oraParamKills1 = new OracleParameter("pKILLS1", OracleDbType.Int32);
                 oraParamKills1.Direction = ParameterDirection.Input;
@@ -419,10 +419,10 @@ namespace ControleBD
                 oraAdd.Parameters.Add(oraParamIsDead1);
                 ////////////////////////////////////
                 // Character 2
-                OracleParameter oraParamGUID2 = new OracleParameter("pGUID2", OracleDbType.Int32);
-                oraParamGUID2.Direction = ParameterDirection.Input;
-                oraParamGUID2.Value = guID2;
-                oraAdd.Parameters.Add(oraParamGUID2);
+                OracleParameter oraParamNOM2 = new OracleParameter("pNOM2", OracleDbType.Varchar2, 12);
+                oraParamNOM2.Direction = ParameterDirection.Input;
+                oraParamNOM2.Value = nom2;
+                oraAdd.Parameters.Add(oraParamNOM2);
 
                 OracleParameter oraParamKills2 = new OracleParameter("pKILLS2", OracleDbType.Int32);
                 oraParamKills2.Direction = ParameterDirection.Input;
@@ -435,10 +435,10 @@ namespace ControleBD
                 oraAdd.Parameters.Add(oraParamIsDead2);
                 ////////////////////////////////////
                 // Character 3
-                OracleParameter oraParamGUID3 = new OracleParameter("pGUID3", OracleDbType.Int32);
-                oraParamGUID3.Direction = ParameterDirection.Input;
-                oraParamGUID3.Value = guID3;
-                oraAdd.Parameters.Add(oraParamGUID3);
+                OracleParameter oraParamNOM3 = new OracleParameter("pNOM3", OracleDbType.Varchar2, 12);
+                oraParamNOM3.Direction = ParameterDirection.Input;
+                oraParamNOM3.Value = nom3;
+                oraAdd.Parameters.Add(oraParamNOM3);
 
                 OracleParameter oraParamKills3 = new OracleParameter("pKILLS3", OracleDbType.Int32);
                 oraParamKills3.Direction = ParameterDirection.Input;
@@ -451,10 +451,10 @@ namespace ControleBD
                 oraAdd.Parameters.Add(oraParamIsDead3);
                 ////////////////////////////////////
                 // Character 4
-                OracleParameter oraParamGUID4 = new OracleParameter("pGUID4", OracleDbType.Int32);
-                oraParamGUID4.Direction = ParameterDirection.Input;
-                oraParamGUID4.Value = guID4;
-                oraAdd.Parameters.Add(oraParamGUID4);
+                OracleParameter oraParamNOM4 = new OracleParameter("pNOM4", OracleDbType.Varchar2, 12);
+                oraParamNOM4.Direction = ParameterDirection.Input;
+                oraParamNOM4.Value = nom4;
+                oraAdd.Parameters.Add(oraParamNOM4);
 
                 OracleParameter oraParamKills4 = new OracleParameter("pKILLS4", OracleDbType.Int32);
                 oraParamKills4.Direction = ParameterDirection.Input;
@@ -473,10 +473,10 @@ namespace ControleBD
                 oraParamJID2.Value = jID2;
                 oraAdd.Parameters.Add(oraParamJID2);
                 // Character 5
-                OracleParameter oraParamGUID5 = new OracleParameter("pGUID5", OracleDbType.Int32);
-                oraParamGUID5.Direction = ParameterDirection.Input;
-                oraParamGUID5.Value = guID5;
-                oraAdd.Parameters.Add(oraParamGUID5);
+                OracleParameter oraParamNOM5 = new OracleParameter("pNOM5", OracleDbType.Varchar2, 12);
+                oraParamNOM5.Direction = ParameterDirection.Input;
+                oraParamNOM5.Value = nom5;
+                oraAdd.Parameters.Add(oraParamNOM5);
 
                 OracleParameter oraParamKills5 = new OracleParameter("pKILLS5", OracleDbType.Int32);
                 oraParamKills5.Direction = ParameterDirection.Input;
@@ -489,10 +489,10 @@ namespace ControleBD
                 oraAdd.Parameters.Add(oraParamIsDead5);
                 ////////////////////////////////////
                 // Character 6
-                OracleParameter oraParamGUID6 = new OracleParameter("pGUID6", OracleDbType.Int32);
-                oraParamGUID6.Direction = ParameterDirection.Input;
-                oraParamGUID6.Value = guID6;
-                oraAdd.Parameters.Add(oraParamGUID6);
+                OracleParameter oraParamNOM6 = new OracleParameter("pNOM6", OracleDbType.Varchar2, 12);
+                oraParamNOM6.Direction = ParameterDirection.Input;
+                oraParamNOM6.Value = nom6;
+                oraAdd.Parameters.Add(oraParamNOM6);
 
                 OracleParameter oraParamKills6 = new OracleParameter("pKILLS6", OracleDbType.Int32);
                 oraParamKills6.Direction = ParameterDirection.Input;
@@ -505,10 +505,10 @@ namespace ControleBD
                 oraAdd.Parameters.Add(oraParamIsDead6);
                 ////////////////////////////////////
                 // Character 7
-                OracleParameter oraParamGUID7 = new OracleParameter("pGUID7", OracleDbType.Int32);
-                oraParamGUID7.Direction = ParameterDirection.Input;
-                oraParamGUID7.Value = guID7;
-                oraAdd.Parameters.Add(oraParamGUID7);
+                OracleParameter oraParamNOM7 = new OracleParameter("pNOM7", OracleDbType.Varchar2, 12);
+                oraParamNOM7.Direction = ParameterDirection.Input;
+                oraParamNOM7.Value = nom7;
+                oraAdd.Parameters.Add(oraParamNOM7);
 
                 OracleParameter oraParamKills7 = new OracleParameter("pKILLS7", OracleDbType.Int32);
                 oraParamKills7.Direction = ParameterDirection.Input;
@@ -521,10 +521,10 @@ namespace ControleBD
                 oraAdd.Parameters.Add(oraParamIsDead7);
                 ////////////////////////////////////
                 // Character 8
-                OracleParameter oraParamGUID8 = new OracleParameter("pGUID8", OracleDbType.Int32);
-                oraParamGUID8.Direction = ParameterDirection.Input;
-                oraParamGUID8.Value = guID8;
-                oraAdd.Parameters.Add(oraParamGUID8);
+                OracleParameter oraParamNOM8 = new OracleParameter("pNOM8", OracleDbType.Varchar2, 12);
+                oraParamNOM8.Direction = ParameterDirection.Input;
+                oraParamNOM8.Value = nom8;
+                oraAdd.Parameters.Add(oraParamNOM8);
 
                 OracleParameter oraParamKills8 = new OracleParameter("pKILLS8", OracleDbType.Int32);
                 oraParamKills8.Direction = ParameterDirection.Input;
@@ -1276,7 +1276,7 @@ namespace ControleBD
         /// <param name="doitAfficher">Affiche tous les items(0), ceux d'un joueur(1) ou ceux d'un personnages(2)</param>
         /// <param name="guid">Personnage ID</param>
         /// <returns>Le dataset rempli</returns>
-        public static DataSet listItems(bool afficherTout, int jid = 0, int doitAfficher = 0, int guid = 0)
+        public static DataSet listItems(bool afficherTout, int jid = 0, int doitAfficher = 0, int guid = 0, bool showIsActive = true)
         {
 
             DataSet monDataSet = new DataSet();
@@ -1286,7 +1286,9 @@ namespace ControleBD
                 string sql = "SELECT I.IID, NOM, CNAME AS CLASSE, \"LEVEL\" AS NIVEAU, WATK, WDEF, MATK, MDEF, ";
                 if (doitAfficher == 1)
                     sql += "QUANTITY, ";
-                sql += "ISACTIVE, PRICE AS PRIX FROM ITEMS I INNER JOIN CLASSES C ON I.CID = C.CID ";
+                if (showIsActive)
+                    sql += "ISACTIVE, ";
+                sql += "PRICE AS PRIX FROM ITEMS I INNER JOIN CLASSES C ON I.CID = C.CID ";
 
                 switch (doitAfficher)
                 {
