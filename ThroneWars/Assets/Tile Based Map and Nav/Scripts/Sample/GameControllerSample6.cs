@@ -61,8 +61,6 @@ public class GameControllerSample6 : MonoBehaviour
     private Rect _containerBox = new Rect(Screen.width - 150, 0, 150, Screen.height - 50);
     private Rect rectPlay = new Rect(Screen.width / 3, Screen.height - 50, Screen.width / 3, 50);
 
-
-
     IEnumerator Start()
     {
         // wait for a frame for everything else to start and then enable the colliders for the TielNodes
@@ -70,7 +68,6 @@ public class GameControllerSample6 : MonoBehaviour
 
         //démarrer le thread qui écoutera au serveur si l'autre joueur à fini de placer/ à quitter la partie
         ListenServer();
-
 
         //InitializeDummyEnemyUnits();
 
@@ -106,11 +103,11 @@ public class GameControllerSample6 : MonoBehaviour
         GUILayout.Window(2, rectPlay, doPlayWindow, "", GUIStyle.none);
 
         //flag thread
-        if(!PlayerManager._instance.isWaitingPlayer && !doneWaiting)
+        if (!PlayerManager._instance.isWaitingPlayer && !doneWaiting)
         {
             doneWaiting = true;
 
-            if(!PlayerManager._instance.hasWonDefault)
+            if (!PlayerManager._instance.hasWonDefault)
             {
                 Object[] allObjects = FindObjectsOfType(typeof(Character));
 
@@ -131,7 +128,7 @@ public class GameControllerSample6 : MonoBehaviour
             else
             {
                 //le joueur a gagné
-    }
+            }
         }
     }
 
