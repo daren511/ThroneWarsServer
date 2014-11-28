@@ -20,7 +20,7 @@
                 });
             });
             function calculate(e) {
-                $('#TB_Total').val($('#TB_Quantite').val() * $('#TB_Prix').val());
+                var Total = $('#TB_Total').val($('#TB_Quantite').val() * $('#TB_Prix').val());
             }
             function MessageBoxReussi() {
                 $(document).ready(function () {
@@ -34,7 +34,7 @@
             }
             function MessageBoxWarning(textadaptatif) {
                 $(document).ready(function () {
-                    swal({ title: "Attention! ", text: textadaptatif, type: "warning", confirmButtonText: "Ok" });
+                    swal({ title: "Attention! ", text: textadaptatif, type: "warning", confirmButtonText: "Ok" }, function () { window.location.assign("Connexion.aspx"); });
                 });
             }
         </script>
@@ -57,31 +57,35 @@
             </ul>
         </div>
         <div id="MagasinGV">
-            <asp:Label ID="usernameLB" runat="server">Nom d'utilisateur</asp:Label><br />
-            <asp:TextBox ID="username" TextMode="SingleLine" runat="server" Enabled="false" /><br />
-            <asp:Label ID="Label3" runat="server">Monnaie</asp:Label><br />
-            <asp:TextBox ID="TB_Monnaie"  TextMode="SingleLine" runat="server" Enabled="false" /><br />
+            <asp:Label ID="usernameLB" runat="server">Nom d'utilisateur :</asp:Label>
+            <asp:Label ID="User_Set" runat="server" Font-Bold="true"></asp:Label>
+            <asp:Label ID="MoneyLB" runat="server" >Monnaie :</asp:Label>
+            <asp:Label ID="Money_Set" runat="server" Font-Bold="true" ></asp:Label><br />
+            <asp:Button Text="Items" ID="BTN_Items" OnClick="BTN_Items_Click" runat="server"  />
+            <asp:Button Text="Potions" ID="BTN_Potions" OnClick="BTN_Potions_Click" runat="server"  /><br />
 
-            <asp:GridView runat="server" ID="GV_Magasin" OnSelectedIndexChanged="GV_Magasin_SelectedIndexChanged" OnRowDataBound="GV_Magasin_RowDataBound">
+            <asp:GridView runat="server" ID="GV_Magasin" OnSelectedIndexChanged="GV_Magasin_SelectedIndexChanged" 
+                OnRowDataBound="GV_Magasin_RowDataBound"   AllowPaging ="true" OnPageIndexChanging="GV_Magasin_PageIndexChanging" 
+                PageSize = "10" >
+                <RowStyle HorizontalAlign="Center"/>
             </asp:GridView>
-
         </div>
         <div id="MagasinInfo">
 
             <asp:Label ID="Label1" runat="server">Quantité</asp:Label><br />
-            <asp:TextBox ID="TB_Quantite" TextMode="SingleLine" runat="server" /><br />
+            <asp:TextBox ID="TB_Quantite" TextMode="SingleLine" runat="server" ClientIDMode="Static" /><br />
             <asp:RangeValidator ID="RangeValidator1" Type="Integer" MinimumValue="1"
                 MaximumValue="99" ControlToValidate="TB_Quantite" runat="server"
                 ErrorMessage="La quanité doit être entre 1 et 99"></asp:RangeValidator><br />
 
             <asp:Label ID="Label5" runat="server">Prix</asp:Label><br />
-            <asp:TextBox ID="TB_Prix" TextMode="Number" runat="server" Enabled="false" /><br />
+            <asp:TextBox ID="TB_Prix" TextMode="Number" runat="server" Enabled="false" ClientIDMode="Static"/><br />
 
             <asp:Label ID="Label2" runat="server">Total</asp:Label><br />
-            <asp:TextBox ID="TB_Total" name="Total" TextMode="Number" runat="server" Enabled="false" /><br />
+            <% TB_Total.Attributes.Add("readonly", "readonly"); %>
+            <asp:TextBox ID="TB_Total" name="Total" runat="server" ClientIDMode="Static"/><br />
             <br />
-            <asp:Label ID="Label4" runat="server">Test</asp:Label><br />
-
+          
             <asp:Button Text="Acheter" ID="BTN_Acheter" OnClick="Acheter_Click" runat="server"  /><br />
         </div>
     </form>

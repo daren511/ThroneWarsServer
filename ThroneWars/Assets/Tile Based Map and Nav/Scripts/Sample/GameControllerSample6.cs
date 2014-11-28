@@ -24,6 +24,7 @@ public class GameControllerSample6 : MonoBehaviour
     public LayerMask tilesLayer;// layer the tiles are on
     public static string scene;
     private bool hasUpdatedGui = false;
+    private bool wantToQuit = false;
 
     public static Thread thread;
     private bool doneWaiting = false;
@@ -52,8 +53,16 @@ public class GameControllerSample6 : MonoBehaviour
     private int placed = 0;
     List<GameObject> table = new List<GameObject>();
 
-    private Rect _containerBox = new Rect(Screen.width - 300, 0, 300, Screen.height);
+    // Quit window
+    private static float wQ = 275.0f;
+    private static float hQ = 110.0f;
+    private static Rect rectQuit = new Rect((Screen.width - wQ) / 2, (Screen.height - hQ) / 2, wQ, hQ);
+
+    private Rect _containerBox = new Rect(Screen.width - 150, 0, 150, Screen.height - 50);
     private Rect rectPlay = new Rect(Screen.width / 3, Screen.height - 50, Screen.width / 3, 50);
+
+
+
     IEnumerator Start()
     {
         // wait for a frame for everything else to start and then enable the colliders for the TielNodes
@@ -122,7 +131,7 @@ public class GameControllerSample6 : MonoBehaviour
             else
             {
                 //le joueur a gagné
-            }
+    }
         }
     }
 
@@ -141,8 +150,8 @@ public class GameControllerSample6 : MonoBehaviour
         {
             PlayerManager._instance.SendObject(Controle.Game.SENDPOSITIONS);
             //envoi des positions de l'équipe choisie par le joueur
-            PlayerManager._instance.SendObject<List<int>>(GameManager._instance._playerPositions);      
-     
+            PlayerManager._instance.SendObject<List<int>>(GameManager._instance._playerPositions);
+
             //splash screen en attente de l'autre joueur 
         }
     }
@@ -331,6 +340,36 @@ public class GameControllerSample6 : MonoBehaviour
                 break;
         }
         enemyFabs[pos] = Resources.Load(classPrefab, typeof(GameObject)) as GameObject;
+    }
+
+    private void doQuitWindow(int windowID)
+    {
+        GUI.BringWindowToFront(windowID);
+        // Ornament
+        GUI.DrawTexture(new Rect(20, 4, 31, 40), ColoredGUISkin.Skin.customStyles[0].normal.background);
+
+        GUILayout.Space(35);
+        GUILayout.BeginVertical();
+        GUILayout.BeginHorizontal();
+        GUILayout.Label("Êtes-vous certain de vouloir quitter?");
+        GUILayout.EndHorizontal();
+        GUILayout.BeginHorizontal();
+        GUILayout.Label("Vous allez perdre la partie.");
+        GUILayout.EndHorizontal();
+        GUILayout.EndVertical();
+        GUILayout.Space(7);
+
+        GUILayout.BeginHorizontal();
+        if (GUILayout.Button("Oui", GUILayout.Height(37)))
+        {
+            Application.LoadLevel("MainMenu");
+        }
+        if (GUILayout.Button("Non", GUILayout.Height(37)))
+        {
+            wantToQuit = false;
+        }
+        GUILayout.EndHorizontal();
+        GUILayout.Space(3);
     }
     // ====================================================================================================================
 }
