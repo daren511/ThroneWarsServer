@@ -146,6 +146,7 @@ public class GameControllerSample6 : MonoBehaviour
             {
                 //l'adversaire a abandonné la partie, le joueur a gagné
                 Debug.Log("Vous avez gagné!");
+                PlayerManager._instance.ClearPlayer(false);
                 PlayerManager._instance.LoadPlayer();
                 Application.LoadLevel("MainMenu");                
             }
@@ -380,6 +381,7 @@ public class GameControllerSample6 : MonoBehaviour
         if (GUILayout.Button("Oui", GUILayout.Height(37)))
         {
             PlayerManager._instance.SendObject(Controle.Game.CANCEL);
+            PlayerManager._instance.ClearPlayer(false);
             PlayerManager._instance.LoadPlayer();
             Application.LoadLevel("MainMenu");
         }

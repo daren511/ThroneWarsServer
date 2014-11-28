@@ -314,9 +314,9 @@ public class PlayerManager : MonoBehaviour
         }
         return list;
     }
-    public void ClearPlayer()
+    public void ClearPlayer(bool closeSocket = true)
     {
-        if (sck.Connected)
+        if (closeSocket && sck.Connected)
         {
             sck.Close();
             sck = null;
