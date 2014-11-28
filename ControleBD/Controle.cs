@@ -13,7 +13,7 @@ namespace ControleBD
     {
         private static int SaltValueSize = 16;
         public enum Actions { CLICK, CREATE, DELETE, START_GAME , EQUIP, UNEQUIP , NOTHING, QUIT, STATS, ITEMS};
-        public enum Game {FOUND, ATTAQUE }
+        public enum Game { QUIT, ATTAQUE, SENDPOSITIONS };
         //-------------------------------------INSERT / UPDATE / DELETE PLAYER-------------------------------------------
 
         public static bool insertPlayer(string username, string email, string password)
@@ -287,6 +287,10 @@ namespace ControleBD
                 oraCreate.CommandText = "PACK_MATCHS.CREATE_MATCH";
                 oraCreate.CommandType = CommandType.StoredProcedure;
 
+                OracleParameter OraParamID = new OracleParameter("MATCH_ID", OracleDbType.Int32);
+                OraParamID.Direction = ParameterDirection.ReturnValue;
+                oraCreate.Parameters.Add(OraParamID);
+
                 OracleParameter oraParamJID = new OracleParameter("pJID", OracleDbType.Int32);
                 oraParamJID.Direction = ParameterDirection.Input;
                 oraParamJID.Value = jID;
@@ -317,12 +321,10 @@ namespace ControleBD
                 oraParamNOM4.Value = nom4;
                 oraCreate.Parameters.Add(oraParamNOM4);
 
-                OracleParameter OraParamID = new OracleParameter("MATCH_ID", OracleDbType.Int32);
-                OraParamID.Direction = ParameterDirection.ReturnValue;
-                oraCreate.Parameters.Add(OraParamID);
+                
 
                 oraCreate.ExecuteScalar();
-                return int.Parse(OraParamID.Value.ToString()); ;
+                return Int32.Parse(OraParamID.Value.ToString()); ;
             }
             catch (OracleException ex)
             {

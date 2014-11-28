@@ -82,6 +82,7 @@ namespace ThroneWarsServer
                 Joueur1.positionsPersonnages = RecevoirObjet<int>(Joueur2);
                 envoyerObjet(Joueur2.positionsPersonnages, Joueur1);
                 envoyerObjet(Joueur1.positionsPersonnages, Joueur2);
+
             }
             catch(Exception)
             {
