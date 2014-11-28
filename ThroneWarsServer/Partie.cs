@@ -15,26 +15,27 @@ namespace ThroneWarsServer
         private int mId;
         private const char SPLITTER = '?';
         public Thread T;
-        private Joueur Joueur1;
-        private Joueur Joueur2;
+        private Joueur player1;
+        private Joueur player2;
         public bool isFull = false;
-        
+        public bool isWon = false;
+
         public Partie(Joueur J)
         {
-            Joueur1 = J;
+            player1 = J;
             T = new Thread(new ThreadStart(Run));
         }
         public void addJoueur(Joueur j)
         {
-            if (Joueur2 == null)
+            if (player2 == null)
             {
-                Joueur2 = j;
+                player2 = j;
             }
-            else if (Joueur1 == null)
+            else if (player1 == null)
             {
-                Joueur1 = j;
+                player1 = j;
             }
-            if (!dcInactivePlayer() && Joueur1 != null && Joueur2 != null)
+            if (!dcInactivePlayer() && player1 != null && player2 != null)
             {
                 isFull = true;
                 this.T.Start();
@@ -46,16 +47,16 @@ namespace ThroneWarsServer
         public bool dcInactivePlayer()
         {
             bool aPlayerIsInactive = false;
-            if (Joueur1 != null && !Joueur1.socketIsConnected())
+            if (player1 != null && !player1.socketIsConnected())
             {
-                Joueur1.isConnected = false;
-                Joueur1 = null;
+                player1.isConnected = false;
+                player1 = null;
                 aPlayerIsInactive = true;
             }
-            if (Joueur2 != null && !Joueur2.socketIsConnected())
+            if (player2 != null && !player2.socketIsConnected())
             {
-                Joueur2.isConnected = false;
-                Joueur2 = null;
+                player2.isConnected = false;
+                player2 = null;
                 aPlayerIsInactive = true;
             }
 
@@ -70,89 +71,125 @@ namespace ThroneWarsServer
         {
             try
             {
-                startGame();
-                bool player1Placed = false;
-                bool player2Placed = false;
-                while(!player1Placed && !player2Placed)
+                prepareGame();
+                bool player1PlacedOrHasQuitted = false;
+                bool player2PlacedOrHasQuitted = false;
+                while (!player1PlacedOrHasQuitted || !player2PlacedOrHasQuitted)
                 {
                     Controle.Game Action;
                     try
                     {
-                        Joueur1.Socket.Blocking = false;
-                        Action = recevoirChoix(Joueur1);
-                        Joueur1.Socket.Blocking = true;
+                        player1.Socket.Blocking = false;
+                        Action = recevoirChoix(player1);
+                        player1.Socket.Blocking = true;
                     }
-                    catch(Exception){Action = Controle.Game.NOTHING;}
-                    switch(Action)
+                    catch (Exception) { Action = Controle.Game.NOTHING; }
+                    switch (Action)
                     {
                         case Controle.Game.NOTHING:
                             break;
                         case Controle.Game.SENDPOSITIONS:
-
+                            player1.positionsPersonnages = RecevoirObjet<int>(player1);
+                            player1PlacedOrHasQuitted = true;
                             break;
-                        case Controle.Game.QUIT:
-
+                        case Controle.Game.QUIT: 
+                            envoyerObjet(Controle.Game.QUIT, player2);
+                            updateWinner(player2);
+                            player1PlacedOrHasQuitted = true;
+                            player1.isConnected = false;
                             break;
 
                         case Controle.Game.CANCEL:
-
+                            envoyerObjet(Controle.Game.QUIT, player2);
+                            updateWinner(player2);
+                            player1PlacedOrHasQuitted = true;
+                            Program.addGoToMenu(player1);
                             break;
                     }
                     try
                     {
-                        Joueur2.Socket.Blocking = false;
-                        Action = recevoirChoix(Joueur2);
-                        Joueur2.Socket.Blocking = true;
+                        player2.Socket.Blocking = false;
+                        Action = recevoirChoix(player2);
+                        player2.Socket.Blocking = true;
                     }
-                    catch(Exception){Action = Controle.Game.NOTHING;}
-                    switch(Action)
+                    catch (Exception) { Action = Controle.Game.NOTHING; }
+                    switch (Action)
                     {
                         case Controle.Game.NOTHING:
                             break;
                         case Controle.Game.SENDPOSITIONS:
-
+                            player2.positionsPersonnages = RecevoirObjet<int>(player2);
+                            player2PlacedOrHasQuitted = true;
                             break;
                         case Controle.Game.QUIT:
-
+                            envoyerObjet(Controle.Game.QUIT, player1);
+                            updateWinner(player1);
+                            player2PlacedOrHasQuitted = true;
+                            player2.isConnected = false;
                             break;
 
                         case Controle.Game.CANCEL:
-
+                            envoyerObjet(Controle.Game.QUIT, player1);
+                            updateWinner(player1);
+                            player2PlacedOrHasQuitted = true;
+                            Program.addGoToMenu(player2);
                             break;
                     }
                 }
+                //la partie debute ou un joueur a quitter
+                if(!isWon)
+                {
+                    //jouation
+                }
 
-                if (recevoirChoix(Joueur2) != Controle.Game.QUIT)
-                {
-                    envoyerObjet(Controle.Game.OK,Joueur2);
-                    envoyerObjet(Joueur1.Persos, Joueur2);
-                    Joueur1.positionsPersonnages = RecevoirObjet<int>(Joueur2);
-                }
-                else
-                {
-                    
-                }
-                envoyerObjet(Joueur2.Persos, Joueur1);
-                Joueur1.positionsPersonnages = RecevoirObjet<int>(Joueur1);
-               
-                envoyerObjet(Joueur2.positionsPersonnages, Joueur1);
-                envoyerObjet(Joueur1.positionsPersonnages, Joueur2);
+                //if (recevoirChoix(player2) != Controle.Game.QUIT)
+                //{
+                //    envoyerObjet(Controle.Game.OK, player2);
+                //    envoyerObjet(player1.Persos, player2);
+                //    player1.positionsPersonnages = RecevoirObjet<int>(player2);
+                //}
+                //else
+                //{
+
+                //}
+                //envoyerObjet(player2.Persos, player1);
+                //player1.positionsPersonnages = RecevoirObjet<int>(player1);
+
+                //envoyerObjet(player2.positionsPersonnages, player1);
+                //envoyerObjet(player1.positionsPersonnages, player2);
 
             }
-            catch(Exception)
+            catch (Exception)
             {
 
             }
             this.T.Abort();
         }
-        private void startGame()
+
+        private void updateWinner(Joueur j)
         {
-            envoyerReponse("1", Joueur1);
-            envoyerReponse("2", Joueur2);
-            Joueur1.Persos = RecevoirObjet<Personnages>(Joueur1);
-            Joueur2.Persos = RecevoirObjet<Personnages>(Joueur2);
-            this.mId = Controle.createMatch(Joueur1.jid, 1, Joueur1.Persos[0].Nom, Joueur1.Persos[1].Nom, Joueur1.Persos[2].Nom, Joueur1.Persos[3].Nom);
-            Controle.addPlayerMatch(this.mId, Joueur2.jid, Joueur2.Persos[0].Nom, Joueur2.Persos[1].Nom, Joueur2.Persos[2].Nom, Joueur2.Persos[3].Nom);
+            Controle.updateMatch(this.mId, j.jid, player1.jid,
+                        player1.Persos[0].Nom, player1.Persos[0].kills, Convert.ToInt32(player1.Persos[0].idDead).ToString()[0],
+                        player1.Persos[1].Nom, player1.Persos[1].kills, Convert.ToInt32(player1.Persos[1].idDead).ToString()[0],
+                        player1.Persos[2].Nom, player1.Persos[2].kills, Convert.ToInt32(player1.Persos[2].idDead).ToString()[0],
+                        player1.Persos[3].Nom, player1.Persos[3].kills, Convert.ToInt32(player1.Persos[3].idDead).ToString()[0],
+                        player2.jid,
+                        player2.Persos[0].Nom, player2.Persos[0].kills, Convert.ToInt32(player2.Persos[0].idDead).ToString()[0],
+                        player2.Persos[1].Nom, player2.Persos[1].kills, Convert.ToInt32(player2.Persos[1].idDead).ToString()[0],
+                        player2.Persos[2].Nom, player2.Persos[2].kills, Convert.ToInt32(player2.Persos[2].idDead).ToString()[0],
+                        player2.Persos[3].Nom, player2.Persos[3].kills, Convert.ToInt32(player2.Persos[3].idDead).ToString()[0]
+                        );
+            isWon = true;
+        }
+
+        private void prepareGame()
+        {
+            envoyerReponse("1", player1);
+            envoyerReponse("2", player2);
+            player1.Persos = RecevoirObjet<Personnages>(player1);
+            player2.Persos = RecevoirObjet<Personnages>(player2);
+            this.mId = Controle.createMatch(player1.jid, 1, player1.Persos[0].Nom, player1.Persos[1].Nom, player1.Persos[2].Nom, player1.Persos[3].Nom);
+            Controle.addPlayerMatch(this.mId, player2.jid, player2.Persos[0].Nom, player2.Persos[1].Nom, player2.Persos[2].Nom, player2.Persos[3].Nom);
         }
         private List<T> RecevoirObjet<T>(Joueur j)
         {

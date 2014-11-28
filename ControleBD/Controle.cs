@@ -365,7 +365,7 @@ namespace ControleBD
         /// <param name="kills8">Character8 kills</param>
         /// <param name="isDead8">If player2's fourth character is dead</param>
         /// <returns>True if the function worked</returns>
-        private static bool updateMatch(int mID, int winner,
+        public static bool updateMatch(int mID, int winner,
                                         int jID1,
                                         string nom1, int kills1, char isDead1,
                                         string nom2, int kills2, char isDead2,

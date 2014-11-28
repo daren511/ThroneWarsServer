@@ -18,11 +18,13 @@ namespace ThroneWarsServer
         static List<Joueur> v = new List<Joueur>();
         static List<Joueur> queue = new List<Joueur>();
         static List<Partie> games = new List<Partie>();
+        static List<Joueur> playersWantingMainMenu = new List<Joueur>();
         static Socket sckserver;
         static Socket sck1;
         static Mutex mJoueur = new Mutex();
         static Mutex mQueue = new Mutex();
         static Mutex mGame = new Mutex();
+        static Mutex mMainMenu = new Mutex();
         /// <summary>
         /// Verifie si le socket est connecte
         /// </summary>
@@ -32,6 +34,17 @@ namespace ThroneWarsServer
         {
             return !(s.Poll(1000, SelectMode.SelectRead) && s.Available == 0);
         }
+        /// <summary>
+        /// Ajoute un joueur pour recreer un thread de Instance ( le menu principale)
+        /// </summary>
+        /// <param name="j">Joueur a etre ajouter dans la liste</param>
+        public static void addGoToMenu(Joueur j)
+        {
+            mMainMenu.WaitOne();
+            playersWantingMainMenu.Add(j);
+            mMainMenu.ReleaseMutex();
+        }
+
         /// <summary>
         /// Verifie si le joueur passer en parametre est deja connecter
         /// </summary>
@@ -46,7 +59,7 @@ namespace ThroneWarsServer
                 if (player.Username == j.Username) { count++; }
             }
             mJoueur.ReleaseMutex();
-            //si le joueur est different de 1 puisque 1 est le joueur lui meme puisqu'il est deja ajouter a la liste de joueurs 
+            //si le chiffre retourne est autre que 1 alors le joueur est deja connecter (1 represente le joueur (lui meme) qui tente la connection) 
             return count != 1;
         }
         /// <summary>
@@ -127,6 +140,18 @@ namespace ThroneWarsServer
                 {
                     games[findFreeGame()].dcInactivePlayer(); // on deconnecte les joueur inactif de la partie
                 }
+
+                if(playersWantingMainMenu.Count > 1)// si des joueur veulent retourne au menu principale
+                {
+                    mMainMenu.WaitOne();
+                    foreach(Joueur j in playersWantingMainMenu)
+                    {
+                        new Instance(j).T.Start(); // on recreer une instance et on la demarre
+                    }
+                    playersWantingMainMenu.Clear(); // on vide la liste
+                    mMainMenu.ReleaseMutex();
+                }
+                
                 if(v.Count != 0) // si il y a des joueurs
                 {
                     for (int i = 0; i < v.Count;++i)

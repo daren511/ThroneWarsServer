@@ -34,6 +34,9 @@ namespace ControleBD
             MagicAtk = matk;
             MagicDef = mdef;
         }
+        public bool idDead = false;
+
+        public int kills = 0;
         public int ClassId { get;  set; }
 
         public string ClassName {get; set;}
