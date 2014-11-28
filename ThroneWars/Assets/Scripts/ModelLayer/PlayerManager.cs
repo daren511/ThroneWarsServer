@@ -331,6 +331,7 @@ public class PlayerManager : MonoBehaviour
         {
             Destroy(_chosenTeam[i]);
         }
+        _chosenTeam.Clear();
         onStartUp.alreadyConnected = false;
     }
     public Personnages GetDefaultStats(string name)
