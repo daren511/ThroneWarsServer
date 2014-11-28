@@ -29,6 +29,7 @@ public class GameControllerSample6 : MonoBehaviour
     public static Thread thread;
     private bool doneWaiting = false;
     private bool isLoading = false;
+    private bool hasWon = false;
 
     // Character stats
     public string charName = "",
@@ -62,6 +63,10 @@ public class GameControllerSample6 : MonoBehaviour
     private static float wL = 275.0f;
     private static float hL = 115.0f;
     private static Rect rectLoading = new Rect((Screen.width - wL) / 2, (Screen.height - hL) / 2, wL, hL);
+    // Winning window
+    private static float wW = 275.0f;
+    private static float hW = 115.0f;
+    private static Rect rectWinning = new Rect((Screen.width - wW) / 2, (Screen.height - hW) / 2, wW, hW);
 
     private Rect _containerBox = new Rect(Screen.width - 150, 0, 150, Screen.height - 50);
     private Rect rectPlay = new Rect(Screen.width / 3, Screen.height - 50, Screen.width / 3, 50);
@@ -108,7 +113,7 @@ public class GameControllerSample6 : MonoBehaviour
         if (!isLoading)
             GUILayout.Window(2, rectPlay, doPlayWindow, "", GUIStyle.none);
 
-        if (!isLoading)
+        if (!isLoading || !hasWon)
         {
             if (GUI.Button(new Rect(Screen.width - 150, Screen.height - 50, 150, 50), "Quitter"))
                 wantToQuit = true;
@@ -145,10 +150,10 @@ public class GameControllerSample6 : MonoBehaviour
             else
             {
                 //l'adversaire a abandonné la partie, le joueur a gagné
-                Debug.Log("Vous avez gagné!");
-                PlayerManager._instance.ClearPlayer(false);
-                PlayerManager._instance.LoadPlayer();
-                Application.LoadLevel("MainMenu");                
+                isLoading = false;
+                wantToQuit = false;
+                hasWon = true;
+                GUILayout.Window(-10, rectWinning, doWinningWindow, "Gagné!");          
             }
         }
     }
@@ -407,6 +412,30 @@ public class GameControllerSample6 : MonoBehaviour
         GUILayout.FlexibleSpace();
         if (GUILayout.Button("Quitter", GUILayout.Height(37)))
             wantToQuit = true;
+        GUILayout.EndHorizontal();
+        GUILayout.Space(3);
+    }
+
+    private void doWinningWindow(int windowID)
+    {
+        GUI.BringWindowToFront(windowID);
+        // Ornament
+        GUI.DrawTexture(new Rect(20, 4, 31, 40), ColoredGUISkin.Skin.customStyles[0].normal.background);
+
+        GUILayout.Space(20);
+        GUILayout.BeginHorizontal();
+        GUILayout.Label("Félicitation, vous avez gagné!");
+        GUILayout.EndHorizontal();
+
+        GUILayout.BeginHorizontal();
+        GUILayout.FlexibleSpace();
+        if (GUILayout.Button("Retour au menu principal", GUILayout.Height(37)))
+        {
+            hasWon = false;
+            PlayerManager._instance.ClearPlayer(false);
+            PlayerManager._instance.LoadPlayer();
+            Application.LoadLevel("MainMenu");
+        }
         GUILayout.EndHorizontal();
         GUILayout.Space(3);
     }
