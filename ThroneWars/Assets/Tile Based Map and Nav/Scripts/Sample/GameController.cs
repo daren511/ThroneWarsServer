@@ -165,21 +165,15 @@ public class GameController : TMNController
     }
     private void SpawnEnemyUnits()
     {
-
-        GameManager._instance._enemyPositions.Add(378);
-        GameManager._instance._enemyPositions.Add(402);
-        GameManager._instance._enemyPositions.Add(403);
-        GameManager._instance._enemyPositions.Add(379);
-
         for (int i = 0; i < GameManager._instance._enemyTeam.Count; ++i)
         {
-            Character unitFab = GameManager._instance._enemyTeam[i]; //enemyFabs[i].GetComponent<Character>();
+            Character unitFab = enemyFabs[i].GetComponent<Character>();
 
             TileNode node = null;
 
             unitFab._name = GameManager._instance._enemyTeam[i]._name;
             unitFab._maxHealth = GameManager._instance._enemyTeam[i]._maxHealth;
-            unitFab._currHealth = 1;//GameManager._instance._enemyTeam[i]._currHealth;
+            unitFab._currHealth = GameManager._instance._enemyTeam[i]._currHealth;
             unitFab._isAlive = unitFab._currHealth > 0;
             unitFab._maxMagic = GameManager._instance._enemyTeam[i]._maxMagic;
             unitFab._currMagic = GameManager._instance._enemyTeam[i]._currMagic;
