@@ -34,7 +34,7 @@
             }
             function MessageBoxWarning(textadaptatif) {
                 $(document).ready(function () {
-                    swal({ title: "Attention! ", text: textadaptatif, type: "warning", confirmButtonText: "Ok" });
+                    swal({ title: "Attention! ", text: textadaptatif, type: "warning", confirmButtonText: "Ok" }, function () { window.location.assign("Connexion.aspx"); });
                 });
             }
         </script>
@@ -57,22 +57,18 @@
             </ul>
         </div>
         <div id="MagasinGV">
-            <asp:Label ID="usernameLB" runat="server">Nom d'utilisateur</asp:Label><br />
-            <asp:TextBox ID="username" TextMode="SingleLine" runat="server" Enabled="false" /><br />
-            <asp:Label ID="Label3" runat="server">Monnaie</asp:Label><br />
-            <asp:TextBox ID="TB_Monnaie"  TextMode="SingleLine" runat="server" Enabled="false" /><br />
+            <asp:Label ID="usernameLB" runat="server">Nom d'utilisateur :</asp:Label>
+            <asp:Label ID="User_Set" runat="server" Font-Bold="true"></asp:Label>
+            <asp:Label ID="MoneyLB" runat="server" >Monnaie :</asp:Label>
+            <asp:Label ID="Money_Set" runat="server" Font-Bold="true" ></asp:Label><br />
             <asp:Button Text="Items" ID="BTN_Items" OnClick="BTN_Items_Click" runat="server"  />
             <asp:Button Text="Potions" ID="BTN_Potions" OnClick="BTN_Potions_Click" runat="server"  /><br />
 
-
             <asp:GridView runat="server" ID="GV_Magasin" OnSelectedIndexChanged="GV_Magasin_SelectedIndexChanged" 
-                OnRowDataBound="GV_Magasin_RowDataBound" AllowPaging ="true" OnPageIndexChanging="GV_Magasin_PageIndexChanging" 
-                PageSize = "10">
+                OnRowDataBound="GV_Magasin_RowDataBound"   AllowPaging ="true" OnPageIndexChanging="GV_Magasin_PageIndexChanging" 
+                PageSize = "10" >
+                <RowStyle HorizontalAlign="Center"/>
             </asp:GridView>
-            
-
-
-
         </div>
         <div id="MagasinInfo">
 

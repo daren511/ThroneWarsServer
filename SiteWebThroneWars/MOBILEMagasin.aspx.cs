@@ -20,40 +20,64 @@ namespace SiteWebThroneWars
         }
         protected void isSessionOn()
         {
+            if (!IsPostBack)
+            {
+                Session["GV"] = "NotPostBack";
+            }
             if (Session["username"] != null)
             {
-                username.Text = Session["username"].ToString();
-                TB_Monnaie.Text = Controle.GetJoueurMoney(username.Text).ToString();
-                ListerItems();
+                string test = Session["GV"].ToString();
+                User_Set.Text = Session["username"].ToString();
+                Money_Set.Text = Controle.GetJoueurMoney(User_Set.Text).ToString();
+                if (Session["GV"].ToString() == "Items")
+                {
+                    ListerItems();
+                }
+                else if (Session["GV"].ToString() == "Potions")
+                {
+                    ListerItems();
+                }
             }
 
             else
             {
-                string text = "Veuillez vous connecter";
+                string text = "Veuillez vous connecter avant d'accéder au magasin";
                 //Textbox vide erreur
                 ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>MessageBoxWarning(\"" + text + "\");</script>", false);
-                Response.Redirect("Connexion.aspx");
             }
         }
 
         protected void Acheter_Click(object sender, EventArgs e)
         {
-            if (TB_Quantite != null)
+            if (TB_Quantite.Text != "")
             {
-                int test = 0;
-
-                if (test != 0)//changer juste paour pas compilé
+                if (TB_Prix.Text != "")
                 {
-                    int JID = Controle.getJID(Session["username"].ToString());
-                    int ItemID = Int32.Parse(Session["ItemID"].ToString());
-                    //Fonction dans controle qui ajouter au compte l'item ID dans ItemID
-                    Controle.addItemInventaire(ItemID, JID, Int32.Parse(TB_Quantite.Text));
-                    ViderTB();
-                    ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>MessageBoxReussi();</script>", false);
+                    if (Int32.Parse(TB_Total.Text) <= Int32.Parse(Money_Set.Text))
+                    {
+                        int JID = Controle.getJID(Session["username"].ToString());
+                        int ItemID = Int32.Parse(Session["ItemID"].ToString());
+                        if (Session["GV"].ToString() == "Items")
+                            Controle.addItemInventaire(ItemID, JID, Int32.Parse(TB_Quantite.Text));
+                        else if (Session["GV"].ToString() == "Potions")
+                            Controle.addPotionJoueurs(ItemID, JID, Int32.Parse(TB_Quantite.Text));
+
+                        Controle.RetirerTotalFromMoney(Int32.Parse(TB_Total.Text), Int32.Parse(Money_Set.Text), JID);
+                        Money_Set.Text = Controle.GetJoueurMoney(User_Set.Text).ToString();
+
+                        ViderTB();
+                        ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>MessageBoxReussi();</script>", false);
+                    }
+                    else
+                    {
+                        string text = "Vous n'avez pas assez de monnaie";
+                        ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>MessageBoxErreur(\"" + text + "\");</script>", false);
+                        ViderTB();
+                    }
                 }
                 else
                 {
-                    string text = "Vous n'avez pas assez de monnaie";
+                    string text = "Veuillez sélectionner un item";
                     ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>MessageBoxErreur(\"" + text + "\");</script>", false);
                     ViderTB();
                 }
@@ -71,7 +95,10 @@ namespace SiteWebThroneWars
         {
             DataSet DSMagasin = new DataSet();
 
-            DSMagasin = Controle.listItems(false);
+            if (Session["GV"].ToString() == "Items")
+                DSMagasin = Controle.listItems(false, 0, 0, 0, false);
+            else if (Session["GV"].ToString() == "Potions")
+                DSMagasin = Controle.listPotions(0, 0);
             if (DSMagasin != null)
             {
                 GV_Magasin.DataSource = DSMagasin;
@@ -79,26 +106,26 @@ namespace SiteWebThroneWars
             }
         }
 
+
         protected void GV_Magasin_SelectedIndexChanged(object sender, EventArgs e)
         {
             ViderTB();
             GridViewRow IDItem = GV_Magasin.SelectedRow;
             ItemID = Int32.Parse(IDItem.Cells[0].Text);
             Session["ItemID"] = ItemID;
-            Prix = Int32.Parse(IDItem.Cells[9].Text);
+            Prix = Int32.Parse(IDItem.Cells[8].Text);
             TB_Prix.Text = Prix.ToString();
         }
         protected void GV_Magasin_RowDataBound(object sender, GridViewRowEventArgs e)
         {
-            e.Row.Cells[8].Visible = false;
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
-
                 e.Row.Attributes.Add("onmouseover", "this.style.backgroundColor='#D2E6F8'");
                 e.Row.Attributes.Add("onmouseout", "this.style.backgroundColor='#219ac2'");
                 e.Row.Attributes["style"] = "cursor:pointer";
                 e.Row.Attributes["onclick"] = ClientScript.GetPostBackEventReference(GV_Magasin, "Select$" + e.Row.RowIndex.ToString());
             }
+
         }
         protected void ViderTB()
         {
@@ -106,5 +133,24 @@ namespace SiteWebThroneWars
             TB_Total.Text = "";
             TB_Prix.Text = "";
         }
+
+        protected void GV_Magasin_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            GV_Magasin.PageIndex = e.NewPageIndex;
+            GV_Magasin.DataBind();
+        }
+        protected void BTN_Items_Click(object sender, EventArgs e)
+        {
+            Session["GV"] = "Items";
+            ListerItems();
+        }
+
+        protected void BTN_Potions_Click(object sender, EventArgs e)
+        {
+            Session["GV"] = "Potions";
+            ListerItems();
+        }
+
     }
+
 }

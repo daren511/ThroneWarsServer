@@ -14,7 +14,6 @@ namespace SiteWebThroneWars
     {
         int ItemID = 0;
         int Prix = 0;
-        string GVCurrent = "";
         protected void Page_Load(object sender, EventArgs e)
         {
             isSessionOn();
@@ -27,9 +26,8 @@ namespace SiteWebThroneWars
             }
             if (Session["username"] != null)
             {
-                string test = Session["GV"].ToString();
-                username.Text = Session["username"].ToString();
-                TB_Monnaie.Text = Controle.GetJoueurMoney(username.Text).ToString();
+                User_Set.Text = Session["username"].ToString();
+                Money_Set.Text = Controle.GetJoueurMoney(User_Set.Text).ToString();
                 if (Session["GV"].ToString() == "Items")
                 {
                     ListerItems();
@@ -42,35 +40,43 @@ namespace SiteWebThroneWars
 
             else
             {
-                string text = "Veuillez vous connecter";
+                string text = "Veuillez vous connecter avant d'accéder au magasin";
                 //Textbox vide erreur
                 ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>MessageBoxWarning(\"" + text + "\");</script>", false);
-                Response.Redirect("Connexion.aspx");
             }
         }
 
         protected void Acheter_Click(object sender, EventArgs e)
         {
-            if (TB_Quantite != null)
+            if (TB_Quantite.Text != "")
             {
-                if (Int32.Parse(TB_Total.Text) <= Int32.Parse(TB_Monnaie.Text))
+                if (TB_Prix.Text != "")
                 {
-                    int JID = Controle.getJID(Session["username"].ToString());
-                    int ItemID = Int32.Parse(Session["ItemID"].ToString());
-                    if (GVCurrent == "Items")
-                        Controle.addItemInventaire(ItemID, JID, Int32.Parse(TB_Quantite.Text));
-                    else if (GVCurrent == "Potions")
-                        Controle.addPotionJoueurs(ItemID, JID, Int32.Parse(TB_Quantite.Text));
+                    if (Int32.Parse(TB_Total.Text) <= Int32.Parse(Money_Set.Text))
+                    {
+                        int JID = Controle.getJID(Session["username"].ToString());
+                        int ItemID = Int32.Parse(Session["ItemID"].ToString());
+                        if (Session["GV"].ToString() == "Items")
+                            Controle.addItemInventaire(ItemID, JID, Int32.Parse(TB_Quantite.Text));
+                        else if (Session["GV"].ToString() == "Potions")
+                            Controle.addPotionJoueurs(ItemID, JID, Int32.Parse(TB_Quantite.Text));
 
-                    Controle.RetirerTotalFromMoney(Int32.Parse(TB_Total.Text), Int32.Parse(TB_Monnaie.Text), JID);
-                    TB_Monnaie.Text = Controle.GetJoueurMoney(username.Text).ToString();
+                        Controle.RetirerTotalFromMoney(Int32.Parse(TB_Total.Text), Int32.Parse(Money_Set.Text), JID);
+                        Money_Set.Text = Controle.GetJoueurMoney(User_Set.Text).ToString();
 
-                    ViderTB();
-                    ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>MessageBoxReussi();</script>", false);
+                        ViderTB();
+                        ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>MessageBoxReussi();</script>", false);
+                    }
+                    else
+                    {
+                        string text = "Vous n'avez pas assez de monnaie";
+                        ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>MessageBoxErreur(\"" + text + "\");</script>", false);
+                        ViderTB();
+                    }
                 }
                 else
                 {
-                    string text = "Vous n'avez pas assez de monnaie";
+                    string text = "Veuillez sélectionner un item";
                     ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>MessageBoxErreur(\"" + text + "\");</script>", false);
                     ViderTB();
                 }
@@ -135,14 +141,12 @@ namespace SiteWebThroneWars
         protected void BTN_Items_Click(object sender, EventArgs e)
         {
             Session["GV"] = "Items";
-            GVCurrent = "Items";
             ListerItems();
         }
 
         protected void BTN_Potions_Click(object sender, EventArgs e)
         {
             Session["GV"] = "Potions";
-            GVCurrent = "Potions";
             ListerItems();
         }
         

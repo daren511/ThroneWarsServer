@@ -31,31 +31,31 @@ namespace SiteWebThroneWars {
         protected global::System.Web.UI.WebControls.Label usernameLB;
         
         /// <summary>
-        /// Contrôle username.
+        /// Contrôle User_Set.
         /// </summary>
         /// <remarks>
         /// Champ généré automatiquement.
         /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox username;
+        protected global::System.Web.UI.WebControls.Label User_Set;
         
         /// <summary>
-        /// Contrôle Label3.
+        /// Contrôle MoneyLB.
         /// </summary>
         /// <remarks>
         /// Champ généré automatiquement.
         /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label3;
+        protected global::System.Web.UI.WebControls.Label MoneyLB;
         
         /// <summary>
-        /// Contrôle TB_Monnaie.
+        /// Contrôle Money_Set.
         /// </summary>
         /// <remarks>
         /// Champ généré automatiquement.
         /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox TB_Monnaie;
+        protected global::System.Web.UI.WebControls.Label Money_Set;
         
         /// <summary>
         /// Contrôle BTN_Items.
