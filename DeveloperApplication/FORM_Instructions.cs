@@ -19,7 +19,7 @@ namespace DeveloperApplication
 
         private void FORM_Instructions_Load(object sender, EventArgs e)
         {
-            string text = "Dans votre fichier texte, mettez un nom par ligne et vous devez ajouter des balises avant " + 
+            string text = "Dans votre fichier texte, mettez un nom par ligne et ajoutez des balises avant " + 
                 "le nom de vos items pour permettre à l'application d'insérer les items selon la classe. Les balises sont: " + 
                 "@[TOUS]" + 
                 "@[GUERRIER]" + 

@@ -121,7 +121,7 @@ namespace DeveloperApplication
             {
                 string str = null;
                 tabItems = tabDefault = File.ReadAllLines(TB_Path.Text);
-                for(int i = 0; i < tabItems.Length; ++i)
+                for (int i = 0; i < tabItems.Length; ++i)
                 {
                     if (tabItems[i].ToString().StartsWith("[") && tabItems[i].ToString().EndsWith("]"))
                     {
@@ -152,7 +152,14 @@ namespace DeveloperApplication
                 }
             }
             else
+            {
                 tabItems = tabDefault = null;
+                listTous.Clear();
+                listGuerrier.Clear();
+                listArcher.Clear();
+                listMage.Clear();
+                listPretre.Clear();
+            }
         }
     }
 }
