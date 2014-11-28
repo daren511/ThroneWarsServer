@@ -441,22 +441,6 @@ public class PlayerManager : MonoBehaviour
         }
         return list;
     }
-    public void ReceiveConfirm()
-    {
-        int count = sck.ReceiveBufferSize;
-        byte[] buffer;
-        buffer = new byte[count];
-
-        sck.Receive(buffer);
-
-        byte[] formatted = new byte[count];
-
-        for (int i = 0; i < count; ++i)
-        {
-            formatted[i] = buffer[i];
-        }
-
-    }
     public void changePort(string password)
     {
         string pwd = Controle.hashPassword(password, null, System.Security.Cryptography.SHA256.Create());
