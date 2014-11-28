@@ -22,6 +22,7 @@ public class GameControllerSample6 : MonoBehaviour
     public LayerMask tilesLayer;// layer the tiles are on
     public static string scene;
     private bool hasUpdatedGui = false;
+    private bool wantToQuit = false;
 
     // Character stats
     public string charName = "",
@@ -47,8 +48,16 @@ public class GameControllerSample6 : MonoBehaviour
     private int placed = 0;
     List<GameObject> table = new List<GameObject>();
 
-    private Rect _containerBox = new Rect(Screen.width - 300, 0, 300, Screen.height);
+    // Quit window
+    private static float wQ = 275.0f;
+    private static float hQ = 110.0f;
+    private static Rect rectQuit = new Rect((Screen.width - wQ) / 2, (Screen.height - hQ) / 2, wQ, hQ);
+
+    private Rect _containerBox = new Rect(Screen.width - 150, 0, 150, Screen.height - 50);
     private Rect rectPlay = new Rect(Screen.width / 3, Screen.height - 50, Screen.width / 3, 50);
+
+
+
     IEnumerator Start()
     {
         // wait for a frame for everything else to start and then enable the colliders for the TielNodes
@@ -56,14 +65,14 @@ public class GameControllerSample6 : MonoBehaviour
 
         //InitializeEnemyUnits();
 
-        for (int i = 0; i < PlayerManager._instance._chosenTeam.Count; ++i)
-        {
-            AddCharacterPrefab(i);
-        }
-        for (int i = 0; i < GameManager._instance._enemyTeam.Count; ++i)
-        {
-            AddEnemyPrefab(i);
-        }
+        //for (int i = 0; i < PlayerManager._instance._chosenTeam.Count; ++i)
+        //{
+        //    AddCharacterPrefab(i);
+        //}
+        //for (int i = 0; i < GameManager._instance._enemyTeam.Count; ++i)
+        //{
+        //    AddEnemyPrefab(i);
+        //}
 
         // now enable the colliders of the TileNodes.
         // they are disabled by default, but for this sample to work I need the player to be able to click on any tile.
@@ -86,6 +95,10 @@ public class GameControllerSample6 : MonoBehaviour
         InitializeStats();
         GUILayout.Window(1, _containerBox, doContainerWindow, "", ColoredGUISkin.Skin.box);
         GUILayout.Window(2, rectPlay, doPlayWindow, "", GUIStyle.none);
+        if (GUI.Button(new Rect(Screen.width - 150, Screen.height - 50, 150, 50), "Quitter"))
+            wantToQuit = true;
+        if (wantToQuit)
+            GUILayout.Window(0, rectQuit, doQuitWindow, "Quitter");   // Draw the quit window
     }
 
     private void doContainerWindow(int windowID)
@@ -306,6 +319,36 @@ public class GameControllerSample6 : MonoBehaviour
                 break;
         }
         enemyFabs[pos] = Resources.Load(classPrefab, typeof(GameObject)) as GameObject;
+    }
+
+    private void doQuitWindow(int windowID)
+    {
+        GUI.BringWindowToFront(windowID);
+        // Ornament
+        GUI.DrawTexture(new Rect(20, 4, 31, 40), ColoredGUISkin.Skin.customStyles[0].normal.background);
+
+        GUILayout.Space(35);
+        GUILayout.BeginVertical();
+        GUILayout.BeginHorizontal();
+        GUILayout.Label("Êtes-vous certain de vouloir quitter?");
+        GUILayout.EndHorizontal();
+        GUILayout.BeginHorizontal();
+        GUILayout.Label("Vous allez perdre la partie.");
+        GUILayout.EndHorizontal();
+        GUILayout.EndVertical();
+        GUILayout.Space(7);
+
+        GUILayout.BeginHorizontal();
+        if (GUILayout.Button("Oui", GUILayout.Height(37)))
+        {
+            Application.LoadLevel("MainMenu");
+        }
+        if (GUILayout.Button("Non", GUILayout.Height(37)))
+        {
+            wantToQuit = false;
+        }
+        GUILayout.EndHorizontal();
+        GUILayout.Space(3);
     }
     // ====================================================================================================================
 }
