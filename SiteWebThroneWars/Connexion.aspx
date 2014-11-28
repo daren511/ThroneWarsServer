@@ -15,7 +15,7 @@
 <body>
    <form runat="server" action="Connexion.aspx" autocomplete="on">
     <script type="text/javascript">
-        function MessageBoxReussi() {
+        function MessageBoxReussi() { 
             $(document).ready(function () {
                 swal({ title: "Bravo! ", text: "Vous êtes connecté", type: "success", confirmButtonText: "Ok" });
             });
@@ -30,7 +30,7 @@
                 swal({ title: "Attention! ", text: textadaptatif, type: "warning", confirmButtonText: "Ok" });
             });
         }
-        function changeVisibilityON() {
+        function changeVisibility() {
             $(document).ready(function () {
                 document.getElementById("Leaderboard_Conn").style.visibility = "visible";
                 document.getElementById("Stats_Conn").style.visibility = "visible";
@@ -68,13 +68,13 @@
             <a href="SendConfirmation.aspx">Renvoyer le lien de confirmation</a>
         </div>
         <div id="Leaderboard_Conn">
-            <asp:GridView runat="server" ID="GV_Leaderboard" OnRowDataBound="GV_Leaderboard_OnRowDataBound">
+            <asp:GridView runat="server" ID="GV_Leaderboard" OnRowDataBound="GV_Leaderboard_OnRowDataBound" CssClass="GVLeaderboard">
                 
             </asp:GridView>
         </div>
 
         <div id="Stats_Conn">
-          <asp:GridView runat="server" ID="GV_Stats">
+          <asp:GridView runat="server" ID="GV_Stats" CssClass="GVStats">
           </asp:GridView>
         </div>
     </form>
