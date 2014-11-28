@@ -34,7 +34,7 @@ namespace ThroneWarsServer
             {
                 Joueur1 = j;
             }
-            if (!deconnecterJoueurInactif() && Joueur1 != null && Joueur2 != null)
+            if (!dcInactivePlayer() && Joueur1 != null && Joueur2 != null)
             {
                 isFull = true;
                 this.T.Start();
@@ -43,7 +43,7 @@ namespace ThroneWarsServer
         /// <summary>
         /// si un joueur est inactif en attendant le debut de la partie le serveur va le deconnecter 
         /// </summary>
-        public bool deconnecterJoueurInactif()
+        public bool dcInactivePlayer()
         {
             bool aPlayerIsInactive = false;
             if (Joueur1 != null && !Joueur1.socketIsConnected())
@@ -70,16 +70,71 @@ namespace ThroneWarsServer
         {
             try
             {
-                envoyerReponse("1", Joueur1);
-                envoyerReponse("2", Joueur2);
-                Joueur1.Persos = RecevoirObjet<Personnages>(Joueur1);
-                Joueur2.Persos = RecevoirObjet<Personnages>(Joueur2);
-                this.mId = Controle.createMatch(Joueur1.jid, 1, Joueur1.Persos[0].Nom, Joueur1.Persos[1].Nom, Joueur1.Persos[2].Nom, Joueur1.Persos[3].Nom);
-                Controle.addPlayerMatch(this.mId, Joueur2.jid, Joueur2.Persos[0].Nom, Joueur2.Persos[1].Nom, Joueur2.Persos[2].Nom, Joueur2.Persos[3].Nom);
-                envoyerObjet(Joueur1.Persos, Joueur2);
+                startGame();
+                bool player1Placed = false;
+                bool player2Placed = false;
+                while(!player1Placed && !player2Placed)
+                {
+                    Controle.Game Action;
+                    try
+                    {
+                        Joueur1.Socket.Blocking = false;
+                        Action = recevoirChoix(Joueur1);
+                        Joueur1.Socket.Blocking = true;
+                    }
+                    catch(Exception){Action = Controle.Game.NOTHING;}
+                    switch(Action)
+                    {
+                        case Controle.Game.NOTHING:
+                            break;
+                        case Controle.Game.SENDPOSITIONS:
+
+                            break;
+                        case Controle.Game.QUIT:
+
+                            break;
+
+                        case Controle.Game.CANCEL:
+
+                            break;
+                    }
+                    try
+                    {
+                        Joueur2.Socket.Blocking = false;
+                        Action = recevoirChoix(Joueur2);
+                        Joueur2.Socket.Blocking = true;
+                    }
+                    catch(Exception){Action = Controle.Game.NOTHING;}
+                    switch(Action)
+                    {
+                        case Controle.Game.NOTHING:
+                            break;
+                        case Controle.Game.SENDPOSITIONS:
+
+                            break;
+                        case Controle.Game.QUIT:
+
+                            break;
+
+                        case Controle.Game.CANCEL:
+
+                            break;
+                    }
+                }
+
+                if (recevoirChoix(Joueur2) != Controle.Game.QUIT)
+                {
+                    envoyerObjet(Controle.Game.OK,Joueur2);
+                    envoyerObjet(Joueur1.Persos, Joueur2);
+                    Joueur1.positionsPersonnages = RecevoirObjet<int>(Joueur2);
+                }
+                else
+                {
+                    
+                }
                 envoyerObjet(Joueur2.Persos, Joueur1);
                 Joueur1.positionsPersonnages = RecevoirObjet<int>(Joueur1);
-                Joueur1.positionsPersonnages = RecevoirObjet<int>(Joueur2);
+               
                 envoyerObjet(Joueur2.positionsPersonnages, Joueur1);
                 envoyerObjet(Joueur1.positionsPersonnages, Joueur2);
 
@@ -89,6 +144,15 @@ namespace ThroneWarsServer
 
             }
             this.T.Abort();
+        }
+        private void startGame()
+        {
+            envoyerReponse("1", Joueur1);
+            envoyerReponse("2", Joueur2);
+            Joueur1.Persos = RecevoirObjet<Personnages>(Joueur1);
+            Joueur2.Persos = RecevoirObjet<Personnages>(Joueur2);
+            this.mId = Controle.createMatch(Joueur1.jid, 1, Joueur1.Persos[0].Nom, Joueur1.Persos[1].Nom, Joueur1.Persos[2].Nom, Joueur1.Persos[3].Nom);
+            Controle.addPlayerMatch(this.mId, Joueur2.jid, Joueur2.Persos[0].Nom, Joueur2.Persos[1].Nom, Joueur2.Persos[2].Nom, Joueur2.Persos[3].Nom);
         }
         private List<T> RecevoirObjet<T>(Joueur j)
         {
@@ -113,7 +177,7 @@ namespace ThroneWarsServer
             }
             return list;
         }
-        private Controle.Actions recevoirChoix(Joueur j)
+        private Controle.Game recevoirChoix(Joueur j)
         {
             int first = j.Socket.ReceiveBufferSize;
             byte[] array = new byte[first];
@@ -127,7 +191,7 @@ namespace ThroneWarsServer
             BinaryFormatter rec = new BinaryFormatter();
             using (var stream = new MemoryStream(format))
             {
-                return (Controle.Actions)rec.Deserialize(stream);
+                return (Controle.Game)rec.Deserialize(stream);
             }
 
         }
