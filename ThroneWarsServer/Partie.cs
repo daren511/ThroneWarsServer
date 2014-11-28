@@ -34,7 +34,7 @@ namespace ThroneWarsServer
             {
                 Joueur1 = j;
             }
-            if (!deconnecterJoueurInactif() && Joueur1 != null && Joueur2 != null)
+            if (!dcInactivePlayer() && Joueur1 != null && Joueur2 != null)
             {
                 isFull = true;
                 this.T.Start();
@@ -43,7 +43,7 @@ namespace ThroneWarsServer
         /// <summary>
         /// si un joueur est inactif en attendant le debut de la partie le serveur va le deconnecter 
         /// </summary>
-        public bool deconnecterJoueurInactif()
+        public bool dcInactivePlayer()
         {
             bool aPlayerIsInactive = false;
             if (Joueur1 != null && !Joueur1.socketIsConnected())

@@ -39,7 +39,7 @@ namespace ThroneWarsServer
                     bool reponse = Controle.userPassCorrespondant(Joueur.Username, Login.Substring(Login.LastIndexOf(SPLITTER)+1));//verifie si les informations de login sont ok
                     if (reponse)
                     {
-                        string rep = reponse.ToString() + SPLITTER + Controle.accountIsConfirmed(Joueur.Username).ToString() + SPLITTER + Program.checkConnected(Joueur).ToString();
+                        string rep = reponse.ToString() + SPLITTER + Controle.accountIsConfirmed(Joueur.Username).ToString() + SPLITTER + Program.checkAlreadyConnected(Joueur).ToString();
                         envoyerReponse(rep);
                         if(rep == "True?True?False")
                         Joueur.isConnected = true;
@@ -85,7 +85,8 @@ namespace ThroneWarsServer
                                 envoyerReponse(Controle.updateStatePerso(Controle.getGUID(recevoirString()),"0").ToString());
                                 break;
                             case Controle.Actions.START_GAME:
-                                Program.ajouterQueue(Joueur);
+                                Program.addToQueue(Joueur);
+
                                 break;
                             case Controle.Actions.EQUIP:
                                 string requeteEquip = recevoirString();
@@ -101,7 +102,7 @@ namespace ThroneWarsServer
                                 break;   
                             case Controle.Actions.NOTHING:
                                 Timer++;
-                                if(Timer >= 10000)
+                                if(Timer >= 10000) // plus de 5 minutes a avoir rien recu du client on le sort
                                 {
                                     Joueur.isConnected = false;
                                 }
