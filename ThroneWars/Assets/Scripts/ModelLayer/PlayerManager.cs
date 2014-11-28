@@ -378,6 +378,7 @@ public class PlayerManager : MonoBehaviour
         if(action == Controle.Game.QUIT)
         {
             hasWonDefault = true;
+            isWaitingPlayer = false;
         }
         else if(action == Controle.Game.STARTING)
         {
