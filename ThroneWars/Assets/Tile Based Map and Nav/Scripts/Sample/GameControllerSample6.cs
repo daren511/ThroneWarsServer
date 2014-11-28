@@ -28,7 +28,7 @@ public class GameControllerSample6 : MonoBehaviour
 
     public static Thread thread;
     private bool doneWaiting = false;
-    private bool isLoading = true;
+    private bool isLoading = false;
 
     // Character stats
     public string charName = "",
@@ -76,14 +76,14 @@ public class GameControllerSample6 : MonoBehaviour
 
         //InitializeDummyEnemyUnits();
 
-        //for (int i = 0; i < PlayerManager._instance._chosenTeam.Count; ++i)
-        //{
-        //    AddCharacterPrefab(i);
-        //}
-        //for (int i = 0; i < GameManager._instance._enemyTeam.Count; ++i)
-        //{
-        //    AddEnemyPrefab(i);
-        //}
+        for (int i = 0; i < PlayerManager._instance._chosenTeam.Count; ++i)
+        {
+            AddCharacterPrefab(i);
+        }
+        for (int i = 0; i < GameManager._instance._enemyTeam.Count; ++i)
+        {
+            AddEnemyPrefab(i);
+        }
 
         // now enable the colliders of the TileNodes.
         // they are disabled by default, but for this sample to work I need the player to be able to click on any tile.
@@ -123,6 +123,7 @@ public class GameControllerSample6 : MonoBehaviour
         {
             doneWaiting = true;
 
+            //si l'adversaire a terminé, on commence la partie
             if (!PlayerManager._instance.hasWonDefault)
             {
                 Object[] allObjects = FindObjectsOfType(typeof(Character));
@@ -143,7 +144,11 @@ public class GameControllerSample6 : MonoBehaviour
             }
             else
             {
-                //le joueur a gagné
+                //l'adversaire a abandonné la partie, le joueur a gagné
+                Debug.Log("Vous avez gagné!");
+                PlayerManager._instance.ClearPlayer(false);
+                PlayerManager._instance.LoadPlayer();
+                Application.LoadLevel("MainMenu");                
             }
         }
     }
@@ -375,6 +380,9 @@ public class GameControllerSample6 : MonoBehaviour
         GUILayout.BeginHorizontal();
         if (GUILayout.Button("Oui", GUILayout.Height(37)))
         {
+            PlayerManager._instance.SendObject(Controle.Game.CANCEL);
+            PlayerManager._instance.ClearPlayer(false);
+            PlayerManager._instance.LoadPlayer();
             Application.LoadLevel("MainMenu");
         }
         if (GUILayout.Button("Non", GUILayout.Height(37)))

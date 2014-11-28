@@ -42,18 +42,25 @@ public class PlayerManager : MonoBehaviour
     public bool isLoading = false;
     public bool isWaitingPlayer = false;
     public bool hasWonDefault = false;
+
+    public bool isInGame = false;
+
     void OnApplicationQuit()
     {
 
-        if (!isLoading)
+        if (!isLoading && !isInGame)
             SendObject(Controle.Actions.QUIT);
+        else if (isInGame)
+            SendObject(Controle.Game.QUIT);
 
         PlayerManager._instance.ClearPlayer();
     }
     void OnDestroy()
     {
-        if (sck.Connected && !isLoading)
+        if (sck.Connected && !isLoading && !isInGame)
             SendObject(Controle.Actions.QUIT);
+        else if (isInGame)
+            SendObject(Controle.Game.QUIT);
         PlayerManager._instance.ClearPlayer();
     }
 
@@ -307,9 +314,9 @@ public class PlayerManager : MonoBehaviour
         }
         return list;
     }
-    public void ClearPlayer()
+    public void ClearPlayer(bool closeSocket = true)
     {
-        if (sck.Connected)
+        if (closeSocket && sck.Connected)
         {
             sck.Close();
             sck = null;
@@ -368,15 +375,10 @@ public class PlayerManager : MonoBehaviour
         {
             action = (Controle.Game)receive.Deserialize(recstream);
         }
-        //if(action == Controle.Game.)
-        //{
-
-        //}
-        //else
-        //{
-
-        //}
-
+        if(action == Controle.Game.QUIT)
+        {
+            hasWonDefault = true;
+        }
         isWaitingPlayer = false;
         GameControllerSample6.thread.Abort();
     }
