@@ -36,7 +36,7 @@ namespace SiteWebThroneWars
                     GV_Stats.DataSource = DS;
                     GV_Stats.DataBind();
                 }
-                ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>changeVisibilityON();</script>", false);
+                ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>changeVisibility();</script>", false);
             }
             if(Cookie != null)
             {
@@ -120,7 +120,7 @@ namespace SiteWebThroneWars
                             GV_Stats.DataSource = DS;
                             GV_Stats.DataBind();
                         }
-                        ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>changeVisibilityON();</script>", false);
+                        ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>changeVisibility();</script>", false);
                         Session["username"] = username.Text;
                         ViderTB();
 

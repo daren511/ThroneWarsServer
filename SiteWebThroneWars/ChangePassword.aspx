@@ -50,7 +50,7 @@
   			<asp:label id="NewPass" runat="server">Nouveau mot de passe</asp:label><br/>
                 <asp:TextBox id="npassword" TextMode="password" runat="server"/><br />
             <asp:label id="cNewPass" runat="server">Confirmer nouveau mot de passe</asp:label><br/>
-                <asp:TextBox id="ncpassword" TextMode="password" runat="server"/><br />
+                <asp:TextBox id="ncpassword" TextMode="password" runat="server"/><br /><br />
             <asp:Button id="Button_Valider" Text="Valider" onClick="ChangePassword_Click" runat="server"/>
 
         </div>

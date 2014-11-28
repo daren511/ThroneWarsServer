@@ -23,14 +23,12 @@ namespace SiteWebThroneWars
             string oldpass = apassword.Text;
             string newPass = npassword.Text;
             string confirmNewPass = ncpassword.Text;
-            
+
             if (ok)
             {
                 if (oldpass == newPass || newPass != confirmNewPass)
                 {
-                    // Redirect avant ??
                     text = "L'ancien mot de pass et le nouveau sont les mêmes ou le nouveau et la confirmation ne correspondent pas";
-                    //Verif si forecolor is the right thing
                     OldPass.ForeColor = System.Drawing.Color.Red;
                     NewPass.ForeColor = System.Drawing.Color.Red;
                     cNewPass.ForeColor = System.Drawing.Color.Red;
@@ -52,19 +50,34 @@ namespace SiteWebThroneWars
                         {
                             // Messagebox changement réussi
                             ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>MessageBoxReussi();</script>", false);
+                            usernameLB.ForeColor = System.Drawing.Color.Black;
+                            OldPass.ForeColor = System.Drawing.Color.Black;
+                            NewPass.ForeColor = System.Drawing.Color.Black;
+                            cNewPass.ForeColor = System.Drawing.Color.Black;
                         }
-                        else
-                        {
-                            text = "Le changement à échoué";
-                            ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>MessageBoxErreur(\"" + text + "\");</script>", false);
-                        }
+
+                    }
+                    else
+                    {
+                        text = "Le nom  d'utilisateur et l'ancien mot de passe ne correspondent pas";
+                        ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>MessageBoxErreur(\"" + text + "\");</script>", false);
+                        usernameLB.ForeColor = System.Drawing.Color.Red;
+                        OldPass.ForeColor = System.Drawing.Color.Red;
+
                     }
 
                 }
             }
-            text = "Vous devez remplir tout les champs requis";
-            ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>MessageBoxErreur(\"" + text + "\");</script>", false);
-            ViderTB();
+            else
+            {
+                text = "Vous devez remplir tout les champs requis";
+                ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>MessageBoxErreur(\"" + text + "\");</script>", false);
+                usernameLB.ForeColor = System.Drawing.Color.Red;
+                OldPass.ForeColor = System.Drawing.Color.Red;
+                NewPass.ForeColor = System.Drawing.Color.Red;
+                cNewPass.ForeColor = System.Drawing.Color.Red;
+                ViderTB();
+            }
         }
         protected bool VerifChamps()
         {

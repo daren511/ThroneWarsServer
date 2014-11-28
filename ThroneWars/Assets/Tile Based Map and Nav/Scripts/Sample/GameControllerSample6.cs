@@ -29,6 +29,7 @@ public class GameControllerSample6 : MonoBehaviour
     public static Thread thread;
     private bool doneWaiting = false;
     private bool isLoading = false;
+    private bool hasWon = false;
 
     // Character stats
     public string charName = "",
@@ -62,6 +63,10 @@ public class GameControllerSample6 : MonoBehaviour
     private static float wL = 275.0f;
     private static float hL = 115.0f;
     private static Rect rectLoading = new Rect((Screen.width - wL) / 2, (Screen.height - hL) / 2, wL, hL);
+    // Winning window
+    private static float wW = 275.0f;
+    private static float hW = 115.0f;
+    private static Rect rectWinning = new Rect((Screen.width - wW) / 2, (Screen.height - hW) / 2, wW, hW);
 
     private Rect _containerBox = new Rect(Screen.width - 150, 0, 150, Screen.height - 50);
     private Rect rectPlay = new Rect(Screen.width / 3, Screen.height - 50, Screen.width / 3, 50);
@@ -105,10 +110,10 @@ public class GameControllerSample6 : MonoBehaviour
         hasUpdatedGui = ResourceManager.GetInstance.UpdateGUI(hasUpdatedGui);
         InitializeStats();
         GUILayout.Window(1, _containerBox, doContainerWindow, "", ColoredGUISkin.Skin.box);
-        if (!isLoading)
+        if (!isLoading && !hasWon)
             GUILayout.Window(2, rectPlay, doPlayWindow, "", GUIStyle.none);
 
-        if (!isLoading)
+        if (!isLoading && !hasWon)
         {
             if (GUI.Button(new Rect(Screen.width - 150, Screen.height - 50, 150, 50), "Quitter"))
                 wantToQuit = true;
@@ -117,6 +122,8 @@ public class GameControllerSample6 : MonoBehaviour
             GUILayout.Window(0, rectQuit, doQuitWindow, "Quitter");
         if (isLoading)
             GUILayout.Window(-1, rectLoading, doLoadingWindow, "En attente");
+        if (hasWon)
+            GUILayout.Window(-10, rectWinning, doWinningWindow, "Gagné!");
 
         //flag thread
         if (!PlayerManager._instance.isWaitingPlayer && !doneWaiting)
@@ -130,6 +137,7 @@ public class GameControllerSample6 : MonoBehaviour
 
                 //les personnages de l'adversaire
                 PlayerManager._instance.PopulateEnemy(PlayerManager._instance.ReceiveObject<Personnages>());
+
                 //les positions des personnages de l'adversaire
                 GameManager._instance._enemyPositions = PlayerManager._instance.ReceiveObject<int>();
 
@@ -145,14 +153,17 @@ public class GameControllerSample6 : MonoBehaviour
             else
             {
                 //l'adversaire a abandonné la partie, le joueur a gagné
-                Debug.Log("Vous avez gagné!");
-                PlayerManager._instance.ClearPlayer(false);
-                PlayerManager._instance.LoadPlayer();
-                Application.LoadLevel("MainMenu");                
+                hasWon = true;       
             }
         }
     }
 
+    private void CleanScene()
+    {
+        doneWaiting = false;
+        wantToQuit = false;
+        isLoading = false;
+    }
     private void doContainerWindow(int windowID)
     {
         GUILayout.BeginVertical();
@@ -171,6 +182,7 @@ public class GameControllerSample6 : MonoBehaviour
             PlayerManager._instance.SendObject<List<int>>(GameManager._instance._playerPositions);
 
             //splash screen en attente de l'autre joueur 
+            isLoading = true;
         }
     }
 
@@ -380,8 +392,9 @@ public class GameControllerSample6 : MonoBehaviour
         GUILayout.BeginHorizontal();
         if (GUILayout.Button("Oui", GUILayout.Height(37)))
         {
-            PlayerManager._instance.SendObject(Controle.Game.CANCEL);
             PlayerManager._instance.ClearPlayer(false);
+            CleanScene();
+            PlayerManager._instance.SendObject(Controle.Game.CANCEL);
             PlayerManager._instance.LoadPlayer();
             Application.LoadLevel("MainMenu");
         }
@@ -407,6 +420,30 @@ public class GameControllerSample6 : MonoBehaviour
         GUILayout.FlexibleSpace();
         if (GUILayout.Button("Quitter", GUILayout.Height(37)))
             wantToQuit = true;
+        GUILayout.EndHorizontal();
+        GUILayout.Space(3);
+    }
+
+    private void doWinningWindow(int windowID)
+    {
+        GUI.BringWindowToFront(windowID);
+        // Ornament
+        GUI.DrawTexture(new Rect(20, 4, 31, 40), ColoredGUISkin.Skin.customStyles[0].normal.background);
+
+        GUILayout.Space(20);
+        GUILayout.BeginHorizontal();
+        GUILayout.Label("Félicitation, vous avez gagné!");
+        GUILayout.EndHorizontal();
+
+        GUILayout.BeginHorizontal();
+        if (GUILayout.Button("Retour au menu principal", GUILayout.Height(37)))
+        {
+            hasWon = false;
+            CleanScene();
+            PlayerManager._instance.ClearPlayer(false);
+            PlayerManager._instance.LoadPlayer();
+            Application.LoadLevel("MainMenu");
+        }
         GUILayout.EndHorizontal();
         GUILayout.Space(3);
     }

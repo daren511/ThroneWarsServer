@@ -66,7 +66,7 @@
 
             <asp:GridView runat="server" ID="GV_Magasin" OnSelectedIndexChanged="GV_Magasin_SelectedIndexChanged" 
                 OnRowDataBound="GV_Magasin_RowDataBound"   AllowPaging ="true" OnPageIndexChanging="GV_Magasin_PageIndexChanging" 
-                PageSize = "10" >
+                PageSize = "25" >
                 <RowStyle HorizontalAlign="Center"/>
             </asp:GridView>
         </div>

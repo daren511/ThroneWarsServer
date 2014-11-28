@@ -99,7 +99,7 @@ public class onMainMenu : MonoBehaviour
             ShowChosenCharacterInventory();
         }
         _storedSelection = "perso";
-        refresh = (Texture) Resources.Load("Menu/refresh");
+        refresh = (Texture)Resources.Load("Menu/refresh");
     }
 
 
@@ -128,20 +128,20 @@ public class onMainMenu : MonoBehaviour
         selectedTeam = GUILayout.SelectionGrid(selectedTeam, tabTeam.ToArray(), 1);
         try
         {
-        if (_teamSelection != selectedTeam && tabTeam.Count > 0)
-        {
-            if (tabTeam != null && PlayerManager._instance._selectedCharacter != null)
+            if (_teamSelection != selectedTeam && tabTeam.Count > 0)
             {
-                if (PlayerManager._instance._selectedCharacter._name != tabTeam[selectedTeam])
+                if (tabTeam != null && PlayerManager._instance._selectedCharacter != null)
                 {
-                    GetHighlightedCharacter(tabTeam[selectedTeam]);
+                    if (PlayerManager._instance._selectedCharacter._name != tabTeam[selectedTeam])
+                    {
+                        GetHighlightedCharacter(tabTeam[selectedTeam]);
                         _storedSelection = "team";
                         _charSelection = selectedTeam = -1;
                     }
                 }
                 _teamSelection = selectedTeam;
             }
-                }
+        }
         catch (Exception e)
         {
             if (PlayerManager._instance._selectedCharacter._name != tabTeam[0])
@@ -195,7 +195,7 @@ public class onMainMenu : MonoBehaviour
         GUILayout.EndVertical();
 
         GUILayout.BeginVertical();
-        GUI.enabled = chosenCharacters == MAX_TEAM_LENGTH && tabMap[0] ;//&& PlayerManager._instance.dev;
+        GUI.enabled = chosenCharacters == MAX_TEAM_LENGTH && tabMap[0];//&& PlayerManager._instance.dev;
         if (GUILayout.Button("Jouer", GUILayout.Width(rectInvent.width)))
         {
             // Go to matchmaking
@@ -402,26 +402,26 @@ public class onMainMenu : MonoBehaviour
             GUI.enabled = remainingPosition > 0 && tabCharac.Count > 0;
             if (GUILayout.Button("Ajouter", GUILayout.Height(35), GUILayout.Width(200)))
             {
-                if(selectedCharac > 0)
-                SelectCharacter(selectedCharac);
+                if (selectedCharac > 0)
+                    SelectCharacter(selectedCharac);
                 else
-                    SelectCharacter(0);                
+                    SelectCharacter(0);
 
-                if(tabCharac.Count != 0)
+                if (tabCharac.Count != 0)
                 {
                     GetHighlightedCharacter(tabCharac[0]);
-            }
+                }
                 selectedCharac = -1;
                 _charSelection = -1;
-        }
+            }
         }
         else if (_storedSelection == "team") //clicked in team characters
         {
             GUI.enabled = chosenCharacters > 0 && tabTeam.Count > 0;
             if (GUILayout.Button("Retirer", GUILayout.Height(35), GUILayout.Width(200)))
             {
-                if(selectedTeam > 0)
-                UnselectCharacter(selectedTeam);
+                if (selectedTeam > 0)
+                    UnselectCharacter(selectedTeam);
                 else
                     UnselectCharacter(0);
 
@@ -433,7 +433,7 @@ public class onMainMenu : MonoBehaviour
                 selectedTeam = -1;
             }
         }
- 
+
         //GUILayout.FlexibleSpace();
         GUILayout.EndHorizontal();
         GUILayout.EndArea();
@@ -505,5 +505,9 @@ public class onMainMenu : MonoBehaviour
             item = c._characterInventory._invent[i];
             tabItem.Add(item._itemName);
         }
+    }
+    private void CleanScene()
+    {
+
     }
 }
