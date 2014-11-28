@@ -94,6 +94,7 @@ namespace ThroneWarsServer
                             break;
                         case Controle.Game.QUIT: 
                             envoyerObjet(Controle.Game.QUIT, player2);
+                            
                             updateWinner(player2);
                             player1PlacedOrHasQuitted = true;
                             player2PlacedOrHasQuitted = true;
@@ -103,11 +104,12 @@ namespace ThroneWarsServer
 
                         case Controle.Game.CANCEL:
                             envoyerObjet(Controle.Game.QUIT, player2);
+                            envoyerObjet(Controle.Game.CANCEL, player1);
                             updateWinner(player2);
                             player1PlacedOrHasQuitted = true;
                             player2PlacedOrHasQuitted = true;
                             Program.addGoToMenu(player1);
-                            Program.addGoToMenu(player2);
+                            Program.addGoToMenu(player2);                            
                             break;
                     }
                     try
@@ -136,11 +138,12 @@ namespace ThroneWarsServer
 
                         case Controle.Game.CANCEL:
                             envoyerObjet(Controle.Game.QUIT, player1);
+                            envoyerObjet(Controle.Game.CANCEL, player2);
                             updateWinner(player1);
                             player1PlacedOrHasQuitted = true;
                             player2PlacedOrHasQuitted = true;
-                            Program.addGoToMenu(player1);
                             Program.addGoToMenu(player2);
+                            Program.addGoToMenu(player1);
                             break;
                     }
                 }
@@ -150,6 +153,13 @@ namespace ThroneWarsServer
                     envoyerObjet(Controle.Game.STARTING, player1);
                     envoyerObjet(Controle.Game.STARTING, player2);
                     //jouation
+                    envoyerObjet(player1.Persos, player2);
+                    envoyerObjet(player1.positionsPersonnages, player2);
+                    RecevoirObjet<Controle.Game>(player2);
+                    
+                    envoyerObjet(player2.Persos, player1);
+                    envoyerObjet(player2.positionsPersonnages, player1);
+                    RecevoirObjet<Controle.Game>(player1);
                 }
 
                 //if (recevoirChoix(player2) != Controle.Game.QUIT)
