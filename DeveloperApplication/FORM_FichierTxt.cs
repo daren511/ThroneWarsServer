@@ -19,6 +19,7 @@ namespace DeveloperApplication
         string[] tabDefault;
         string[] tabItems;
         // List
+        List<List<string>> listGlobalArmes = new List<List<string>>();
         List<string> listTousArmes = new List<string>();
         List<string> listTousArmures = new List<string>();
         List<string> listGuerrierArmes = new List<string>();
@@ -45,7 +46,6 @@ namespace DeveloperApplication
 
         private void FORM_FichierTxt_Load(object sender, EventArgs e)
         {
-            CB_Type.SelectedIndex = 0;
             CB_Niveau.SelectedIndex = 0;
         }
 
