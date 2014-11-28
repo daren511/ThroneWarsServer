@@ -152,11 +152,7 @@ public class GameControllerSample6 : MonoBehaviour
             else
             {
                 //l'adversaire a abandonné la partie, le joueur a gagné
-                hasWon = true;
-                CleanScene();
-                PlayerManager._instance.ClearPlayer(false);
-                PlayerManager._instance.LoadPlayer();
-                Application.LoadLevel("MainMenu");                
+                hasWon = true;       
             }
         }
     }
@@ -442,6 +438,7 @@ public class GameControllerSample6 : MonoBehaviour
         if (GUILayout.Button("Retour au menu principal", GUILayout.Height(37)))
         {
             hasWon = false;
+            CleanScene();
             PlayerManager._instance.ClearPlayer(false);
             PlayerManager._instance.LoadPlayer();
             Application.LoadLevel("MainMenu");
