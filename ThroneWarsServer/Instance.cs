@@ -50,8 +50,7 @@ namespace ThroneWarsServer
                     }
                     if(Joueur.isConnected)
                     {
-                        Joueur.jid = Controle.getJID(Joueur.Username);
-                        
+                        Joueur.jid = Controle.getJID(Joueur.Username); 
                     }
                 }
                 if (Joueur.isConnected)

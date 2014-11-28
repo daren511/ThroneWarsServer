@@ -36,6 +36,7 @@ public class onLoading : MonoBehaviour
             GameManager._instance._enemySide = PlayerManager._instance._playerSide == 1 ? 2 : 1;
             PlayerManager._instance.SendTeam();
             PlayerManager._instance.isWaitingPlayer = true;
+            //CleanScene();
             Application.LoadLevel("placement");
         }
     }
@@ -46,6 +47,7 @@ public class onLoading : MonoBehaviour
     }
     private void cancelLoading()
     {
+        CleanScene();
         PlayerManager._instance.LoadPlayer();
         Application.LoadLevel("MainMenu");
     }
@@ -53,5 +55,10 @@ public class onLoading : MonoBehaviour
     {
         thread = new Thread(new ThreadStart(PlayerManager._instance.Lobby));
         thread.Start();
+    }
+    private void CleanScene()
+    {
+        doneLoading = false;
+        PlayerManager._instance.isWaitingPlayer = false;
     }
 } 

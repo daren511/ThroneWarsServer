@@ -96,6 +96,8 @@ namespace ThroneWarsServer
                             envoyerObjet(Controle.Game.QUIT, player2);
                             updateWinner(player2);
                             player1PlacedOrHasQuitted = true;
+                            player2PlacedOrHasQuitted = true;
+                            Program.addGoToMenu(player2);
                             player1.isConnected = false;
                             break;
 
@@ -103,7 +105,9 @@ namespace ThroneWarsServer
                             envoyerObjet(Controle.Game.QUIT, player2);
                             updateWinner(player2);
                             player1PlacedOrHasQuitted = true;
+                            player2PlacedOrHasQuitted = true;
                             Program.addGoToMenu(player1);
+                            Program.addGoToMenu(player2);
                             break;
                     }
                     try
@@ -124,14 +128,18 @@ namespace ThroneWarsServer
                         case Controle.Game.QUIT:
                             envoyerObjet(Controle.Game.QUIT, player1);
                             updateWinner(player1);
+                            player1PlacedOrHasQuitted = true;
                             player2PlacedOrHasQuitted = true;
+                            Program.addGoToMenu(player1);
                             player2.isConnected = false;
                             break;
 
                         case Controle.Game.CANCEL:
                             envoyerObjet(Controle.Game.QUIT, player1);
                             updateWinner(player1);
+                            player1PlacedOrHasQuitted = true;
                             player2PlacedOrHasQuitted = true;
+                            Program.addGoToMenu(player1);
                             Program.addGoToMenu(player2);
                             break;
                     }

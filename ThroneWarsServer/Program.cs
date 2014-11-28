@@ -146,6 +146,7 @@ namespace ThroneWarsServer
                     mMainMenu.WaitOne();
                     foreach(Joueur j in playersWantingMainMenu)
                     {
+                        j.Socket.Blocking = true;
                         new Instance(j).T.Start(); // on recreer une instance et on la demarre
                     }
                     playersWantingMainMenu.Clear(); // on vide la liste
