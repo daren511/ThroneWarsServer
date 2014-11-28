@@ -34,7 +34,8 @@ public class onLoading : MonoBehaviour
         {
             doneLoading = true;
             GameManager._instance._enemySide = PlayerManager._instance._playerSide == 1 ? 2 : 1;
-            PlayerManager._instance.PrepareGame();
+            PlayerManager._instance.SendTeam();
+            PlayerManager._instance.isWaitingPlayer = true;
             Application.LoadLevel("placement");
         }
     }

@@ -41,6 +41,7 @@ public class PlayerManager : MonoBehaviour
 
     public bool isLoading = false;
     public bool isWaitingPlayer = false;
+    public bool hasWonDefault = false;
     void OnApplicationQuit()
     {
 
@@ -331,30 +332,6 @@ public class PlayerManager : MonoBehaviour
         Send(name);
         return GetPersonnage();
     }
-    public void LookForPlayer()
-    {
-        int pos = 0;
-        sck.Blocking = false;        
-        while(isWaitingPlayer)
-        {
-            try
-            {
-                pos = ReadForPosition();
-
-                isWaitingPlayer = false;
-            }
-            catch (Exception) {}
-
-        }
-        sck.Blocking = true;
-
-        _playerSide = pos;
-        GameManager._instance._enemySide = _playerSide == 1 ? 2 : 1;
-        isLoading = false;
-
-        PrepareGame();
-        Application.LoadLevel("placement");
-    }
     public void Lobby()
     {
         int count = sck.ReceiveBufferSize;
@@ -371,7 +348,8 @@ public class PlayerManager : MonoBehaviour
         isLoading = false;
         onLoading.thread.Abort();
     }
-    public int ReadForPosition()
+
+    public void PlacementScreen()
     {
         int count = sck.ReceiveBufferSize;
         byte[] buffer = new byte[count];
@@ -382,13 +360,25 @@ public class PlayerManager : MonoBehaviour
         {
             formatted[i] = buffer[i];
         }
-       return Int32.Parse(Encoding.UTF8.GetString(formatted));
-    }
 
-    public void PrepareGame()
-    {
-        SendTeam();
-        PopulateEnemy(ReceiveObject<Personnages>());
+        Controle.Game action;
+
+        BinaryFormatter receive = new BinaryFormatter();
+        using (var recstream = new MemoryStream(formatted))
+        {
+            action = (Controle.Game)receive.Deserialize(recstream);
+        }
+        //if(action == Controle.Game.)
+        //{
+
+        //}
+        //else
+        //{
+
+        //}
+
+        isWaitingPlayer = false;
+        GameControllerSample6.thread.Abort();
     }
     public void SendTeam()
     {
@@ -457,18 +447,15 @@ public class PlayerManager : MonoBehaviour
         else
         { port = 50052; dev = false; }
     }
-
     public bool DEV
     {
         get { return dev; }
     }
-
     public static string USERNAME
     {
         get { return nom; }
         set { nom = value; }
     }
-
     public static string PASSWORD
     {
         get { return pwd; }

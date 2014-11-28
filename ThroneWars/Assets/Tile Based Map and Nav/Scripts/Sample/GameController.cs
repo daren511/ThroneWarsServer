@@ -122,7 +122,7 @@ public class GameController : TMNController
     {
         for (int i = 0; i < PlayerManager._instance._chosenTeam.Count; ++i)
         {
-            Character unitFab = PlayerManager._instance._chosenTeam[i];// unitsFabs[i].GetComponent<Character>();
+            Character unitFab = unitsFabs[i].GetComponent<Character>();
 
             TileNode node = null;
 

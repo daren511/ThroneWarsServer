@@ -203,7 +203,6 @@ public class onMainMenu : MonoBehaviour
             GameControllerSample6.scene = "Map1";
 
             PlayerManager._instance.isLoading = true;
-            PlayerManager._instance.isWaitingPlayer = true;
 
             Application.LoadLevel("Loading");
         }
@@ -224,6 +223,7 @@ public class onMainMenu : MonoBehaviour
             PlayerManager._instance._playerInventory._equips.Clear();
             PlayerManager._instance.LoadPlayerinventory(PlayerManager._instance.GetPlayerInventory());
         }
+
         GUI.DrawTexture(new Rect(rectInvent.width - 265, 30, 20, 20), _atkTexture, ScaleMode.StretchToFill, true, 0.0f);
         GUI.DrawTexture(new Rect(rectInvent.width - 215, 30, 20, 20), _defTexture, ScaleMode.StretchToFill, true, 0.0f);
         GUI.DrawTexture(new Rect(rectInvent.width - 165, 30, 20, 20), _matkTexture, ScaleMode.StretchToFill, true, 0.0f);

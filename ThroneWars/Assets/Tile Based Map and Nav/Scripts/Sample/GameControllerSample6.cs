@@ -8,6 +8,8 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using ControleBD;
+using System.Threading;
 
 public class GameControllerSample6 : MonoBehaviour
 {
@@ -22,6 +24,9 @@ public class GameControllerSample6 : MonoBehaviour
     public LayerMask tilesLayer;// layer the tiles are on
     public static string scene;
     private bool hasUpdatedGui = false;
+
+    public static Thread thread;
+    private bool doneWaiting = false;
 
     // Character stats
     public string charName = "",
@@ -54,7 +59,11 @@ public class GameControllerSample6 : MonoBehaviour
         // wait for a frame for everything else to start and then enable the colliders for the TielNodes
         yield return null;
 
-        //InitializeEnemyUnits();
+        //démarrer le thread qui écoutera au serveur si l'autre joueur à fini de placer/ à quitter la partie
+        ListenServer();
+
+
+        //InitializeDummyEnemyUnits();
 
         for (int i = 0; i < PlayerManager._instance._chosenTeam.Count; ++i)
         {
@@ -86,6 +95,35 @@ public class GameControllerSample6 : MonoBehaviour
         InitializeStats();
         GUILayout.Window(1, _containerBox, doContainerWindow, "", ColoredGUISkin.Skin.box);
         GUILayout.Window(2, rectPlay, doPlayWindow, "", GUIStyle.none);
+
+        //flag thread
+        if(!PlayerManager._instance.isWaitingPlayer && !doneWaiting)
+        {
+            doneWaiting = true;
+
+            if(!PlayerManager._instance.hasWonDefault)
+            {
+                Object[] allObjects = FindObjectsOfType(typeof(Character));
+
+                //les personnages de l'adversaire
+                PlayerManager._instance.PopulateEnemy(PlayerManager._instance.ReceiveObject<Personnages>());
+                //les positions des personnages de l'adversaire
+                GameManager._instance._enemyPositions = PlayerManager._instance.ReceiveObject<int>();
+
+                GameController.unitsFabs = unitFabs;
+                GameController.enemyFabs = enemyFabs;
+
+                for (int i = 0; i < allObjects.Length; ++i)
+                {
+                    Destroy(allObjects[i]);
+                }
+                Application.LoadLevel(scene);
+            }
+            else
+            {
+                //le joueur a gagné
+            }
+        }
     }
 
     private void doContainerWindow(int windowID)
@@ -98,25 +136,14 @@ public class GameControllerSample6 : MonoBehaviour
     private void doPlayWindow(int windowID)
     {
         GUI.enabled = placed == PlayerManager._instance._chosenTeam.Count;
+
         if (GUILayout.Button("Démarrer"))
         {
-            Object[] allObjects = FindObjectsOfType(typeof(Character));
-
-
-
-            PlayerManager._instance.Send("ok");
-            PlayerManager._instance.SendObject<List<int>>(GameManager._instance._playerPositions);
-            GameManager._instance._enemyPositions = PlayerManager._instance.ReceiveObject<int>();
-            GameController.unitsFabs = unitFabs;
-            GameController.enemyFabs = enemyFabs;
-
-
-
-            for (int i = 0; i < allObjects.Length; ++i)
-            {
-                Destroy(allObjects[i]);
-            }
-            Application.LoadLevel(scene);
+            PlayerManager._instance.SendObject(Controle.Game.SENDPOSITIONS);
+            //envoi des positions de l'équipe choisie par le joueur
+            PlayerManager._instance.SendObject<List<int>>(GameManager._instance._playerPositions);      
+     
+            //splash screen en attente de l'autre joueur 
         }
     }
 
@@ -162,26 +189,18 @@ public class GameControllerSample6 : MonoBehaviour
         if (placed < PlayerManager._instance._chosenTeam.Count && PlayerManager._instance._chosenTeam[placed] != null)
         {
             charName = PlayerManager._instance._chosenTeam[placed]._name;
-            //charClass = unitFabs[placed].GetComponent<Character>()._characterClass._className;
-            //lvl = unitFabs[placed].GetComponent<Character>()._characterClass._classLevel;
-
             hpMax = PlayerManager._instance._chosenTeam[placed]._maxHealth;
             mpMax = PlayerManager._instance._chosenTeam[placed]._maxMagic;
-
             patk = PlayerManager._instance._chosenTeam[placed]._physAttack;
             matk = PlayerManager._instance._chosenTeam[placed]._magicAttack;
             pdef = PlayerManager._instance._chosenTeam[placed]._physDefense;
             mdef = PlayerManager._instance._chosenTeam[placed]._magicDefense;
 
-
-
             //charName = unitFabs[placed].GetComponent<Character>()._name;
             ////charClass = unitFabs[placed].GetComponent<Character>()._characterClass._className;
             ////lvl = unitFabs[placed].GetComponent<Character>()._characterClass._classLevel;
-
             //hpMax = unitFabs[placed].GetComponent<Character>()._maxHealth;
             //mpMax = unitFabs[placed].GetComponent<Character>()._maxMagic;
-
             //patk = unitFabs[placed].GetComponent<Character>()._currPhysAttack;
             //matk = unitFabs[placed].GetComponent<Character>()._currMagicAttack;
             //pdef = unitFabs[placed].GetComponent<Character>()._currPhysDefense;
@@ -252,7 +271,7 @@ public class GameControllerSample6 : MonoBehaviour
         }
     }
 
-    private void InitializeEnemyUnits()
+    private void InitializeDummyEnemyUnits()
     {
         //BIDON, À MODIFIER AVEC LES INFOS DU SERVEUR
 
@@ -263,6 +282,12 @@ public class GameControllerSample6 : MonoBehaviour
         GameManager._instance._enemyTeam[2] = Character.CreateCharacter("SnIP3r", "Archer", 1, 4, 4, 100, 10, characterInvent, 10, 10, 10, 10);
         GameManager._instance._enemyTeam[3] = Character.CreateCharacter("1337", "Prêtre", 1, 2, 1, 60, 40, characterInvent, 10, 10, 10, 10);
 
+    }
+
+    private void ListenServer()
+    {
+        thread = new Thread(new ThreadStart(PlayerManager._instance.PlacementScreen));
+        thread.Start();
     }
 
     private void AddCharacterPrefab(int pos)
