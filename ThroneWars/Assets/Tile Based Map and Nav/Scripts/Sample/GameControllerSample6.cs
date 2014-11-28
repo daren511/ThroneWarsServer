@@ -146,6 +146,7 @@ public class GameControllerSample6 : MonoBehaviour
             {
                 //l'adversaire a abandonné la partie, le joueur a gagné
                 Debug.Log("Vous avez gagné!");
+                CleanScene();
                 PlayerManager._instance.ClearPlayer(false);
                 PlayerManager._instance.LoadPlayer();
                 Application.LoadLevel("MainMenu");                
@@ -153,6 +154,13 @@ public class GameControllerSample6 : MonoBehaviour
         }
     }
 
+    private void CleanScene()
+    {
+        doneWaiting = false;
+        wantToQuit = false;
+        isLoading = false;
+
+    }
     private void doContainerWindow(int windowID)
     {
         GUILayout.BeginVertical();
@@ -171,6 +179,7 @@ public class GameControllerSample6 : MonoBehaviour
             PlayerManager._instance.SendObject<List<int>>(GameManager._instance._playerPositions);
 
             //splash screen en attente de l'autre joueur 
+            isLoading = true;
         }
     }
 
@@ -380,8 +389,10 @@ public class GameControllerSample6 : MonoBehaviour
         GUILayout.BeginHorizontal();
         if (GUILayout.Button("Oui", GUILayout.Height(37)))
         {
-            PlayerManager._instance.SendObject(Controle.Game.CANCEL);
             PlayerManager._instance.ClearPlayer(false);
+            CleanScene();
+            PlayerManager._instance.SendObject(Controle.Game.CANCEL);
+
             PlayerManager._instance.LoadPlayer();
             Application.LoadLevel("MainMenu");
         }
