@@ -441,7 +441,7 @@ public class PlayerManager : MonoBehaviour
         }
         return list;
     }
-    private void ReceiveConfirm()
+    public void ReceiveConfirm()
     {
         int count = sck.ReceiveBufferSize;
         byte[] buffer;
@@ -450,7 +450,6 @@ public class PlayerManager : MonoBehaviour
         sck.Receive(buffer);
 
         byte[] formatted = new byte[count];
-
 
         for (int i = 0; i < count; ++i)
         {

@@ -399,7 +399,7 @@ public class GameControllerSample6 : MonoBehaviour
             PlayerManager._instance.ClearPlayer(false);
             CleanScene();
             PlayerManager._instance.SendObject(Controle.Game.CANCEL);
-
+            PlayerManager._instance.ReceiveConfirm();
             PlayerManager._instance.LoadPlayer();
             Application.LoadLevel("MainMenu");
         }
