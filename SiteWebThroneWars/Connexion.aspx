@@ -30,7 +30,7 @@
                 swal({ title: "Attention! ", text: textadaptatif, type: "warning", confirmButtonText: "Ok" });
             });
         }
-        function changeVisibility() {
+        function changeVisibilityON() {
             $(document).ready(function () {
                 document.getElementById("Leaderboard_Conn").style.visibility = "visible";
                 document.getElementById("Stats_Conn").style.visibility = "visible";
