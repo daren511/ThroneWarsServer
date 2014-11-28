@@ -110,10 +110,10 @@ public class GameControllerSample6 : MonoBehaviour
         hasUpdatedGui = ResourceManager.GetInstance.UpdateGUI(hasUpdatedGui);
         InitializeStats();
         GUILayout.Window(1, _containerBox, doContainerWindow, "", ColoredGUISkin.Skin.box);
-        if (!isLoading)
+        if (!isLoading && !hasWon)
             GUILayout.Window(2, rectPlay, doPlayWindow, "", GUIStyle.none);
 
-        if (!isLoading || !hasWon)
+        if (!isLoading && !hasWon)
         {
             if (GUI.Button(new Rect(Screen.width - 150, Screen.height - 50, 150, 50), "Quitter"))
                 wantToQuit = true;
@@ -122,6 +122,8 @@ public class GameControllerSample6 : MonoBehaviour
             GUILayout.Window(0, rectQuit, doQuitWindow, "Quitter");
         if (isLoading)
             GUILayout.Window(-1, rectLoading, doLoadingWindow, "En attente");
+        if (hasWon)
+            GUILayout.Window(-10, rectWinning, doWinningWindow, "Gagné!");
 
         //flag thread
         if (!PlayerManager._instance.isWaitingPlayer && !doneWaiting)
@@ -152,8 +154,7 @@ public class GameControllerSample6 : MonoBehaviour
                 //l'adversaire a abandonné la partie, le joueur a gagné
                 isLoading = false;
                 wantToQuit = false;
-                hasWon = true;
-                GUILayout.Window(-10, rectWinning, doWinningWindow, "Gagné!");          
+                hasWon = true;    
             }
         }
     }
@@ -385,6 +386,7 @@ public class GameControllerSample6 : MonoBehaviour
         GUILayout.BeginHorizontal();
         if (GUILayout.Button("Oui", GUILayout.Height(37)))
         {
+            isLoading = false;
             PlayerManager._instance.SendObject(Controle.Game.CANCEL);
             PlayerManager._instance.ClearPlayer(false);
             PlayerManager._instance.LoadPlayer();
@@ -428,7 +430,6 @@ public class GameControllerSample6 : MonoBehaviour
         GUILayout.EndHorizontal();
 
         GUILayout.BeginHorizontal();
-        GUILayout.FlexibleSpace();
         if (GUILayout.Button("Retour au menu principal", GUILayout.Height(37)))
         {
             hasWon = false;
