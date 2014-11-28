@@ -152,7 +152,7 @@ public class GameControllerSample6 : MonoBehaviour
             else
             {
                 //l'adversaire a abandonné la partie, le joueur a gagné
-                Debug.Log("Vous avez gagné!");
+                hasWon = true;
                 CleanScene();
                 PlayerManager._instance.ClearPlayer(false);
                 PlayerManager._instance.LoadPlayer();
@@ -166,7 +166,6 @@ public class GameControllerSample6 : MonoBehaviour
         doneWaiting = false;
         wantToQuit = false;
         isLoading = false;
-
     }
     private void doContainerWindow(int windowID)
     {
