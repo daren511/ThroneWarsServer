@@ -379,7 +379,10 @@ public class PlayerManager : MonoBehaviour
         {
             hasWonDefault = true;
         }
-        isWaitingPlayer = false;
+        else if(action == Controle.Game.STARTING)
+        {
+            isWaitingPlayer = false;
+        }
         GameControllerSample6.thread.Abort();
     }
     public void SendTeam()
