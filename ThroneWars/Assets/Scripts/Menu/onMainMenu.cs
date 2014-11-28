@@ -199,7 +199,7 @@ public class onMainMenu : MonoBehaviour
         if (GUILayout.Button("Jouer", GUILayout.Width(rectInvent.width)))
         {
             // Go to matchmaking
-            PlayerManager._instance.SendAction(Controle.Actions.START_GAME);
+            PlayerManager._instance.SendObject(Controle.Actions.START_GAME);
             GameControllerSample6.scene = "Map1";
 
             PlayerManager._instance.isLoading = true;
@@ -220,7 +220,7 @@ public class onMainMenu : MonoBehaviour
 
         if (GUI.Button(new Rect(20, 25, 35, 35), refresh))
         {
-            PlayerManager._instance.SendAction(Controle.Actions.ITEMS);
+            PlayerManager._instance.SendObject(Controle.Actions.ITEMS);
             PlayerManager._instance._playerInventory._equips.Clear();
             PlayerManager._instance.LoadPlayerinventory(PlayerManager._instance.GetPlayerInventory());
         }
@@ -442,7 +442,7 @@ public class onMainMenu : MonoBehaviour
     private void GetHighlightedCharacter(string name)
     {
         PlayerManager._instance._selectedCharacter = null;
-        PlayerManager._instance.SendAction(Controle.Actions.CLICK);
+        PlayerManager._instance.SendObject(Controle.Actions.CLICK);
         PlayerManager._instance.Send(name);
         PlayerManager._instance.LoadPersonnage(PlayerManager._instance.GetPersonnage());
     }

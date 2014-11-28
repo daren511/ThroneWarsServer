@@ -47,7 +47,7 @@ public class GameControllerSample6 : MonoBehaviour
     private int placed = 0;
     List<GameObject> table = new List<GameObject>();
 
-    private Rect _containerBox = new Rect(Screen.width - 300, 0, 100, Screen.height);
+    private Rect _containerBox = new Rect(Screen.width - 300, 0, 300, Screen.height);
     private Rect rectPlay = new Rect(Screen.width / 3, Screen.height - 50, Screen.width / 3, 50);
     IEnumerator Start()
     {
@@ -102,16 +102,20 @@ public class GameControllerSample6 : MonoBehaviour
         {
             Object[] allObjects = FindObjectsOfType(typeof(Character));
 
-            for (int i = 0; i < allObjects.Length; ++i)
-            {
-                Destroy(allObjects[i]);
-            }
 
+
+            PlayerManager._instance.Send("ok");
             PlayerManager._instance.SendObject<List<int>>(GameManager._instance._playerPositions);
             GameManager._instance._enemyPositions = PlayerManager._instance.ReceiveObject<int>();
             GameController.unitsFabs = unitFabs;
             GameController.enemyFabs = enemyFabs;
 
+
+
+            for (int i = 0; i < allObjects.Length; ++i)
+            {
+                Destroy(allObjects[i]);
+            }
             Application.LoadLevel(scene);
         }
     }

@@ -45,14 +45,14 @@ public class PlayerManager : MonoBehaviour
     {
 
         if (!isLoading)
-            SendAction(Controle.Actions.QUIT);
+            SendObject(Controle.Actions.QUIT);
 
         PlayerManager._instance.ClearPlayer();
     }
     void OnDestroy()
     {
         if (sck.Connected && !isLoading)
-            SendAction(Controle.Actions.QUIT);
+            SendObject(Controle.Actions.QUIT);
         PlayerManager._instance.ClearPlayer();
     }
 
@@ -147,20 +147,11 @@ public class PlayerManager : MonoBehaviour
         }
         return perso;
     }
-    public void SendAction(Controle.Actions ac)
-    {
-        BinaryFormatter b = new BinaryFormatter();
-        using (var stream = new MemoryStream())
-        {
-            b.Serialize(stream, (int)ac);
-            PlayerManager._instance.sck.Send(stream.ToArray());
-        }
-    }
     public bool CreateCharacter(string nom, string classe)
     {
         string sender = nom + SPLITTER + classe;
 
-        SendAction(Controle.Actions.CREATE);
+        SendObject(Controle.Actions.CREATE);
         Send(sender);
 
         int count = sck.ReceiveBufferSize;
@@ -177,7 +168,7 @@ public class PlayerManager : MonoBehaviour
     }
     public bool DeleteCharacter(string nom)
     {
-        SendAction(Controle.Actions.DELETE);
+        SendObject(Controle.Actions.DELETE);
         Send(nom);
 
         int count = sck.ReceiveBufferSize;
@@ -241,7 +232,7 @@ public class PlayerManager : MonoBehaviour
     }
     public void EquipItem(int itemId)
     {
-        SendAction(Controle.Actions.EQUIP);
+        SendObject(Controle.Actions.EQUIP);
         Send(_selectedCharacter._name + SPLITTER + itemId);
 
         int count = sck.ReceiveBufferSize;
@@ -277,7 +268,7 @@ public class PlayerManager : MonoBehaviour
     }
     public void UnequipItem(int itemId)
     {
-        SendAction(Controle.Actions.UNEQUIP);
+        SendObject(Controle.Actions.UNEQUIP);
         Send(_selectedCharacter._name + SPLITTER + itemId);
 
         int count = sck.ReceiveBufferSize;
@@ -336,7 +327,7 @@ public class PlayerManager : MonoBehaviour
     }
     public Personnages GetDefaultStats(string name)
     {
-        SendAction(Controle.Actions.STATS);
+        SendObject(Controle.Actions.STATS);
         Send(name);
         return GetPersonnage();
     }
@@ -376,10 +367,7 @@ public class PlayerManager : MonoBehaviour
             formatted[i] = buffer[i];
         }
 
-        Debug.Log("joueur affecté");
         _playerSide = Int32.Parse(Encoding.UTF8.GetString(formatted));
-
-        Debug.Log("chargement terminé");
         isLoading = false;
         onLoading.thread.Abort();
     }
@@ -443,6 +431,8 @@ public class PlayerManager : MonoBehaviour
         int count = sck.ReceiveBufferSize;
         byte[] buffer;
         buffer = new byte[count];
+
+        sck.Receive(buffer);
 
         byte[] formatted = new byte[count];
 
