@@ -105,23 +105,24 @@ public class GameController : TMNController
 	}
 
     //todo: trouver une façon intelligente de placer les personnages en formation prédeterminé par le joueur sur la carte
-    private TileNode CalculateStartingPosition()
+    private TileNode CalculateStartingPosition(int pos)
     {
+        TileNode node = map[0];
         if (PlayerManager._instance._playerSide == 1)
         {
-
+            node = map[(((GameManager._instance._playerPositions[pos] % 5 + 1)) * 24) + 280];
         }
         else
         {
 
         }
-        return map[0];
+        return node;
     }
     private void SpawnUnits()
     {
         for (int i = 0; i < PlayerManager._instance._chosenTeam.Count; ++i)
         {
-            Character unitFab = unitsFabs[i].GetComponent<Character>();
+            Character unitFab = PlayerManager._instance._chosenTeam[i];// unitsFabs[i].GetComponent<Character>();
 
             TileNode node = null;
 
@@ -147,7 +148,7 @@ public class GameController : TMNController
             {
                 if (unitFab.CanStandOn(map[i], true))
                 {
-                    node = map[(((GameManager._instance._playerPositions[i] % 5 + 1)) * 24) + 280];
+                    node = CalculateStartingPosition(i);
                 }
             }
             
@@ -161,7 +162,6 @@ public class GameController : TMNController
             units[unit.playerSide - 1].Add(unit);
         }
 
-
     }
     private void SpawnEnemyUnits()
     {
@@ -173,7 +173,7 @@ public class GameController : TMNController
 
         for (int i = 0; i < GameManager._instance._enemyTeam.Count; ++i)
         {
-            Character unitFab = enemyFabs[i].GetComponent<Character>();
+            Character unitFab = GameManager._instance._enemyTeam[i]; //enemyFabs[i].GetComponent<Character>();
 
             TileNode node = null;
 
@@ -205,8 +205,10 @@ public class GameController : TMNController
 
             // spawn the unit
             Character unit = (Character)Character.SpawnUnit(unitFab.gameObject, map, node);
+
             //unit._characterClass = GameManager._instance._enemyTeam[i]._characterClass.GetCharacterClass();
             //unit._characterInventory = GameManager._instance._enemyTeam[i]._characterInventory;
+
             unit.Init(OnUnitEvent);
             unit.name = "enemy-" + i;
             unit.playerSide = GameManager._instance._enemySide;

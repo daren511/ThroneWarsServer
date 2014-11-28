@@ -54,6 +54,12 @@
     <Compile Include="FORM_FichierTxt.Designer.cs">
       <DependentUpon>FORM_FichierTxt.cs</DependentUpon>
     </Compile>
+    <Compile Include="FORM_Instructions.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FORM_Instructions.Designer.cs">
+      <DependentUpon>FORM_Instructions.cs</DependentUpon>
+    </Compile>
     <Compile Include="FORM_Item.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -100,6 +106,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="FORM_FichierTxt.resx">
       <DependentUpon>FORM_FichierTxt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FORM_Instructions.resx">
+      <DependentUpon>FORM_Instructions.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FORM_Item.resx">
       <DependentUpon>FORM_Item.cs</DependentUpon>
