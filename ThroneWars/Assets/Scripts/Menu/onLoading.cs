@@ -20,7 +20,6 @@ public class onLoading : MonoBehaviour
     void Start()
     {
         FindPlayer();
-        //StartCoroutine(StartSearch());
     }
     void OnGUI()
     {
@@ -34,10 +33,9 @@ public class onLoading : MonoBehaviour
         if(!PlayerManager._instance.isLoading && !doneLoading)
         {
             doneLoading = true;
-            Debug.Log("Ennemi affecté");
             GameManager._instance._enemySide = PlayerManager._instance._playerSide == 1 ? 2 : 1;
-
-            PlayerManager._instance.PrepareGame();
+            PlayerManager._instance.SendTeam();
+            PlayerManager._instance.isWaitingPlayer = true;
             Application.LoadLevel("placement");
         }
     }
@@ -55,30 +53,5 @@ public class onLoading : MonoBehaviour
     {
         thread = new Thread(new ThreadStart(PlayerManager._instance.Lobby));
         thread.Start();
-    }
-    IEnumerator WaitForPlayer()
-    {
-        while (PlayerManager._instance.isWaitingPlayer)
-        {
-            Debug.Log("En attente d'un joueur");
-            Debug.Log(PlayerManager._instance.isWaitingPlayer);
-            if ( ReferenceEquals(PlayerManager._instance.isWaitingPlayer, false))
-            {
-                //Debug.Log("J'vais trouver un joueur...wait for it");
-                yield break;
-            }
-            Debug.Log("minute , je t'attends");
-            yield return this;
-        }
-    }
-    IEnumerator StartSearch()
-    {
-        //if (!started)
-        //{
-        //    started = true;
-        //    yield return new WaitForSeconds(1);
-        //    PlayerManager._instance.LookForPlayer();
-        //}
-        yield return 0;
     }
 } 

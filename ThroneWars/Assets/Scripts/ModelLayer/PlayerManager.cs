@@ -41,18 +41,19 @@ public class PlayerManager : MonoBehaviour
 
     public bool isLoading = false;
     public bool isWaitingPlayer = false;
+    public bool hasWonDefault = false;
     void OnApplicationQuit()
     {
 
         if (!isLoading)
-            SendAction(Controle.Actions.QUIT);
+            SendObject(Controle.Actions.QUIT);
 
         PlayerManager._instance.ClearPlayer();
     }
     void OnDestroy()
     {
         if (sck.Connected && !isLoading)
-            SendAction(Controle.Actions.QUIT);
+            SendObject(Controle.Actions.QUIT);
         PlayerManager._instance.ClearPlayer();
     }
 
@@ -147,20 +148,11 @@ public class PlayerManager : MonoBehaviour
         }
         return perso;
     }
-    public void SendAction(Controle.Actions ac)
-    {
-        BinaryFormatter b = new BinaryFormatter();
-        using (var stream = new MemoryStream())
-        {
-            b.Serialize(stream, (int)ac);
-            PlayerManager._instance.sck.Send(stream.ToArray());
-        }
-    }
     public bool CreateCharacter(string nom, string classe)
     {
         string sender = nom + SPLITTER + classe;
 
-        SendAction(Controle.Actions.CREATE);
+        SendObject(Controle.Actions.CREATE);
         Send(sender);
 
         int count = sck.ReceiveBufferSize;
@@ -177,7 +169,7 @@ public class PlayerManager : MonoBehaviour
     }
     public bool DeleteCharacter(string nom)
     {
-        SendAction(Controle.Actions.DELETE);
+        SendObject(Controle.Actions.DELETE);
         Send(nom);
 
         int count = sck.ReceiveBufferSize;
@@ -241,7 +233,7 @@ public class PlayerManager : MonoBehaviour
     }
     public void EquipItem(int itemId)
     {
-        SendAction(Controle.Actions.EQUIP);
+        SendObject(Controle.Actions.EQUIP);
         Send(_selectedCharacter._name + SPLITTER + itemId);
 
         int count = sck.ReceiveBufferSize;
@@ -277,7 +269,7 @@ public class PlayerManager : MonoBehaviour
     }
     public void UnequipItem(int itemId)
     {
-        SendAction(Controle.Actions.UNEQUIP);
+        SendObject(Controle.Actions.UNEQUIP);
         Send(_selectedCharacter._name + SPLITTER + itemId);
 
         int count = sck.ReceiveBufferSize;
@@ -336,33 +328,9 @@ public class PlayerManager : MonoBehaviour
     }
     public Personnages GetDefaultStats(string name)
     {
-        SendAction(Controle.Actions.STATS);
+        SendObject(Controle.Actions.STATS);
         Send(name);
         return GetPersonnage();
-    }
-    public void LookForPlayer()
-    {
-        int pos = 0;
-        sck.Blocking = false;        
-        while(isWaitingPlayer)
-        {
-            try
-            {
-                pos = ReadForPosition();
-
-                isWaitingPlayer = false;
-            }
-            catch (Exception) {}
-
-        }
-        sck.Blocking = true;
-
-        _playerSide = pos;
-        GameManager._instance._enemySide = _playerSide == 1 ? 2 : 1;
-        isLoading = false;
-
-        PrepareGame();
-        Application.LoadLevel("placement");
     }
     public void Lobby()
     {
@@ -376,14 +344,12 @@ public class PlayerManager : MonoBehaviour
             formatted[i] = buffer[i];
         }
 
-        Debug.Log("joueur affecté");
         _playerSide = Int32.Parse(Encoding.UTF8.GetString(formatted));
-
-        Debug.Log("chargement terminé");
         isLoading = false;
         onLoading.thread.Abort();
     }
-    public int ReadForPosition()
+
+    public void PlacementScreen()
     {
         int count = sck.ReceiveBufferSize;
         byte[] buffer = new byte[count];
@@ -394,13 +360,25 @@ public class PlayerManager : MonoBehaviour
         {
             formatted[i] = buffer[i];
         }
-       return Int32.Parse(Encoding.UTF8.GetString(formatted));
-    }
 
-    public void PrepareGame()
-    {
-        SendTeam();
-        PopulateEnemy(ReceiveObject<Personnages>());
+        Controle.Game action;
+
+        BinaryFormatter receive = new BinaryFormatter();
+        using (var recstream = new MemoryStream(formatted))
+        {
+            action = (Controle.Game)receive.Deserialize(recstream);
+        }
+        //if(action == Controle.Game.)
+        //{
+
+        //}
+        //else
+        //{
+
+        //}
+
+        isWaitingPlayer = false;
+        GameControllerSample6.thread.Abort();
     }
     public void SendTeam()
     {
@@ -444,6 +422,8 @@ public class PlayerManager : MonoBehaviour
         byte[] buffer;
         buffer = new byte[count];
 
+        sck.Receive(buffer);
+
         byte[] formatted = new byte[count];
 
 
@@ -467,18 +447,15 @@ public class PlayerManager : MonoBehaviour
         else
         { port = 50052; dev = false; }
     }
-
     public bool DEV
     {
         get { return dev; }
     }
-
     public static string USERNAME
     {
         get { return nom; }
         set { nom = value; }
     }
-
     public static string PASSWORD
     {
         get { return pwd; }
