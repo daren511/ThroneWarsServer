@@ -15,14 +15,22 @@ namespace DeveloperApplication
     public partial class FORM_FichierTxt : Form
     {
         //---------- VARIABLES ----------//
+        // Array
         string[] tabDefault;
         string[] tabItems;
-        List<string> listTous = new List<string>();
-        List<string> listGuerrier = new List<string>();
-        List<string> listArcher = new List<string>();
-        List<string> listMage = new List<string>();
-        List<string> listPretre = new List<string>();
-        string classe = null;
+        // List
+        List<string> listTousArmes = new List<string>();
+        List<string> listTousArmures = new List<string>();
+        List<string> listGuerrierArmes = new List<string>();
+        List<string> listGuerrierArmures = new List<string>();
+        List<string> listArcherArmes = new List<string>();
+        List<string> listArcherArmures = new List<string>();
+        List<string> listMageArmes = new List<string>();
+        List<string> listMageArmures = new List<string>();
+        List<string> listPretreArmes = new List<string>();
+        List<string> listPretreArmures = new List<string>();
+        // Infos
+        string classe = "";
         int watk = 0;
         int wdef = 0;
         int matk = 0;
@@ -50,7 +58,6 @@ namespace DeveloperApplication
         private void TB_Path_TextChanged(object sender, EventArgs e)
         {
             fileDialog.FileName = TB_Path.Text;
-            SplitClasses();
             ListerItems();
         }
 
@@ -69,7 +76,8 @@ namespace DeveloperApplication
         {
             if (LB_Noms.SelectedItem != null)
                 TB_Nom.Text = LB_Noms.SelectedItem.ToString();
-            if (LB_Noms.SelectedItem.ToString().StartsWith("[") && LB_Noms.SelectedItem.ToString().EndsWith("]"))
+            if ((LB_Noms.SelectedItem.ToString().StartsWith("[") && LB_Noms.SelectedItem.ToString().EndsWith("]")) ||
+                ((LB_Noms.SelectedItem.ToString().StartsWith("{") && LB_Noms.SelectedItem.ToString().EndsWith("}"))))
             {
                 TB_Nom.Text = "";
                 BTN_Modifier.Enabled = false;
@@ -90,6 +98,7 @@ namespace DeveloperApplication
 
         private void ListerItems()
         {
+            SplitClasses();
             int index = LB_Noms.SelectedIndex;
             LB_Noms.Items.Clear();
             if (tabItems != null)
@@ -98,11 +107,11 @@ namespace DeveloperApplication
                     LB_Noms.Items.Add(tabItems[i]);
                 LBL_Total.Text = LB_Noms.Items.Count.ToString() + "/" + tabDefault.Length.ToString();
 
-                if (LB_Noms.Items.Count > 1) 
+                if (LB_Noms.Items.Count > 1)
                     LBL_Total.Text += " lignes";
-                else 
+                else
                     LBL_Total.Text += " ligne";
-                if (index < LB_Noms.Items.Count) 
+                if (index < LB_Noms.Items.Count)
                     LB_Noms.SelectedIndex = index;
             }
             else
@@ -117,49 +126,92 @@ namespace DeveloperApplication
 
         private void SplitClasses()
         {
+            ClearTables();
             if (File.Exists(TB_Path.Text))
             {
-                string str = null;
+                string strClasse = null;
+                string strType = null;
                 tabItems = tabDefault = File.ReadAllLines(TB_Path.Text);
                 for (int i = 0; i < tabItems.Length; ++i)
                 {
                     if (tabItems[i].ToString().StartsWith("[") && tabItems[i].ToString().EndsWith("]"))
                     {
-                        str = tabItems[i].ToString();
+                        strClasse = tabItems[i].ToString();
                         ++i;
                     }
-                    switch (str)
+                    if (tabItems[i].ToString().StartsWith("{") && tabItems[i].ToString().EndsWith("}"))
                     {
-                        case "[TOUS]":
-                            listTous.Add(tabItems[i].ToString());
-                            break;
-                        case "[GUERRIER]":
-                            listGuerrier.Add(tabItems[i].ToString());
-                            break;
-                        case "[ARCHER]":
-                            listArcher.Add(tabItems[i].ToString());
-                            break;
-                        case "[MAGE]":
-                            listMage.Add(tabItems[i].ToString());
-                            break;
-                        case "[PRETRE]":
-                            listPretre.Add(tabItems[i].ToString());
-                            break;
-                        default:
-                            listTous.Add(tabItems[i].ToString());
-                            break;
+                        strType = tabItems[i].ToString();
+                        ++i;
                     }
+                    addItemInList(strClasse, strType, i);
                 }
             }
-            else
+        }
+
+        private void addItemInList(string strClasse, string strType, int i)
+        {
+            switch (strClasse)
             {
-                tabItems = tabDefault = null;
-                listTous.Clear();
-                listGuerrier.Clear();
-                listArcher.Clear();
-                listMage.Clear();
-                listPretre.Clear();
+                case "[TOUS]":
+                    if (strType == "{ARME}")
+                        listTousArmes.Add(tabItems[i].ToString());
+                    else if (strType == "{ARMURE}")
+                        listTousArmures.Add(tabItems[i].ToString());
+                    break;
+                case "[GUERRIER]":
+                    if (strType == "{ARME}")
+                        listGuerrierArmes.Add(tabItems[i].ToString());
+                    else if (strType == "{ARMURE}")
+                        listGuerrierArmes.Add(tabItems[i].ToString());
+                    break;
+                case "[ARCHER]":
+                    if (strType == "{ARME}")
+                        listArcherArmes.Add(tabItems[i].ToString());
+                    else if (strType == "{ARMURE}")
+                        listArcherArmes.Add(tabItems[i].ToString());
+                    break;
+                case "[MAGE]":
+                    if (strType == "{ARME}")
+                        listMageArmes.Add(tabItems[i].ToString());
+                    else if (strType == "{ARMURE}")
+                        listMageArmes.Add(tabItems[i].ToString());
+                    break;
+                case "[PRETRE]":
+                    if (strType == "{ARME}")
+                        listPretreArmes.Add(tabItems[i].ToString());
+                    else if (strType == "{ARMURE}")
+                        listPretreArmes.Add(tabItems[i].ToString());
+                    break;
+                default:
+                    if (strType == "{ARME}")
+                        listTousArmes.Add(tabItems[i].ToString());
+                    else if (strType == "{ARMURE}")
+                        listTousArmures.Add(tabItems[i].ToString());
+                    break;
             }
+        }
+
+        private void ClearTables()
+        {
+            tabItems = tabDefault = null;
+            // Armes
+            listTousArmes.Clear();
+            listGuerrierArmes.Clear();
+            listArcherArmes.Clear();
+            listMageArmes.Clear();
+            listPretreArmes.Clear();
+            // Armures
+            listTousArmures.Clear();
+            listGuerrierArmures.Clear();
+            listArcherArmures.Clear();
+            listMageArmures.Clear();
+            listPretreArmures.Clear();
+        }
+
+        private void InsererArmes()
+        {
+
         }
     }
 }
