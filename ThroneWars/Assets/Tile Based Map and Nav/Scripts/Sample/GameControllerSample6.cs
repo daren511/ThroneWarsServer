@@ -145,6 +145,9 @@ public class GameControllerSample6 : MonoBehaviour
             else
             {
                 //l'adversaire a abandonné la partie, le joueur a gagné
+                Debug.Log("Vous avez gagné!");
+                PlayerManager._instance.LoadPlayer();
+                Application.LoadLevel("MainMenu");                
             }
         }
     }
