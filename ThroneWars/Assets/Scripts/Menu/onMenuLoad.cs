@@ -112,7 +112,7 @@ public class onMenuLoad : MonoBehaviour
                 error = false;
                 cb.ResetContent();
 
-                PlayerManager._instance.SendAction(Controle.Actions.QUIT);
+                PlayerManager._instance.SendObject(Controle.Actions.QUIT);
                 PlayerManager._instance.ClearPlayer();
                 Application.LoadLevel("Login");
                 onStartUp.SetInfos(PlayerManager.USERNAME, PlayerManager.PASSWORD);

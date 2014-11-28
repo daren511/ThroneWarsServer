@@ -47,7 +47,7 @@ public class GameControllerSample6 : MonoBehaviour
     private int placed = 0;
     List<GameObject> table = new List<GameObject>();
 
-    private Rect _containerBox = new Rect(Screen.width - 300, 0, 100, Screen.height);
+    private Rect _containerBox = new Rect(Screen.width - 300, 0, 300, Screen.height);
     private Rect rectPlay = new Rect(Screen.width / 3, Screen.height - 50, Screen.width / 3, 50);
     IEnumerator Start()
     {
@@ -60,10 +60,10 @@ public class GameControllerSample6 : MonoBehaviour
         {
             AddCharacterPrefab(i);
         }
-        //for (int i = 0; i < GameManager._instance._enemyTeam.Count; ++i)
-        //{
-        //    AddEnemyPrefab(i);
-        //}
+        for (int i = 0; i < GameManager._instance._enemyTeam.Count; ++i)
+        {
+            AddEnemyPrefab(i);
+        }
 
         // now enable the colliders of the TileNodes.
         // they are disabled by default, but for this sample to work I need the player to be able to click on any tile.
@@ -102,13 +102,20 @@ public class GameControllerSample6 : MonoBehaviour
         {
             Object[] allObjects = FindObjectsOfType(typeof(Character));
 
+
+
+            PlayerManager._instance.Send("ok");
+            PlayerManager._instance.SendObject<List<int>>(GameManager._instance._playerPositions);
+            GameManager._instance._enemyPositions = PlayerManager._instance.ReceiveObject<int>();
+            GameController.unitsFabs = unitFabs;
+            GameController.enemyFabs = enemyFabs;
+
+
+
             for (int i = 0; i < allObjects.Length; ++i)
             {
                 Destroy(allObjects[i]);
             }
-            GameController.unitsFabs = unitFabs;
-            GameController.enemyFabs = enemyFabs;
-
             Application.LoadLevel(scene);
         }
     }
@@ -152,19 +159,33 @@ public class GameControllerSample6 : MonoBehaviour
 
     void InitializeStats()
     {
-        if (placed < PlayerManager._instance._chosenTeam.Count)
+        if (placed < PlayerManager._instance._chosenTeam.Count && PlayerManager._instance._chosenTeam[placed] != null)
         {
-            charName = unitFabs[placed].GetComponent<Character>()._name;
+            charName = PlayerManager._instance._chosenTeam[placed]._name;
             //charClass = unitFabs[placed].GetComponent<Character>()._characterClass._className;
             //lvl = unitFabs[placed].GetComponent<Character>()._characterClass._classLevel;
 
-            hpMax = unitFabs[placed].GetComponent<Character>()._maxHealth;
-            mpMax = unitFabs[placed].GetComponent<Character>()._maxMagic;
+            hpMax = PlayerManager._instance._chosenTeam[placed]._maxHealth;
+            mpMax = PlayerManager._instance._chosenTeam[placed]._maxMagic;
 
-            patk = unitFabs[placed].GetComponent<Character>()._currPhysAttack;
-            matk = unitFabs[placed].GetComponent<Character>()._currMagicAttack;
-            pdef = unitFabs[placed].GetComponent<Character>()._currPhysDefense;
-            mdef = unitFabs[placed].GetComponent<Character>()._currMagicDefense;
+            patk = PlayerManager._instance._chosenTeam[placed]._physAttack;
+            matk = PlayerManager._instance._chosenTeam[placed]._magicAttack;
+            pdef = PlayerManager._instance._chosenTeam[placed]._physDefense;
+            mdef = PlayerManager._instance._chosenTeam[placed]._magicDefense;
+
+
+
+            //charName = unitFabs[placed].GetComponent<Character>()._name;
+            ////charClass = unitFabs[placed].GetComponent<Character>()._characterClass._className;
+            ////lvl = unitFabs[placed].GetComponent<Character>()._characterClass._classLevel;
+
+            //hpMax = unitFabs[placed].GetComponent<Character>()._maxHealth;
+            //mpMax = unitFabs[placed].GetComponent<Character>()._maxMagic;
+
+            //patk = unitFabs[placed].GetComponent<Character>()._currPhysAttack;
+            //matk = unitFabs[placed].GetComponent<Character>()._currMagicAttack;
+            //pdef = unitFabs[placed].GetComponent<Character>()._currPhysDefense;
+            //mdef = unitFabs[placed].GetComponent<Character>()._currMagicDefense;
         }
     }
 

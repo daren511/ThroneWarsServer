@@ -45,14 +45,14 @@ public class PlayerManager : MonoBehaviour
     {
 
         if (!isLoading)
-            SendAction(Controle.Actions.QUIT);
+            SendObject(Controle.Actions.QUIT);
 
         PlayerManager._instance.ClearPlayer();
     }
     void OnDestroy()
     {
         if (sck.Connected && !isLoading)
-            SendAction(Controle.Actions.QUIT);
+            SendObject(Controle.Actions.QUIT);
         PlayerManager._instance.ClearPlayer();
     }
 
@@ -147,20 +147,11 @@ public class PlayerManager : MonoBehaviour
         }
         return perso;
     }
-    public void SendAction(Controle.Actions ac)
-    {
-        BinaryFormatter b = new BinaryFormatter();
-        using (var stream = new MemoryStream())
-        {
-            b.Serialize(stream, (int)ac);
-            PlayerManager._instance.sck.Send(stream.ToArray());
-        }
-    }
     public bool CreateCharacter(string nom, string classe)
     {
         string sender = nom + SPLITTER + classe;
 
-        SendAction(Controle.Actions.CREATE);
+        SendObject(Controle.Actions.CREATE);
         Send(sender);
 
         int count = sck.ReceiveBufferSize;
@@ -177,7 +168,7 @@ public class PlayerManager : MonoBehaviour
     }
     public bool DeleteCharacter(string nom)
     {
-        SendAction(Controle.Actions.DELETE);
+        SendObject(Controle.Actions.DELETE);
         Send(nom);
 
         int count = sck.ReceiveBufferSize;
@@ -241,7 +232,7 @@ public class PlayerManager : MonoBehaviour
     }
     public void EquipItem(int itemId)
     {
-        SendAction(Controle.Actions.EQUIP);
+        SendObject(Controle.Actions.EQUIP);
         Send(_selectedCharacter._name + SPLITTER + itemId);
 
         int count = sck.ReceiveBufferSize;
@@ -277,7 +268,7 @@ public class PlayerManager : MonoBehaviour
     }
     public void UnequipItem(int itemId)
     {
-        SendAction(Controle.Actions.UNEQUIP);
+        SendObject(Controle.Actions.UNEQUIP);
         Send(_selectedCharacter._name + SPLITTER + itemId);
 
         int count = sck.ReceiveBufferSize;
@@ -336,46 +327,68 @@ public class PlayerManager : MonoBehaviour
     }
     public Personnages GetDefaultStats(string name)
     {
-        SendAction(Controle.Actions.STATS);
+        SendObject(Controle.Actions.STATS);
         Send(name);
         return GetPersonnage();
     }
     public void LookForPlayer()
     {
-
-        int count = sck.ReceiveBufferSize;
-        byte[] buffer;
-        buffer = new byte[count];
+        int pos = 0;
+        sck.Blocking = false;        
         while(isWaitingPlayer)
         {
             try
             {
-                sck.Receive(buffer);
-
+                pos = ReadForPosition();
 
                 isWaitingPlayer = false;
             }
-            catch(Exception e) {}
+            catch (Exception) {}
 
         }
-        byte[] formatted = new byte[count];
-        for (int i = 0; i < count; i++)
-        {
-            formatted[i] = buffer[i];
-        }
-        _playerSide = Int32.Parse(Encoding.UTF8.GetString(formatted));
-        GameManager._instance._enemySide = _playerSide == 1 ? 2 : 1;
-
         sck.Blocking = true;
+
+        _playerSide = pos;
+        GameManager._instance._enemySide = _playerSide == 1 ? 2 : 1;
         isLoading = false;
 
         PrepareGame();
         Application.LoadLevel("placement");
     }
+    public void Lobby()
+    {
+        int count = sck.ReceiveBufferSize;
+        byte[] buffer = new byte[count];
+        sck.Receive(buffer);
+
+        byte[] formatted = new byte[count];
+        for (int i = 0; i < count; i++)
+        {
+            formatted[i] = buffer[i];
+        }
+
+        _playerSide = Int32.Parse(Encoding.UTF8.GetString(formatted));
+        isLoading = false;
+        onLoading.thread.Abort();
+    }
+    public int ReadForPosition()
+    {
+        int count = sck.ReceiveBufferSize;
+        byte[] buffer = new byte[count];
+        sck.Receive(buffer);
+
+        byte[] formatted = new byte[count];
+        for (int i = 0; i < count; i++)
+        {
+            formatted[i] = buffer[i];
+        }
+       return Int32.Parse(Encoding.UTF8.GetString(formatted));
+    }
+
     public void PrepareGame()
     {
         SendTeam();
-        PopulateEnemy(ReceiveEnemy());
+        PopulateEnemy(ReceiveObject<Personnages>());
     }
     public void SendTeam()
     {
@@ -389,27 +402,6 @@ public class PlayerManager : MonoBehaviour
                 c._physAttack, c._physDefense, c._magicAttack, c._magicDefense));
         }
         SendObject(list);
-    }
-    public List<Personnages> ReceiveEnemy()
-    {
-        List<Personnages> list = new List<Personnages>();
-
-        int count = sck.ReceiveBufferSize;
-        byte[] buffer;
-        buffer = new byte[count];
-        sck.Receive(buffer);
-
-        byte[] formatted = new byte[count];
-        for (int i = 0; i < count; i++)
-        {
-            formatted[i] = buffer[i];
-        }
-        BinaryFormatter receive = new BinaryFormatter();
-        using (var recstream = new MemoryStream(formatted))
-        {
-            list = receive.Deserialize(recstream) as List<Personnages>;
-        }
-        return list;
     }
     public void PopulateEnemy(List<Personnages> list)
     {
@@ -431,6 +423,31 @@ public class PlayerManager : MonoBehaviour
             b.Serialize(stream, obj);
             sck.Send(stream.ToArray());
         }
+    }
+    public List<T> ReceiveObject<T>()
+    {
+        List<T> list = new List<T>();
+
+        int count = sck.ReceiveBufferSize;
+        byte[] buffer;
+        buffer = new byte[count];
+
+        sck.Receive(buffer);
+
+        byte[] formatted = new byte[count];
+
+
+        for (int i = 0; i < count; ++i )
+        {
+            formatted[i] = buffer[i];
+        }
+
+        BinaryFormatter receive = new BinaryFormatter();
+        using (var recstream = new MemoryStream(formatted))
+        {
+            list = receive.Deserialize(recstream) as List<T>;
+        }
+        return list;
     }
     public void changePort(string password)
     {
