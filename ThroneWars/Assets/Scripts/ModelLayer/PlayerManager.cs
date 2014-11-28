@@ -411,6 +411,7 @@ public class PlayerManager : MonoBehaviour
                 null, p.PhysAtk, p.PhysDef, p.MagicAtk, p.MagicDef));
         }
         GameManager._instance._enemyTeam = enemyTeam;
+        SendObject(Controle.Game.OK);
     }
     public void SendObject<T>(T obj)
     {

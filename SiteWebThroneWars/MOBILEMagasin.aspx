@@ -54,8 +54,7 @@
         </script>
     <form id="form1" runat="server">
     <nav id="my-menu">
-            <ul>
-                
+            <ul>  
                 <li><a href="MOBILEdefault.aspx">Accueil</a></li>
                 <li><a href="MOBILEInscription.aspx">Inscription</a></li>
                 <li><a href="MOBILEConnexion.aspx">Connexion</a></li>
@@ -86,7 +85,7 @@
 
             <asp:GridView runat="server" ID="GV_Magasin" OnSelectedIndexChanged="GV_Magasin_SelectedIndexChanged" 
                 OnRowDataBound="GV_Magasin_RowDataBound"   AllowPaging ="true" OnPageIndexChanging="GV_Magasin_PageIndexChanging" 
-                PageSize = "10" >
+                PageSize = "25" >
                 <RowStyle HorizontalAlign="Center"/>
             </asp:GridView>
         </div>

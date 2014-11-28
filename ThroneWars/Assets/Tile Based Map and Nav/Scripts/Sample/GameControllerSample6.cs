@@ -137,6 +137,7 @@ public class GameControllerSample6 : MonoBehaviour
 
                 //les personnages de l'adversaire
                 PlayerManager._instance.PopulateEnemy(PlayerManager._instance.ReceiveObject<Personnages>());
+
                 //les positions des personnages de l'adversaire
                 GameManager._instance._enemyPositions = PlayerManager._instance.ReceiveObject<int>();
 

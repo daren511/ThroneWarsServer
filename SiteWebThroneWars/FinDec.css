@@ -206,6 +206,12 @@ div.FormRecherche{
   box-shadow: 31px 7px 32px 3px rgba(0,0,0,0.75);
 
 }
+.GVLeaderboard{
+
+}
+GVStats{
+
+}
 
 /*/////////////////////////LEADERBOARD_CLASSEMENT/////////////////////////////*/
 #Leaderboard_Classement{
@@ -263,7 +269,7 @@ div.FormRecherche{
 /******************************************************/
 #menu-bar {
   margin-left:20%;
-  width: 57%;
+  width: 59%;
   padding: 6px 6px 4px 6px;
   height: 5%;
   line-height: 100%;
