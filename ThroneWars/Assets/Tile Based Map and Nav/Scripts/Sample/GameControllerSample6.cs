@@ -28,6 +28,7 @@ public class GameControllerSample6 : MonoBehaviour
 
     public static Thread thread;
     private bool doneWaiting = false;
+    private bool isLoading = true;
 
     // Character stats
     public string charName = "",
@@ -57,6 +58,10 @@ public class GameControllerSample6 : MonoBehaviour
     private static float wQ = 275.0f;
     private static float hQ = 110.0f;
     private static Rect rectQuit = new Rect((Screen.width - wQ) / 2, (Screen.height - hQ) / 2, wQ, hQ);
+    // Loading window
+    private static float wL = 275.0f;
+    private static float hL = 115.0f;
+    private static Rect rectLoading = new Rect((Screen.width - wL) / 2, (Screen.height - hL) / 2, wL, hL);
 
     private Rect _containerBox = new Rect(Screen.width - 150, 0, 150, Screen.height - 50);
     private Rect rectPlay = new Rect(Screen.width / 3, Screen.height - 50, Screen.width / 3, 50);
@@ -74,14 +79,14 @@ public class GameControllerSample6 : MonoBehaviour
 
         //InitializeDummyEnemyUnits();
 
-        for (int i = 0; i < PlayerManager._instance._chosenTeam.Count; ++i)
-        {
-            AddCharacterPrefab(i);
-        }
-        for (int i = 0; i < GameManager._instance._enemyTeam.Count; ++i)
-        {
-            AddEnemyPrefab(i);
-        }
+        //for (int i = 0; i < PlayerManager._instance._chosenTeam.Count; ++i)
+        //{
+        //    AddCharacterPrefab(i);
+        //}
+        //for (int i = 0; i < GameManager._instance._enemyTeam.Count; ++i)
+        //{
+        //    AddEnemyPrefab(i);
+        //}
 
         // now enable the colliders of the TileNodes.
         // they are disabled by default, but for this sample to work I need the player to be able to click on any tile.
@@ -103,7 +108,18 @@ public class GameControllerSample6 : MonoBehaviour
         hasUpdatedGui = ResourceManager.GetInstance.UpdateGUI(hasUpdatedGui);
         InitializeStats();
         GUILayout.Window(1, _containerBox, doContainerWindow, "", ColoredGUISkin.Skin.box);
-        GUILayout.Window(2, rectPlay, doPlayWindow, "", GUIStyle.none);
+        if (!isLoading)
+            GUILayout.Window(2, rectPlay, doPlayWindow, "", GUIStyle.none);
+
+        if (!isLoading)
+        {
+            if (GUI.Button(new Rect(Screen.width - 150, Screen.height - 50, 150, 50), "Quitter"))
+                wantToQuit = true;
+        }
+        if (wantToQuit)
+            GUILayout.Window(0, rectQuit, doQuitWindow, "Quitter");
+        if (isLoading)
+            GUILayout.Window(-1, rectLoading, doLoadingWindow, "En attente");
 
         //flag thread
         if(!PlayerManager._instance.isWaitingPlayer && !doneWaiting)
@@ -368,6 +384,24 @@ public class GameControllerSample6 : MonoBehaviour
         {
             wantToQuit = false;
         }
+        GUILayout.EndHorizontal();
+        GUILayout.Space(3);
+    }
+
+    private void doLoadingWindow(int windowID)
+    {
+        // Ornament
+        GUI.DrawTexture(new Rect(20, 4, 31, 40), ColoredGUISkin.Skin.customStyles[0].normal.background);
+
+        GUILayout.Space(20);
+        GUILayout.BeginHorizontal();
+        GUILayout.Label("En attente de l'autre joueur...");
+        GUILayout.EndHorizontal();
+
+        GUILayout.BeginHorizontal();
+        GUILayout.FlexibleSpace();
+        if (GUILayout.Button("Quitter", GUILayout.Height(37)))
+            wantToQuit = true;
         GUILayout.EndHorizontal();
         GUILayout.Space(3);
     }
