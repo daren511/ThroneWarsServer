@@ -139,6 +139,8 @@ namespace ThroneWarsServer
                 //la partie debute ou un joueur a quitter
                 if(!isWon)
                 {
+                    envoyerObjet(Controle.Game.STARTING, player1);
+                    envoyerObjet(Controle.Game.STARTING, player2);
                     //jouation
                 }
 
