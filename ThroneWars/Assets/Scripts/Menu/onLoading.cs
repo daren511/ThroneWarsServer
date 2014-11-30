@@ -53,7 +53,7 @@ public class onLoading : MonoBehaviour
     }
     private void FindPlayer()
     {
-        thread = new Thread(new ThreadStart(PlayerManager._instance.Lobby));
+        thread = new Thread(new ThreadStart(PlayerManager._instance.WaitingForPlayerScreen));
         thread.Start();
     }
     private void CleanScene()

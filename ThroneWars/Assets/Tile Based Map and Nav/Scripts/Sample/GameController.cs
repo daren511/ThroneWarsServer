@@ -114,7 +114,7 @@ public class GameController : TMNController
         }
         else
         {
-
+            node = map[(((GameManager._instance._playerPositions[pos] % 5 + 1)) * 24) + 280];
         }
         return node;
     }
@@ -169,6 +169,7 @@ public class GameController : TMNController
         {
             Character unitFab = enemyFabs[i].GetComponent<Character>();
 
+            Debug.Log(unitFab._name);
             TileNode node = null;
 
             unitFab._name = GameManager._instance._enemyTeam[i]._name;
@@ -528,7 +529,7 @@ public class GameController : TMNController
 			// is active player's unit that was clicked on?
                 if (unit.playerSide == (PlayerManager._instance._playerSide))
 			{
-                CombatMenu.FindObjectOfType<CombatMenu>().go = unit.gameObject;
+                CombatMenu.FindObjectOfType<CombatMenu>().selectedCharacter = unit.gameObject;
 
                     if (PlayerManager._instance._playerSide == currPlayerTurn)
                     CombatMenu.FindObjectOfType<CombatMenu>().characterChosen = true;
