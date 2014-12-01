@@ -54,6 +54,7 @@ public class PlayerManager : MonoBehaviour
     public bool isWaitingPlayer = false;
     public bool hasWonDefault = false;
     public bool isInGame = false;
+    public bool isAFK = false;
     #endregion
 
     void OnApplicationQuit()
@@ -393,6 +394,11 @@ public class PlayerManager : MonoBehaviour
         _playerInventory._equips.Clear();
         _playerInventory._potions.Clear();
 
+        isLoading = false;
+        isWaitingPlayer = false;
+        hasWonDefault = false;
+        isInGame = false;
+
         ///destruction des instances des objets de type Character
         for (int i = 0; i < _chosenTeam.Count; ++i)
         {
@@ -461,6 +467,7 @@ public class PlayerManager : MonoBehaviour
         {
             hasWonDefault = true;
             isWaitingPlayer = false;
+            isInGame = false;
         }
         else if(action == Controle.Game.STARTING)
         {
@@ -468,6 +475,59 @@ public class PlayerManager : MonoBehaviour
             isWaitingPlayer = false;
         }
         GameControllerSample6.thread.Abort();
+    }
+    public void InGameManager()
+    {
+        int count = sck.ReceiveBufferSize;
+        byte[] buffer = new byte[count];
+        sck.Receive(buffer);
+
+        byte[] formatted = new byte[count];
+        for (int i = 0; i < count; i++)
+        {
+            formatted[i] = buffer[i];
+        }
+
+        Controle.Game action;
+
+        BinaryFormatter receive = new BinaryFormatter();
+        using (var recstream = new MemoryStream(formatted))
+        {
+            action = (Controle.Game)receive.Deserialize(recstream);
+        }
+        //if(action == )
+    }
+    public void CheckForInactivity()
+    {
+        int count = sck.ReceiveBufferSize;
+        byte[] buffer = new byte[count];
+        sck.Receive(buffer);
+
+        byte[] formatted = new byte[count];
+        for (int i = 0; i < count; i++)
+        {
+            formatted[i] = buffer[i];
+        }
+
+        Controle.Game action;
+
+        BinaryFormatter receive = new BinaryFormatter();
+        using (var recstream = new MemoryStream(formatted))
+        {
+            action = (Controle.Game)receive.Deserialize(recstream);
+        }
+        /*
+         * if(action == Controle.Game.HALFAFK)
+         * {
+         * 
+         * }
+         * else if(action == Controle.Game.AFK)
+         * {
+         * 
+         * }         
+         * */
+
+
     }
     #endregion
     /// <summary>
