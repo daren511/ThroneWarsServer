@@ -17,18 +17,18 @@ public class onLoading : MonoBehaviour
     {
 
     }
+
     void Start()
     {
         FindPlayer();
     }
+
     void OnGUI()
     {
         hasUpdatedGui = ResourceManager.GetInstance.UpdateGUI(hasUpdatedGui);
         ResourceManager.GetInstance.CreateBackground();
         ResourceManager.GetInstance.CreateLogo();
         GUI.Window(-10, rect, doDisplayMessage, title);
-        if (GUI.Button(new Rect(Screen.width - 200, Screen.height - 50, 200, 50), "Annuler"))
-            cancelLoading();
 
         if(!PlayerManager._instance.isLoading && !doneLoading)
         {
@@ -40,22 +40,19 @@ public class onLoading : MonoBehaviour
             Application.LoadLevel("placement");
         }
     }
+
     private void doDisplayMessage(int windowID)
     {
         GUILayout.Space(25);
         GUILayout.Label(message);
     }
-    private void cancelLoading()
-    {
-        CleanScene();
-        PlayerManager._instance.LoadPlayer();
-        Application.LoadLevel("MainMenu");
-    }
+
     private void FindPlayer()
     {
         thread = new Thread(new ThreadStart(PlayerManager._instance.WaitingForPlayerScreen));
         thread.Start();
     }
+
     private void CleanScene()
     {
         doneLoading = false;

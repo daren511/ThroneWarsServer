@@ -407,7 +407,7 @@ public class GameControllerSample6 : MonoBehaviour
 
         GUILayout.Space(20);
         GUILayout.BeginHorizontal();
-        GUILayout.Label("En attente de l'autre joueur...");
+        GUILayout.Label("En attente du joueur adverse...");
         GUILayout.EndHorizontal();
 
         GUILayout.BeginHorizontal();
