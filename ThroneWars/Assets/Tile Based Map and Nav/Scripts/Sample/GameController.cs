@@ -105,113 +105,239 @@ public class GameController : TMNController
 	}
 
     //todo: trouver une façon intelligente de placer les personnages en formation prédeterminé par le joueur sur la carte
-    private TileNode CalculateStartingPosition(int pos)
+    private TileNode CalculateStartingPosition(List<int> positions, int pos, int playerSide)
     {
         TileNode node = map[0];
-        if (PlayerManager._instance._playerSide == 1)
+        if (playerSide == 1)
         {
-            node = map[(((GameManager._instance._playerPositions[pos] % 5 + 1)) * 24) + 280];
+            node = TeamAPosition(positions, pos);
         }
         else
         {
-            node = map[(((GameManager._instance._playerPositions[pos] % 5 + 1)) * 24) + 280];
+            node = TeamBPosition(positions, pos);
         }
         return node;
     }
-    private void SpawnUnits()
-    {
-        for (int i = 0; i < PlayerManager._instance._chosenTeam.Count; ++i)
-        {
-            Character unitFab = unitsFabs[i].GetComponent<Character>();
+    #region despairzone
 
+    #region nopeville
+    #region nopefirst
+    private TileNode TeamAPosition(List<int> originalPosition, int index)
+    {
+        TileNode node = map[0];
+
+        switch (originalPosition[index])
+        {
+            case 0:
+                node = map[35];
+                break;
+            case 1:
+                node = map[36];
+                break;
+            case 2:
+                node = map[37];
+                break;
+            case 3:
+                node = map[38];
+                break;
+            case 4:
+                node = map[39];
+                break;
+            case 5:
+                node = map[60];
+                break;
+            case 6:
+                node = map[61];
+                break;
+            case 7:
+                node = map[62];
+                break;
+            case 8:
+                node = map[63];
+                break;
+            case 10:
+                node = map[83];
+                break;
+            case 11:
+                node = map[84];
+                break;
+            case 12:
+                node = map[85];
+                break;
+            case 13:
+                node = map[86];
+                break;
+            case 14:
+                node = map[87];
+                break;
+            case 15:
+                node = map[108];
+                break;
+            case 16:
+                node = map[109];
+                break;
+            case 17:
+                node = map[110];
+                break;
+            case 18:
+                node = map[111];
+                break;
+            case 20:
+                node = map[131];
+                break;
+            case 21:
+                node = map[132];
+                break;
+            case 22:
+                node = map[133];
+                break;
+            case 23:
+                node = map[134];
+                break;
+            case 24:
+                node = map[135];
+                break;
+        }
+        return node;
+    }
+    #endregion
+    #region nopesecond
+    private TileNode TeamBPosition(List<int> originalPosition, int index)
+    {
+        TileNode node = map[0];
+
+        switch (originalPosition[index])
+        {
+            case 0:
+                node = map[329];
+                break;
+            case 1:
+                node = map[330];
+                break;
+            case 2:
+                node = map[331];
+                break;
+            case 3:
+                node = map[332];
+                break;
+            case 4:
+                node = map[333];
+                break;
+            case 5:
+                node = map[354];
+                break;
+            case 6:
+                node = map[355];
+                break;
+            case 7:
+                node = map[356];
+                break;
+            case 8:
+                node = map[357];
+                break;
+            case 10:
+                node = map[377];
+                break;
+            case 11:
+                node = map[378];
+                break;
+            case 12:
+                node = map[379];
+                break;
+            case 13:
+                node = map[380];
+                break;
+            case 14:
+                node = map[381];
+                break;
+            case 15:
+                node = map[402];
+                break;
+            case 16:
+                node = map[403];
+                break;
+            case 17:
+                node = map[404];
+                break;
+            case 18:
+                node = map[405];
+                break;
+            case 20:
+                node = map[425];
+                break;
+            case 21:
+                node = map[426];
+                break;
+            case 22:
+                node = map[427];
+                break;
+            case 23:
+                node = map[428];
+                break;
+            case 24:
+                node = map[429];
+                break;
+        }
+        return node;
+    }
+    #endregion
+    #endregion
+
+    #endregion
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="fabs"></param>
+    /// <param name="charactersToSpawn"></param>
+    /// <param name="playerSide"></param>
+    private void SpawnUnits(GameObject[] fabs, List<Character> charactersToSpawn, List<int> positions, int playerSide)
+    {
+        for (int i = 0; i < charactersToSpawn.Count; ++i)
+        {
+            Character unitFab = fabs[i].GetComponent<Character>();
             TileNode node = null;
 
-            unitFab._name = PlayerManager._instance._chosenTeam[i]._name;
-            unitFab._maxHealth = PlayerManager._instance._chosenTeam[i]._maxHealth;
-            unitFab._currHealth = PlayerManager._instance._chosenTeam[i]._currHealth - 20;
+            unitFab._name = charactersToSpawn[i]._name;
+            unitFab._maxHealth = charactersToSpawn[i]._maxHealth;
+            unitFab._currHealth = charactersToSpawn[i]._currHealth;
             unitFab._isAlive = unitFab._currHealth > 0;
-            unitFab._maxMagic = PlayerManager._instance._chosenTeam[i]._maxMagic;
-            unitFab._currMagic = PlayerManager._instance._chosenTeam[i]._currMagic;
+            unitFab._maxMagic = charactersToSpawn[i]._maxMagic;
+            unitFab._currMagic = charactersToSpawn[i]._currMagic;
 
-            unitFab._magicAttack = PlayerManager._instance._chosenTeam[i]._magicAttack;
-            unitFab._magicDefense = PlayerManager._instance._chosenTeam[i]._magicDefense;
-            unitFab._currMagicAttack = PlayerManager._instance._chosenTeam[i]._magicAttack;
-            unitFab._currMagicDefense = PlayerManager._instance._chosenTeam[i]._magicDefense;
-            unitFab._moves = PlayerManager._instance._chosenTeam[i]._moves;
-            unitFab.attackRange = PlayerManager._instance._chosenTeam[i].attackRange;
-            unitFab._physAttack = PlayerManager._instance._chosenTeam[i]._physAttack;
-            unitFab._physDefense = PlayerManager._instance._chosenTeam[i]._physDefense;
-            unitFab._currPhysAttack = PlayerManager._instance._chosenTeam[i]._physAttack;
-            unitFab._currPhysDefense = PlayerManager._instance._chosenTeam[i]._physDefense;
-
+            unitFab._magicAttack = charactersToSpawn[i]._magicAttack;
+            unitFab._magicDefense = charactersToSpawn[i]._magicDefense;
+            unitFab._currMagicAttack = charactersToSpawn[i]._magicAttack;
+            unitFab._currMagicDefense = charactersToSpawn[i]._magicDefense;
+            unitFab._moves = charactersToSpawn[i]._moves;
+            unitFab.attackRange = charactersToSpawn[i].attackRange;
+            unitFab._physAttack = charactersToSpawn[i]._physAttack;
+            unitFab._physDefense = charactersToSpawn[i]._physDefense;
+            unitFab._currPhysAttack = charactersToSpawn[i]._physAttack;
+            unitFab._currPhysDefense = charactersToSpawn[i]._physDefense;
+ 
             while (node == null)
             {
                 if (unitFab.CanStandOn(map[i], true))
                 {
-                    node = CalculateStartingPosition(i);
+                    node = CalculateStartingPosition(positions, i, playerSide);
                 }
             }
             
             // spawn the unit
             Character unit = (Character)Character.SpawnUnit(unitFab.gameObject, map, node);
-            unit._characterClass = PlayerManager._instance._chosenTeam[i]._characterClass.GetCharacterClass();
-            unit._characterInventory = PlayerManager._instance._chosenTeam[i]._characterInventory;
+            unit._characterClass = charactersToSpawn[i]._characterClass.GetCharacterClass();
+            unit._characterInventory = charactersToSpawn[i]._characterInventory;
             unit.Init(OnUnitEvent);
-            unit.playerSide = PlayerManager._instance._playerSide;
-            unit.name = "unit-" + i;
-            units[unit.playerSide - 1].Add(unit);
-        }
-
-    }
-    private void SpawnEnemyUnits()
-    {
-        for (int i = 0; i < GameManager._instance._enemyTeam.Count; ++i)
-        {
-            Character unitFab = enemyFabs[i].GetComponent<Character>();
-
-            Debug.Log(unitFab._name);
-            TileNode node = null;
-
-            unitFab._name = GameManager._instance._enemyTeam[i]._name;
-            unitFab._maxHealth = GameManager._instance._enemyTeam[i]._maxHealth;
-            unitFab._currHealth = GameManager._instance._enemyTeam[i]._currHealth;
-            unitFab._isAlive = unitFab._currHealth > 0;
-            unitFab._maxMagic = GameManager._instance._enemyTeam[i]._maxMagic;
-            unitFab._currMagic = GameManager._instance._enemyTeam[i]._currMagic;
-
-            unitFab._magicAttack = GameManager._instance._enemyTeam[i]._magicAttack;
-            unitFab._magicDefense = GameManager._instance._enemyTeam[i]._magicDefense;
-            unitFab._currMagicAttack = GameManager._instance._enemyTeam[i]._magicAttack;
-            unitFab._currMagicDefense = GameManager._instance._enemyTeam[i]._magicDefense;
-            unitFab._moves = GameManager._instance._enemyTeam[i]._moves;
-            unitFab.attackRange = GameManager._instance._enemyTeam[i].attackRange;
-            unitFab._physAttack = GameManager._instance._enemyTeam[i]._physAttack;
-            unitFab._physDefense = GameManager._instance._enemyTeam[i]._physDefense;
-            unitFab._currPhysAttack = GameManager._instance._enemyTeam[i]._physAttack;
-            unitFab._currPhysDefense = GameManager._instance._enemyTeam[i]._physDefense;
-
-            while (node == null)
-            {
-                if (unitFab.CanStandOn(map[i], true))
-                {
-                    node = map[GameManager._instance._enemyPositions[i]];
-                }
-            }
-
-            // spawn the unit
-            Character unit = (Character)Character.SpawnUnit(unitFab.gameObject, map, node);
-
-            unit._characterClass = GameManager._instance._enemyTeam[i]._characterClass.GetCharacterClass();
-            unit._characterInventory = GameManager._instance._enemyTeam[i]._characterInventory;
-
-            unit.Init(OnUnitEvent);
-            unit.name = "enemy-" + i;
-            unit.playerSide = GameManager._instance._enemySide;
+            unit.playerSide = playerSide;
+            unit.name = unitFab._name;
             units[unit.playerSide - 1].Add(unit);
         }
     }
+
+    #region combat
     /// <summary>
-    /// 
+    /// Formule pour calculer les dégâts infligés
     /// </summary>
     /// <param name="atker">L'unité qui attaque</param>
     /// <param name="defender">L'unité qui recoit les dégâts</param>
@@ -268,9 +394,12 @@ public class GameController : TMNController
             int dmg = CalculateDamage(selectedUnit, defender, false);
             int exp = CalculateExperience(selectedUnit, defender, dmg);
             int gold = CalculateMoneyGain(selectedUnit, defender, dmg);
+
+            //à titre de tests
             Debug.Log(selectedUnit._name + "  attaque " + defender._name + ", et inflige " + dmg.ToString() + " de dégâts!");
             Debug.Log(selectedUnit._name + " gagne " + exp.ToString() + " d'expérience.");
             Debug.Log("Vous gagnez " + gold + " d'or.");
+
             GameObject.Find("StatusIndicator").transform.position = defender.transform.position;
             defender.ReceiveDamage(dmg);
             selectedUnit.ReceiveExperience(exp);
@@ -281,6 +410,7 @@ public class GameController : TMNController
             CombatMenu.FindObjectOfType<CombatMenu>().winner = CheckGameOver();
         }
     }
+    #endregion
     public int CountAliveCharacters(Character[] tab)
     {
         int alive = 0;
@@ -355,11 +485,7 @@ public class GameController : TMNController
             //tour du joueur terminer
             Debug.Log("Tour terminé!");
 
-            //TEMPORAIRE POUR TESTS/BETA, ON RECOMMENCE LE TOUR DU JOUEUR UNIQUE
-            foreach (Character u in units[currPlayerTurn])
-            {
-                u.Reset();
-            }
+            //on envoie au serveur une requête comme quoi que notre tour est terminé
         }
         OnNaviUnitClick(units[PlayerManager._instance._playerSide - 1][activeCharacterIndex].gameObject);
         if (PlayerManager._instance._playerSide - 1 == currPlayerTurn)
@@ -396,8 +522,8 @@ public class GameController : TMNController
 		else if (state == State.Init)
 		{
 			state = State.Running;
-            SpawnUnits();
-            SpawnEnemyUnits();
+            SpawnUnits(unitsFabs, PlayerManager._instance._chosenTeam, GameManager._instance._playerPositions, PlayerManager._instance._playerSide);
+            SpawnUnits(enemyFabs, GameManager._instance._enemyTeam, GameManager._instance._enemyPositions, GameManager._instance._enemySide);
 
             OnNaviUnitClick(units[PlayerManager._instance._playerSide - 1][activeCharacterIndex].GetComponent<Character>().gameObject);
             if (PlayerManager._instance._playerSide == 1)
@@ -408,7 +534,6 @@ public class GameController : TMNController
             {
                 CombatMenu.FindObjectOfType<CombatMenu>().characterChosen = false;
             }
-
 		}
 	}
 

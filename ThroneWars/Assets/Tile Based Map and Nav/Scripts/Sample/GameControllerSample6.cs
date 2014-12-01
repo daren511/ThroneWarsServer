@@ -126,28 +126,7 @@ public class GameControllerSample6 : MonoBehaviour
             ///si l'adversaire a terminé, on commence la partie
             if (!PlayerManager._instance.hasWonDefault)
             {
-
-                ///les personnages de l'adversaire pour la partie
-                GameManager._instance.PopulateEnemy(PlayerManager._instance.ReceiveObject<Personnages>());
-                for (int i = 0; i < GameManager._instance._enemyTeam.Count; ++i)
-                {
-                    AddEnemyPrefab(i);
-                }
-                ///les positions des personnages de l'adversaire
-                GameManager._instance._enemyPositions = PlayerManager._instance.ReceiveObject<int>();
-                
-                ///on affecte les unités aux équipes respectives
-                GameController.unitsFabs = unitFabs;
-                GameController.enemyFabs = enemyFabs;
-
-                ///destruction des instanciations de type Character de la scène de placement
-                Object[] allObjects = FindObjectsOfType(typeof(Character));
-                for (int i = 0; i < allObjects.Length; ++i)
-                {
-                    Destroy(allObjects[i]);
-                }
-                ///on charge la scène de jeu
-                Application.LoadLevel(scene);
+                StartGame();
             }
             else
             {
@@ -156,7 +135,31 @@ public class GameControllerSample6 : MonoBehaviour
             }
         }
     }
+    private void StartGame()
+    {
+        ///les personnages de l'adversaire pour la partie
+        GameManager._instance.PopulateEnemy(PlayerManager._instance.ReceiveObject<Personnages>());
 
+        ///les positions des personnages de l'adversaire
+        GameManager._instance._enemyPositions = PlayerManager._instance.ReceiveObject<int>();
+
+        for (int i = 0; i < GameManager._instance._enemyTeam.Count; ++i)
+        {
+            AddEnemyPrefab(i);
+        }
+        ///on affecte les unités aux équipes respectives
+        GameController.unitsFabs = unitFabs;
+        GameController.enemyFabs = enemyFabs;
+
+        ///destruction des instanciations de type Character de la scène de placement
+        Object[] allObjects = GameObject.FindObjectsOfType<Character>(); // FindObjectsOfType(typeof(Character));
+        for (int i = 0; i < allObjects.Length; ++i)
+        {
+            Destroy(allObjects[i]);
+        }
+        ///on charge la scène de jeu
+        Application.LoadLevel(scene);
+    }
     private void CleanScene()
     {
         doneWaiting = false;

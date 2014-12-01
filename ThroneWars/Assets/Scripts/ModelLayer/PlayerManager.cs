@@ -69,7 +69,7 @@ public class PlayerManager : MonoBehaviour
     {
         if (sck.Connected && !isLoading && !isInGame)
             SendObject(Controle.Actions.QUIT);
-        else if (isInGame)
+        else if (sck.Connected && isInGame)
             SendObject(Controle.Game.QUIT);
         PlayerManager._instance.ClearPlayer();
     }
