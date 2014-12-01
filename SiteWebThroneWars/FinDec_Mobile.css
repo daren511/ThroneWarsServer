@@ -305,10 +305,13 @@ div.FormRecherche_Mobile{
   -moz-box-shadow: 31px 7px 32px 3px rgba(0,0,0,0.75);
   box-shadow: 31px 7px 32px 3px rgba(0,0,0,0.75);
 }
-#MagasinGV_Mobile table{
-    margin-left:6%;
-    font-size:23px;
+.MagasinGV{
+    margin-left:5%;
+    font-size:25px;
 }
+.GV_Magasin_Pager{
+    margin-left:2%;
+}    
 #MagasinInfo_Mobile{
   padding-left:4%;
   padding-bottom:2%;
