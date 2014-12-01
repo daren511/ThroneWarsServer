@@ -1261,6 +1261,33 @@ namespace ControleBD
                 Erreur.ErrorMessage(ex);
             }
         }
+/*
+        public static int getIIDByItemName(string nomitem)
+        {
+            OracleConnection conn = Connection.getInstance().conn;
+            string sql = "select IID from ITEMS where NOM =:nomitem";
+
+            try
+            {
+                OracleCommand oraSelect = new OracleCommand(sql, conn);
+                OracleParameter OraParamItemName = new OracleParameter(":nomitem", OracleDbType.Varchar2, 40);
+                OraParamItemName.Value = nomitem;
+                oraSelect.Parameters.Add(OraParamItemName);
+
+                using (OracleDataReader objRead = oraSelect.ExecuteReader())
+                {
+                    if (objRead.Read())
+                        return objRead.GetInt32(0);
+                }
+            }
+            catch (OracleException ex)
+            {
+                Erreur.ErrorMessage(ex);
+            }
+            return 0;
+             
+        }
+ * */
         //------------------------------ À ALEXIS ------------------------------//
         // J'VOUS TOUCHE LE RECTUM SI VOUS MODIFIER QUELQUE CHOSE
         public static DataSet listPlayers(bool afficherTout)
@@ -1303,11 +1330,12 @@ namespace ControleBD
             DataSet monDataSet = new DataSet();
             using (OracleDataAdapter oraDataAdapItems = new OracleDataAdapter())
             {
+                string sql = "SELECT ";
                 OracleConnection conn = Connection.getInstance().conn;
-                string sql = "SELECT I.IID, NOM, CNAME AS CLASSE, \"LEVEL\" AS NIVEAU, WATK, WDEF, MATK, MDEF, ";
+                sql += "I.IID , NOM, CNAME AS CLASSE, \"LEVEL\" AS NIVEAU, WATK, WDEF, MATK, MDEF, ";
                 if (doitAfficher == 1)
                     sql += "QUANTITY, ";
-                if (showIsShop)
+                if (!showIsShop)
                     sql += "ISACTIVE, ";
                 sql += "PRICE AS PRIX FROM ITEMS I INNER JOIN CLASSES C ON I.CID = C.CID ";
 
