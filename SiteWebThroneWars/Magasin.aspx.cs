@@ -95,7 +95,7 @@ namespace SiteWebThroneWars
             DataSet DSMagasin = new DataSet();
 
             if (Session["GV"].ToString() == "Items")
-                DSMagasin = Controle.listItems(false,0,0,0,false);
+                DSMagasin = Controle.listItems(false,0,0,0,false,true);
             else if (Session["GV"].ToString() == "Potions")
                 DSMagasin = Controle.listPotions(0, 0);
             if (DSMagasin != null)
@@ -149,7 +149,6 @@ namespace SiteWebThroneWars
             Session["GV"] = "Potions";
             ListerItems();
         }
-        
     }
     
 }

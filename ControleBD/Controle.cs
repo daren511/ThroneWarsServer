@@ -1310,6 +1310,7 @@ namespace ControleBD
                 if (showIsActive)
                     sql += "ISACTIVE, ";
                 sql += "PRICE AS PRIX FROM ITEMS I INNER JOIN CLASSES C ON I.CID = C.CID ";
+                
 
                 switch (doitAfficher)
                 {
@@ -1326,7 +1327,7 @@ namespace ControleBD
 
                 if (afficherTout)
                     sql += " OR ISACTIVE = 0";
-                sql += ") ORDER BY IID";
+                    sql += ") ORDER BY IID";
 
                 oraDataAdapItems.SelectCommand = new OracleCommand(sql, conn);
 
