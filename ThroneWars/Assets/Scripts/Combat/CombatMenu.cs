@@ -85,9 +85,9 @@ public class CombatMenu : MonoBehaviour
 
     void OnGUI()
     {
+        hasUpdatedGUI = ResourceManager.GetInstance.UpdateGUI(hasUpdatedGUI);
         if(!gameOver)
         {
-            hasUpdatedGUI = ResourceManager.GetInstance.UpdateGUI(hasUpdatedGUI);
             DisplayCharacterStats();
             InitializeStats();
 
