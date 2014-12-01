@@ -19,16 +19,18 @@ namespace DeveloperApplication
 
         private void FORM_Instructions_Load(object sender, EventArgs e)
         {
-            string text = "Dans votre fichier texte, mettez un nom par ligne et ajoutez des balises avant " + 
-                "le nom de vos items pour permettre à l'application d'insérer les items selon la classe. Les balises sont: " + 
+            string text = "Dans votre fichier texte, débutez par le nom de la classe avec une des balises suivantes: " + 
                 "@[TOUS]" + 
                 "@[GUERRIER]" + 
                 "@[ARCHER]" + 
                 "@[MAGE]" + 
                 "@[PRÊTRE]" + 
-                "@Si vous ne mettez aucune balise, l'application va mettre ces items dans la catégorie [TOUS]. " + 
-                "Vous n'avez qu'à choisir le type d'item que vous ajoutez et le niveau pour influencer les statistiques " + 
-                "et le prix de l'item en conséquence.";
+                "@La deuxième ligne doit être le type de l'item choisit avec l'une des balises suivantes: " + 
+                "@{ARMES}" + 
+                "@{ARMURES}" + 
+                "@{BIJOUX}" + 
+                "@Il est obligatoire de mettre une balise pour la classe et le type." + 
+                "Précédez vos noms d'items par le niveau et \"-\" (ex.: 3-Item).";
             TB_Instructions.Text = text.Replace("@", System.Environment.NewLine);
         }
     }
