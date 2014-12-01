@@ -1362,7 +1362,7 @@ namespace ControleBD
             {
                 OracleConnection conn = Connection.getInstance().conn;
 
-                string sql = "SELECT P.PID, NOM, DESCRIPTION, DURATION, WATK, WDEF, MATK, MDEF";
+                string sql = "SELECT P.PID, NOM, DESCRIPTION, DURATION, HEALTH, WATK, WDEF, MATK, MDEF";
                 if (doitAfficher != 0)
                     sql += ", QUANTITY, PRICE FROM POTIONS P INNER JOIN POTIONJOUEURS J ON P.PID = J.PID WHERE JID = :jid ";
                 else

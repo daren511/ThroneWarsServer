@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using ControleBD;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
+using System.Data;
 
 namespace ThroneWarsServer
 {
@@ -196,15 +197,26 @@ namespace ThroneWarsServer
             envoyerObjet(player1.positionsPersonnages, player2);
             recevoirChoix(player1);
             recevoirChoix(player2);
-            envoyerObjet(Controle.listPotions(player1.jid,1), player1);
-
+            envoyerObjet(traiterDataSet(Controle.listPotions(player1.jid, 1)), player1);
+            envoyerObjet(traiterDataSet(Controle.listPotions(player2.jid, 1)), player2);
+            recevoirChoix(player1);
+            recevoirChoix(player2);
         }
-        private List<Controle.po> traiterDataSet(DataSet DS)
+        private List<Potions> traiterDataSet(DataSet DS)
         {
-            List<string> Liste = new List<string>();
-            foreach (DataRow dr in DS.Tables["StatsJoueur"].Rows)
+            List<Potions> Liste = new List<Potions>();
+            foreach (DataRow dr in DS.Tables["POTIONS"].Rows)
             {
-                Liste.Add(dr[0].ToString());
+                Liste.Add(new Potions(
+                    Int32.Parse(dr[0].ToString()),
+                    dr[1].ToString(), dr[2].ToString(),
+                    Int32.Parse(dr[3].ToString()),
+                    Int32.Parse(dr[4].ToString()),
+                    Int32.Parse(dr[5].ToString()),
+                    Int32.Parse(dr[6].ToString()),
+                    Int32.Parse(dr[7].ToString()),
+                    Int32.Parse(dr[8].ToString()),
+                    Int32.Parse(dr[9].ToString())));
             }
             Liste.Capacity = Liste.Count;
             return Liste;
