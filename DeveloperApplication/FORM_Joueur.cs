@@ -72,24 +72,25 @@ namespace DeveloperApplication
             ToolTip.SetToolTip(DTP_JoinDate, "Date rejoint");
 
             Lister_Items();
-            DGV_Inventaire.Columns[0].Visible = false;
-            DGV_Inventaire.Columns[2].Visible = false;
-            DGV_Inventaire.Columns[3].Visible = false;
-            DGV_Inventaire.Columns[4].Visible = false;
-            DGV_Inventaire.Columns[5].Visible = false;
-            DGV_Inventaire.Columns[6].Visible = false;
-            DGV_Inventaire.Columns[7].Visible = false;
-            DGV_Inventaire.Columns[10].Visible = false;
+            DGV_Inventaire.Columns[0].Visible = false;  // IID
+            DGV_Inventaire.Columns[2].Visible = false;  // CLASSE
+            DGV_Inventaire.Columns[3].Visible = false;  // NIVEAU
+            DGV_Inventaire.Columns[4].Visible = false;  // WATK
+            DGV_Inventaire.Columns[5].Visible = false;  // WDEF
+            DGV_Inventaire.Columns[6].Visible = false;  // MATK
+            DGV_Inventaire.Columns[7].Visible = false;  // MDEF
+            DGV_Inventaire.Columns[9].Visible = false;  // PRICE
 
             ListerPotions();
-            DGV_Potions.Columns[0].Visible = false;
-            DGV_Potions.Columns[2].Visible = false;
-            DGV_Potions.Columns[3].Visible = false;
-            DGV_Potions.Columns[4].Visible = false;
-            DGV_Potions.Columns[5].Visible = false;
-            DGV_Potions.Columns[6].Visible = false;
-            DGV_Potions.Columns[7].Visible = false;
-            DGV_Potions.Columns[9].Visible = false;
+            DGV_Potions.Columns[0].Visible = false;     // PID
+            DGV_Potions.Columns[2].Visible = false;     // DESCRIPTION
+            DGV_Potions.Columns[3].Visible = false;     // DURATION
+            DGV_Potions.Columns[4].Visible = false;     // HEALTH
+            DGV_Potions.Columns[5].Visible = false;     // WATK
+            DGV_Potions.Columns[6].Visible = false;     // WDEF
+            DGV_Potions.Columns[7].Visible = false;     // MATK
+            DGV_Potions.Columns[8].Visible = false;     // MDEF
+            DGV_Potions.Columns[10].Visible = false;    // PRICE
 
             FillComboBox();
         }
@@ -191,12 +192,13 @@ namespace DeveloperApplication
             FP.NOM = DGV_Potions.SelectedRows[0].Cells[1].Value.ToString();
             FP.DESCRIPTION = DGV_Potions.SelectedRows[0].Cells[2].Value.ToString();
             FP.DURATION = int.Parse(DGV_Potions.SelectedRows[0].Cells[3].Value.ToString());
-            FP.WATK = int.Parse(DGV_Potions.SelectedRows[0].Cells[4].Value.ToString());
-            FP.WDEF = int.Parse(DGV_Potions.SelectedRows[0].Cells[5].Value.ToString());
-            FP.MATK = int.Parse(DGV_Potions.SelectedRows[0].Cells[6].Value.ToString());
-            FP.MDEF = int.Parse(DGV_Potions.SelectedRows[0].Cells[7].Value.ToString());
-            FP.QUANTITE = int.Parse(DGV_Potions.SelectedRows[0].Cells[8].Value.ToString());
-            FP.PRIX = int.Parse(DGV_Potions.SelectedRows[0].Cells[9].Value.ToString());
+            FP.HEALTH = int.Parse(DGV_Potions.SelectedRows[0].Cells[4].Value.ToString());
+            FP.WATK = int.Parse(DGV_Potions.SelectedRows[0].Cells[5].Value.ToString());
+            FP.WDEF = int.Parse(DGV_Potions.SelectedRows[0].Cells[6].Value.ToString());
+            FP.MATK = int.Parse(DGV_Potions.SelectedRows[0].Cells[7].Value.ToString());
+            FP.MDEF = int.Parse(DGV_Potions.SelectedRows[0].Cells[8].Value.ToString());
+            FP.QUANTITE = int.Parse(DGV_Potions.SelectedRows[0].Cells[9].Value.ToString());
+            FP.PRIX = int.Parse(DGV_Potions.SelectedRows[0].Cells[10].Value.ToString());
 
             if (FP.ShowDialog() == DialogResult.OK)
             {

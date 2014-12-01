@@ -40,6 +40,12 @@ namespace DeveloperApplication
             set { TB_Duration.Text = value.ToString(); }
         }
 
+        public int HEALTH
+        {
+            get { return int.Parse(TB_Health.Text); }
+            set { TB_Health.Text = value.ToString(); }
+        }
+
         public int WATK
         {
             get { return int.Parse(TB_WATK.Text); }
@@ -86,6 +92,7 @@ namespace DeveloperApplication
             ToolTip.SetToolTip(TB_Nom, "Nom");
             ToolTip.SetToolTip(TB_Desc, "Description");
             ToolTip.SetToolTip(TB_Duration, "Durée");
+            ToolTip.SetToolTip(TB_Health, "Vie restaurée");
             ToolTip.SetToolTip(TB_Quantite, "Quantité");
             ToolTip.SetToolTip(TB_WATK, "Attaque physique");
             ToolTip.SetToolTip(TB_WDEF, "Défense physique");
@@ -101,6 +108,7 @@ namespace DeveloperApplication
                 TB_Nom.ReadOnly = false;
                 TB_Desc.ReadOnly = false;
                 TB_Duration.ReadOnly = false;
+                TB_Health.ReadOnly = false;
                 TB_WATK.ReadOnly = false;
                 TB_WDEF.ReadOnly = false;
                 TB_MATK.ReadOnly = false;
@@ -123,9 +131,10 @@ namespace DeveloperApplication
             if (this.Text == "Ajout" || CANMODIFY)
             {
                 if (string.IsNullOrWhiteSpace(TB_Nom.Text) || string.IsNullOrWhiteSpace(TB_Desc.Text) ||
-                    string.IsNullOrWhiteSpace(TB_Duration.Text) ||string.IsNullOrWhiteSpace(TB_WATK.Text) || 
-                    string.IsNullOrWhiteSpace(TB_WDEF.Text) || string.IsNullOrWhiteSpace(TB_MATK.Text) || 
-                    string.IsNullOrWhiteSpace(TB_MDEF.Text) || string.IsNullOrWhiteSpace(TB_Prix.Text))
+                    string.IsNullOrWhiteSpace(TB_Duration.Text) || string.IsNullOrWhiteSpace(TB_Health.Text) || 
+                    string.IsNullOrWhiteSpace(TB_WATK.Text) || string.IsNullOrWhiteSpace(TB_WDEF.Text) || 
+                    string.IsNullOrWhiteSpace(TB_MATK.Text) || string.IsNullOrWhiteSpace(TB_MDEF.Text) || 
+                    string.IsNullOrWhiteSpace(TB_Prix.Text))
                     BTN_OK.Enabled = false;
                 else
                     BTN_OK.Enabled = true;
