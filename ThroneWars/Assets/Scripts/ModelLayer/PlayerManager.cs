@@ -23,7 +23,7 @@ public class PlayerManager : MonoBehaviour
 {
     #region Constants
     public const int MAX_TEAM_LENGTH = 4;
-    private const char SPLITTER = '?';
+    public const char SPLITTER = '?';
     private const int MAX_CHARACTER_EQUIPS = 6;
     #endregion
     #region Player parameters
@@ -505,7 +505,6 @@ public class PlayerManager : MonoBehaviour
         switch(action)
         {
             case Controle.Game.ENDTURN:
-
                 break;
 
             case Controle.Game.ATTACK:
@@ -513,6 +512,8 @@ public class PlayerManager : MonoBehaviour
                 break;
 
             case Controle.Game.MOVE:
+                //_activeEnemy;
+                //string destinationNode;
                 enemyMove = true;
                 break;
 

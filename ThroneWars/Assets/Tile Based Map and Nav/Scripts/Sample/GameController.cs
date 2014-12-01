@@ -8,6 +8,8 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
 using System.Threading;
+using ControleBD;
+using System.Text.RegularExpressions;
 
 public class GameController : TMNController
 {
@@ -39,6 +41,9 @@ public class GameController : TMNController
     public bool attackAllowed = false;
 
     private int activeCharacterIndex = 0;
+
+    public const char SPLITTER = '?';
+
 
     #endregion
     // ====================================================================================================================
@@ -587,8 +592,12 @@ public class GameController : TMNController
             prevNode = selectedUnit.node; // needed if unit is gonna move
             if (selectedUnit.MoveTo(node, ref selectedUnit.currMoves))
             {
+                string[] numbers = Regex.Split(node.name, @"\D+");
+
+                PlayerManager._instance.SendObject<Controle.Game>(Controle.Game.MOVE);
+                PlayerManager._instance.SendObject<string>(selectedUnit._name + SPLITTER + numbers[1]);
+
                 selectedUnit._lookDirection = node.transform.position - prevNode.transform.position;
-                //selectedUnit._lookDirection =  selectedUnit._lookDirection.normalized;
 
                 // dont want the player clicking around while a unit is moving
                 //allowInput = true;
@@ -701,6 +710,7 @@ public class GameController : TMNController
                 else if (selectedUnit != null && combatOn && unit._isAlive)
                 {
                     DoCombat(selectedUnit, unit);
+                    PlayerManager._instance.SendObject(Controle.Game.ATTACK);
                 }
             }
 
@@ -823,11 +833,11 @@ public class GameController : TMNController
             //}
             //else
             //{
-            //if (!useTurns)
-            //{
-            //    // units can't use their moves up in this case, so reset after it moved
-            //    u.currMoves = u._moves;
-            //}
+                //if (!useTurns)
+                //{
+                //    // units can't use their moves up in this case, so reset after it moved
+                //    u.currMoves = u._moves;
+                //}
 
             if (!hideMarkersOnMove && prevNode != null)
             {	// the markers where not hidden when the unit started moving,
