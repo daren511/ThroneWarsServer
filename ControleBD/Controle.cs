@@ -1297,7 +1297,7 @@ namespace ControleBD
         /// <param name="doitAfficher">Affiche tous les items(0), ceux d'un joueur(1) ou ceux d'un personnages(2)</param>
         /// <param name="guid">Personnage ID</param>
         /// <returns>Le dataset rempli</returns>
-        public static DataSet listItems(bool afficherTout, int jid = 0, int doitAfficher = 0, int guid = 0, bool showIsActive = true)
+        public static DataSet listItems(bool afficherTout, int jid = 0, int doitAfficher = 0, int guid = 0, bool showIsShop = false)
         {
 
             DataSet monDataSet = new DataSet();
@@ -1307,10 +1307,9 @@ namespace ControleBD
                 string sql = "SELECT I.IID, NOM, CNAME AS CLASSE, \"LEVEL\" AS NIVEAU, WATK, WDEF, MATK, MDEF, ";
                 if (doitAfficher == 1)
                     sql += "QUANTITY, ";
-                if (showIsActive)
+                if (showIsShop)
                     sql += "ISACTIVE, ";
                 sql += "PRICE AS PRIX FROM ITEMS I INNER JOIN CLASSES C ON I.CID = C.CID ";
-                
 
                 switch (doitAfficher)
                 {
@@ -1327,6 +1326,9 @@ namespace ControleBD
 
                 if (afficherTout)
                     sql += " OR ISACTIVE = 0";
+                if (showIsShop)
+                    sql += ") ORDER BY \"LEVEL\"";
+                else
                     sql += ") ORDER BY IID";
 
                 oraDataAdapItems.SelectCommand = new OracleCommand(sql, conn);
@@ -1363,7 +1365,7 @@ namespace ControleBD
             {
                 OracleConnection conn = Connection.getInstance().conn;
 
-                string sql = "SELECT P.PID, NOM, DESCRIPTION, DURATION, WATK, WDEF, MATK, MDEF";
+                string sql = "SELECT P.PID, NOM, DESCRIPTION, DURATION, HEALTH, WATK, WDEF, MATK, MDEF";
                 if (doitAfficher != 0)
                     sql += ", QUANTITY, PRICE FROM POTIONS P INNER JOIN POTIONJOUEURS J ON P.PID = J.PID WHERE JID = :jid ";
                 else

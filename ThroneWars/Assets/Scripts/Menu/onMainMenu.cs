@@ -195,7 +195,7 @@ public class onMainMenu : MonoBehaviour
         GUILayout.EndVertical();
 
         GUILayout.BeginVertical();
-        GUI.enabled = chosenCharacters == MAX_TEAM_LENGTH && tabMap[0];//&& PlayerManager._instance.dev;
+        GUI.enabled = chosenCharacters == MAX_TEAM_LENGTH && tabMap[0]; //&& PlayerManager._instance.dev;
         if (GUILayout.Button("Jouer", GUILayout.Width(rectInvent.width)))
         {
             // Go to matchmaking

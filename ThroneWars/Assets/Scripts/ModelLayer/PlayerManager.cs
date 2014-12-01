@@ -58,9 +58,9 @@ public class PlayerManager : MonoBehaviour
 
     void OnApplicationQuit()
     {
-        if (!isLoading && !isInGame)
+        if (sck.Connected && !isLoading && !isInGame)
             SendObject(Controle.Actions.QUIT);
-        else if (isInGame)
+        else if (sck.Connected && isInGame)
             SendObject(Controle.Game.QUIT);
 
         PlayerManager._instance.ClearPlayer();
@@ -69,7 +69,7 @@ public class PlayerManager : MonoBehaviour
     {
         if (sck.Connected && !isLoading && !isInGame)
             SendObject(Controle.Actions.QUIT);
-        else if (isInGame)
+        else if (sck.Connected && isInGame)
             SendObject(Controle.Game.QUIT);
         PlayerManager._instance.ClearPlayer();
     }
@@ -268,7 +268,18 @@ public class PlayerManager : MonoBehaviour
             _playerInventory._equips.Add(eItem);
         }
     }
-    
+    public void LoadPlayerPotions(List<Potions> list)
+    {
+        Potions pot;
+        Potion newPot;
+        for (int i = 0; i < list.Count; ++i)
+        {
+            pot = list[i];
+            newPot = new Potion(pot.pid, -1, 1, "Tous", pot.name, pot.description, pot.duration, pot.quantity, 
+                pot.WAtk, pot.WDef, pot.MAtk, pot.MDef, pot.healthRestore);
+            _playerInventory._potions.Add(newPot);
+        }
+    }
 
     /// <summary>
     /// Retourne un équipement pour un objet de type Character
@@ -421,6 +432,7 @@ public class PlayerManager : MonoBehaviour
 
         _playerSide = Int32.Parse(Encoding.UTF8.GetString(formatted));
         isLoading = false;
+        isInGame = true;
         onLoading.thread.Abort();
     }
     /// <summary>
@@ -452,6 +464,7 @@ public class PlayerManager : MonoBehaviour
         }
         else if(action == Controle.Game.STARTING)
         {
+            SendObject(Controle.Game.OK);
             isWaitingPlayer = false;
         }
         GameControllerSample6.thread.Abort();

@@ -72,9 +72,9 @@ public class onStartUp : MonoBehaviour
                     string[] tab = ans.Split(SPLITTER);
 
                     validInfos = tab[0].Contains("True");
-                    if (validInfos)
+                    if (validInfos && tab.Length > 0)
                         confirmed = tab[1].Contains("True");
-                    if (confirmed)
+                    if (confirmed && tab.Length > 1)
                         alreadyConnected = tab[2].Contains("True");
 
 
