@@ -616,8 +616,9 @@ namespace ControleBD
                         int randomNumber = random.Next(1, 9);
                         string UserHash = Controle.Phrase.Chiffrer(username, randomNumber);
                         UserHash += randomNumber;
+                        string link = "<a href=http://www.thronewars.ca/ResetPassword.aspx?User=" + UserHash + ">Ici</a>";
                         //Reset password
-                        Email.sendMail(resultemail, Email.SubjectResetPass, Email.BodyResetPass + UserHash);
+                        Email.sendMail(resultemail, Email.SubjectResetPass, Email.BodyResetPass + link);
                     }
                     return true;
                 }
@@ -1303,11 +1304,12 @@ namespace ControleBD
             DataSet monDataSet = new DataSet();
             using (OracleDataAdapter oraDataAdapItems = new OracleDataAdapter())
             {
+                string sql = "SELECT ";
                 OracleConnection conn = Connection.getInstance().conn;
-                string sql = "SELECT I.IID, NOM, CNAME AS CLASSE, \"LEVEL\" AS NIVEAU, WATK, WDEF, MATK, MDEF, ";
+                sql += "I.IID , NOM, CNAME AS CLASSE, \"LEVEL\" AS NIVEAU, WATK, WDEF, MATK, MDEF, ";
                 if (doitAfficher == 1)
                     sql += "QUANTITY, ";
-                if (showIsShop)
+                if (!showIsShop)
                     sql += "ISACTIVE, ";
                 sql += "PRICE AS PRIX FROM ITEMS I INNER JOIN CLASSES C ON I.CID = C.CID ";
 
@@ -1719,12 +1721,10 @@ namespace ControleBD
                 return false;
             }
         }
-
         public static bool addPotionJoueurs(int pid, int jid, int qte)
         {
             OracleConnection conn = Connection.getInstance().conn;
             string sql = "INSERT INTO POTIONJOUEURS VALUES(:pid, :jid, :qte)";
-
             try
             {
                 OracleCommand oraInsert = new OracleCommand(sql, conn);
@@ -1736,7 +1736,6 @@ namespace ControleBD
                 OraParamPID.Value = pid;
                 OraParamJID.Value = jid;
                 OraParamQTE.Value = qte;
-
                 oraInsert.Parameters.Add(OraParamPID);
                 oraInsert.Parameters.Add(OraParamJID);
                 oraInsert.Parameters.Add(OraParamQTE);
@@ -1747,7 +1746,7 @@ namespace ControleBD
             catch (OracleException ex)
             {
                 Erreur.ErrorMessage(ex);
-                return updateQuantityPotion(jid, pid, qte);
+                return updateQuantityPotion(jid, pid,qte);
             }
         }
 

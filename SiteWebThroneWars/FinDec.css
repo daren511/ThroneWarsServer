@@ -435,6 +435,9 @@ GVStats{
 #MagasinGV_Table{
     margin-left:2%;
 }
+.GV_Magasin{
+    font-size:20px;
+}
 #MagasinInfo{
   padding-bottom:2%;
   padding-top:2%;

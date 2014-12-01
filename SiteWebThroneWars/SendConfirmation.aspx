@@ -46,7 +46,7 @@
     </div>
     <div class="FormRecherche">
             <label>Nom d'utilisateur</label><br />
-            <asp:TextBox ID="TB_Username" TextMode="SingleLine" runat="server" /><br/><br />
+            <asp:TextBox ID="username" TextMode="SingleLine" runat="server" /><br/><br />
             <asp:Button Text="Envoyer" ID="SendLinkBack" runat="server" OnClick="SendLinkBack_Click" />
         </div>
     </form>

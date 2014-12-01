@@ -66,8 +66,9 @@ namespace SiteWebThroneWars
                         int randomNumber = random.Next(1, 9);
                         string userHash = Controle.Phrase.Chiffrer(user,randomNumber);
                         userHash += randomNumber;
+                        string link = "<a href=http://www.thronewars.ca/ConfirmAccount.aspx?User=" + userHash + ">Ici</a>";
                         // Send email de confirmation
-                        Email.sendMail(courriel, Email.SujetInscription, Email.BodyConfirmation + userHash);
+                        Email.sendMail(courriel, Email.SujetInscription, Email.BodyConfirmation + link);
                         // Vide les TB
                         ViderTB();
                         //Remet la couleur noir au label

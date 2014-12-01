@@ -61,7 +61,7 @@
                 <li><a href="MOBILERecherche.aspx">Classement</a></li>
                 <li><a href="MOBILEMedia.aspx">Média</a></li>
                 <li><a href="MOBILEMagasin.aspx">Magasin</a></li>
-                <li><a href="#my-page">Close the menu</a></li>
+                <li><a href="#my-page">Fermer le menu</a></li>
             </ul>
         </nav>
         <div id="menu">
@@ -83,29 +83,29 @@
             <asp:Button Text="Items" ID="BTN_Items" OnClick="BTN_Items_Click" runat="server"  />
             <asp:Button Text="Potions" ID="BTN_Potions" OnClick="BTN_Potions_Click" runat="server"  /><br />
 
-            <asp:GridView runat="server" ID="GV_Magasin" OnSelectedIndexChanged="GV_Magasin_SelectedIndexChanged" 
-                OnRowDataBound="GV_Magasin_RowDataBound"   AllowPaging ="true" OnPageIndexChanging="GV_Magasin_PageIndexChanging" 
-                PageSize = "25" >
+            <asp:GridView runat="server" ID="GV_Magasin" AllowPaging="true" OnPageIndexChanging="GV_Magasin_PageIndexChanging" PageSize="25"
+                 OnSelectedIndexChanged="GV_Magasin_SelectedIndexChanged" OnRowDataBound="GV_Magasin_RowDataBound" OnRowCreated="GV_Magasin_RowCreated" CssClass="GV_Magasin">
                 <RowStyle HorizontalAlign="Center"/>
+                <PagerStyle CssClass="GV_Magasin_Pager" />
             </asp:GridView>
         </div>
         <div id="MagasinInfo_Mobile">
 
             <asp:Label ID="Label1" runat="server">Quantité</asp:Label><br />
-            <asp:TextBox ID="TB_Quantite" TextMode="SingleLine" runat="server" ClientIDMode="Static" style="width: 38%; font-size:30px;"/><br />
+            <asp:TextBox ID="TB_Quantite" TextMode="SingleLine" runat="server" ClientIDMode="Static" /><br />
             <asp:RangeValidator ID="RangeValidator1" Type="Integer" MinimumValue="1"
                 MaximumValue="99" ControlToValidate="TB_Quantite" runat="server"
-                ErrorMessage="La quanité doit être entre 1 et 99" style="font-size:30px;"></asp:RangeValidator><br />
+                ErrorMessage="La quanité doit être entre 1 et 99"></asp:RangeValidator><br />
 
             <asp:Label ID="Label5" runat="server">Prix</asp:Label><br />
-            <asp:TextBox ID="TB_Prix" TextMode="Number" runat="server" Enabled="false" ClientIDMode="Static" style="width: 38%; font-size:30px;"/><br />
+            <asp:TextBox ID="TB_Prix" TextMode="Number" runat="server" Enabled="false" ClientIDMode="Static"/><br />
 
             <asp:Label ID="Label2" runat="server">Total</asp:Label><br />
             <% TB_Total.Attributes.Add("readonly", "readonly"); %>
-            <asp:TextBox ID="TB_Total" name="Total" runat="server" ClientIDMode="Static" style="width: 38%; font-size:30px;"/><br />
+            <asp:TextBox ID="TB_Total" name="Total" runat="server" ClientIDMode="Static"/><br />
             <br />
           
-            <asp:Button Text="Acheter" ID="BTN_Acheter" OnClick="Acheter_Click" runat="server" style="width:31%; font-size:35px;" /><br />
+            <asp:Button Text="Acheter" ID="BTN_Acheter" OnClick="Acheter_Click" runat="server"  /><br />
         </div>
     </form>
 </body>
