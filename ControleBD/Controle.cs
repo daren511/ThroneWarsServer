@@ -616,8 +616,9 @@ namespace ControleBD
                         int randomNumber = random.Next(1, 9);
                         string UserHash = Controle.Phrase.Chiffrer(username, randomNumber);
                         UserHash += randomNumber;
+                        string link = "<a href=http://www.thronewars.ca/ResetPassword.aspx?User=" + UserHash + ">Ici</a>";
                         //Reset password
-                        Email.sendMail(resultemail, Email.SubjectResetPass, Email.BodyResetPass + UserHash);
+                        Email.sendMail(resultemail, Email.SubjectResetPass, Email.BodyResetPass + link);
                     }
                     return true;
                 }

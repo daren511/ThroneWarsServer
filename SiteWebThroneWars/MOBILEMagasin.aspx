@@ -84,8 +84,9 @@
             <asp:Button Text="Potions" ID="BTN_Potions" OnClick="BTN_Potions_Click" runat="server"  /><br />
 
             <asp:GridView runat="server" ID="GV_Magasin" AllowPaging="true" OnPageIndexChanging="GV_Magasin_PageIndexChanging" PageSize="25"
-                 OnSelectedIndexChanged="GV_Magasin_SelectedIndexChanged" data OnRowDataBound="GV_Magasin_RowDataBound" OnRowCreated="GV_Magasin_RowCreated" bottom>
+                 OnSelectedIndexChanged="GV_Magasin_SelectedIndexChanged" OnRowDataBound="GV_Magasin_RowDataBound" OnRowCreated="GV_Magasin_RowCreated" CssClass="GV_Magasin">
                 <RowStyle HorizontalAlign="Center"/>
+                <PagerStyle CssClass="GV_Magasin_Pager" />
             </asp:GridView>
         </div>
         <div id="MagasinInfo_Mobile">
