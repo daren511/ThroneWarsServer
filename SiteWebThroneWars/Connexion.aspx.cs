@@ -59,6 +59,7 @@ namespace SiteWebThroneWars
 
             bool Connecter = false;
             bool siConfirmer = false;
+            bool siExiste = false;
             // if Text box pas null
             if (ok)
             {
@@ -68,9 +69,9 @@ namespace SiteWebThroneWars
 
                 string passHash = Controle.hashPassword(pass, null, System.Security.Cryptography.SHA256.Create());
                 Connecter = Controle.userPassCorrespondant(user, passHash);
-                if (Connecter)
-                    siConfirmer = Controle.accountIsConfirmed(user);
-                else
+                siExiste = Controle.userExiste(user);
+                
+                if (!siExiste)
                 {
                     text = "Compte inexistant";
                     // Pas connecté
@@ -84,6 +85,9 @@ namespace SiteWebThroneWars
                     }
                     ViderTB();
                 }
+                else
+                    siConfirmer = Controle.accountIsConfirmed(user);
+                    
                 if (!siConfirmer && Connecter)
                 {
                     text = "Veuillez visiter votre courriel pour confirmer votre compte";
@@ -94,10 +98,8 @@ namespace SiteWebThroneWars
                     Response.Redirect("Connexion.aspx");
                     ViderTB();
                 }
-                if (Connecter)
+                if (Connecter && siConfirmer)
                 {
-                    // ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>MessageBoxReussi();</script>", false);
-
                     //Prend le JID
                     int JID = Controle.getJID(user);
 
