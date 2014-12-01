@@ -115,7 +115,7 @@ namespace SiteWebThroneWars
             if(Session["GV"].ToString() == "Items")
                 Prix = Int32.Parse(IDItem.Cells[8].Text);
             else if (Session["GV"].ToString() == "Potions")
-                Prix = Int32.Parse(IDItem.Cells[8].Text);
+                Prix = Int32.Parse(IDItem.Cells[9].Text);
             TB_Prix.Text = Prix.ToString();
         }
         protected void GV_Magasin_RowDataBound(object sender, GridViewRowEventArgs e)

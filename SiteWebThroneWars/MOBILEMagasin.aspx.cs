@@ -113,7 +113,10 @@ namespace SiteWebThroneWars
             GridViewRow IDItem = GV_Magasin.SelectedRow;
             ItemID = Int32.Parse(IDItem.Cells[0].Text);
             Session["ItemID"] = ItemID;
-            Prix = Int32.Parse(IDItem.Cells[8].Text);
+            if (Session["GV"].ToString() == "Items")
+                Prix = Int32.Parse(IDItem.Cells[8].Text);
+            else if (Session["GV"].ToString() == "Potions")
+                Prix = Int32.Parse(IDItem.Cells[9].Text);
             TB_Prix.Text = Prix.ToString();
         }
         protected void GV_Magasin_RowDataBound(object sender, GridViewRowEventArgs e)
