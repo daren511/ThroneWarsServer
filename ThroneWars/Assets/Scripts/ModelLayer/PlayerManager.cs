@@ -268,18 +268,18 @@ public class PlayerManager : MonoBehaviour
             _playerInventory._equips.Add(eItem);
         }
     }
-    //public void LoadPlayerPotions(List<ControleBD.Potion> list)
-    //{
-        //ControleBD.Potion pot;
-        //Potion newPot;
-        //for(int i = 0; i < list.Count; ++i)
-        //{
-            //pot = list[i];
-            //newPot = new Potion();
-            //_playerInventory._potions.Add(newPot);
-        //}
-            
-    //}
+    public void LoadPlayerPotions(List<Potions> list)
+    {
+        Potions pot;
+        Potion newPot;
+        for (int i = 0; i < list.Count; ++i)
+        {
+            pot = list[i];
+            newPot = new Potion(pot.pid, -1, 1, "Tous", pot.name, pot.description, pot.duration, pot.quantity, 
+                pot.WAtk, pot.WDef, pot.MAtk, pot.MDef, pot.healthRestore);
+            _playerInventory._potions.Add(newPot);
+        }
+    }
 
     /// <summary>
     /// Retourne un équipement pour un objet de type Character

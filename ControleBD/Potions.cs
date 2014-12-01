@@ -20,12 +20,12 @@ namespace ControleBD
             this.MDef = MDef;
             this.quantity = quantity;
         }
-        int pid;
-        string name;
-        string description;
-        int quantity;
-        int healthRestore;
-        int duration;
+        public int pid;
+        public string name;
+        public string description;
+        public int quantity;
+        public int healthRestore;
+        public int duration;
         public int WAtk { get; private set; }
         public int WDef { get; private set; }
         public int MAtk { get; private set; }

@@ -146,8 +146,8 @@ public class GameControllerSample6 : MonoBehaviour
         PlayerManager._instance.SendObject(Controle.Game.OK);
 
         ///les potions du joueur
-        //PlayerManager._instance.LoadPlayerPotions(PlayerManager._instance.ReceiveObject<ControleBD.Potion>());
-        //Player._instance.SendObject(Controle.Game.OK);
+        PlayerManager._instance.LoadPlayerPotions(PlayerManager._instance.ReceiveObject<Potions>());
+        PlayerManager._instance.SendObject(Controle.Game.OK);
 
         for (int i = 0; i < GameManager._instance._enemyTeam.Count; ++i)
         {
