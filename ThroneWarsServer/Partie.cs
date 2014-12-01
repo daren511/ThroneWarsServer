@@ -73,87 +73,121 @@ namespace ThroneWarsServer
             try
             {
                 prepareGame();
-                bool player1PlacedOrHasQuitted = false;
-                bool player2PlacedOrHasQuitted = false;
-                while (!player1PlacedOrHasQuitted || !player2PlacedOrHasQuitted)
-                {
-                    Controle.Game Action;
-                    try
-                    {
-                        player1.Socket.Blocking = false;
-                        Action = recevoirChoix(player1);
-                        player1.Socket.Blocking = true;
-                    }
-                    catch (Exception) { Action = Controle.Game.NOTHING; }
-                    switch (Action)
-                    {
-                        case Controle.Game.NOTHING:
-                            break;
-                        case Controle.Game.SENDPOSITIONS:
-                            player1.positionsPersonnages = RecevoirObjet<int>(player1);
-                            player1PlacedOrHasQuitted = true;
-                            break;
-                        case Controle.Game.QUIT: 
-                            envoyerObjet(Controle.Game.QUIT, player2);
-                            updateWinner(player2);
-                            player1PlacedOrHasQuitted = true;
-                            player2PlacedOrHasQuitted = true;
-                            Program.addGoToMenu(player2);
-                            player1.isConnected = false;
-                            break;
-
-                        case Controle.Game.CANCEL:
-                            envoyerObjet(Controle.Game.QUIT, player2);
-                            envoyerObjet(Controle.Game.CANCEL, player1);
-                            updateWinner(player2);
-                            player1PlacedOrHasQuitted = true;
-                            player2PlacedOrHasQuitted = true;
-                            Program.addGoToMenu(player1);
-                            Program.addGoToMenu(player2);                            
-                            break;
-                    }
-                    if (Action != Controle.Game.QUIT && Action != Controle.Game.CANCEL)
-                    {
-                        try
-                        {
-                            player2.Socket.Blocking = false;
-                            Action = recevoirChoix(player2);
-                            player2.Socket.Blocking = true;
-                        }
-                        catch (Exception) { Action = Controle.Game.NOTHING; }
-                        switch (Action)
-                        {
-                            case Controle.Game.NOTHING:
-                                break;
-                            case Controle.Game.SENDPOSITIONS:
-                                player2.positionsPersonnages = RecevoirObjet<int>(player2);
-                                player2PlacedOrHasQuitted = true;
-                                break;
-                            case Controle.Game.QUIT:
-                                envoyerObjet(Controle.Game.QUIT, player1);
-                                updateWinner(player1);
-                                player1PlacedOrHasQuitted = true;
-                                player2PlacedOrHasQuitted = true;
-                                Program.addGoToMenu(player1);
-                                player2.isConnected = false;
-                                break;
-
-                            case Controle.Game.CANCEL:
-                                envoyerObjet(Controle.Game.QUIT, player1);
-                                envoyerObjet(Controle.Game.CANCEL, player2);
-                                updateWinner(player1);
-                                player1PlacedOrHasQuitted = true;
-                                player2PlacedOrHasQuitted = true;
-                                Program.addGoToMenu(player2);
-                                Program.addGoToMenu(player1);
-                                break;
-                        }
-                    }
-                }
+                placementScreen();
                 //la partie debute ou un joueur a quitter
                 if (!isWon)
                 {
                     initGame();
+                    Controle.Game action1;
+                    Controle.Game action2;
+                    int timer = 0;
+                    while (!isWon)
+                    {
+                        timer = 0;
+                        do
+                        {
+                            try
+                            {
+                                action1 = recevoirChoix(player1);
+                                timer = 0;
+                            }
+                            catch (Exception) { action1 = Controle.Game.NOTHING; }
+                            switch (action1)
+                            {
+                                case Controle.Game.ENDTURN:
+                                    envoyerObjet(Controle.Game.ENDTURN, player2);
+                                    break;
+                                case Controle.Game.NOTHING:
+                                    timer++;
+                                    if (timer == 2500)
+                                    {
+                                        envoyerObjet(Controle.Game.HALFAFK, player1);
+                                    }
+                                    if (timer == 5000)
+                                    {
+                                        envoyerObjet(Controle.Game.AFK, player1);
+
+                                    }
+                                    break;
+                                case Controle.Game.MOVE:
+
+                                    break;
+                                case Controle.Game.USEITEM:
+
+                                    break;
+                                case Controle.Game.DEFEND:
+
+                                    break;
+                                case Controle.Game.ATTACK:
+
+                                    break;
+                                case Controle.Game.QUIT:
+                                    envoyerObjet(Controle.Game.QUIT, player2);
+                                    updateWinner(player2);//+traitement exp
+                                    Program.addGoToMenu(player2);
+                                    player1.isConnected = false;
+                                    isWon = true;
+                                    break;
+
+                                case Controle.Game.CANCEL:
+                                    envoyerObjet(Controle.Game.QUIT, player2);
+                                    envoyerObjet(Controle.Game.CANCEL, player1);
+                                    updateWinner(player2);//+traitement exp
+                                    Program.addGoToMenu(player1);
+                                    Program.addGoToMenu(player2);
+                                    isWon = true;
+                                    break;
+                            }
+                        }
+                        while (action1 != Controle.Game.ENDTURN && timer < 5000 && !isWon);
+
+                        if (!isWon)
+                        {
+                            timer = 0;
+                            do
+                            {
+                                try
+                                {
+                                    action2 = recevoirChoix(player1);
+                                }
+                                catch (Exception) { action2 = Controle.Game.NOTHING; }
+                                switch (action2)
+                                {
+                                    case Controle.Game.ENDTURN:
+                                        envoyerObjet(Controle.Game.ENDTURN, player1);
+                                        break;
+                                    case Controle.Game.NOTHING:
+                                        timer++;
+                                        if (timer == 2500)
+                                        {
+                                            envoyerObjet(Controle.Game.HALFAFK, player2);
+                                        }
+                                        if (timer == 5000)
+                                        {
+                                            envoyerObjet(Controle.Game.AFK, player2);
+                                        }
+                                        break;
+                                    case Controle.Game.QUIT:
+                                        envoyerObjet(Controle.Game.QUIT, player2);
+                                        updateWinner(player2);
+                                        Program.addGoToMenu(player2);
+                                        isWon = true;
+                                        player2.isConnected = false;
+                                        break;
+
+                                    case Controle.Game.CANCEL:
+                                        envoyerObjet(Controle.Game.QUIT, player2);
+                                        envoyerObjet(Controle.Game.CANCEL, player1);
+                                        updateWinner(player2);
+                                        Program.addGoToMenu(player1);
+                                        Program.addGoToMenu(player2);
+                                        isWon = true;
+                                        break;
+                                }
+                            }
+                            while (action1 != Controle.Game.ENDTURN && timer < 5000 && !isWon);
+                        }
+                    }
                 }
 
             }
@@ -163,7 +197,6 @@ namespace ThroneWarsServer
             }
             this.T.Abort();
         }
-
         private void updateWinner(Joueur j)
         {
             Controle.updateMatch(this.mId, j.jid, player1.jid,
@@ -178,6 +211,85 @@ namespace ThroneWarsServer
                         player2.Persos[3].Nom, player2.Persos[3].kills, Convert.ToInt32(player2.Persos[3].idDead).ToString()[0]
                         );
             isWon = true;
+        }
+        private void placementScreen()
+        {
+            bool player1PlacedOrHasQuitted = false;
+            bool player2PlacedOrHasQuitted = false;
+            while (!player1PlacedOrHasQuitted || !player2PlacedOrHasQuitted)
+            {
+                Controle.Game Action;
+                try
+                {
+                    player1.Socket.Blocking = false;
+                    Action = recevoirChoix(player1);
+                    player1.Socket.Blocking = true;
+                }
+                catch (Exception) { Action = Controle.Game.NOTHING; }
+                switch (Action)
+                {
+                    case Controle.Game.NOTHING:
+                        break;
+                    case Controle.Game.SENDPOSITIONS:
+                        player1.positionsPersonnages = RecevoirObjet<int>(player1);
+                        player1PlacedOrHasQuitted = true;
+                        break;
+                    case Controle.Game.QUIT:
+                        envoyerObjet(Controle.Game.QUIT, player2);
+                        updateWinner(player2);
+                        player1PlacedOrHasQuitted = true;
+                        player2PlacedOrHasQuitted = true;
+                        Program.addGoToMenu(player2);
+                        player1.isConnected = false;
+                        break;
+
+                    case Controle.Game.CANCEL:
+                        envoyerObjet(Controle.Game.QUIT, player2);
+                        envoyerObjet(Controle.Game.CANCEL, player1);
+                        updateWinner(player2);
+                        player1PlacedOrHasQuitted = true;
+                        player2PlacedOrHasQuitted = true;
+                        Program.addGoToMenu(player1);
+                        Program.addGoToMenu(player2);
+                        break;
+                }
+                if (Action != Controle.Game.QUIT && Action != Controle.Game.CANCEL)
+                {
+                    try
+                    {
+                        player2.Socket.Blocking = false;
+                        Action = recevoirChoix(player2);
+                        player2.Socket.Blocking = true;
+                    }
+                    catch (Exception) { Action = Controle.Game.NOTHING; }
+                    switch (Action)
+                    {
+                        case Controle.Game.NOTHING:
+                            break;
+                        case Controle.Game.SENDPOSITIONS:
+                            player2.positionsPersonnages = RecevoirObjet<int>(player2);
+                            player2PlacedOrHasQuitted = true;
+                            break;
+                        case Controle.Game.QUIT:
+                            envoyerObjet(Controle.Game.QUIT, player1);
+                            updateWinner(player1);
+                            player1PlacedOrHasQuitted = true;
+                            player2PlacedOrHasQuitted = true;
+                            Program.addGoToMenu(player1);
+                            player2.isConnected = false;
+                            break;
+                        case Controle.Game.CANCEL:
+                            envoyerObjet(Controle.Game.QUIT, player1);
+                            envoyerObjet(Controle.Game.CANCEL, player2);
+                            updateWinner(player1);
+                            player1PlacedOrHasQuitted = true;
+                            player2PlacedOrHasQuitted = true;
+                            Program.addGoToMenu(player2);
+                            Program.addGoToMenu(player1);
+                            break;
+                    }
+                }
+            }
         }
         /// <summary>
         /// cette fonction envoie au joueurs les fonctions neccessaire pour debuter la partie apres l'ecran de placement
@@ -209,7 +321,8 @@ namespace ThroneWarsServer
             {
                 Liste.Add(new Potions(
                     Int32.Parse(dr[0].ToString()),
-                    dr[1].ToString(), dr[2].ToString(),
+                    dr[1].ToString(),
+                    dr[2].ToString(),
                     Int32.Parse(dr[3].ToString()),
                     Int32.Parse(dr[4].ToString()),
                     Int32.Parse(dr[5].ToString()),
@@ -271,9 +384,6 @@ namespace ThroneWarsServer
             }
 
         }
-
-
-
         private void envoyerObjet<T>(T ds, Joueur j)
         {
             BinaryFormatter b = new BinaryFormatter();
@@ -283,7 +393,6 @@ namespace ThroneWarsServer
                 j.Socket.Send(stream.ToArray());
             }
         }
-
         private void envoyerReponse(string reponse, Joueur j)
         {
             byte[] data = Encoding.ASCII.GetBytes(reponse);
