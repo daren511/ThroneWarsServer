@@ -352,7 +352,12 @@ public class GameController : TMNController
             units[unit.playerSide - 1].Add(unit);
         }
     }
-
+    private void MoveUnit(Unit unit, string nodeNumber)
+    {
+        TileNode node = GameObject.Find("node" + nodeNumber).GetComponent<TileNode>();
+        unit.MoveTo(node);
+    }
+    //private void AttackUnit(Unit unit, string)
     #region combat
     /// <summary>
     /// Formule pour calculer les dégâts infligés
