@@ -268,7 +268,18 @@ public class PlayerManager : MonoBehaviour
             _playerInventory._equips.Add(eItem);
         }
     }
-    
+    //public void LoadPlayerPotions(List<ControleBD.Potion> list)
+    //{
+        //ControleBD.Potion pot;
+        //Potion newPot;
+        //for(int i = 0; i < list.Count; ++i)
+        //{
+            //pot = list[i];
+            //newPot = new Potion();
+            //_playerInventory._potions.Add(newPot);
+        //}
+            
+    //}
 
     /// <summary>
     /// Retourne un équipement pour un objet de type Character
@@ -421,6 +432,7 @@ public class PlayerManager : MonoBehaviour
 
         _playerSide = Int32.Parse(Encoding.UTF8.GetString(formatted));
         isLoading = false;
+        isInGame = true;
         onLoading.thread.Abort();
     }
     /// <summary>
@@ -453,6 +465,7 @@ public class PlayerManager : MonoBehaviour
         else if(action == Controle.Game.STARTING)
         {
             isWaitingPlayer = false;
+            PlayerManager._instance.SendObject(Controle.Game.OK);
         }
         GameControllerSample6.thread.Abort();
     }
