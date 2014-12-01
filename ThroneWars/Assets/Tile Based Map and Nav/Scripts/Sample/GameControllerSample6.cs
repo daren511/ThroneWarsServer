@@ -139,9 +139,15 @@ public class GameControllerSample6 : MonoBehaviour
     {
         ///les personnages de l'adversaire pour la partie
         GameManager._instance.PopulateEnemy(PlayerManager._instance.ReceiveObject<Personnages>());
+        PlayerManager._instance.SendObject(Controle.Game.OK);
 
         ///les positions des personnages de l'adversaire
         GameManager._instance._enemyPositions = PlayerManager._instance.ReceiveObject<int>();
+        PlayerManager._instance.SendObject(Controle.Game.OK);
+
+        ///les potions du joueur
+        PlayerManager._instance.LoadPlayerPotions(PlayerManager._instance.ReceiveObject<Potions>());
+        PlayerManager._instance.SendObject(Controle.Game.OK);
 
         for (int i = 0; i < GameManager._instance._enemyTeam.Count; ++i)
         {
@@ -150,7 +156,6 @@ public class GameControllerSample6 : MonoBehaviour
         ///on affecte les unités aux équipes respectives
         GameController.unitsFabs = unitFabs;
         GameController.enemyFabs = enemyFabs;
-
         ///destruction des instanciations de type Character de la scène de placement
         Object[] allObjects = GameObject.FindObjectsOfType<Character>(); // FindObjectsOfType(typeof(Character));
         for (int i = 0; i < allObjects.Length; ++i)

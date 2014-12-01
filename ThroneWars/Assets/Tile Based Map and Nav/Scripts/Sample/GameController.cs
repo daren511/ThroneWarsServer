@@ -70,7 +70,7 @@ public class GameController : TMNController
 		currPlayerTurn = 0;
 		state = State.Init;
 	}
-
+        
 	private void SpawnRandomUnits(int count)
 	{
 		for (int i = 0; i < count; i++)
