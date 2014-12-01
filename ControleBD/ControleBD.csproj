@@ -48,6 +48,7 @@
     <Compile Include="Items.cs" />
     <Compile Include="Joueur.cs" />
     <Compile Include="Personnages.cs" />
+    <Compile Include="Potions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
