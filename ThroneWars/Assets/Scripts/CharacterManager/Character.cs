@@ -155,7 +155,7 @@ public class Character : NaviUnit
     public override void Start()
     {
         base.Start();
-        //DontDestroyOnLoad(this);
+        DontDestroyOnLoad(this);
 
         //weapon.Init(OnAttackDone);
     }
