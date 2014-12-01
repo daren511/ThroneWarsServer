@@ -58,9 +58,9 @@ public class PlayerManager : MonoBehaviour
 
     void OnApplicationQuit()
     {
-        if (!isLoading && !isInGame)
+        if (sck.Connected && !isLoading && !isInGame)
             SendObject(Controle.Actions.QUIT);
-        else if (isInGame)
+        else if (sck.Connected && isInGame)
             SendObject(Controle.Game.QUIT);
 
         PlayerManager._instance.ClearPlayer();
@@ -464,8 +464,8 @@ public class PlayerManager : MonoBehaviour
         }
         else if(action == Controle.Game.STARTING)
         {
-            isWaitingPlayer = false;
             PlayerManager._instance.SendObject(Controle.Game.OK);
+            isWaitingPlayer = false;
         }
         GameControllerSample6.thread.Abort();
     }
