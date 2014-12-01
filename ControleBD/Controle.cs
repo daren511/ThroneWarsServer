@@ -1752,6 +1752,7 @@ namespace ControleBD
         {
             OracleConnection conn = Connection.getInstance().conn;
             string sql = "INSERT INTO POTIONJOUEURS VALUES(:pid, :jid, :qte)";
+            string currentqte = "SELECT QUANTITY FROM POTIONJOUEURS WHERE PID :=pid";
 
             try
             {
@@ -1763,7 +1764,7 @@ namespace ControleBD
 
                 OraParamPID.Value = pid;
                 OraParamJID.Value = jid;
-                OraParamQTE.Value = qte;
+                OraParamQTE.Value = qte + currentqte;
 
                 oraInsert.Parameters.Add(OraParamPID);
                 oraInsert.Parameters.Add(OraParamJID);
