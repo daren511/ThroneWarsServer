@@ -1261,33 +1261,6 @@ namespace ControleBD
                 Erreur.ErrorMessage(ex);
             }
         }
-/*
-        public static int getIIDByItemName(string nomitem)
-        {
-            OracleConnection conn = Connection.getInstance().conn;
-            string sql = "select IID from ITEMS where NOM =:nomitem";
-
-            try
-            {
-                OracleCommand oraSelect = new OracleCommand(sql, conn);
-                OracleParameter OraParamItemName = new OracleParameter(":nomitem", OracleDbType.Varchar2, 40);
-                OraParamItemName.Value = nomitem;
-                oraSelect.Parameters.Add(OraParamItemName);
-
-                using (OracleDataReader objRead = oraSelect.ExecuteReader())
-                {
-                    if (objRead.Read())
-                        return objRead.GetInt32(0);
-                }
-            }
-            catch (OracleException ex)
-            {
-                Erreur.ErrorMessage(ex);
-            }
-            return 0;
-             
-        }
- * */
         //------------------------------ À ALEXIS ------------------------------//
         // J'VOUS TOUCHE LE RECTUM SI VOUS MODIFIER QUELQUE CHOSE
         public static DataSet listPlayers(bool afficherTout)
@@ -1747,13 +1720,10 @@ namespace ControleBD
                 return false;
             }
         }
-
         public static bool addPotionJoueurs(int pid, int jid, int qte)
         {
             OracleConnection conn = Connection.getInstance().conn;
             string sql = "INSERT INTO POTIONJOUEURS VALUES(:pid, :jid, :qte)";
-            string currentqte = "SELECT QUANTITY FROM POTIONJOUEURS WHERE PID :=pid";
-
             try
             {
                 OracleCommand oraInsert = new OracleCommand(sql, conn);
@@ -1764,8 +1734,7 @@ namespace ControleBD
 
                 OraParamPID.Value = pid;
                 OraParamJID.Value = jid;
-                OraParamQTE.Value = qte + currentqte;
-
+                OraParamQTE.Value = qte;
                 oraInsert.Parameters.Add(OraParamPID);
                 oraInsert.Parameters.Add(OraParamJID);
                 oraInsert.Parameters.Add(OraParamQTE);
@@ -1776,7 +1745,7 @@ namespace ControleBD
             catch (OracleException ex)
             {
                 Erreur.ErrorMessage(ex);
-                return updateQuantityPotion(jid, pid, qte);
+                return updateQuantityPotion(jid, pid,qte);
             }
         }
 
