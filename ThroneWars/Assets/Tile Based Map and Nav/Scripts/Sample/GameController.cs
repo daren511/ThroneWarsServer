@@ -61,8 +61,8 @@ public class GameController : TMNController
 	};
 
     public int currPlayerTurn { get; set; }		// which player's turn it is, only if useTurns = true;
-    public Thread thread;
-
+    public Thread threadTurn;
+    public Thread threadAFK;
     #endregion
     // ====================================================================================================================
     #region start/init
@@ -74,18 +74,16 @@ public class GameController : TMNController
         currPlayerTurn = 0;
         state = State.Init;
     }
-
-    public void Update()
+    private void ListenToServer()
     {
-
+        threadTurn = new Thread(new ThreadStart(PlayerManager._instance.InGameManager));
+        threadTurn.Start();
     }
-
-    private void StartListeningToServer()
+    private void InactivityAndQuitCheck()
     {
-        thread = new Thread(new ThreadStart(PlayerManager._instance.InGameManager));
-        thread.Start();
+        threadAFK = new Thread(new ThreadStart(PlayerManager._instance.CheckForInactivity));
+        threadAFK.Start();
     }
-
     private void SpawnRandomUnits(int count)
     {
         for (int i = 0; i < count; i++)
@@ -498,7 +496,6 @@ public class GameController : TMNController
         if (done == PlayerManager._instance._chosenTeam.Count && PlayerManager._instance._playerSide == currPlayerTurn + 1)
         {
             //tour du joueur terminer
-            Debug.Log("Tour terminé!");
 
             //on envoie au serveur une requête comme quoi que notre tour est terminé
         }
@@ -541,14 +538,18 @@ public class GameController : TMNController
             SpawnUnits(enemyFabs, GameManager._instance._enemyTeam, GameManager._instance._enemyPositions, GameManager._instance._enemySide);
 
             OnNaviUnitClick(units[PlayerManager._instance._playerSide - 1][activeCharacterIndex].GetComponent<Character>().gameObject);
+
             if (PlayerManager._instance._playerSide == 1)
             {
                 CombatMenu.FindObjectOfType<CombatMenu>().characterChosen = true;
+                InactivityAndQuitCheck();
             }
             else
             {
                 CombatMenu.FindObjectOfType<CombatMenu>().characterChosen = false;
+                ListenToServer();
             }
+
         }
     }
 

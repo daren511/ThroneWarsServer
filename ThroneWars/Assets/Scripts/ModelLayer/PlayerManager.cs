@@ -54,7 +54,14 @@ public class PlayerManager : MonoBehaviour
     public bool isWaitingPlayer = false;
     public bool hasWonDefault = false;
     public bool isInGame = false;
+    /// in game
     public bool isAFK = false;
+
+    public bool enemyAttack = false;
+    public bool enemyMove = false;
+    public bool enemyItem = false;
+
+    public Character _activeEnemy;
     #endregion
 
     void OnApplicationQuit()
@@ -124,7 +131,7 @@ public class PlayerManager : MonoBehaviour
     /// </summary>
     public void LoadPlayer()
     {
-        
+
         ///on reçoit les noms des personnages du joueur
         _characNames = ReceiveObject<string>();
         onMainMenu.tabCharac = _characNames;//optimiser: on affecte les noms qui seront affichés on menu principal dans une autre classe
@@ -276,7 +283,7 @@ public class PlayerManager : MonoBehaviour
         for (int i = 0; i < list.Count; ++i)
         {
             pot = list[i];
-            newPot = new Potion(pot.pid, -1, 1, "Tous", pot.name, pot.description, pot.duration, pot.quantity, 
+            newPot = new Potion(pot.pid, -1, 1, "Tous", pot.name, pot.description, pot.duration, pot.quantity,
                 pot.WAtk, pot.WDef, pot.MAtk, pot.MDef, pot.healthRestore);
             _playerInventory._potions.Add(newPot);
         }
@@ -463,13 +470,13 @@ public class PlayerManager : MonoBehaviour
         {
             action = (Controle.Game)receive.Deserialize(recstream);
         }
-        if(action == Controle.Game.QUIT)
+        if (action == Controle.Game.QUIT)
         {
             hasWonDefault = true;
             isWaitingPlayer = false;
             isInGame = false;
         }
-        else if(action == Controle.Game.STARTING)
+        else if (action == Controle.Game.STARTING)
         {
             SendObject(Controle.Game.OK);
             isWaitingPlayer = false;
@@ -495,7 +502,33 @@ public class PlayerManager : MonoBehaviour
         {
             action = (Controle.Game)receive.Deserialize(recstream);
         }
-        //if(action == )
+        switch(action)
+        {
+            case Controle.Game.ENDTURN:
+
+                break;
+
+            case Controle.Game.ATTACK:
+                enemyAttack = true;
+                break;
+
+            case Controle.Game.MOVE:
+                enemyMove = true;
+                break;
+
+            case Controle.Game.USEITEM:
+                enemyItem = true;
+                break;
+
+            case Controle.Game.DEFEND:
+                break;
+
+            case Controle.Game.WIN:
+                break;
+
+            case Controle.Game.QUIT:
+                break;
+        }
     }
     public void CheckForInactivity()
     {
@@ -516,29 +549,30 @@ public class PlayerManager : MonoBehaviour
         {
             action = (Controle.Game)receive.Deserialize(recstream);
         }
-        /*
-         * if(action == Controle.Game.HALFAFK)
-         * {
-         * 
-         * }
-         * else if(action == Controle.Game.AFK)
-         * {
-         * 
-         * }         
-         * */
 
+        if (action == Controle.Game.HALFAFK)
+        {
 
+        }
+        else if (action == Controle.Game.QUIT)
+        {
+
+        }
+        else if (action == Controle.Game.AFK)
+        {
+
+        }
     }
     #endregion
     /// <summary>
-    /// Envoie les personnages choisis par le joueur au serveur, fait appelle à la méthode SendObject(T obj).
+    /// Envoi les personnages choisis par le joueur au serveur, fait appelle à la méthode SendObject(T obj).
     /// </summary>
     public void SendTeam()
     {
         List<Personnages> list = new List<Personnages>();
         Character c;
 
-        for(int i = 0; i < _chosenTeam.Count; ++i)
+        for (int i = 0; i < _chosenTeam.Count; ++i)
         {
             c = _chosenTeam[i];
             list.Add(new Personnages(c._name, c._characterClass._classLevel, c._characterClass._className, c._maxHealth, c._maxMagic,
@@ -578,7 +612,7 @@ public class PlayerManager : MonoBehaviour
 
         ///on formatte les informations reçues
         byte[] formatted = new byte[count];
-        for (int i = 0; i < count; ++i )
+        for (int i = 0; i < count; ++i)
         {
             formatted[i] = buffer[i];
         }
