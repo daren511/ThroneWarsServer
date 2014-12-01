@@ -81,7 +81,7 @@ namespace ThroneWarsServer
                     Controle.Game action1;
                     Controle.Game action2;
                     int timer = 0;
-                    while(!isWon)
+                    while (!isWon)
                     {
                         timer = 0;
                         do
@@ -91,16 +91,19 @@ namespace ThroneWarsServer
                                 action1 = recevoirChoix(player1);
                                 timer = 0;
                             }
-                            catch(Exception){ action1 = Controle.Game.NOTHING; }
-                            switch(action1)
+                            catch (Exception) { action1 = Controle.Game.NOTHING; }
+                            switch (action1)
                             {
+                                case Controle.Game.ENDTURN:
+                                    envoyerObjet(Controle.Game.ENDTURN, player2);
+                                    break;
                                 case Controle.Game.NOTHING:
                                     timer++;
-                                    if(timer == 2500)
+                                    if (timer == 2500)
                                     {
                                         envoyerObjet(Controle.Game.HALFAFK, player1);
                                     }
-                                    if(timer == 5000)
+                                    if (timer == 5000)
                                     {
                                         envoyerObjet(Controle.Game.AFK, player1);
 
@@ -118,11 +121,27 @@ namespace ThroneWarsServer
                                 case Controle.Game.ATTACK:
 
                                     break;
+                                case Controle.Game.QUIT:
+                                    envoyerObjet(Controle.Game.QUIT, player2);
+                                    updateWinner(player2);//+traitement exp
+                                    Program.addGoToMenu(player2);
+                                    player1.isConnected = false;
+                                    isWon = true;
+                                    break;
+
+                                case Controle.Game.CANCEL:
+                                    envoyerObjet(Controle.Game.QUIT, player2);
+                                    envoyerObjet(Controle.Game.CANCEL, player1);
+                                    updateWinner(player2);//+traitement exp
+                                    Program.addGoToMenu(player1);
+                                    Program.addGoToMenu(player2);
+                                    isWon = true;
+                                    break;
                             }
                         }
-                        while(action1 != Controle.Game.ENDTURN && timer < 5000 && !isWon);
-                        
-                        if(!isWon)
+                        while (action1 != Controle.Game.ENDTURN && timer < 5000 && !isWon);
+
+                        if (!isWon)
                         {
                             timer = 0;
                             do
@@ -134,8 +153,35 @@ namespace ThroneWarsServer
                                 catch (Exception) { action2 = Controle.Game.NOTHING; }
                                 switch (action2)
                                 {
+                                    case Controle.Game.ENDTURN:
+                                        envoyerObjet(Controle.Game.ENDTURN, player1);
+                                        break;
                                     case Controle.Game.NOTHING:
+                                        timer++;
+                                        if (timer == 2500)
+                                        {
+                                            envoyerObjet(Controle.Game.HALFAFK, player2);
+                                        }
+                                        if (timer == 5000)
+                                        {
+                                            envoyerObjet(Controle.Game.AFK, player2);
+                                        }
+                                        break;
+                                    case Controle.Game.QUIT:
+                                        envoyerObjet(Controle.Game.QUIT, player2);
+                                        updateWinner(player2);
+                                        Program.addGoToMenu(player2);
+                                        isWon = true;
+                                        player2.isConnected = false;
+                                        break;
 
+                                    case Controle.Game.CANCEL:
+                                        envoyerObjet(Controle.Game.QUIT, player2);
+                                        envoyerObjet(Controle.Game.CANCEL, player1);
+                                        updateWinner(player2);
+                                        Program.addGoToMenu(player1);
+                                        Program.addGoToMenu(player2);
+                                        isWon = true;
                                         break;
                                 }
                             }
