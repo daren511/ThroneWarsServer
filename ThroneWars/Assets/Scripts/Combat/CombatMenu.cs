@@ -36,6 +36,7 @@ public class CombatMenu : MonoBehaviour
 
     public bool moveEnabled = true;
     public bool itemEnabled = true;
+    private bool hasUpdatedGUI = false;
 
     #region textures
     public GUISkin _skin;
