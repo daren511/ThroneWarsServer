@@ -15,20 +15,28 @@ namespace DeveloperApplication
     public partial class FORM_FichierTxt : Form
     {
         //---------- VARIABLES ----------//
-        string[] tabDefault;
+        // Values
+        int minWATK = 0;
+        int maxWATK = 0;
+        int minMATK = 0;
+        int maxMATK = 0;
+        int minWDEF = 0;
+        int maxWDEF = 0;
+        int minMDEF = 0;
+        int maxMDEF = 0;
+        // Array
         string[] tabItems;
-        List<string> listTous = new List<string>();
-        List<string> listGuerrier = new List<string>();
-        List<string> listArcher = new List<string>();
-        List<string> listMage = new List<string>();
-        List<string> listPretre = new List<string>();
-        string classe = null;
+        // Attributs item
+        string nom = "";
+        string classe = "";
+        int level = 0;
         int watk = 0;
         int wdef = 0;
         int matk = 0;
         int mdef = 0;
         string actif = "1";
         int price = 0;
+
 
         public FORM_FichierTxt()
         {
@@ -37,8 +45,10 @@ namespace DeveloperApplication
 
         private void FORM_FichierTxt_Load(object sender, EventArgs e)
         {
-            CB_Type.SelectedIndex = 0;
-            CB_Niveau.SelectedIndex = 0;
+            BTN_Supprimer.Enabled = false;
+            BTN_Insert.Enabled = false;
+            LBL_Total_Inserer.Text = "";
+            LBL_NonInserer.Text = "";
         }
 
         private void BTN_OuvrirFichier_Click(object sender, EventArgs e)
@@ -49,14 +59,16 @@ namespace DeveloperApplication
 
         private void TB_Path_TextChanged(object sender, EventArgs e)
         {
+            LBL_Total_Inserer.Text = "";
+            LBL_NonInserer.Text = "";
             fileDialog.FileName = TB_Path.Text;
-            SplitClasses();
+            tabItems = File.ReadAllLines(TB_Path.Text);
             ListerItems();
         }
 
         private void BTN_Insert_Click(object sender, EventArgs e)
         {
-
+            InsererItem();
         }
 
         private void BTN_Supprimer_Click(object sender, EventArgs e)
@@ -68,18 +80,10 @@ namespace DeveloperApplication
         private void LB_Noms_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (LB_Noms.SelectedItem != null)
-                TB_Nom.Text = LB_Noms.SelectedItem.ToString();
-            if (LB_Noms.SelectedItem.ToString().StartsWith("[") && LB_Noms.SelectedItem.ToString().EndsWith("]"))
-            {
-                TB_Nom.Text = "";
-                BTN_Modifier.Enabled = false;
-            }
-        }
-
-        private void BTN_Modifier_Click(object sender, EventArgs e)
-        {
-            tabItems[LB_Noms.SelectedIndex] = TB_Nom.Text;
-            ListerItems();
+                BTN_Supprimer.Enabled = true;
+            if ((LB_Noms.SelectedItem.ToString().StartsWith("[") && LB_Noms.SelectedItem.ToString().EndsWith("]")) ||
+                ((LB_Noms.SelectedItem.ToString().StartsWith("{") && LB_Noms.SelectedItem.ToString().EndsWith("}"))))
+                BTN_Supprimer.Enabled = false;
         }
 
         private void BTN_Instructions_Click(object sender, EventArgs e)
@@ -94,72 +98,198 @@ namespace DeveloperApplication
             LB_Noms.Items.Clear();
             if (tabItems != null)
             {
+                BTN_Insert.Enabled = tabItems.Length == 0 ? false : true;
+                BTN_Supprimer.Enabled = tabItems.Length == 0 ? false : true;
+
                 for (int i = 0; i < tabItems.Length; ++i)
                     LB_Noms.Items.Add(tabItems[i]);
-                LBL_Total.Text = LB_Noms.Items.Count.ToString() + "/" + tabDefault.Length.ToString();
 
-                if (LB_Noms.Items.Count > 1) 
-                    LBL_Total.Text += " lignes";
-                else 
-                    LBL_Total.Text += " ligne";
-                if (index < LB_Noms.Items.Count) 
+                if (index < LB_Noms.Items.Count && index != -1)
                     LB_Noms.SelectedIndex = index;
+                else
+                    BTN_Supprimer.Enabled = false;
             }
             else
             {
-                LBL_Total.Text = "";
                 BTN_Insert.Enabled = false;
-                BTN_Modifier.Enabled = false;
                 BTN_Supprimer.Enabled = false;
-                TB_Nom.Enabled = false;
             }
         }
 
-        private void SplitClasses()
+        private void InsererItem()
         {
-            if (File.Exists(TB_Path.Text))
+            InitialiserClasse();
+            if (classe != "vide")
             {
-                string str = null;
-                tabItems = tabDefault = File.ReadAllLines(TB_Path.Text);
-                for (int i = 0; i < tabItems.Length; ++i)
+                if (LB_Noms.Items[1].ToString() == "{ARMES}")
+                    InsererArmes();
+                else if (LB_Noms.Items[1].ToString() == "{ARMURES}")
+                    InsererArmures();
+                else if (LB_Noms.Items[1].ToString() == "{BIJOUX}")
+                    InsererBijoux();
+                else
                 {
-                    if (tabItems[i].ToString().StartsWith("[") && tabItems[i].ToString().EndsWith("]"))
-                    {
-                        str = tabItems[i].ToString();
-                        ++i;
-                    }
-                    switch (str)
-                    {
-                        case "[TOUS]":
-                            listTous.Add(tabItems[i].ToString());
-                            break;
-                        case "[GUERRIER]":
-                            listGuerrier.Add(tabItems[i].ToString());
-                            break;
-                        case "[ARCHER]":
-                            listArcher.Add(tabItems[i].ToString());
-                            break;
-                        case "[MAGE]":
-                            listMage.Add(tabItems[i].ToString());
-                            break;
-                        case "[PRETRE]":
-                            listPretre.Add(tabItems[i].ToString());
-                            break;
-                        default:
-                            listTous.Add(tabItems[i].ToString());
-                            break;
-                    }
+                    classe = "";
+                    LB_Noms.SelectedIndex = 0;
+                    MessageBox.Show("La deuxième ligne doit être {ARMES}, {ARMURES} OU {BIJOUX}. " + Environment.NewLine + "Pour de l'aide, référez-vous aux instructions.");
                 }
             }
             else
             {
-                tabItems = tabDefault = null;
-                listTous.Clear();
-                listGuerrier.Clear();
-                listArcher.Clear();
-                listMage.Clear();
-                listPretre.Clear();
+                classe = "";
+                LB_Noms.SelectedIndex = 0;
+                MessageBox.Show("La première ligne doit être [TOUS], [GUERRIER], [ARCHER], [MAGE] OU [PRETRE]. " +
+                    Environment.NewLine + "Pour de l'aide, référez-vous aux instructions.");
             }
+        }
+
+        private void InitialiserClasse()
+        {
+            switch (LB_Noms.Items[0].ToString())
+            {
+                case "[TOUS]":
+                    classe = "Tous";
+                    minWATK = -6;
+                    maxWATK = 12;
+                    minMATK = -3;
+                    maxMATK = 8;
+                    minWDEF = -2;
+                    maxWDEF = 9;
+                    minMDEF = -1;
+                    maxMDEF = 10;
+                    break;
+                case "[GUERRIER]":
+                    classe = "Guerrier";
+                    minWATK = 2;
+                    maxWATK = 8;
+                    minMATK = -6;
+                    maxMATK = 3;
+                    minWDEF = 1;
+                    maxWDEF = 9;
+                    minMDEF = -2;
+                    maxMDEF = 6;
+                    break;
+                case "[ARCHER]":
+                    classe = "Archer";
+                    minWATK = 1;
+                    maxWATK = 6;
+                    minMATK = -3;
+                    maxMATK = 5;
+                    minWDEF = 0;
+                    maxWDEF = 4;
+                    minMDEF = -4;
+                    maxMDEF = 5;
+                    break;
+                case "[MAGE]":
+                    classe = "Mage";
+                    minWATK = 1;
+                    maxWATK = 5;
+                    minMATK = 3;
+                    maxMATK = 9;
+                    minWDEF = -2;
+                    maxWDEF = 4;
+                    minMDEF = 2;
+                    maxMDEF = 8;
+                    break;
+                case "[PRETRE]":
+                    classe = "Prêtre";
+                    minWATK = 1;
+                    maxWATK = 4;
+                    minMATK = 2;
+                    maxMATK = 11;
+                    minWDEF = -3;
+                    maxWDEF = 6;
+                    minMDEF = 2;
+                    maxMDEF = 10;
+                    break;
+                default:
+                    classe = "vide";
+                    break;
+            }
+        }
+
+        private void InsererArmes()
+        {
+            int valeurInserer = 0;
+            int valeurNonInserer = 0;
+            Random rand = new Random();
+            for (int i = 2; i < tabItems.Length; ++i)
+            {
+                level = int.Parse(tabItems[i].Split('-')[0]);
+                nom = tabItems[i].Split('-')[1];
+                watk = rand.Next(minWATK + Convert.ToInt32(0.7 * level), maxWATK + Convert.ToInt32(1.5 * level));
+                wdef = rand.Next(minWDEF + Convert.ToInt32(0.2 * level), maxWDEF + Convert.ToInt32(0.4 * level));
+                matk = rand.Next(minMATK + Convert.ToInt32(0.6 * level), maxMATK + Convert.ToInt32(1.6 * level));
+                mdef = rand.Next(minMDEF + Convert.ToInt32(0.2 * level), maxMDEF + Convert.ToInt32(0.3 * level));
+                price = (watk * matk) + Convert.ToInt32(1.5 * level) + wdef - mdef - level;
+                if (price < 0)
+                    price = Convert.ToInt32(price * -1 + 2.5 * level);
+                else
+                    price = Convert.ToInt32(price + 2.5 * level);
+
+                if (Controle.addItem(nom, classe, level, watk, wdef, matk, mdef, actif, price))
+                    valeurInserer++;
+                else
+                    valeurNonInserer++; 
+            }
+            LBL_Total_Inserer.Text = valeurInserer.ToString() + (valeurInserer > 1 ? " lignes insérées" : " ligne insérée");
+            LBL_NonInserer.Text = valeurNonInserer.ToString() + (valeurNonInserer > 1 ? " lignes non insérées" : " ligne non insérée");
+        }
+
+        private void InsererArmures()
+        {
+            int valeurInserer = 0;
+            int valeurNonInserer = 0;
+            Random rand = new Random();
+            for (int i = 2; i < tabItems.Length; ++i)
+            {
+                level = int.Parse(tabItems[i].Split('-')[0]);
+                nom = tabItems[i].Split('-')[1];
+                watk = rand.Next(minWATK + Convert.ToInt32(0.2 * level), maxWATK + Convert.ToInt32(0.4 * level));
+                wdef = rand.Next(minWDEF + Convert.ToInt32(0.7 * level), maxWDEF + Convert.ToInt32(1.5 * level));
+                matk = rand.Next(minMATK + Convert.ToInt32(0.2 * level), maxMATK + Convert.ToInt32(0.3 * level));
+                mdef = rand.Next(minMDEF + Convert.ToInt32(0.6 * level), maxMDEF + Convert.ToInt32(1.6 * level));
+                price = (wdef * mdef) + Convert.ToInt32(1.5 * level) + watk - matk - level;
+                if (price < 0)
+                    price = Convert.ToInt32(price * -1 + 2.5 * level);
+                else
+                    price = Convert.ToInt32(price + 2.5 * level);
+
+                if (Controle.addItem(nom, classe, level, watk, wdef, matk, mdef, actif, price))
+                    valeurInserer++;
+                else
+                    valeurNonInserer++; 
+            }
+            LBL_Total_Inserer.Text = valeurInserer.ToString() + (valeurInserer > 1 ? " lignes insérées" : " ligne insérée");
+            LBL_NonInserer.Text = valeurNonInserer.ToString() + (valeurNonInserer > 1 ? " lignes non insérées" : " ligne non insérée");
+        }
+
+        private void InsererBijoux()
+        {
+            int valeurInserer = 0;
+            int valeurNonInserer = 0;
+            Random rand = new Random();
+            for (int i = 2; i < tabItems.Length; ++i)
+            {
+                level = int.Parse(tabItems[i].Split('-')[0]);
+                nom = tabItems[i].Split('-')[1];
+                watk = rand.Next(minWATK + Convert.ToInt32(0.3 * level), maxWATK + level);
+                wdef = rand.Next(minWDEF + Convert.ToInt32(0.3 * level), maxWDEF + level);
+                matk = rand.Next(minMATK + Convert.ToInt32(0.3 * level), maxMATK + level);
+                mdef = rand.Next(minMDEF + Convert.ToInt32(0.3 * level), maxMDEF + level);
+                price = watk * matk + wdef * mdef;
+                if (price < 0)
+                    price = Convert.ToInt32(price * -1 + 3.5 * level);
+                else
+                    price = Convert.ToInt32(price + 3.5 * level);
+
+                if (Controle.addItem(nom, classe, level, watk, wdef, matk, mdef, actif, price))
+                    valeurInserer++;
+                else
+                    valeurNonInserer++; 
+            }
+            LBL_Total_Inserer.Text = valeurInserer.ToString() + (valeurInserer > 1 ? " lignes insérées" : " ligne insérée");
+            LBL_NonInserer.Text = valeurNonInserer.ToString() + (valeurNonInserer > 1 ? " lignes non insérées" : " ligne non insérée");
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using ControleBD;
 /*
  * PlayerManager
  * par Charles Hunter-Roy, 2014
@@ -33,5 +34,28 @@ public class GameManager : MonoBehaviour
     {
         DontDestroyOnLoad(this);
         instance = this;
+    }
+    public void PopulateEnemy(List<Personnages> list)
+    {
+        List<Character> enemyTeam = new List<Character>();
+        CharacterInventory invent = new CharacterInventory();
+        Personnages p;
+        for (int i = 0; i < list.Count; ++i)
+        {
+            p = list[i];
+            enemyTeam.Add(Character.CreateCharacter(p.Nom, p.ClassName, p.Level, p.Moves, p.Range, p.Health, p.Magic,
+                invent, p.PhysAtk, p.PhysDef, p.MagicAtk, p.MagicDef));
+        }
+        _enemyTeam = enemyTeam;
+    }
+    public void ClearEnemy()
+    {
+        _playerPositions.Clear();
+        _enemyPositions.Clear();
+        for (int i = 0; i < _enemyTeam.Count; ++i)
+        {
+            Destroy(_enemyTeam[i]);
+        }
+        _enemyTeam.Clear();
     }
 }

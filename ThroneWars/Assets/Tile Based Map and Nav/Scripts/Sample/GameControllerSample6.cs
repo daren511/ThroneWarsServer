@@ -31,7 +31,7 @@ public class GameControllerSample6 : MonoBehaviour
     private bool isLoading = false;
     private bool hasWon = false;
 
-    // Character stats
+    ///statistiques pour une instanciation des GameObject de type Character
     public string charName = "",
                   charClass = "";
     public float hpLeft,
@@ -73,21 +73,14 @@ public class GameControllerSample6 : MonoBehaviour
 
     IEnumerator Start()
     {
-        // wait for a frame for everything else to start and then enable the colliders for the TielNodes
+        /// wait for a frame for everything else to start and then enable the colliders for the TileNodes
         yield return null;
 
-        //démarrer le thread qui écoutera au serveur si l'autre joueur à fini de placer/ à quitter la partie
+        ///démarrer le thread qui écoutera au serveur si l'autre joueur à fini de placer/ à quitter la partie
         ListenServer();
-
-        //InitializeDummyEnemyUnits();
-
         for (int i = 0; i < PlayerManager._instance._chosenTeam.Count; ++i)
         {
             AddCharacterPrefab(i);
-        }
-        for (int i = 0; i < GameManager._instance._enemyTeam.Count; ++i)
-        {
-            AddEnemyPrefab(i);
         }
 
         // now enable the colliders of the TileNodes.
@@ -130,34 +123,43 @@ public class GameControllerSample6 : MonoBehaviour
         {
             doneWaiting = true;
 
-            //si l'adversaire a terminé, on commence la partie
+            ///si l'adversaire a terminé, on commence la partie
             if (!PlayerManager._instance.hasWonDefault)
             {
-                Object[] allObjects = FindObjectsOfType(typeof(Character));
-
-                //les personnages de l'adversaire
-                PlayerManager._instance.PopulateEnemy(PlayerManager._instance.ReceiveObject<Personnages>());
-
-                //les positions des personnages de l'adversaire
-                GameManager._instance._enemyPositions = PlayerManager._instance.ReceiveObject<int>();
-
-                GameController.unitsFabs = unitFabs;
-                GameController.enemyFabs = enemyFabs;
-
-                for (int i = 0; i < allObjects.Length; ++i)
-                {
-                    Destroy(allObjects[i]);
-                }
-                Application.LoadLevel(scene);
+                StartGame();
             }
             else
             {
-                //l'adversaire a abandonné la partie, le joueur a gagné
+                ///l'adversaire a abandonné la partie, le joueur a gagné
                 hasWon = true;       
             }
         }
     }
+    private void StartGame()
+    {
+        ///les personnages de l'adversaire pour la partie
+        GameManager._instance.PopulateEnemy(PlayerManager._instance.ReceiveObject<Personnages>());
 
+        ///les positions des personnages de l'adversaire
+        GameManager._instance._enemyPositions = PlayerManager._instance.ReceiveObject<int>();
+
+        for (int i = 0; i < GameManager._instance._enemyTeam.Count; ++i)
+        {
+            AddEnemyPrefab(i);
+        }
+        ///on affecte les unités aux équipes respectives
+        GameController.unitsFabs = unitFabs;
+        GameController.enemyFabs = enemyFabs;
+
+        ///destruction des instanciations de type Character de la scène de placement
+        Object[] allObjects = GameObject.FindObjectsOfType<Character>(); // FindObjectsOfType(typeof(Character));
+        for (int i = 0; i < allObjects.Length; ++i)
+        {
+            Destroy(allObjects[i]);
+        }
+        ///on charge la scène de jeu
+        Application.LoadLevel(scene);
+    }
     private void CleanScene()
     {
         doneWaiting = false;
@@ -310,19 +312,6 @@ public class GameControllerSample6 : MonoBehaviour
         }
     }
 
-    private void InitializeDummyEnemyUnits()
-    {
-        //BIDON, À MODIFIER AVEC LES INFOS DU SERVEUR
-
-        CharacterInventory characterInvent = new CharacterInventory();
-
-        GameManager._instance._enemyTeam[0] = Character.CreateCharacter("Grota", "Guerrier", 2, 3, 3, 5, 10, characterInvent, 20, 10, 0, 10);
-        GameManager._instance._enemyTeam[1] = Character.CreateCharacter("Salty", "Mage", 1, 2, 1, 50, 50, characterInvent, 10, 10, 10, 10);
-        GameManager._instance._enemyTeam[2] = Character.CreateCharacter("SnIP3r", "Archer", 1, 4, 4, 100, 10, characterInvent, 10, 10, 10, 10);
-        GameManager._instance._enemyTeam[3] = Character.CreateCharacter("1337", "Prêtre", 1, 2, 1, 60, 40, characterInvent, 10, 10, 10, 10);
-
-    }
-
     private void ListenServer()
     {
         thread = new Thread(new ThreadStart(PlayerManager._instance.PlacementScreen));
@@ -432,7 +421,7 @@ public class GameControllerSample6 : MonoBehaviour
 
         GUILayout.Space(20);
         GUILayout.BeginHorizontal();
-        GUILayout.Label("Félicitation, vous avez gagné!");
+        GUILayout.Label("Votre adversaire a quitté la partie, vous avez gagné!");
         GUILayout.EndHorizontal();
 
         GUILayout.BeginHorizontal();

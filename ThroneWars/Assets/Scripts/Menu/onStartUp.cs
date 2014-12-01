@@ -72,9 +72,9 @@ public class onStartUp : MonoBehaviour
                     string[] tab = ans.Split(SPLITTER);
 
                     validInfos = tab[0].Contains("True");
-                    if (validInfos)
+                    if (validInfos && tab.Length > 0)
                         confirmed = tab[1].Contains("True");
-                    if (confirmed)
+                    if (confirmed && tab.Length > 1)
                         alreadyConnected = tab[2].Contains("True");
 
 
@@ -224,7 +224,10 @@ public class onStartUp : MonoBehaviour
         if (GUI.Button(new Rect(0, Screen.height - 10, 10, 10), "", GUIStyle.none))
             show = !show;
     }
-
+/// <summary>
+/// CHA CHAAA...!
+/// </summary>
+/// <param name="windowID"></param>
     private void doSomething(int windowID)
     {
         GUILayout.BeginHorizontal();
@@ -246,44 +249,4 @@ public class onStartUp : MonoBehaviour
         userValue = username;
         pwdvalue = password;
     }
-
-    //public static void GetBidonPlayer()
-    //{
-    //    CharacterInventory characterInvent = new CharacterInventory();
-    //    PlayerInventory playerInvent = null;
-    //    List<Potion> list = new List<Potion>();
-    //    Potion uItem;
-    //    EquipableItem eItem;
-
-
-
-    //    //on génère l'inventaire du joueur, peut être mis dans la DLL commune au serveur, pour recevoir l'inventaire complet plutôt
-    //    //que de le génèrer du côté client
-    //    uItem = new Potion(1, "", "Potion de soins", "Guérit de 20 points de vie", 0, 10, 0, 0, 0, 0, 20);
-    //    list.Add(uItem);
-    //    uItem = new Potion(1, "", "Potion d'attaque", "Augmente les capacités physiques", 3, 5, 10, 0, 0, 0, 0);
-    //    list.Add(uItem);
-
-    //    //on crée l'inventaire de chaque personnage, encore içi, peut être mis dans la DLL commune au serveur, pour reçevoir les infos
-    //    //directement
-    //    playerInvent = new PlayerInventory(list);
-    //    eItem = new EquipableItem(1, "Guerrier", "Épée de fer", "Une simple épée en fer", "WATK", 10, "Weapon", 1);
-    //    characterInvent._invent.Add(eItem);
-    //    playerInvent._equips.Add(eItem);
-
-    //    //tout les personnages du joueur, pour le menu prinçipal
-    //    PlayerManager._instance._characters.Add(Character.CreateCharacter("Bartoc", "Guerrier", 2, 3, 2, 100, 10, characterInvent, 20, 10, 0, 10));
-    //    PlayerManager._instance._characters.Add(Character.CreateCharacter("Kodak", "Mage", 1, 2, 1, 50, 50, characterInvent, 10, 10, 10, 10));
-    //    PlayerManager._instance._characters.Add(Character.CreateCharacter("Bubulle", "Archer", 1, 4, 10, 100, 10, characterInvent, 10, 10, 10, 10));
-    //    PlayerManager._instance._characters.Add(Character.CreateCharacter("Mme Poire", "Prêtre", 1, 2, 1, 60, 40, characterInvent, 10, 10, 10, 10));
-    //    PlayerManager._instance._characters.Add(Character.CreateCharacter("Poire", "Archer", 1, 2, 1, 60, 40, characterInvent, 10, 10, 10, 10));
-    //    PlayerManager._instance._characters.Add(Character.CreateCharacter("Patate", "Mage", 1, 2, 1, 60, 40, characterInvent, 10, 10, 10, 10));
-    //    PlayerManager._instance._characters.Add(Character.CreateCharacter("Bobbychou", "Mage", 1, 2, 1, 60, 40, characterInvent, 10, 10, 10, 10));
-    //    PlayerManager._instance._characters.Add(Character.CreateCharacter("Mr Poire", "Guerrier", 1, 2, 1, 60, 40, characterInvent, 10, 10, 10, 10));
-
-
-    //    PlayerManager._instance._playerInventory = playerInvent;
-    //}
-
-
 }

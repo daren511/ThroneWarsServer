@@ -3,12 +3,14 @@ using System.Collections;
 
 public class CombatMenu : MonoBehaviour
 {
+    #region GUIElements
     private Rect _menuContainer;
     private Rect _characterStats = new Rect(0, 0, 300, 100);
     private Rect _itemContainer;
+    #endregion
 
-    //le personnage
-    public GameObject go;
+    ///le personnage sélectionné
+    public GameObject selectedCharacter;
 
 
     public string charName = "",
@@ -35,6 +37,7 @@ public class CombatMenu : MonoBehaviour
     public bool moveEnabled = true;
     public bool itemEnabled = true;
 
+    #region textures
     public GUISkin _skin;
     public GUIStyle _healthBarFront;
     public GUIStyle _magicBarFront;
@@ -48,9 +51,7 @@ public class CombatMenu : MonoBehaviour
     public Texture2D _defTexture;
     public Texture2D _matkTexture;
     public Texture2D _mdefTexture;
-
-    public Texture2D _returnTexture;
-
+    #endregion
     private Vector2 scrollViewVector = Vector2.zero;
 
     // Use this for initialization
@@ -66,19 +67,19 @@ public class CombatMenu : MonoBehaviour
     }
     void InitializeStats()
     {
-        charName = go.GetComponent<Character>()._name;
-        charClass = go.GetComponent<Character>()._characterClass._className;
-        lvl = go.GetComponent<Character>()._characterClass._classLevel;
+        charName = selectedCharacter.GetComponent<Character>()._name;
+        charClass = selectedCharacter.GetComponent<Character>()._characterClass._className;
+        lvl = selectedCharacter.GetComponent<Character>()._characterClass._classLevel;
 
-        hpMax = go.GetComponent<Character>()._maxHealth;
-        hpLeft = go.GetComponent<Character>()._currHealth;
-        mpMax = go.GetComponent<Character>()._maxMagic;
-        mpLeft = go.GetComponent<Character>()._currMagic;
+        hpMax = selectedCharacter.GetComponent<Character>()._maxHealth;
+        hpLeft = selectedCharacter.GetComponent<Character>()._currHealth;
+        mpMax = selectedCharacter.GetComponent<Character>()._maxMagic;
+        mpLeft = selectedCharacter.GetComponent<Character>()._currMagic;
 
-        patk = go.GetComponent<Character>()._currPhysAttack;
-        matk = go.GetComponent<Character>()._currMagicAttack;
-        pdef = go.GetComponent<Character>()._currPhysDefense;
-        mdef = go.GetComponent<Character>()._currMagicDefense;
+        patk = selectedCharacter.GetComponent<Character>()._currPhysAttack;
+        matk = selectedCharacter.GetComponent<Character>()._currMagicAttack;
+        pdef = selectedCharacter.GetComponent<Character>()._currPhysDefense;
+        mdef = selectedCharacter.GetComponent<Character>()._currMagicDefense;
     }
 
     void OnGUI()
@@ -136,13 +137,13 @@ public class CombatMenu : MonoBehaviour
     }
     void DisplayCombatCommands()
     {
-        Vector3 pos = go.GetComponent<Character>().transform.position;
+        Vector3 pos = selectedCharacter.GetComponent<Character>().transform.position;
         pos = Camera.main.WorldToScreenPoint(pos);
         _menuContainer = new Rect(pos.x, pos.y, 100, 80);
 
         GUI.Box(_menuContainer, "");
 
-        GUI.enabled = !go.GetComponent<Character>().didMove;
+        GUI.enabled = !selectedCharacter.GetComponent<Character>().didMove;
         if (GUI.Button(new Rect(_menuContainer.x, _menuContainer.y, 100, 20), "Déplacer"))
         {
             GameController.FindObjectOfType<GameController>().allowInput = false;
@@ -150,7 +151,7 @@ public class CombatMenu : MonoBehaviour
             StartCoroutine(AllowMovement());
         }
 
-        GUI.enabled = !go.GetComponent<Character>().didAttack;
+        GUI.enabled = !selectedCharacter.GetComponent<Character>().didAttack;
         if (GUI.Button(new Rect(_menuContainer.x, _menuContainer.y + 20, 100, 20), "Attaquer"))
         {
             GameController.FindObjectOfType<GameController>().allowInput = false;
@@ -158,29 +159,29 @@ public class CombatMenu : MonoBehaviour
             StartCoroutine(AllowAttack());
         }
 
-        GUI.enabled = !go.GetComponent<Character>().didAttack;
+        GUI.enabled = !selectedCharacter.GetComponent<Character>().didAttack;
         if (GUI.Button(new Rect(_menuContainer.x, _menuContainer.y + 40, 100, 20), "Item"))
         {
             showItems = true;
         }
-        GUI.enabled = !go.GetComponent<Character>().didMove;
+        GUI.enabled = true;
         if (GUI.Button(new Rect(_menuContainer.x, _menuContainer.y + 60, 100, 20), "Défendre"))
         {
-            //augmente la défense et passer le tour du personnage
-            go.GetComponent<Character>().Defend();
+            ///augmente la défense et passe le tour du personnage
+            selectedCharacter.GetComponent<Character>().Defend();
             GameController.FindObjectOfType<GameController>().ClickNextActiveCharacter();
         }
     }
     IEnumerator AllowMovement()
     {
-        go.GetComponent<Character>().node.ShowNeighbours(go.GetComponent<Character>().currMoves, go.GetComponent<Character>().tileLevel, true, true);
+        selectedCharacter.GetComponent<Character>().node.ShowNeighbours(selectedCharacter.GetComponent<Character>().currMoves, selectedCharacter.GetComponent<Character>().tileLevel, true, true);
         yield return new WaitForSeconds(0.05f);
         GameController.FindObjectOfType<GameController>().allowInput = true;
     }
     IEnumerator AllowAttack()
     {
         GameController.FindObjectOfType<GameController>().attackRangeMarker.Show(
-            go.GetComponent<Character>().transform.position, go.GetComponent<Character>().attackRange);
+            selectedCharacter.GetComponent<Character>().transform.position, selectedCharacter.GetComponent<Character>().attackRange);
         yield return new WaitForSeconds(0.05f);
         GameController.FindObjectOfType<GameController>().allowInput = true;
     }
@@ -191,7 +192,7 @@ public class CombatMenu : MonoBehaviour
         Rect button;
         GUI.Box(_itemContainer, "");
 
-        //affichage de la légende
+        ///affichage de la légende
         GUI.Label(new Rect(_itemContainer.x + 50, _itemContainer.y, 150, 25), "Item");
         GUI.DrawTexture(new Rect(_itemContainer.x + 125, _itemContainer.y, 20, 20), _healthTexture, ScaleMode.StretchToFill, true, 0.0f);
         GUI.DrawTexture(new Rect(_itemContainer.x + 175, _itemContainer.y, 20, 20), _atkTexture, ScaleMode.StretchToFill, true, 0.0f);
@@ -200,7 +201,7 @@ public class CombatMenu : MonoBehaviour
         GUI.DrawTexture(new Rect(_itemContainer.x + 325, _itemContainer.y, 20, 20), _mdefTexture, ScaleMode.StretchToFill, true, 0.0f);
         GUI.Label(new Rect(_itemContainer.x + 375, _itemContainer.y, 150, 25), "Quantité");
 
-        //pour revenir au menu  de commandes de combat
+        ///pour revenir au menu  de commandes de combat
         if (GUI.Button(new Rect(_itemContainer.x + _itemContainer.width - 100, _itemContainer.y + _itemContainer.height - 20, 100, 20),
                         "Retour"))
         {
@@ -208,7 +209,7 @@ public class CombatMenu : MonoBehaviour
             showItems = false;
         }
 
-        //début du menu déroulant
+        ///début du menu déroulant
         scrollViewVector = GUI.BeginScrollView(new Rect(_itemContainer.x, _itemContainer.y, _itemContainer.width, _itemContainer.height - 20),
                                                          scrollViewVector, new Rect(_itemContainer.x, _itemContainer.y, 200, 400));
 
@@ -223,21 +224,21 @@ public class CombatMenu : MonoBehaviour
             GUIContent content = new GUIContent(playerItem._itemName, playerItem._itemDescription);
 
             //on ajoute la potion si la quantité est suffisante et que le personnage peut l'équipper
-            if (playerItem.CanEquipUse(go.GetComponent<Character>()) && playerItem._quantity > 0)
+            if (playerItem.CanEquipUse(selectedCharacter.GetComponent<Character>()) && playerItem._quantity > 0)
             {
                 if (GUI.Button(button, content))
                 {
                     //utiliser l'item
-                    GameObject.Find("StatusIndicator").transform.position = go.GetComponent<Character>().transform.position;
-                    go.GetComponent<Character>().UsePotion(playerItem);
-                    go.GetComponent<Character>().didAttack = true;
+                    GameObject.Find("StatusIndicator").transform.position = selectedCharacter.GetComponent<Character>().transform.position;
+                    selectedCharacter.GetComponent<Character>().UsePotion(playerItem);
+                    selectedCharacter.GetComponent<Character>().didAttack = true;
                     playerItem._quantity--;
                     characterChosen = true;
                     showItems = false;
                     GameController.FindObjectOfType<GameController>().attackAllowed = false;
                     itemEnabled = false;
-                    go.GetComponentInParent<NaviUnit>().onUnitEvent(go.GetComponentInParent<NaviUnit>(), 2);
 
+                    selectedCharacter.GetComponentInParent<NaviUnit>().onUnitEvent(selectedCharacter.GetComponentInParent<NaviUnit>(), 2);
                 }
                 //affichage des stats de l'item
                 GUI.Label(new Rect(_itemContainer.x + 125, _itemContainer.y + (displayed * 25) + 20, 20, 20), playerItem._lifeRestore.ToString());
@@ -278,7 +279,9 @@ public class CombatMenu : MonoBehaviour
             {
                 Destroy(allObjects[i]);
             }
-            //onStartUp.GetBidonPlayer();
+
+            PlayerManager._instance.ClearPlayer();
+            GameManager._instance.ClearEnemy();
             Application.LoadLevel("MainMenu");            
         }
     }

@@ -100,6 +100,7 @@ public class Character : NaviUnit
     public int _currMagicAttack;// { get;  set; }
     public int _currMagicDefense;// { get;  set; }
 
+    public int _kills = 0;
     public bool _isAlive { get { return _currHealth > 0; } set { } }
     public string _name;
 
@@ -257,11 +258,7 @@ public class Character : NaviUnit
         GameObject.Find("StatusIndicator").GetComponent<StatusIndicator>().Show(amt, "Gold");
         PlayerManager._instance._gold += amt;
     }
-
-    public void UseSpecialAttack()
-    {
-
-    }
+    
 
     /// <summary>
     /// 

@@ -238,7 +238,7 @@ public class onMenuLoad : MonoBehaviour
             // Create the character
             characClass = contents[cb.SelectedItemIndex].text;
 
-            if (PlayerManager._instance.CreateCharacter(characName, characClass))
+            if (PlayerManager._instance.SendCreateCharacter(characName, characClass))
             {
                 wantToCreate = false;
                 PlayerManager._instance._characNames.Add(characName);
@@ -257,7 +257,7 @@ public class onMenuLoad : MonoBehaviour
         {
             lblError.normal.textColor = Color.red;
             GUI.Label(new Rect(rectCreate.width / 2 + (rectCreate.width * 0.03f), rectCreate.height / 2 - 53, 200, 40),
-                "Ce nom est déjà utilisé!", lblError);
+                "Ce nom est invalide ou déjà utilisé", lblError);
         }
         else
         {
@@ -290,7 +290,7 @@ public class onMenuLoad : MonoBehaviour
         if (GUILayout.Button("Oui", GUILayout.Height(37)))
         {
             // Delete the character
-            if (PlayerManager._instance.DeleteCharacter(PlayerManager._instance._selectedCharacter._name))
+            if (PlayerManager._instance.SendDeleteCharacter(PlayerManager._instance._selectedCharacter._name))
             {
                 if (onMainMenu.tabCharac.IndexOf(PlayerManager._instance._selectedCharacter._name) == onMainMenu.tabCharac.Count - 1)
                 {

@@ -221,7 +221,7 @@ public class onMainMenu : MonoBehaviour
         {
             PlayerManager._instance.SendObject(Controle.Actions.ITEMS);
             PlayerManager._instance._playerInventory._equips.Clear();
-            PlayerManager._instance.LoadPlayerinventory(PlayerManager._instance.GetPlayerInventory());
+            PlayerManager._instance.LoadPlayerEquipement(PlayerManager._instance.ReceiveObject<Items>());
         }
 
         GUI.DrawTexture(new Rect(rectInvent.width - 265, 30, 20, 20), _atkTexture, ScaleMode.StretchToFill, true, 0.0f);
@@ -245,7 +245,7 @@ public class onMainMenu : MonoBehaviour
                 GUI.enabled = PlayerManager._instance.VerifyCanEquip(item);
                 if (GUI.Button(itemButton, item._itemName))
                 {
-                    PlayerManager._instance.EquipItem(item._itemID);
+                    PlayerManager._instance.SendEquipItem(item._itemID);
                     PlayerManager._instance._selectedCharacter._characterInventory._invent.Add(item);
                     tabItem.Add(item._itemName);
                     item._quantity -= 1;
@@ -292,7 +292,7 @@ public class onMainMenu : MonoBehaviour
                 {
                     if (GUI.Button(itemButton, item._itemName))
                     {
-                        PlayerManager._instance.UnequipItem(item._itemID);
+                        PlayerManager._instance.SendUnequipItem(item._itemID);
 
                         int index = PlayerManager._instance._playerInventory._equips.IndexOf(
                             PlayerManager._instance._playerInventory._equips.Find(x => x._itemName == item._itemName));
