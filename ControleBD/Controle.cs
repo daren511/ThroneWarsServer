@@ -1670,11 +1670,11 @@ namespace ControleBD
             }
         }
 
-        public static bool addPotion(string nom, string description, int duration, int watk, int wdef, int matk, int mdef, int price)
+        public static bool addPotion(string nom, string description, int duration, int health, int watk, int wdef, int matk, int mdef, int price)
         {
             OracleConnection conn = Connection.getInstance().conn;
-            string sql = "INSERT INTO POTIONS(NOM,DESCRIPTION,DURATION,WATK,WDEF,MATK,MDEF,PRICE) " + 
-                "VALUES(:nom, :description, :duration, :watk, :wdef, :matk, :mdef, :price)";
+            string sql = "INSERT INTO POTIONS(NOM,DESCRIPTION,DURATION,HEALTH,WATK,WDEF,MATK,MDEF,PRICE) " + 
+                "VALUES(:nom, :description, :duration, :health, :watk, :wdef, :matk, :mdef, :price)";
 
             try
             {
@@ -1683,6 +1683,7 @@ namespace ControleBD
                 OracleParameter OraParamNom = new OracleParameter(":nom", OracleDbType.Varchar2, 40);
                 OracleParameter OraParamDesc = new OracleParameter(":description", OracleDbType.Varchar2, 255);
                 OracleParameter OraParamDuree = new OracleParameter(":duration", OracleDbType.Int32, 1);
+                OracleParameter OraParamHealth = new OracleParameter(":health", OracleDbType.Int32, 4);
                 OracleParameter OraParamWATK = new OracleParameter(":watk", OracleDbType.Int32, 4);
                 OracleParameter OraParamWDEF = new OracleParameter(":wdef", OracleDbType.Int32, 4);
                 OracleParameter OraParamMATK = new OracleParameter(":matk", OracleDbType.Int32, 4);
@@ -1692,6 +1693,7 @@ namespace ControleBD
                 OraParamNom.Value = nom;
                 OraParamDesc.Value = description;
                 OraParamDuree.Value = duration;
+                OraParamHealth.Value = health;
                 OraParamWATK.Value = watk;
                 OraParamWDEF.Value = wdef;
                 OraParamMATK.Value = matk;
@@ -1701,6 +1703,7 @@ namespace ControleBD
                 oraInsert.Parameters.Add(OraParamNom);
                 oraInsert.Parameters.Add(OraParamDesc);
                 oraInsert.Parameters.Add(OraParamDuree);
+                oraInsert.Parameters.Add(OraParamHealth);
                 oraInsert.Parameters.Add(OraParamWATK);
                 oraInsert.Parameters.Add(OraParamWDEF);
                 oraInsert.Parameters.Add(OraParamMATK);
@@ -1748,11 +1751,11 @@ namespace ControleBD
             }
         }
 
-        public static bool updatePotion(int pid, string nom, string description, int duration, int watk, int wdef, int matk, int mdef, int price)
+        public static bool updatePotion(int pid, string nom, string description, int duration, int health, int watk, int wdef, int matk, int mdef, int price)
         {
             OracleConnection conn = Connection.getInstance().conn;
-            string sql = "UPDATE POTIONS SET NOM =:nom, DESCRIPTION =:description, DURATION =:duration, WATK =:watk, " + 
-                "WDEF =:wdef, MATK =:matk, MDEF =:mdef, PRICE =:price WHERE PID =:pid";
+            string sql = "UPDATE POTIONS SET NOM =:nom, DESCRIPTION =:description, DURATION =:duration, HEALTH =:health, " + 
+                "WATK =:watk, WDEF =:wdef, MATK =:matk, MDEF =:mdef, PRICE =:price WHERE PID =:pid";
 
             try
             {
@@ -1761,6 +1764,7 @@ namespace ControleBD
                 OracleParameter OraParamNom = new OracleParameter(":nom", OracleDbType.Varchar2, 40);
                 OracleParameter OraParamDesc = new OracleParameter(":description", OracleDbType.Varchar2, 255);
                 OracleParameter OraParamDuree = new OracleParameter(":duration", OracleDbType.Int32, 1);
+                OracleParameter OraParamHealth = new OracleParameter("health", OracleDbType.Int32, 4);
                 OracleParameter OraParamWATK = new OracleParameter(":watk", OracleDbType.Int32, 4);
                 OracleParameter OraParamWDEF = new OracleParameter(":wdef", OracleDbType.Int32, 4);
                 OracleParameter OraParamMATK = new OracleParameter(":matk", OracleDbType.Int32, 4);
@@ -1771,6 +1775,7 @@ namespace ControleBD
                 OraParamNom.Value = nom;
                 OraParamDesc.Value = description;
                 OraParamDuree.Value = duration;
+                OraParamHealth.Value = health;
                 OraParamWATK.Value = watk;
                 OraParamWDEF.Value = wdef;
                 OraParamMATK.Value = matk;
@@ -1781,6 +1786,7 @@ namespace ControleBD
                 oraUpdate.Parameters.Add(OraParamNom);
                 oraUpdate.Parameters.Add(OraParamDesc);
                 oraUpdate.Parameters.Add(OraParamDuree);
+                oraUpdate.Parameters.Add(OraParamHealth);
                 oraUpdate.Parameters.Add(OraParamWATK);
                 oraUpdate.Parameters.Add(OraParamWDEF);
                 oraUpdate.Parameters.Add(OraParamMATK);

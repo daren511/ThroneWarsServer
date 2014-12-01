@@ -148,15 +148,16 @@ namespace DeveloperApplication
             FP.NOM = DGV_Liste.SelectedRows[0].Cells[1].Value.ToString();
             FP.DESCRIPTION = DGV_Liste.SelectedRows[0].Cells[2].Value.ToString();
             FP.DURATION = int.Parse(DGV_Liste.SelectedRows[0].Cells[3].Value.ToString());
-            FP.WATK = int.Parse(DGV_Liste.SelectedRows[0].Cells[4].Value.ToString());
-            FP.WDEF = int.Parse(DGV_Liste.SelectedRows[0].Cells[5].Value.ToString());
-            FP.MATK = int.Parse(DGV_Liste.SelectedRows[0].Cells[6].Value.ToString());
-            FP.MDEF = int.Parse(DGV_Liste.SelectedRows[0].Cells[7].Value.ToString());
-            FP.PRIX = int.Parse(DGV_Liste.SelectedRows[0].Cells[8].Value.ToString());
+            FP.HEALTH = int.Parse(DGV_Liste.SelectedRows[0].Cells[4].Value.ToString());
+            FP.WATK = int.Parse(DGV_Liste.SelectedRows[0].Cells[5].Value.ToString());
+            FP.WDEF = int.Parse(DGV_Liste.SelectedRows[0].Cells[6].Value.ToString());
+            FP.MATK = int.Parse(DGV_Liste.SelectedRows[0].Cells[7].Value.ToString());
+            FP.MDEF = int.Parse(DGV_Liste.SelectedRows[0].Cells[8].Value.ToString());
+            FP.PRIX = int.Parse(DGV_Liste.SelectedRows[0].Cells[9].Value.ToString());
 
             if (FP.ShowDialog() == DialogResult.OK)
             {
-                if (Controle.updatePotion(FP.PID, FP.NOM, FP.DESCRIPTION, FP.DURATION, FP.WATK, FP.WDEF, FP.MATK, FP.MDEF, FP.PRIX))
+                if (Controle.updatePotion(FP.PID, FP.NOM, FP.DESCRIPTION, FP.DURATION, FP.HEALTH, FP.WATK, FP.WDEF, FP.MATK, FP.MDEF, FP.PRIX))
                     Lister_Potions();
             }
         }
@@ -240,7 +241,7 @@ namespace DeveloperApplication
 
             if (FP.ShowDialog() == DialogResult.OK)
             {
-                if (Controle.addPotion(FP.NOM, FP.DESCRIPTION, FP.DURATION, FP.WATK, FP.WDEF, FP.MATK, FP.MDEF, FP.PRIX))
+                if (Controle.addPotion(FP.NOM, FP.DESCRIPTION, FP.DURATION, FP.HEALTH, FP.WATK, FP.WDEF, FP.MATK, FP.MDEF, FP.PRIX))
                     Lister_Potions();
             }
         }

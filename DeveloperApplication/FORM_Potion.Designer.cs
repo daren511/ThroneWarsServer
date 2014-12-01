@@ -42,6 +42,7 @@
             this.BTN_OK = new System.Windows.Forms.Button();
             this.ToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.TB_Prix = new System.Windows.Forms.TextBox();
+            this.TB_Health = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // LBL_PID
@@ -70,13 +71,13 @@
             this.TB_Desc.Multiline = true;
             this.TB_Desc.Name = "TB_Desc";
             this.TB_Desc.ReadOnly = true;
-            this.TB_Desc.Size = new System.Drawing.Size(222, 78);
+            this.TB_Desc.Size = new System.Drawing.Size(222, 69);
             this.TB_Desc.TabIndex = 2;
             this.TB_Desc.TextChanged += new System.EventHandler(this.UpdateControls);
             // 
             // TB_Duration
             // 
-            this.TB_Duration.Location = new System.Drawing.Point(52, 116);
+            this.TB_Duration.Location = new System.Drawing.Point(52, 133);
             this.TB_Duration.MaxLength = 1;
             this.TB_Duration.Name = "TB_Duration";
             this.TB_Duration.ReadOnly = true;
@@ -87,7 +88,7 @@
             // 
             // TB_Quantite
             // 
-            this.TB_Quantite.Location = new System.Drawing.Point(174, 116);
+            this.TB_Quantite.Location = new System.Drawing.Point(174, 133);
             this.TB_Quantite.MaxLength = 2;
             this.TB_Quantite.Name = "TB_Quantite";
             this.TB_Quantite.Size = new System.Drawing.Size(100, 20);
@@ -172,6 +173,15 @@
             this.TB_Prix.TextChanged += new System.EventHandler(this.UpdateControls);
             this.TB_Prix.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.CheckKeyPress);
             // 
+            // TB_Health
+            // 
+            this.TB_Health.Location = new System.Drawing.Point(52, 107);
+            this.TB_Health.MaxLength = 4;
+            this.TB_Health.Name = "TB_Health";
+            this.TB_Health.ReadOnly = true;
+            this.TB_Health.Size = new System.Drawing.Size(100, 20);
+            this.TB_Health.TabIndex = 12;
+            // 
             // FORM_Potion
             // 
             this.AcceptButton = this.BTN_OK;
@@ -179,6 +189,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.BTN_Annuler;
             this.ClientSize = new System.Drawing.Size(284, 257);
+            this.Controls.Add(this.TB_Health);
             this.Controls.Add(this.TB_Prix);
             this.Controls.Add(this.BTN_OK);
             this.Controls.Add(this.BTN_Annuler);
@@ -214,5 +225,6 @@
         private System.Windows.Forms.Button BTN_OK;
         private System.Windows.Forms.ToolTip ToolTip;
         private System.Windows.Forms.TextBox TB_Prix;
+        private System.Windows.Forms.TextBox TB_Health;
     }
 }
