@@ -71,6 +71,7 @@ namespace DeveloperApplication
 
         private void UpdateControls(object sender, EventArgs e)
         {
+            LBL_Envoyer.Text = "";
             if (string.IsNullOrWhiteSpace(TB_Qte.Text) || string.IsNullOrWhiteSpace(CB_Joueurs.Text))
                 BTN_Ajouter_Au_Joueur.Enabled = false;
             else
