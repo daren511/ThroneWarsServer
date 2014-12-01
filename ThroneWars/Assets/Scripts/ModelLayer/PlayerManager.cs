@@ -464,7 +464,7 @@ public class PlayerManager : MonoBehaviour
         }
         else if(action == Controle.Game.STARTING)
         {
-            PlayerManager._instance.SendObject(Controle.Game.OK);
+            SendObject(Controle.Game.OK);
             isWaitingPlayer = false;
         }
         GameControllerSample6.thread.Abort();
