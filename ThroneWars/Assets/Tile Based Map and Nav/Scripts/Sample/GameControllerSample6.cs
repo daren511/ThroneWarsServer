@@ -116,7 +116,7 @@ public class GameControllerSample6 : MonoBehaviour
         if (isLoading)
             GUILayout.Window(-1, rectLoading, doLoadingWindow, "En attente");
         if (hasWon)
-            GUILayout.Window(-10, rectWinning, doWinningWindow, "Gagné!");
+            GUILayout.Window(-10, rectWinning, doWinningWindow, "Victoire!");
 
         //flag thread
         if (!PlayerManager._instance.isWaitingPlayer && !doneWaiting)
