@@ -96,11 +96,26 @@ namespace ThroneWarsServer
                             {
                                 case Controle.Game.NOTHING:
                                     timer++;
+                                    if(timer == 2500)
+                                    {
+                                        envoyerObjet(Controle.Game.HALFAFK, player1);
+                                    }
+                                    if(timer == 5000)
+                                    {
+                                        envoyerObjet(Controle.Game.AFK, player1);
+
+                                    }
                                     break;
                                 case Controle.Game.MOVE:
 
                                     break;
                                 case Controle.Game.USEITEM:
+
+                                    break;
+                                case Controle.Game.DEFEND:
+
+                                    break;
+                                case Controle.Game.ATTACK:
 
                                     break;
                             }
