@@ -37,11 +37,11 @@ namespace SiteWebThroneWars
                 string courriel = email.Text;
 
                 // Vérifie si le nombre de charactere du username est respecté 
-                if (user.Length > 4)
+                if (user.Length > 4 && user.Length <= 12)
                     userOK = true;
                 else
                 {
-                    text = "Le nombre de charactères du nom d'utilisateur minimum est de 4 . Veuillez entrer un nom d'utilisateur valide";
+                    text = "Le nombre de charactères du nom d'utilisateur minimum est de 4 et maximum 12 . Veuillez entrer un nom d'utilisateur valide";
                     ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>MessageBoxErreur(\"" + text + "\");</script>", false);
                     ViderTB();
                 }
