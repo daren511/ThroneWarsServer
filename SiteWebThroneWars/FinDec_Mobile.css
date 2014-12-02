@@ -295,18 +295,14 @@ div.FormRecherche_Mobile{
   width:75%;
   text-align:center;
   font-size:30px;
-
   background-color: #219ac2;
-  border-radius: 50px 50px 50px 50px;
-  -moz-border-radius: 50px 50px 50px 50px;
-  -webkit-border-radius: 50px 50px 50px 50px;
   border: 4px solid #000000;
   -webkit-box-shadow: 31px 7px 32px 3px rgba(0,0,0,0.75);
   -moz-box-shadow: 31px 7px 32px 3px rgba(0,0,0,0.75);
   box-shadow: 31px 7px 32px 3px rgba(0,0,0,0.75);
 }
-.MagasinGV{
-    margin-left:5%;
+.GV_Magasin{
+    margin-left:-6%;
     font-size:25px;
 }
 .GV_Magasin_Pager{
