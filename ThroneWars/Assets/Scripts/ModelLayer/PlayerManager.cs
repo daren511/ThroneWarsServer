@@ -490,8 +490,8 @@ public class PlayerManager : MonoBehaviour
     }
     public void InGameManager()
     {
-        Controle.Game action;
-        while (action != Controle.Game.ENDTURN)
+        Controle.Game action = 0;
+        do
         {
 
 
@@ -515,9 +515,6 @@ public class PlayerManager : MonoBehaviour
             switch (action)
             {
                 case Controle.Game.ENDTURN:
-
-
-
                     GameController.threadTurn.Abort();
                     break;
 
@@ -544,9 +541,9 @@ public class PlayerManager : MonoBehaviour
 
                 case Controle.Game.QUIT:
                     break;
-
             }
         }
+        while (action != Controle.Game.ENDTURN);
     }
     public string ReceiveString()
     {
