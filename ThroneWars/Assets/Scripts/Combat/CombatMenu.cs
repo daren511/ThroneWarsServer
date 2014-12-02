@@ -9,6 +9,19 @@ public class CombatMenu : MonoBehaviour
     private Rect _itemContainer;
     #endregion
 
+    // Quit window
+    private static float wQ = 275.0f;
+    private static float hQ = 170.0f;
+    private static Rect rectQuit = new Rect((Screen.width - wQ) / 2, (Screen.height - hQ) / 2, wQ, hQ);
+    // Winning window
+    private static float wW = 275.0f;
+    private static float hW = 115.0f;
+    private static Rect rectWinning = new Rect((Screen.width - wW) / 2, (Screen.height - hW) / 2, wW, hW);
+    // Losing window
+    private static float wL = 275.0f;
+    private static float hL = 115.0f;
+    private static Rect rectLosing = new Rect((Screen.width - wL) / 2, (Screen.height - hL) / 2, wL, hL);
+
     ///le personnage sélectionné
     public GameObject selectedCharacter;
 
@@ -33,6 +46,7 @@ public class CombatMenu : MonoBehaviour
 
     public int winner = 0;
     public bool gameOver = false;
+    private bool wantToQuit = false;
 
     public bool moveEnabled = true;
     public bool itemEnabled = true;
@@ -64,6 +78,8 @@ public class CombatMenu : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Escape))
+            wantToQuit = !wantToQuit;
         gameOver = winner > 0;
     }
     void InitializeStats()
@@ -90,6 +106,9 @@ public class CombatMenu : MonoBehaviour
         {
             DisplayCharacterStats();
             InitializeStats();
+
+            if (wantToQuit)
+                GUI.Window(0, rectQuit, doQuitWindow, "Quitter");
 
             if (characterChosen)
             {
@@ -264,15 +283,49 @@ public class CombatMenu : MonoBehaviour
         string msg = "";
         if(winner == PlayerManager._instance._playerSide)
         {
-            msg = "Vous avez gagné!";
+            GUILayout.Window(-10, rectWinning, doWinningWindow, "Victoire!");
         }
         else
         {
-            msg = "Vous avez perdu!";
+            GUILayout.Window(-11, rectLosing, doLosingWindow, "Défaite!");
         }
 
-        GUI.Box(new Rect(Screen.width * 0.3f, Screen.height * 0.3f, Screen.width/2, Screen.height/2), msg);
-        if (GUI.Button(new Rect(200 + (Screen.width * 0.3f), 100 + (Screen.height * 0.3f), 200, 100), "Retour au menu principal"))
+        //GUI.Box(new Rect(Screen.width * 0.3f, Screen.height * 0.3f, Screen.width/2, Screen.height/2), msg);
+        //if (GUI.Button(new Rect(200 + (Screen.width * 0.3f), 100 + (Screen.height * 0.3f), 200, 100), "Retour au menu principal"))
+        //{
+        //    PlayerManager._instance._characters.Clear();
+        //    Object[] allObjects = GameController.FindObjectsOfType(typeof(Character));
+
+        //    for (int i = 0; i < allObjects.Length; ++i)
+        //    {
+        //        Destroy(allObjects[i]);
+        //    }
+
+        //    PlayerManager._instance.ClearPlayer();
+        //    GameManager._instance.ClearEnemy();
+        //    Application.LoadLevel("MainMenu");            
+        //}
+    }
+
+    private void doQuitWindow(int windowID)
+    {
+        GUI.BringWindowToFront(windowID);
+        // Ornament
+        GUI.DrawTexture(new Rect(20, 4, 31, 40), ColoredGUISkin.Skin.customStyles[0].normal.background);
+
+        GUILayout.Space(35);
+        GUILayout.BeginVertical();
+        GUILayout.BeginHorizontal();
+        GUILayout.Label("Êtes-vous certain de vouloir quitter?");
+        GUILayout.EndHorizontal();
+        GUILayout.BeginHorizontal();
+        GUILayout.Label("Vous allez perdre la partie.");
+        GUILayout.EndHorizontal();
+        GUILayout.EndVertical();
+        GUILayout.Space(7);
+
+        GUILayout.BeginHorizontal();
+        if (GUILayout.Button("Oui", GUILayout.Height(37)))
         {
             PlayerManager._instance._characters.Clear();
             Object[] allObjects = GameController.FindObjectsOfType(typeof(Character));
@@ -284,7 +337,73 @@ public class CombatMenu : MonoBehaviour
 
             PlayerManager._instance.ClearPlayer();
             GameManager._instance.ClearEnemy();
-            Application.LoadLevel("MainMenu");            
+            Application.LoadLevel("MainMenu");       
         }
+        if (GUILayout.Button("Non", GUILayout.Height(37)))
+        {
+            wantToQuit = false;
+        }
+        GUILayout.EndHorizontal();
+        GUILayout.Space(3);
+    }
+
+    private void doWinningWindow(int windowID)
+    {
+        GUI.BringWindowToFront(windowID);
+        // Ornament
+        GUI.DrawTexture(new Rect(20, 4, 31, 40), ColoredGUISkin.Skin.customStyles[0].normal.background);
+
+        GUILayout.Space(20);
+        GUILayout.BeginHorizontal();
+        GUILayout.Label("Félicitation, vous avez gagné la partie!");
+        GUILayout.EndHorizontal();
+
+        GUILayout.BeginHorizontal();
+        if (GUILayout.Button("Retour au menu principal", GUILayout.Height(37)))
+        {
+            PlayerManager._instance._characters.Clear();
+            Object[] allObjects = GameController.FindObjectsOfType(typeof(Character));
+
+            for (int i = 0; i < allObjects.Length; ++i)
+            {
+                Destroy(allObjects[i]);
+            }
+
+            PlayerManager._instance.ClearPlayer();
+            GameManager._instance.ClearEnemy();
+            Application.LoadLevel("MainMenu");    
+        }
+        GUILayout.EndHorizontal();
+        GUILayout.Space(3);
+    }
+
+    private void doLosingWindow(int windowID)
+    {
+        GUI.BringWindowToFront(windowID);
+        // Ornament
+        GUI.DrawTexture(new Rect(20, 4, 31, 40), ColoredGUISkin.Skin.customStyles[0].normal.background);
+
+        GUILayout.Space(20);
+        GUILayout.BeginHorizontal();
+        GUILayout.Label("Vous avez été vaincu!");
+        GUILayout.EndHorizontal();
+
+        GUILayout.BeginHorizontal();
+        if (GUILayout.Button("Retour au menu principal", GUILayout.Height(37)))
+        {
+            PlayerManager._instance._characters.Clear();
+            Object[] allObjects = GameController.FindObjectsOfType(typeof(Character));
+
+            for (int i = 0; i < allObjects.Length; ++i)
+            {
+                Destroy(allObjects[i]);
+            }
+
+            PlayerManager._instance.ClearPlayer();
+            GameManager._instance.ClearEnemy();
+            Application.LoadLevel("MainMenu");
+        }
+        GUILayout.EndHorizontal();
+        GUILayout.Space(3);
     }
 }
