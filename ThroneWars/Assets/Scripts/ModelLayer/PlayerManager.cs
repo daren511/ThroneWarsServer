@@ -503,6 +503,8 @@ public class PlayerManager : MonoBehaviour
 
         do
         {
+
+
             int count = sck.ReceiveBufferSize;
             byte[] buffer = new byte[count];
             sck.Receive(buffer);
@@ -513,6 +515,7 @@ public class PlayerManager : MonoBehaviour
                 formatted[i] = buffer[i];
             }
 
+
             BinaryFormatter receive = new BinaryFormatter();
             using (var recstream = new MemoryStream(formatted))
             {
@@ -521,7 +524,10 @@ public class PlayerManager : MonoBehaviour
             switch (action)
             {
                 case Controle.Game.ENDTURN:
-                    GameController.threadTurn.Abort();                    
+
+
+
+                    GameController.threadTurn.Abort();
                     break;
 
                 case Controle.Game.ATTACK:
@@ -554,9 +560,9 @@ public class PlayerManager : MonoBehaviour
 
                 case Controle.Game.QUIT:
                     break;
+
             }
         }
-        while (action != Controle.Game.ENDTURN);
     }
     public string ReceiveString()
     {

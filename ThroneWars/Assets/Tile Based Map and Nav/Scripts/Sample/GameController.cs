@@ -13,8 +13,6 @@ using System.Text.RegularExpressions;
 
 public class GameController : TMNController
 {
-    public const char SPLITTER = '?';
-
     // ====================================================================================================================
     #region inspector properties
 
@@ -44,6 +42,7 @@ public class GameController : TMNController
 
     private int activeCharacterIndex = 0;
 
+    public const char SPLITTER = '?';
 
 
     #endregion
@@ -517,7 +516,7 @@ public class GameController : TMNController
             }
         }
         if (done == PlayerManager._instance._chosenTeam.Count && PlayerManager._instance._playerSide == currPlayerTurn + 1)
-        {            
+        {
             //on envoie au serveur une requête comme quoi que notre tour est terminé
             PlayerManager._instance.SendObject(Controle.Game.ENDTURN);
         }
@@ -552,13 +551,13 @@ public class GameController : TMNController
             {
                 ClickNextActiveCharacter();
             }
-            if(PlayerManager._instance.enemyMove && !hasMoved)
+            if(PlayerManager._instance.enemyMove)
             {
                 GameObject go = GameObject.Find(PlayerManager._instance._activeEnemyName);
+                Debug.Log(go.GetComponent<Character>()._name);
                 TileNode node = GameObject.Find("node" + PlayerManager._instance._destinationNodeNumber).GetComponent<TileNode>();
                 go.GetComponent<Character>().MoveTo(node);
 
-                hasMoved = true;
                 PlayerManager._instance.enemyMove = false;
             }
             else if(PlayerManager._instance.enemyAttack && !hasAttacked)
@@ -710,6 +709,8 @@ public class GameController : TMNController
             base.OnNaviUnitClick(go);
             attackRangeMarker.HideAll();
             map.ShowAllTileNodes(false);
+
+
 
             // jump camera to the unit that was clicked on
             camMover.Follow(go.transform);

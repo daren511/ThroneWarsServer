@@ -432,11 +432,9 @@ GVStats{
   -moz-box-shadow: 31px 7px 32px 3px rgba(0,0,0,0.75);
   box-shadow: 31px 7px 32px 3px rgba(0,0,0,0.75);
 }
-#MagasinGV_Table{
-    margin-left:2%;
-}
 .GV_Magasin{
     font-size:20px;
+    margin-left:-5%;
 }
 #MagasinInfo{
   padding-bottom:2%;

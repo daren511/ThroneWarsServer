@@ -56,6 +56,8 @@
                 </li>
             </ul>
         </div>
+        <br />
+        <br />
         <div id="MagasinGV">
             <asp:Label ID="usernameLB" runat="server">Nom d'utilisateur :</asp:Label>
             <asp:Label ID="User_Set" runat="server" Font-Bold="true"></asp:Label>
