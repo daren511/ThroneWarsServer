@@ -584,11 +584,13 @@ public class GameController : TMNController
             else if(PlayerManager._instance.enemyDone && !enemyIsDone)
             {
                 ChangeTurn();
+                InactivityAndQuitCheck();
                 enemyIsDone = true;
             }
             hasMoved = false;
             hasAttacked = false;
             hasUsedItem = false;
+            enemyIsDone = false;
         }
         else if (state == State.Init)
         {
