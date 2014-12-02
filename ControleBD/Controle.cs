@@ -1129,7 +1129,7 @@ namespace ControleBD
 
         public class Rotation
         {
-            int increment;
+            int increment; 
             List<char> tableau = new List<char>();
             public Rotation(int inc = 2)
             {
