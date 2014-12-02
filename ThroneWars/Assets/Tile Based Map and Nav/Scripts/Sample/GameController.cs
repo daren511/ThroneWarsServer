@@ -540,6 +540,21 @@ public class GameController : TMNController
             {
                 ClickNextActiveCharacter();
             }
+            if(PlayerManager._instance.enemyMove)
+            {
+                TileNode node = GameObject.Find("node" + PlayerManager._instance._destinationNodeNumber).GetComponent<TileNode>();
+                GameObject.FindGameObjectWithTag(PlayerManager._instance._activeEnemyName).GetComponent<Character>().MoveTo(node);
+
+                PlayerManager._instance.enemyMove = false;
+            }
+            else if(PlayerManager._instance.enemyAttack)
+            {
+
+            }
+            else if(PlayerManager._instance.enemyItem)
+            {
+
+            }
         }
         else if (state == State.Init)
         {
@@ -716,6 +731,7 @@ public class GameController : TMNController
                 {
                     DoCombat(selectedUnit, unit);
                     PlayerManager._instance.SendObject(Controle.Game.ATTACK);
+                    PlayerManager._instance.SendObject<string>(selectedUnit._name + SPLITTER + unit._name);
                 }
             }
 

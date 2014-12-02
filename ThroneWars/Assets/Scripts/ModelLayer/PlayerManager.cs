@@ -54,6 +54,9 @@ public class PlayerManager : MonoBehaviour
     public bool isWaitingPlayer = false;
     public bool hasWonDefault = false;
     public bool isInGame = false;
+
+    #endregion
+
     /// in game
     public bool isAFK = false;
 
@@ -61,8 +64,10 @@ public class PlayerManager : MonoBehaviour
     public bool enemyMove = false;
     public bool enemyItem = false;
 
-    public Character _activeEnemy;
-    #endregion
+
+    public string _destinationNodeNumber;
+    public string _activeEnemyName;
+
 
     void OnApplicationQuit()
     {
@@ -502,6 +507,7 @@ public class PlayerManager : MonoBehaviour
         {
             action = (Controle.Game)receive.Deserialize(recstream);
         }
+
         switch(action)
         {
             case Controle.Game.ENDTURN:
@@ -512,8 +518,9 @@ public class PlayerManager : MonoBehaviour
                 break;
 
             case Controle.Game.MOVE:
-                //_activeEnemy;
-                //string destinationNode;
+                string[] vals = ReceiveString().Split(SPLITTER);
+                _activeEnemyName = vals[0];
+                _destinationNodeNumber = vals[1];
                 enemyMove = true;
                 break;
 
@@ -531,6 +538,21 @@ public class PlayerManager : MonoBehaviour
                 break;
         }
     }
+    public string ReceiveString()
+    {
+        int count = sck.ReceiveBufferSize;
+        byte[] buffer;
+        buffer = new byte[count];
+
+        sck.Receive(buffer);
+        byte[] formatted = new byte[count];
+        for (int i = 0; i < count; i++)
+        {
+            formatted[i] = buffer[i];
+        }
+        return Encoding.UTF8.GetString(formatted);
+    }
+        
     public void CheckForInactivity()
     {
         int count = sck.ReceiveBufferSize;
