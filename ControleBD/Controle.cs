@@ -1148,7 +1148,7 @@ namespace ControleBD
                     valeurInterne++;
                 }
             }
-            public override string Chiffrer(string valeur)
+            public string Chiffrer(string valeur)
             {
                 string mot = "";
                 char lettre;
@@ -1165,7 +1165,7 @@ namespace ControleBD
                 }
                 return mot;
             }
-            public override string Dechiffrer(string valeur)
+            public string Dechiffrer(string valeur)
             {
                 string mot = "";
                 char lettre;
