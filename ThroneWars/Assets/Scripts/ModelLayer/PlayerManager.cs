@@ -524,14 +524,11 @@ public class PlayerManager : MonoBehaviour
             switch (action)
             {
                 case Controle.Game.ENDTURN:
-
-
-
                     GameController.threadTurn.Abort();
                     break;
 
                 case Controle.Game.ATTACK:
-                     vals = ReceiveString().Split(SPLITTER);
+                    vals = ReceiveString().Split(SPLITTER);
                     _activeEnemyName = vals[0];
                     _activeTargetUnit = vals[1];
                     _damageDealt = Int32.Parse(vals[2]);
@@ -548,7 +545,7 @@ public class PlayerManager : MonoBehaviour
                 case Controle.Game.USEITEM:
                     vals = ReceiveString().Split(SPLITTER);
                     _activeEnemyName = vals[0];
-                    
+
                     enemyItem = true;
                     break;
 
@@ -562,7 +559,8 @@ public class PlayerManager : MonoBehaviour
                     break;
 
             }
-        }
+        } while (action != Controle.Game.ENDTURN);
+        
     }
     public string ReceiveString()
     {
