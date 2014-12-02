@@ -523,9 +523,7 @@ public class PlayerManager : MonoBehaviour
             switch (action)
             {
                 case Controle.Game.ENDTURN:                    
-                    GameController.InactivityAndQuitCheck();
                     enemyDone = true;
-                    GameController.threadTurn.Abort();
                     break;
 
                 case Controle.Game.ATTACK:
