@@ -79,7 +79,7 @@ namespace SiteWebThroneWars
                         int randomNumber = random.Next(1, 9);
                         Controle.Rotation rot = new Controle.Rotation(randomNumber);
                         string userHash = rot.Chiffrer(user);
-                        userHash += randomNumber;
+                        userHash += randomNumber; 
                         string link = "<a href=http://www.thronewars.ca/ConfirmAccount.aspx?User=" + userHash + ">Ici</a>";
                         // Send email de confirmation
                         Email.sendMail(courriel, Email.SujetInscription, Email.BodyConfirmation + link);
