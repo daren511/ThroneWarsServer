@@ -59,6 +59,7 @@ public class GameController : TMNController
     static public bool hasMoved = false;
     static public bool hasAttacked = false;
     static public bool hasUsedItem = false;
+    static public bool enemyIsDone = false;
 
     public bool isPlayerTurn = false;
 
@@ -579,6 +580,11 @@ public class GameController : TMNController
 
                 hasUsedItem = true;
                 PlayerManager._instance.enemyItem = false;
+            }
+            else if(PlayerManager._instance.enemyDone && !enemyIsDone)
+            {
+                ChangeTurn();
+                enemyIsDone = true;
             }
             hasMoved = false;
             hasAttacked = false;

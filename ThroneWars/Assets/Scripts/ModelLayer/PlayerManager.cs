@@ -63,6 +63,7 @@ public class PlayerManager : MonoBehaviour
     public bool enemyAttack = false;
     public bool enemyMove = false;
     public bool enemyItem = false;
+    public bool enemyDone = false;
 
     public string _activeEnemyName;
 
@@ -521,8 +522,9 @@ public class PlayerManager : MonoBehaviour
             }
             switch (action)
             {
-                case Controle.Game.ENDTURN:
+                case Controle.Game.ENDTURN:                    
                     GameController.InactivityAndQuitCheck();
+                    enemyDone = true;
                     GameController.threadTurn.Abort();
                     break;
 
