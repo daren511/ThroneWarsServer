@@ -503,8 +503,6 @@ public class PlayerManager : MonoBehaviour
 
         do
         {
-
-
             int count = sck.ReceiveBufferSize;
             byte[] buffer = new byte[count];
             sck.Receive(buffer);
@@ -524,6 +522,7 @@ public class PlayerManager : MonoBehaviour
             switch (action)
             {
                 case Controle.Game.ENDTURN:
+                    GameController.InactivityAndQuitCheck();
                     GameController.threadTurn.Abort();
                     break;
 
