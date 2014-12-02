@@ -175,7 +175,6 @@ public class GameControllerSample6 : MonoBehaviour
     private void CleanScene()
     {
         doneWaiting = false;
-        wantToQuit = false;
         isLoading = false;
     }
     private void doContainerWindow(int windowID)
