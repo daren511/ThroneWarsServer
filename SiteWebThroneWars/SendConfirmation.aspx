@@ -22,7 +22,7 @@
             }
             function MessageBoxErreur(textadaptatif) {
                 $(document).ready(function () {
-                    swal({ title: "Échec! ", text: textadaptatif, type: "error", confirmButtonText: "I'm sad" });
+                    swal({ title: "Échec! ", text: textadaptatif, type: "error", confirmButtonText: "Ok" });
                 });
             }
         </script>
