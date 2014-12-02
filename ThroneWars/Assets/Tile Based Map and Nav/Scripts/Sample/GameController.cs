@@ -561,6 +561,7 @@ public class GameController : TMNController
             {
 
             }
+            hasMoved = false;
         }
         else if (state == State.Init)
         {

@@ -539,7 +539,6 @@ public class PlayerManager : MonoBehaviour
                 case Controle.Game.QUIT:
                     break;
             }
-            enemyMove = false;
         }
         while (action != Controle.Game.ENDTURN);
     }
