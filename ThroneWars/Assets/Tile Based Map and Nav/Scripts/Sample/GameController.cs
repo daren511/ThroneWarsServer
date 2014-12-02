@@ -590,7 +590,6 @@ public class GameController : TMNController
             hasMoved = false;
             hasAttacked = false;
             hasUsedItem = false;
-            enemyIsDone = false;
         }
         else if (state == State.Init)
         {
