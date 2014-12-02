@@ -47,7 +47,7 @@
                 <li><a href="MOBILERecherche.aspx">Classement</a></li>
                 <li><a href="MOBILEMedia.aspx">Média</a></li>
                 <li><a href="MOBILEMagasin.aspx">Magasin</a></li>
-                <li><a href="#my-page">Close the menu</a></li>
+                <li><a href="#my-page">Fermer le menu</a></li>
             </ul>
         </nav>
         <div id="menu">

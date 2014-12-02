@@ -155,7 +155,7 @@ public class Character : NaviUnit
     public override void Start()
     {
         base.Start();
-        //DontDestroyOnLoad(this);
+        DontDestroyOnLoad(this);
 
         //weapon.Init(OnAttackDone);
     }
@@ -203,12 +203,6 @@ public class Character : NaviUnit
 
         this.GetComponent<Billboard>().AttackAnimation();
         weapon.Play(target);
-
-        /*
-         * TRAITER L'ATTAQUE, EN L'ENVOYANT AU SERVEUR ET AFFECTER LES 2 CLIENTS
-         * 
-         * */
-
 
         return true;
     }

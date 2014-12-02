@@ -191,7 +191,7 @@ public class onMainMenu : MonoBehaviour
         GUILayout.BeginVertical();
         GUILayout.FlexibleSpace();
         GUILayout.Box("Sélectionner la carte", GUILayout.Width(rectItem.width));
-        tabMap[0] = onMenuLoad.MyToggle(tabMap[0], "Map 1");
+        tabMap[0] = onMenuLoad.MyToggle(tabMap[0], "Carte 1");
         GUILayout.EndVertical();
 
         GUILayout.BeginVertical();

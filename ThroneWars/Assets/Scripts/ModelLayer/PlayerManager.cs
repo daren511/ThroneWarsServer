@@ -23,7 +23,7 @@ public class PlayerManager : MonoBehaviour
 {
     #region Constants
     public const int MAX_TEAM_LENGTH = 4;
-    private const char SPLITTER = '?';
+    public const char SPLITTER = '?';
     private const int MAX_CHARACTER_EQUIPS = 6;
     #endregion
     #region Player parameters
@@ -54,15 +54,29 @@ public class PlayerManager : MonoBehaviour
     public bool isWaitingPlayer = false;
     public bool hasWonDefault = false;
     public bool isInGame = false;
+
+    #endregion
+
     /// in game
     public bool isAFK = false;
 
     public bool enemyAttack = false;
     public bool enemyMove = false;
     public bool enemyItem = false;
+    public bool enemyDone = false;
 
-    public Character _activeEnemy;
-    #endregion
+    public string _activeEnemyName;
+
+    //la tuile de destination, pour les mouvements
+    public string _destinationNodeNumber;
+
+    //la cible, pour le combat
+    public string _activeTargetUnit;
+    //les dégâts infligés, pour le combat
+    public int _damageDealt;
+
+    //le nom de l'item
+    public string _itemName;
 
     void OnApplicationQuit()
     {
@@ -485,51 +499,83 @@ public class PlayerManager : MonoBehaviour
     }
     public void InGameManager()
     {
-        int count = sck.ReceiveBufferSize;
-        byte[] buffer = new byte[count];
-        sck.Receive(buffer);
+        Controle.Game action = 0;
+        string[] vals;
 
+        do
+        {
+            int count = sck.ReceiveBufferSize;
+            byte[] buffer = new byte[count];
+            sck.Receive(buffer);
+
+            byte[] formatted = new byte[count];
+            for (int i = 0; i < count; i++)
+            {
+                formatted[i] = buffer[i];
+            }
+
+
+            BinaryFormatter receive = new BinaryFormatter();
+            using (var recstream = new MemoryStream(formatted))
+            {
+                action = (Controle.Game)receive.Deserialize(recstream);
+            }
+            switch (action)
+            {
+                case Controle.Game.ENDTURN:                    
+                    enemyDone = true;
+                    break;
+
+                case Controle.Game.ATTACK:
+                    vals = ReceiveString().Split(SPLITTER);
+                    _activeEnemyName = vals[0];
+                    _activeTargetUnit = vals[1];
+                    _damageDealt = Int32.Parse(vals[2]);
+                    enemyAttack = true;
+                    break;
+
+                case Controle.Game.MOVE:
+                    vals = ReceiveString().Split(SPLITTER);
+                    _activeEnemyName = vals[0];
+                    _destinationNodeNumber = vals[1];
+                    enemyMove = true;
+                    break;
+
+                case Controle.Game.USEITEM:
+                    vals = ReceiveString().Split(SPLITTER);
+                    _activeEnemyName = vals[0];
+
+                    enemyItem = true;
+                    break;
+
+                case Controle.Game.DEFEND:
+                    break;
+
+                case Controle.Game.WIN:
+                    break;
+
+                case Controle.Game.QUIT:
+                    break;
+
+            }
+        } while (action != Controle.Game.ENDTURN);
+        
+    }
+    public string ReceiveString()
+    {
+        int count = sck.ReceiveBufferSize;
+        byte[] buffer;
+        buffer = new byte[count];
+
+        sck.Receive(buffer);
         byte[] formatted = new byte[count];
         for (int i = 0; i < count; i++)
         {
             formatted[i] = buffer[i];
         }
-
-        Controle.Game action;
-
-        BinaryFormatter receive = new BinaryFormatter();
-        using (var recstream = new MemoryStream(formatted))
-        {
-            action = (Controle.Game)receive.Deserialize(recstream);
-        }
-        switch(action)
-        {
-            case Controle.Game.ENDTURN:
-
-                break;
-
-            case Controle.Game.ATTACK:
-                enemyAttack = true;
-                break;
-
-            case Controle.Game.MOVE:
-                enemyMove = true;
-                break;
-
-            case Controle.Game.USEITEM:
-                enemyItem = true;
-                break;
-
-            case Controle.Game.DEFEND:
-                break;
-
-            case Controle.Game.WIN:
-                break;
-
-            case Controle.Game.QUIT:
-                break;
-        }
+        return Encoding.UTF8.GetString(formatted);
     }
+
     public void CheckForInactivity()
     {
         int count = sck.ReceiveBufferSize;
@@ -593,6 +639,7 @@ public class PlayerManager : MonoBehaviour
         {
             b.Serialize(stream, obj);
             sck.Send(stream.ToArray());
+            System.Threading.Thread.Sleep(500);
         }
     }
     /// <summary>

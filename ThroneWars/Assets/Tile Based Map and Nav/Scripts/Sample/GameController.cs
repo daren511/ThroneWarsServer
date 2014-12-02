@@ -8,6 +8,8 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
 using System.Threading;
+using ControleBD;
+using System.Text.RegularExpressions;
 
 public class GameController : TMNController
 {
@@ -40,6 +42,9 @@ public class GameController : TMNController
 
     private int activeCharacterIndex = 0;
 
+    public const char SPLITTER = '?';
+
+
     #endregion
     // ====================================================================================================================
     #region vars
@@ -51,6 +56,11 @@ public class GameController : TMNController
     private TileNode hoverNode = null;	// that that mouse is hovering over
     private TileNode prevNode = null;	// helper during movement
 
+    static public bool hasMoved = false;
+    static public bool hasAttacked = false;
+    static public bool hasUsedItem = false;
+    static public bool enemyIsDone = false;
+
     public bool isPlayerTurn = false;
 
     public bool allowInput { get; set; }
@@ -61,8 +71,8 @@ public class GameController : TMNController
 	};
 
     public int currPlayerTurn { get; set; }		// which player's turn it is, only if useTurns = true;
-    public Thread threadTurn;
-    public Thread threadAFK;
+    public static Thread threadTurn;
+    public static Thread threadAFK;
     #endregion
     // ====================================================================================================================
     #region start/init
@@ -74,12 +84,12 @@ public class GameController : TMNController
         currPlayerTurn = 0;
         state = State.Init;
     }
-    private void ListenToServer()
+    public static void ListenToServer()
     {
         threadTurn = new Thread(new ThreadStart(PlayerManager._instance.InGameManager));
         threadTurn.Start();
     }
-    private void InactivityAndQuitCheck()
+    public static void InactivityAndQuitCheck()
     {
         threadAFK = new Thread(new ThreadStart(PlayerManager._instance.CheckForInactivity));
         threadAFK.Start();
@@ -347,7 +357,19 @@ public class GameController : TMNController
             units[unit.playerSide - 1].Add(unit);
         }
     }
+    private void MoveUnit(Unit unit, string nodeNumber)
+    {
+        TileNode node = GameObject.Find("node" + nodeNumber).GetComponent<TileNode>();
+        unit.MoveTo(node);
+    }
+    //private void AttackUnit(Unit atker, Unit defender)
+    //{
+        
+    //}
+    //private void UnitUseItem(Unit unit, string itemName)
+    //{
 
+    //}
     #region combat
     /// <summary>
     /// Formule pour calculer les dégâts infligés
@@ -400,23 +422,23 @@ public class GameController : TMNController
         }
         return gain;
     }
-    private void DoCombat(Character atker, Character defender)
+    private void DoCombat(Character atker, Character defender, int damage)
     {
         if (atker.Attack(defender))
         {
-            int dmg = CalculateDamage(selectedUnit, defender, false);
-            int exp = CalculateExperience(selectedUnit, defender, dmg);
-            int gold = CalculateMoneyGain(selectedUnit, defender, dmg);
+            int exp = CalculateExperience(selectedUnit, defender, damage);
+            int gold = CalculateMoneyGain(selectedUnit, defender, damage);
 
             //à titre de tests
-            Debug.Log(selectedUnit._name + "  attaque " + defender._name + ", et inflige " + dmg.ToString() + " de dégâts!");
+            Debug.Log(selectedUnit._name + "  attaque " + defender._name + ", et inflige " + damage.ToString() + " de dégâts!");
             Debug.Log(selectedUnit._name + " gagne " + exp.ToString() + " d'expérience.");
             Debug.Log("Vous gagnez " + gold + " d'or.");
 
             GameObject.Find("StatusIndicator").transform.position = defender.transform.position;
-            defender.ReceiveDamage(dmg);
+            defender.ReceiveDamage(damage);
             selectedUnit.ReceiveExperience(exp);
             selectedUnit.ReceiveGold(gold);
+
             allowInput = false;
             attackRangeMarker.HideAll();
             StartCoroutine(WaitForAttack());
@@ -495,9 +517,9 @@ public class GameController : TMNController
         }
         if (done == PlayerManager._instance._chosenTeam.Count && PlayerManager._instance._playerSide == currPlayerTurn + 1)
         {
-            //tour du joueur terminer
-
             //on envoie au serveur une requête comme quoi que notre tour est terminé
+            PlayerManager._instance.SendObject(Controle.Game.ENDTURN);
+            enemyIsDone = false;
         }
         OnNaviUnitClick(units[PlayerManager._instance._playerSide - 1][activeCharacterIndex].gameObject);
         if (PlayerManager._instance._playerSide - 1 == currPlayerTurn)
@@ -530,6 +552,44 @@ public class GameController : TMNController
             {
                 ClickNextActiveCharacter();
             }
+            if(PlayerManager._instance.enemyMove)
+            {
+                GameObject go = GameObject.Find(PlayerManager._instance._activeEnemyName);
+                TileNode node = GameObject.Find("node" + PlayerManager._instance._destinationNodeNumber).GetComponent<TileNode>();
+                go.GetComponent<Character>().MoveTo(node);
+
+                hasMoved = true;
+                PlayerManager._instance.enemyMove = false;
+            }
+            else if(PlayerManager._instance.enemyAttack && !hasAttacked)
+            {
+                GameObject enemy = GameObject.Find(PlayerManager._instance._activeEnemyName);
+                GameObject target = GameObject.Find(PlayerManager._instance._activeTargetUnit);
+                int dmgDealt = PlayerManager._instance._damageDealt;
+
+                DoCombat(enemy.GetComponent<Character>(), target.GetComponent<Character>(), dmgDealt);
+
+                hasAttacked = true;
+                PlayerManager._instance.enemyAttack = false;
+            }
+            else if(PlayerManager._instance.enemyItem && !hasUsedItem)
+            {
+                GameObject enemy = GameObject.Find(PlayerManager._instance._activeEnemyName);
+
+                //enemy.GetComponent<Character>().UsePotion(PlayerManager._instance._itemName);
+
+                hasUsedItem = true;
+                PlayerManager._instance.enemyItem = false;
+            }
+            else if(PlayerManager._instance.enemyDone && !enemyIsDone)
+            {
+                ChangeTurn();
+                InactivityAndQuitCheck();
+                enemyIsDone = true;
+            }
+            hasMoved = false;
+            hasAttacked = false;
+            hasUsedItem = false;
         }
         else if (state == State.Init)
         {
@@ -549,7 +609,6 @@ public class GameController : TMNController
                 CombatMenu.FindObjectOfType<CombatMenu>().characterChosen = false;
                 ListenToServer();
             }
-
         }
     }
 
@@ -587,8 +646,12 @@ public class GameController : TMNController
             prevNode = selectedUnit.node; // needed if unit is gonna move
             if (selectedUnit.MoveTo(node, ref selectedUnit.currMoves))
             {
+                string[] numbers = Regex.Split(node.name, @"\D+");
+
+                PlayerManager._instance.SendObject<Controle.Game>(Controle.Game.MOVE);
+                PlayerManager._instance.Send(selectedUnit._name + SPLITTER + numbers[1]);
+
                 selectedUnit._lookDirection = node.transform.position - prevNode.transform.position;
-                //selectedUnit._lookDirection =  selectedUnit._lookDirection.normalized;
 
                 // dont want the player clicking around while a unit is moving
                 //allowInput = true;
@@ -644,11 +707,6 @@ public class GameController : TMNController
     // ====================================================================================================================
     #region input handlers - click unit
 
-    public void FakeUnitClick(GameObject go)
-    {
-        this.OnNaviUnitClick(go);
-    }
-
     protected override void OnNaviUnitClick(GameObject go)
     {
         Character unit = go.GetComponent<Character>();
@@ -657,8 +715,6 @@ public class GameController : TMNController
             base.OnNaviUnitClick(go);
             attackRangeMarker.HideAll();
             map.ShowAllTileNodes(false);
-
-
 
             // jump camera to the unit that was clicked on
             camMover.Follow(go.transform);
@@ -700,7 +756,10 @@ public class GameController : TMNController
             // else, not active player's unit but his opponent's unit that was clicked on
                 else if (selectedUnit != null && combatOn && unit._isAlive)
                 {
-                    DoCombat(selectedUnit, unit);
+                    int dmg = CalculateDamage(selectedUnit, unit, false);
+                    PlayerManager._instance.SendObject(Controle.Game.ATTACK);
+                    PlayerManager._instance.SendObject<string>(selectedUnit._name + SPLITTER + unit._name + SPLITTER + dmg.ToString());
+                    DoCombat(selectedUnit, unit, dmg);
                 }
             }
 
@@ -823,11 +882,11 @@ public class GameController : TMNController
             //}
             //else
             //{
-            //if (!useTurns)
-            //{
-            //    // units can't use their moves up in this case, so reset after it moved
-            //    u.currMoves = u._moves;
-            //}
+                //if (!useTurns)
+                //{
+                //    // units can't use their moves up in this case, so reset after it moved
+                //    u.currMoves = u._moves;
+                //}
 
             if (!hideMarkersOnMove && prevNode != null)
             {	// the markers where not hidden when the unit started moving,

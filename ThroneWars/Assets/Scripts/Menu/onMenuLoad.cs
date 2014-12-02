@@ -101,7 +101,7 @@ public class onMenuLoad : MonoBehaviour
             if (GUILayout.Button("Magasin"))
             {
                 // Go to the online store
-                Application.OpenURL("www.thronewars.ca");
+                Application.OpenURL("www.thronewars.ca/Magasin.aspx");
             }
             if (GUILayout.Button("Déconnexion"))
             {

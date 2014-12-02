@@ -60,7 +60,7 @@
                 <li><a href="MOBILERecherche.aspx">Classement</a></li>
                 <li><a href="MOBILEMedia.aspx">Média</a></li>
                 <li><a href="MOBILEMagasin.aspx">Magasin</a></li>
-                <li><a href="#my-page">Close the menu</a></li>
+                <li><a href="#my-page">Fermer le menu</a></li>
             </ul>
         </nav>
         <div id="menu">
@@ -81,7 +81,7 @@
             <asp:TextBox ID="username" TextMode="SingleLine" runat="server" style="width: 38%; font-size:30px;" /><br />
             <asp:Label ID="passwordLB" runat="server">Mot de passe</asp:Label><br />
             <asp:TextBox ID="password" TextMode="password" runat="server" style="width: 38%; font-size:30px;" /><br /><br />
-            <asp:Button Text="Se connecter" OnClick="MOBILEConnexion_Click" runat="server"  style="width:31%; font-size:35px;" /><br />
+            <asp:Button Text="Se connecter" ID="BTN_Connecter" OnClick="MOBILEConnexion_Click" runat="server"  style="width:31%; font-size:35px;" /><br />
             <a href="MOBILEForgotPass.aspx">Mot de passe oublié?</a><br />
             <a href="MOBILEForgotUsername.aspx">Nom d'utilisateur oublié?</a><br />
             <a href="MOBILEChangePassword.aspx">Changer son mot de passe</a><br />

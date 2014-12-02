@@ -38,7 +38,8 @@ public class CameraOrbit : MonoBehaviour
     {
         Vector3 angles = transform.eulerAngles;
         targetX = x = angles.x;
-		targetY = y = ClampAngle(angles.y, yMinLimit, yMaxLimit);
+		//targetY = y = ClampAngle(angles.y, yMinLimit, yMaxLimit);
+        targetY = y = yMinLimit;
 		targetDistance = distance;
     }
 
@@ -60,15 +61,15 @@ public class CameraOrbit : MonoBehaviour
 			if (Input.GetMouseButton(1) || (Input.GetMouseButton(0) && (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl)) ))
             {
                 targetX += Input.GetAxis("Mouse X") * xSpeed * 0.02f;
-				if (allowYTilt)
-				{
-					targetY -= Input.GetAxis("Mouse Y") * ySpeed * 0.02f;
-					targetY = ClampAngle(targetY, yMinLimit, yMaxLimit);
-				}
+                //if (allowYTilt)
+                //{
+                //    targetY -= Input.GetAxis("Mouse Y") * ySpeed * 0.02f;
+                //    targetY = ClampAngle(targetY, yMinLimit, yMaxLimit);
+                //}
             }
 			x = Mathf.SmoothDampAngle(x, targetX, ref xVelocity, 0.3f);
-			if (allowYTilt) y = Mathf.SmoothDampAngle(y, targetY, ref yVelocity, 0.3f);
-			else y = targetY;
+            //if (allowYTilt) y = Mathf.SmoothDampAngle(y, targetY, ref yVelocity, 0.3f);
+            //else y = targetY;
 			Quaternion rotation = Quaternion.Euler(y, x, 0);
 			distance = Mathf.SmoothDamp(distance, targetDistance, ref zoomVelocity, 0.5f);
 

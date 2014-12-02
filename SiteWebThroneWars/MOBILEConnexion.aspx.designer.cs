@@ -49,6 +49,15 @@ namespace SiteWebThroneWars {
         protected global::System.Web.UI.WebControls.TextBox password;
         
         /// <summary>
+        /// Contrôle BTN_Connecter.
+        /// </summary>
+        /// <remarks>
+        /// Champ généré automatiquement.
+        /// Pour modifier, déplacez la déclaration de champ du fichier de concepteur dans le fichier code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button BTN_Connecter;
+        
+        /// <summary>
         /// Contrôle GV_Leaderboard.
         /// </summary>
         /// <remarks>

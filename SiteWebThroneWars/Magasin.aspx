@@ -56,6 +56,8 @@
                 </li>
             </ul>
         </div>
+        <br />
+        <br />
         <div id="MagasinGV">
             <asp:Label ID="usernameLB" runat="server">Nom d'utilisateur :</asp:Label>
             <asp:Label ID="User_Set" runat="server" Font-Bold="true"></asp:Label>
@@ -64,9 +66,8 @@
             <asp:Button Text="Items" ID="BTN_Items" OnClick="BTN_Items_Click" runat="server"  />
             <asp:Button Text="Potions" ID="BTN_Potions" OnClick="BTN_Potions_Click" runat="server"  /><br />
 
-            <asp:GridView runat="server" ID="GV_Magasin" OnSelectedIndexChanged="GV_Magasin_SelectedIndexChanged" 
-                OnRowDataBound="GV_Magasin_RowDataBound"   AllowPaging ="true" OnPageIndexChanging="GV_Magasin_PageIndexChanging" 
-                PageSize = "25">
+            <asp:GridView runat="server" ID="GV_Magasin" AllowPaging="true" OnPageIndexChanging="GV_Magasin_PageIndexChanging" PageSize="25"
+                 OnSelectedIndexChanged="GV_Magasin_SelectedIndexChanged" OnRowDataBound="GV_Magasin_RowDataBound" OnRowCreated="GV_Magasin_RowCreated" CssClass="GV_Magasin">
                 <RowStyle HorizontalAlign="Center"/>
             </asp:GridView>
         </div>

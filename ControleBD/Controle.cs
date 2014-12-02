@@ -614,11 +614,14 @@ namespace ControleBD
                     {
                         Random random = new Random();
                         int randomNumber = random.Next(1, 9);
-                        string UserHash = Controle.Phrase.Chiffrer(username, randomNumber);
+                        Rotation rot = new Rotation(randomNumber);
+                        string UserHash = rot.Chiffrer(username);
                         UserHash += randomNumber;
+                        string link = "<a href=http://www.thronewars.ca/ResetPassword.aspx?User=" + UserHash + ">Ici</a>";
                         //Reset password
-                        Email.sendMail(resultemail, Email.SubjectResetPass, Email.BodyResetPass + UserHash);
+                        Email.sendMail(resultemail, Email.SubjectResetPass, Email.BodyResetPass + link);
                     }
+                    
                     return true;
                 }
                 catch (OracleException ex)
@@ -639,8 +642,9 @@ namespace ControleBD
         {
             OracleConnection conn = Connection.getInstance().conn;
             int encrypthint = Int32.Parse(userHash.Substring(userHash.Length - 1));
+            Rotation rot = new Rotation(encrypthint);
             userHash = userHash.Substring(0, userHash.Length - 1);
-            string userNonHash = Controle.Phrase.Dechiffrer(userHash, encrypthint);
+            string userNonHash = rot.Dechiffrer(userHash);
 
 
             string sqlconfirmation = "update joueurs set CONFIRMED=:CONFIRMED where username=:userNonHash";
@@ -1094,9 +1098,9 @@ namespace ControleBD
             OracleConnection conn = Connection.getInstance().conn;
 
             int encrypthint = Int32.Parse(userHash.Substring(userHash.Length - 1));
+            Rotation rot = new Rotation(encrypthint);
             userHash = userHash.Substring(0, userHash.Length - 1);
-            string userNonHash = Controle.Phrase.Dechiffrer(userHash, encrypthint);
-
+            string userNonHash = rot.Dechiffrer(userHash);
             string sqlconfirmation = "update joueurs set Hash_KEY=:passHash where username=:userNonHash";
 
             try
@@ -1107,7 +1111,7 @@ namespace ControleBD
                 OracleParameter OraParamUsername = new OracleParameter(":userNonHash", OracleDbType.Varchar2, 32);
 
                 OraParamHashKey.Value = passHash;
-                OraParamUsername.Value = userNonHash;
+                OraParamUsername.Value = userNonHash.ToLower();
 
                 oraUpdate.Parameters.Add(OraParamHashKey);
                 oraUpdate.Parameters.Add(OraParamUsername);
@@ -1123,29 +1127,92 @@ namespace ControleBD
             }
         }
 
-        public class Phrase
+        public class Rotation
         {
-            public Phrase()
+            int increment; 
+            List<char> tableau = new List<char>();
+            public Rotation(int inc = 2)
             {
+                increment = inc;
 
+
+                for (int i = 0; i < 26; ++i)
+                {
+                    tableau.Add(Char.ConvertFromUtf32('A' + i)[0]);
+                }
+
+                int valeurInterne = 0;
+                for (int i = tableau.Count; i < 52; ++i)
+                {
+                    tableau.Add(Char.ConvertFromUtf32('a' + valeurInterne)[0]);
+                    valeurInterne++;
+                }
             }
-            public static string Chiffrer(string valeur, int increment = 2)
+            public string Chiffrer(string valeur)
             {
                 string mot = "";
-
+                char lettre;
                 for (int i = 0; i < valeur.Length; ++i)
                 {
-                    mot += Char.ConvertFromUtf32(valeur[i] + increment);
+                    lettre = valeur[i];
+
+                    if (tableau.IndexOf(lettre) < 26)
+                    {
+                        bool isnumber = Char.IsNumber(lettre);
+                        if (!isnumber)
+                            mot += tableau[((lettre - 65 + increment) % 26)];
+                        else
+                         mot += (char)(lettre+1);
+                        
+                    }
+                    else
+                    {
+                        bool isnumber = Char.IsNumber(lettre);
+                        if (!isnumber)
+                            mot += tableau[(lettre - 97 + increment) % 26 + 26];
+                        else
+                            mot += (char)(lettre + 1);
+                    }
                 }
                 return mot;
             }
-            public static string Dechiffrer(string valeur, int increment = 2)
+            public string Dechiffrer(string valeur)
             {
                 string mot = "";
+                char lettre;
 
                 for (int i = 0; i < valeur.Length; ++i)
                 {
-                    mot += Char.ConvertFromUtf32(valeur[i] - increment);
+                    lettre = valeur[i];
+
+                    if (tableau.IndexOf(lettre) < 26)
+                    {
+                        bool isnumber = Char.IsNumber(lettre);
+                        if (!isnumber)
+                            mot += tableau[((lettre + 65 - increment) % 26)];
+                        else
+                            mot += (char)(lettre - 1);
+
+                    }
+                    else
+                    {
+                        if (lettre - 97 - increment >= 0)
+                        {
+                            bool isnumber = Char.IsNumber(lettre);
+                            if (!isnumber)
+                            mot += tableau[(lettre - 97 - increment) % 26 + 26];
+                            else
+                                mot += (char)(lettre - 1);
+                        }
+                        else
+                        {
+                            bool isnumber = Char.IsNumber(lettre);
+                            if (!isnumber)
+                                mot += tableau[52 - Math.Abs(lettre - 97 - increment)];
+                            else
+                                mot += (char)(lettre - 1);
+                        }
+                    }
                 }
                 return mot;
             }
@@ -1303,11 +1370,12 @@ namespace ControleBD
             DataSet monDataSet = new DataSet();
             using (OracleDataAdapter oraDataAdapItems = new OracleDataAdapter())
             {
+                string sql = "SELECT ";
                 OracleConnection conn = Connection.getInstance().conn;
-                string sql = "SELECT I.IID, NOM, CNAME AS CLASSE, \"LEVEL\" AS NIVEAU, WATK, WDEF, MATK, MDEF, ";
+                sql += "I.IID , NOM, CNAME AS CLASSE, \"LEVEL\" AS NIVEAU, WATK, WDEF, MATK, MDEF, ";
                 if (doitAfficher == 1)
                     sql += "QUANTITY, ";
-                if (showIsShop)
+                if (!showIsShop)
                     sql += "ISACTIVE, ";
                 sql += "PRICE AS PRIX FROM ITEMS I INNER JOIN CLASSES C ON I.CID = C.CID ";
 
@@ -1719,12 +1787,10 @@ namespace ControleBD
                 return false;
             }
         }
-
         public static bool addPotionJoueurs(int pid, int jid, int qte)
         {
             OracleConnection conn = Connection.getInstance().conn;
             string sql = "INSERT INTO POTIONJOUEURS VALUES(:pid, :jid, :qte)";
-
             try
             {
                 OracleCommand oraInsert = new OracleCommand(sql, conn);
@@ -1736,7 +1802,6 @@ namespace ControleBD
                 OraParamPID.Value = pid;
                 OraParamJID.Value = jid;
                 OraParamQTE.Value = qte;
-
                 oraInsert.Parameters.Add(OraParamPID);
                 oraInsert.Parameters.Add(OraParamJID);
                 oraInsert.Parameters.Add(OraParamQTE);
@@ -1747,7 +1812,7 @@ namespace ControleBD
             catch (OracleException ex)
             {
                 Erreur.ErrorMessage(ex);
-                return updateQuantityPotion(jid, pid, qte);
+                return updateQuantityPotion(jid, pid,qte);
             }
         }
 
