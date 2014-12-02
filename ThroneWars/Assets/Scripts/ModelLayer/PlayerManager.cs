@@ -639,6 +639,7 @@ public class PlayerManager : MonoBehaviour
         {
             b.Serialize(stream, obj);
             sck.Send(stream.ToArray());
+            System.Threading.Thread.Sleep(500);
         }
     }
     /// <summary>

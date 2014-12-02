@@ -119,7 +119,7 @@ public class GameControllerSample6 : MonoBehaviour
             GUILayout.Window(-10, rectWinning, doWinningWindow, "Victoire!");
 
         //flag thread
-        if (!PlayerManager._instance.isWaitingPlayer && !doneWaiting && !wantToQuit)
+        if (!PlayerManager._instance.isWaitingPlayer && !doneWaiting && !wantToQuit && !hasWon)
         {
             doneWaiting = true;
 
@@ -131,7 +131,7 @@ public class GameControllerSample6 : MonoBehaviour
             else
             {
                 ///l'adversaire a abandonné la partie, le joueur a gagné
-                hasWon = true;       
+                hasWon = true;
             }
         }
     }
@@ -427,7 +427,6 @@ public class GameControllerSample6 : MonoBehaviour
         GUILayout.BeginHorizontal();
         if (GUILayout.Button("Retour au menu principal", GUILayout.Height(37)))
         {
-            hasWon = false;
             CleanScene();
             PlayerManager._instance.ClearPlayer(false);
             PlayerManager._instance.LoadPlayer();
