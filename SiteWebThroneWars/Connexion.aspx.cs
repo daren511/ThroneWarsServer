@@ -17,6 +17,7 @@ namespace SiteWebThroneWars
         protected void Page_Load(object sender, EventArgs e)
         {
             isSessionOn();
+            isIE();
         }
         protected void isSessionOn()
         {
@@ -49,6 +50,14 @@ namespace SiteWebThroneWars
                 Response.Cookies.Add(Cookie);
             }
 
+        }
+        protected void isIE()
+        {
+            if (Request.Browser.Type.ToUpper().Contains("IE"))
+            {
+                string text = "La connexion sur IE n'est pas disponible . Veuillez utiliser Firefox ou Google Chrome";
+                ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>MessageBoxWarning(\"" + text + "\");</script>", false);
+            }
         }
         protected void Connexion_Click(object sender, EventArgs e)
         {
