@@ -119,7 +119,7 @@ public class GameControllerSample6 : MonoBehaviour
             GUILayout.Window(-10, rectWinning, doWinningWindow, "Victoire!");
 
         //flag thread
-        if (!PlayerManager._instance.isWaitingPlayer && !doneWaiting)
+        if (!PlayerManager._instance.isWaitingPlayer && !doneWaiting && !wantToQuit)
         {
             doneWaiting = true;
 
