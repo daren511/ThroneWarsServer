@@ -26,7 +26,6 @@ namespace SiteWebThroneWars
             }
             if (Session["username"] != null)
             {
-                string test = Session["GV"].ToString();
                 User_Set.Text = Session["username"].ToString();
                 Money_Set.Text = Controle.GetJoueurMoney(User_Set.Text).ToString();
                 if (Session["GV"].ToString() == "Items")
@@ -96,7 +95,7 @@ namespace SiteWebThroneWars
             DataSet DSMagasin = new DataSet();
 
             if (Session["GV"].ToString() == "Items")
-                DSMagasin = Controle.listItems(false, 0, 0, 0, false);
+                DSMagasin = Controle.listItems(false, 0, 0, 0, true);
             else if (Session["GV"].ToString() == "Potions")
                 DSMagasin = Controle.listPotions(0, 0);
             if (DSMagasin != null)
@@ -113,7 +112,10 @@ namespace SiteWebThroneWars
             GridViewRow IDItem = GV_Magasin.SelectedRow;
             ItemID = Int32.Parse(IDItem.Cells[0].Text);
             Session["ItemID"] = ItemID;
-            Prix = Int32.Parse(IDItem.Cells[8].Text);
+            if (Session["GV"].ToString() == "Items")
+                Prix = Int32.Parse(IDItem.Cells[8].Text);
+            else if (Session["GV"].ToString() == "Potions")
+                Prix = Int32.Parse(IDItem.Cells[9].Text);
             TB_Prix.Text = Prix.ToString();
         }
         protected void GV_Magasin_RowDataBound(object sender, GridViewRowEventArgs e)
@@ -133,12 +135,6 @@ namespace SiteWebThroneWars
             TB_Total.Text = "";
             TB_Prix.Text = "";
         }
-
-        protected void GV_Magasin_PageIndexChanging(object sender, GridViewPageEventArgs e)
-        {
-            GV_Magasin.PageIndex = e.NewPageIndex;
-            GV_Magasin.DataBind();
-        }
         protected void BTN_Items_Click(object sender, EventArgs e)
         {
             Session["GV"] = "Items";
@@ -151,6 +147,19 @@ namespace SiteWebThroneWars
             ListerItems();
         }
 
+        protected void GV_Magasin_RowCreated(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow || e.Row.RowType == DataControlRowType.Header)
+            {
+                e.Row.Cells[0].Visible = false;
+            }
+        }
+
+        protected void GV_Magasin_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            GV_Magasin.PageIndex = e.NewPageIndex;
+            GV_Magasin.DataBind();
+        }
     }
 
 }

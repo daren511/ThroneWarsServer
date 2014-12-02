@@ -14,7 +14,7 @@ namespace ThroneWarsServer
 {
     class Program
     {
-        const int PORT = 50053;
+        const int PORT = 50052;
         static List<Joueur> v = new List<Joueur>();
         static List<Joueur> queue = new List<Joueur>();
         static List<Partie> games = new List<Partie>();
@@ -141,7 +141,7 @@ namespace ThroneWarsServer
                     games[findFreeGame()].dcInactivePlayer(); // on deconnecte les joueur inactif de la partie
                 }
 
-                if(playersWantingMainMenu.Count > 1)// si des joueur veulent retourne au menu principale
+                if(playersWantingMainMenu.Count >= 1)// si des joueur veulent retourne au menu principale
                 {
                     mMainMenu.WaitOne();
                     foreach(Joueur j in playersWantingMainMenu)

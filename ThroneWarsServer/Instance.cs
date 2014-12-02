@@ -137,11 +137,11 @@ namespace ThroneWarsServer
             envoyerObjet(list);
             recevoirString();
             envoyerObjet(Controle.getInventaireJoueurs(j.jid));
-            recevoirString();
+            string test = recevoirString();
             if (list.Count > 0)
             {
                 envoyerObjet(getPersonnage(list[0]));
-                recevoirString();
+                string allo = recevoirString();
             }            
         }
 

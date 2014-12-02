@@ -17,12 +17,17 @@ namespace SiteWebThroneWars
         protected void Page_Load(object sender, EventArgs e)
         {
             isSessionOn();
+            isIE();
         }
         protected void isSessionOn()
         {
             HttpCookie Cookie = Request.Cookies["Erreur"];
-            if (Session["username"] != null)
+            if (Session["username"] != null) 
             {
+                username.Enabled = false;
+                username.Text = Session["username"].ToString();
+                password.Enabled = false;
+                BTN_Connecter.Text = "Se déconnecter";
                 int JID = Controle.getJID(Session["username"].ToString());
                 DataSet DSLeaderboard = Controle.getLeaderboard(Session["username"].ToString());
                 if (DSLeaderboard != null)
@@ -46,10 +51,22 @@ namespace SiteWebThroneWars
             }
 
         }
-        
+        protected void isIE()
+        {
+            if (Request.Browser.Type.ToUpper().Contains("IE"))
+            {
+                string text = "La connexion sur IE n'est pas disponible . Veuillez utiliser Firefox ou Google Chrome";
+                ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>MessageBoxWarning(\"" + text + "\");</script>", false);
+            }
+        }
         
         protected void MOBILEConnexion_Click(object sender, EventArgs e)
         {
+            if (Session["username"] != null)
+            {
+                Session.Abandon();
+                Response.Redirect("MOBILEConnexion.aspx");
+            }
             //String pour le sweetalert
             string text = "";
             HttpCookie CookieErreur;
@@ -95,10 +112,9 @@ namespace SiteWebThroneWars
                     Response.Redirect("MOBILEConnexion.aspx");
                     ViderTB();
                 }
-                if (Connecter)
+                if (Connecter && siConfirmer)
                 {
-                    // ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>MessageBoxReussi();</script>", false);
-
+                    
                     //Prend le JID
                     int JID = Controle.getJID(user);
 
@@ -124,7 +140,7 @@ namespace SiteWebThroneWars
                         ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>changeVisibility();</script>", false);
                         Session["username"] = username.Text;
                         ViderTB();
-
+                        Response.Redirect("MOBILEConnexion.aspx");
                     }
                     else
                     {
