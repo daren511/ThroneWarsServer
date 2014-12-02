@@ -614,12 +614,14 @@ namespace ControleBD
                     {
                         Random random = new Random();
                         int randomNumber = random.Next(1, 9);
-                        string UserHash = Controle.Phrase.Chiffrer(username, randomNumber);
+                        Rotation rot = new Rotation(randomNumber);
+                        string UserHash = rot.Chiffrer(username);
                         UserHash += randomNumber;
                         string link = "<a href=http://www.thronewars.ca/ResetPassword.aspx?User=" + UserHash + ">Ici</a>";
                         //Reset password
                         Email.sendMail(resultemail, Email.SubjectResetPass, Email.BodyResetPass + link);
                     }
+                    
                     return true;
                 }
                 catch (OracleException ex)
@@ -640,8 +642,9 @@ namespace ControleBD
         {
             OracleConnection conn = Connection.getInstance().conn;
             int encrypthint = Int32.Parse(userHash.Substring(userHash.Length - 1));
+            Rotation rot = new Rotation(encrypthint);
             userHash = userHash.Substring(0, userHash.Length - 1);
-            string userNonHash = Controle.Phrase.Dechiffrer(userHash, encrypthint);
+            string userNonHash = rot.Dechiffrer(userHash);
 
 
             string sqlconfirmation = "update joueurs set CONFIRMED=:CONFIRMED where username=:userNonHash";
@@ -1095,9 +1098,9 @@ namespace ControleBD
             OracleConnection conn = Connection.getInstance().conn;
 
             int encrypthint = Int32.Parse(userHash.Substring(userHash.Length - 1));
+            Rotation rot = new Rotation(encrypthint);
             userHash = userHash.Substring(0, userHash.Length - 1);
-            string userNonHash = Controle.Phrase.Dechiffrer(userHash, encrypthint);
-
+            string userNonHash = rot.Dechiffrer(userHash);
             string sqlconfirmation = "update joueurs set Hash_KEY=:passHash where username=:userNonHash";
 
             try
@@ -1124,29 +1127,68 @@ namespace ControleBD
             }
         }
 
-        public class Phrase
+        public class Rotation
         {
-            public Phrase()
+            int increment;
+            List<char> tableau = new List<char>();
+            public Rotation(int inc = 2)
             {
+                increment = inc;
 
+
+                for (int i = 0; i < 26; ++i)
+                {
+                    tableau.Add(Char.ConvertFromUtf32('A' + i)[0]);
+                }
+
+                int valeurInterne = 0;
+                for (int i = tableau.Count; i < 52; ++i)
+                {
+                    tableau.Add(Char.ConvertFromUtf32('a' + valeurInterne)[0]);
+                    valeurInterne++;
+                }
             }
-            public static string Chiffrer(string valeur, int increment = 2)
+            public override string Chiffrer(string valeur)
             {
                 string mot = "";
-
+                char lettre;
                 for (int i = 0; i < valeur.Length; ++i)
                 {
-                    mot += Char.ConvertFromUtf32(valeur[i] + increment);
+                    lettre = valeur[i];
+
+                    if (tableau.IndexOf(lettre) < 26)
+                    {
+                        mot += tableau[((lettre - 65 + increment) % 26)];
+                    }
+                    else
+                        mot += tableau[(lettre - 97 + increment) % 26 + 26];
                 }
                 return mot;
             }
-            public static string Dechiffrer(string valeur, int increment = 2)
+            public override string Dechiffrer(string valeur)
             {
                 string mot = "";
+                char lettre;
 
                 for (int i = 0; i < valeur.Length; ++i)
                 {
-                    mot += Char.ConvertFromUtf32(valeur[i] - increment);
+                    lettre = valeur[i];
+
+                    if (tableau.IndexOf(lettre) < 26)
+                    {
+                        mot += tableau[((lettre + 65 - increment) % 26)];
+                    }
+                    else
+                    {
+                        if (lettre - 97 - increment >= 0)
+                        {
+                            mot += tableau[(lettre - 97 - increment) % 26 + 26];
+                        }
+                        else
+                        {
+                            mot += tableau[52 - Math.Abs(lettre - 97 - increment)];
+                        }
+                    }
                 }
                 return mot;
             }

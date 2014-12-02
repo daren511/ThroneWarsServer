@@ -15,7 +15,6 @@ namespace SiteWebThroneWars
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-                      
 
         }
         protected void PasswordRecovery(object sender, EventArgs e)
@@ -46,7 +45,7 @@ namespace SiteWebThroneWars
                 ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>MessageBoxErreur(\"" + text + "\");</script>", false);
                 ViderTB();
             }
-             
+
         }
         protected bool VerifChamps()
         {

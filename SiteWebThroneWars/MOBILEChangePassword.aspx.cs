@@ -68,13 +68,16 @@ namespace SiteWebThroneWars
 
                 }
             }
-            text = "Vous devez remplir tout les champs requis";
-            ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>MessageBoxErreur(\"" + text + "\");</script>", false);
-            usernameLB.ForeColor = System.Drawing.Color.Red;
-            OldPass.ForeColor = System.Drawing.Color.Red;
-            NewPass.ForeColor = System.Drawing.Color.Red;
-            cNewPass.ForeColor = System.Drawing.Color.Red;
-            ViderTB();
+            else
+            {
+                text = "Vous devez remplir tout les champs requis";
+                ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>MessageBoxErreur(\"" + text + "\");</script>", false);
+                usernameLB.ForeColor = System.Drawing.Color.Red;
+                OldPass.ForeColor = System.Drawing.Color.Red;
+                NewPass.ForeColor = System.Drawing.Color.Red;
+                cNewPass.ForeColor = System.Drawing.Color.Red;
+                ViderTB();
+            }
         }
         protected bool VerifChamps()
         {
