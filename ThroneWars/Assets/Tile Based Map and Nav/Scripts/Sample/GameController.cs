@@ -543,7 +543,7 @@ public class GameController : TMNController
             if(PlayerManager._instance.enemyMove)
             {
                 TileNode node = GameObject.Find("node" + PlayerManager._instance._destinationNodeNumber).GetComponent<TileNode>();
-                GameObject.FindGameObjectWithTag(PlayerManager._instance._activeEnemyName).GetComponent<Character>().MoveTo(node);
+                GameObject.FindGameObjectsWithTag(PlayerManager._instance._activeEnemyName)[0].GetComponent<Character>().MoveTo(node);
 
                 PlayerManager._instance.enemyMove = false;
             }
@@ -615,7 +615,7 @@ public class GameController : TMNController
                 string[] numbers = Regex.Split(node.name, @"\D+");
 
                 PlayerManager._instance.SendObject<Controle.Game>(Controle.Game.MOVE);
-                PlayerManager._instance.SendMessage(selectedUnit._name + SPLITTER + numbers[1]);
+                PlayerManager._instance.Send(selectedUnit._name + SPLITTER + numbers[1]);
 
                 selectedUnit._lookDirection = node.transform.position - prevNode.transform.position;
 
