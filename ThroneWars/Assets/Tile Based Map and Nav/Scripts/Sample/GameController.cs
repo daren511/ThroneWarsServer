@@ -543,7 +543,7 @@ public class GameController : TMNController
             if(PlayerManager._instance.enemyMove)
             {
                 TileNode node = GameObject.Find("node" + PlayerManager._instance._destinationNodeNumber).GetComponent<TileNode>();
-                GameObject.FindGameObjectsWithTag(PlayerManager._instance._activeEnemyName)[0].GetComponent<Character>().MoveTo(node);
+                GameObject.Find(PlayerManager._instance._activeEnemyName).GetComponent<Character>().MoveTo(node);
 
                 PlayerManager._instance.enemyMove = false;
             }
