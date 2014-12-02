@@ -157,13 +157,19 @@ public class GameControllerSample6 : MonoBehaviour
         GameController.unitsFabs = unitFabs;
         GameController.enemyFabs = enemyFabs;
         ///destruction des instanciations de type Character de la scène de placement
-        Object[] allObjects = GameObject.FindObjectsOfType<Character>(); // FindObjectsOfType(typeof(Character));
-        for (int i = 0; i < allObjects.Length; ++i)
-        {
-            Destroy(allObjects[i]);
-        }
+        ///
+        StartCoroutine(DestroyPrefabs());
         ///on charge la scène de jeu
         Application.LoadLevel(scene);
+    }
+    IEnumerator DestroyPrefabs()
+    {
+        Object[] allObjects = FindObjectsOfType(typeof(Character));
+        for (int i = 0; i < allObjects.Length; ++i)
+        {
+            Destroy(allObjects[i], 0);
+        }
+        yield return new WaitForSeconds(1);
     }
     private void CleanScene()
     {
