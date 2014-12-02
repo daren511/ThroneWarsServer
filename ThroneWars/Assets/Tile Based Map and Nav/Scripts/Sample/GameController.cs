@@ -60,6 +60,7 @@ public class GameController : TMNController
     static public bool hasAttacked = false;
     static public bool hasUsedItem = false;
     static public bool enemyIsDone = false;
+    static public bool isMyTurn = false;
 
     public bool isPlayerTurn = false;
 
@@ -462,7 +463,7 @@ public class GameController : TMNController
 
         for (int i = 0; i < PlayerManager._instance._chosenTeam.Count && done; ++i)
         {
-            if (!units[PlayerManager._instance._playerSide][i].TurnDone())
+            if (!units[currPlayerTurn][i].TurnDone())
             {
                 done = false;
             }
@@ -517,10 +518,9 @@ public class GameController : TMNController
         }
         if (done == PlayerManager._instance._chosenTeam.Count && PlayerManager._instance._playerSide == currPlayerTurn + 1)
         {
-            //on envoie au serveur une requête comme quoi que notre tour est terminé
-            PlayerManager._instance.SendObject(Controle.Game.ENDTURN);
-            enemyIsDone = false;
+
         }
+
         OnNaviUnitClick(units[PlayerManager._instance._playerSide - 1][activeCharacterIndex].gameObject);
         if (PlayerManager._instance._playerSide - 1 == currPlayerTurn)
         {
@@ -552,6 +552,9 @@ public class GameController : TMNController
             {
                 ClickNextActiveCharacter();
             }
+
+            // Mutex
+
             if(PlayerManager._instance.enemyMove)
             {
                 GameObject go = GameObject.Find(PlayerManager._instance._activeEnemyName);
@@ -583,17 +586,37 @@ public class GameController : TMNController
             }
             else if(PlayerManager._instance.enemyDone && !enemyIsDone)
             {
-                ChangeTurn();
-                InactivityAndQuitCheck();
+                Debug.Log("ennemi termine");
                 enemyIsDone = true;
+                ChangeTurn();
+                //InactivityAndQuitCheck();
+            }
+            if(PlayerTurnDone() && currPlayerTurn == PlayerManager._instance._playerSide - 1 && isMyTurn)
+            {
+                isMyTurn = false;
+                Debug.Log("jai fini`mon tour");
+                //on envoie au serveur une requête comme quoi que notre tour est terminé
+                PlayerManager._instance.SendObject(Controle.Game.ENDTURN);
+                ListenToServer();
+                CombatMenu.FindObjectOfType<CombatMenu>().characterChosen = false;
+
+                PlayerManager._instance.enemyMove = false;
+                PlayerManager._instance.enemyItem = false;
+                PlayerManager._instance.enemyAttack = false;
+                PlayerManager._instance.enemyDone = false;
+
+                enemyIsDone = false;
+                isMyTurn = true;
             }
             hasMoved = false;
             hasAttacked = false;
             hasUsedItem = false;
+
+            // End Mutex
         }
         else if (state == State.Init)
         {
-            state = State.Running;
+            state = State.Running;      
             SpawnUnits(unitsFabs, PlayerManager._instance._chosenTeam, GameManager._instance._playerPositions, PlayerManager._instance._playerSide);
             SpawnUnits(enemyFabs, GameManager._instance._enemyTeam, GameManager._instance._enemyPositions, GameManager._instance._enemySide);
 
@@ -602,11 +625,13 @@ public class GameController : TMNController
             if (PlayerManager._instance._playerSide == 1)
             {
                 CombatMenu.FindObjectOfType<CombatMenu>().characterChosen = true;
-                InactivityAndQuitCheck();
+                isMyTurn = true;
+                //InactivityAndQuitCheck();
             }
             else
             {
                 CombatMenu.FindObjectOfType<CombatMenu>().characterChosen = false;
+                isMyTurn = false;
                 ListenToServer();
             }
         }
@@ -628,6 +653,7 @@ public class GameController : TMNController
         {
             u.Reset();
         }
+        ClickNextActiveCharacter();
     }
 
     #endregion

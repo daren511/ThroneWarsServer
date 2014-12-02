@@ -65,6 +65,7 @@ public class PlayerManager : MonoBehaviour
     public bool enemyItem = false;
     public bool enemyDone = false;
 
+
     public string _activeEnemyName;
 
     //la tuile de destination, pour les mouvements
@@ -139,6 +140,10 @@ public class PlayerManager : MonoBehaviour
     {
         byte[] data = Encoding.UTF8.GetBytes(reponse);
         sck.Send(data);
+    }
+    IEnumerator Wait()
+    {
+        yield return new WaitForSeconds(1.0f);
     }
     /// <summary>
     /// Charge les paramètres du joueur, on envoi un message de confirmation entre chaque obtention
@@ -514,15 +519,17 @@ public class PlayerManager : MonoBehaviour
                 formatted[i] = buffer[i];
             }
 
-
             BinaryFormatter receive = new BinaryFormatter();
             using (var recstream = new MemoryStream(formatted))
             {
                 action = (Controle.Game)receive.Deserialize(recstream);
             }
+
+            // Mutex
             switch (action)
             {
-                case Controle.Game.ENDTURN:                    
+                case Controle.Game.ENDTURN:
+                    Debug.Log("endturn");
                     enemyDone = true;
                     break;
 
@@ -535,7 +542,9 @@ public class PlayerManager : MonoBehaviour
                     break;
 
                 case Controle.Game.MOVE:
-                    vals = ReceiveString().Split(SPLITTER);
+                    Debug.Log("move");
+                    string derptest = ReceiveString();
+                    vals = derptest.Split(SPLITTER);
                     _activeEnemyName = vals[0];
                     _destinationNodeNumber = vals[1];
                     enemyMove = true;
@@ -558,8 +567,11 @@ public class PlayerManager : MonoBehaviour
                     break;
 
             }
-        } while (action != Controle.Game.ENDTURN);
+            // End Mutex
+
         
+        } while (action != Controle.Game.ENDTURN);
+
     }
     public string ReceiveString()
     {
