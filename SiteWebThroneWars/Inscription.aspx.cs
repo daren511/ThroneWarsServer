@@ -64,7 +64,8 @@ namespace SiteWebThroneWars
                         //Hash le username pour le courriel de confirmation
                         Random random = new Random();
                         int randomNumber = random.Next(1, 9);
-                        string userHash = Controle.Phrase.Chiffrer(user,randomNumber);
+                        Controle.Rotation rot = new Controle.Rotation(randomNumber);
+                        string userHash = rot.Chiffrer(user);
                         userHash += randomNumber;
                         string link = "<a href=http://www.thronewars.ca/ConfirmAccount.aspx?User=" + userHash + ">Ici</a>";
                         // Send email de confirmation

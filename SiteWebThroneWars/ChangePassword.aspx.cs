@@ -28,7 +28,7 @@ namespace SiteWebThroneWars
             {
                 if (oldpass == newPass || newPass != confirmNewPass)
                 {
-                    text = "L'ancien mot de pass et le nouveau sont les mêmes ou le nouveau et la confirmation ne correspondent pas";
+                    text = "L'ancien mot de passe et le nouveau sont les mêmes ou le nouveau et la confirmation ne correspondent pas";
                     OldPass.ForeColor = System.Drawing.Color.Red;
                     NewPass.ForeColor = System.Drawing.Color.Red;
                     cNewPass.ForeColor = System.Drawing.Color.Red;
