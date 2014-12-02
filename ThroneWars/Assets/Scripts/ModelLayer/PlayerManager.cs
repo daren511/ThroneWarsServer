@@ -524,7 +524,6 @@ public class PlayerManager : MonoBehaviour
             {
                 case Controle.Game.ENDTURN:                    
                     enemyDone = true;
-                    GameController.threadTurn.Abort();
                     break;
 
                 case Controle.Game.ATTACK:
