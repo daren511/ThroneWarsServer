@@ -80,8 +80,8 @@
             <asp:Label ID="User_Set" runat="server" Font-Bold="true"></asp:Label>
             <asp:Label ID="MoneyLB" runat="server" >Monnaie :</asp:Label>
             <asp:Label ID="Money_Set" runat="server" Font-Bold="true" ></asp:Label><br />
-            <asp:Button Text="Items" ID="BTN_Items" OnClick="BTN_Items_Click" runat="server"  />
-            <asp:Button Text="Potions" ID="BTN_Potions" OnClick="BTN_Potions_Click" runat="server"  /><br />
+            <asp:Button Text="Items" ID="BTN_Items" OnClick="BTN_Items_Click" runat="server"  style="width:31%; font-size:35px;"/>
+            <asp:Button Text="Potions" ID="BTN_Potions" OnClick="BTN_Potions_Click" runat="server" style="width:31%; font-size:35px;" /><br />
 
             <asp:GridView runat="server" ID="GV_Magasin" AllowPaging="true" OnPageIndexChanging="GV_Magasin_PageIndexChanging" PageSize="25"
                  OnSelectedIndexChanged="GV_Magasin_SelectedIndexChanged" OnRowDataBound="GV_Magasin_RowDataBound" OnRowCreated="GV_Magasin_RowCreated" CssClass="GV_Magasin">
@@ -92,20 +92,20 @@
         <div id="MagasinInfo_Mobile">
 
             <asp:Label ID="Label1" runat="server">Quantité</asp:Label><br />
-            <asp:TextBox ID="TB_Quantite" TextMode="SingleLine" runat="server" ClientIDMode="Static" /><br />
+            <asp:TextBox ID="TB_Quantite" TextMode="SingleLine" runat="server" ClientIDMode="Static" style="width: 38%; font-size:30px;"/><br />
             <asp:RangeValidator ID="RangeValidator1" Type="Integer" MinimumValue="1"
                 MaximumValue="99" ControlToValidate="TB_Quantite" runat="server"
                 ErrorMessage="La quanité doit être entre 1 et 99"></asp:RangeValidator><br />
 
             <asp:Label ID="Label5" runat="server">Prix</asp:Label><br />
-            <asp:TextBox ID="TB_Prix" TextMode="Number" runat="server" Enabled="false" ClientIDMode="Static"/><br />
+            <asp:TextBox ID="TB_Prix" TextMode="Number" runat="server" Enabled="false" ClientIDMode="Static" style="width: 38%; font-size:30px;"/><br />
 
             <asp:Label ID="Label2" runat="server">Total</asp:Label><br />
             <% TB_Total.Attributes.Add("readonly", "readonly"); %>
-            <asp:TextBox ID="TB_Total" name="Total" runat="server" ClientIDMode="Static"/><br />
+            <asp:TextBox ID="TB_Total" name="Total" runat="server" ClientIDMode="Static" style="width: 38%; font-size:30px;"/><br />
             <br />
           
-            <asp:Button Text="Acheter" ID="BTN_Acheter" OnClick="Acheter_Click" runat="server"  /><br />
+            <asp:Button Text="Acheter" ID="BTN_Acheter" OnClick="Acheter_Click" runat="server" style="width:31%; font-size:35px;" /><br />
         </div>
     </form>
 </body>
