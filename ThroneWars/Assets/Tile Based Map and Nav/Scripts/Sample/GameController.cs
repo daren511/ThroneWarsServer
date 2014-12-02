@@ -553,10 +553,10 @@ public class GameController : TMNController
             if(PlayerManager._instance.enemyMove)
             {
                 GameObject go = GameObject.Find(PlayerManager._instance._activeEnemyName);
-                Debug.Log(go.GetComponent<Character>()._name);
                 TileNode node = GameObject.Find("node" + PlayerManager._instance._destinationNodeNumber).GetComponent<TileNode>();
                 go.GetComponent<Character>().MoveTo(node);
 
+                hasMoved = true;
                 PlayerManager._instance.enemyMove = false;
             }
             else if(PlayerManager._instance.enemyAttack && !hasAttacked)
@@ -601,7 +601,6 @@ public class GameController : TMNController
                 CombatMenu.FindObjectOfType<CombatMenu>().characterChosen = false;
                 ListenToServer();
             }
-
         }
     }
 
