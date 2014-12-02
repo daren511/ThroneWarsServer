@@ -5,7 +5,7 @@ public class CombatMenu : MonoBehaviour
 {
     #region GUIElements
     private Rect _menuContainer;
-    private Rect _characterStats = new Rect(0, 0, 300, 100);
+    private Rect _characterStats = new Rect(0, 0, 320, 110);
     private Rect _itemContainer;
     #endregion
 
@@ -135,12 +135,12 @@ public class CombatMenu : MonoBehaviour
         GUI.Label(new Rect(235f, 5f, 100, 100), "Niv. " + lvl.ToString());
 
         GUI.DrawTexture(new Rect(10f, 20f, 20, 20), _healthTexture, ScaleMode.StretchToFill, true, 0.0f);
-        GUI.Box(new Rect(50f, 30f, 180, 0.01f * Screen.height), "");
+        GUI.Box(new Rect(50f, 30f, 180, 0.01f * Screen.height), "", GUIStyle.none);
         GUI.Box(new Rect(50f, 30f, 180 * (hpLeft / hpMax), 0.01f * Screen.height), "", _healthBarFront);
         GUI.Label(new Rect(235f, 22f, 100, 100), hpLeft + " / " + hpMax);
 
         GUI.DrawTexture(new Rect(10f, 40f, 20, 20), _magicTexture, ScaleMode.StretchToFill, true, 0.0f);
-        GUI.Box(new Rect(50f, 45f, 180, 0.01f * Screen.height), "");
+        GUI.Box(new Rect(50f, 45f, 180, 0.01f * Screen.height), "", GUIStyle.none);
         GUI.Box(new Rect(50f, 45f, 180 * (mpLeft / mpMax), 0.01f * Screen.height), "", _magicBarFront);
         GUI.Label(new Rect(235f, 38f, 100, 100), mpLeft + " / " + mpMax);
 

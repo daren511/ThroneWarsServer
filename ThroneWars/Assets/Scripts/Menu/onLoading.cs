@@ -6,6 +6,7 @@ using System.Threading;
 public class onLoading : MonoBehaviour
 {
     //---------- VARIABLES ----------//
+    // kk
     private bool hasUpdatedGui = false;
     private string title = "Veuillez patienter";
     private string message = "En attente d'un autre joueur...";

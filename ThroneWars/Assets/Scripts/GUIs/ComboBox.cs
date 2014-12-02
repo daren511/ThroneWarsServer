@@ -122,5 +122,6 @@ public class ComboBox
     public void ResetContent()
     {
         buttonContent = listContent[0];
+        perso = PlayerManager._instance.GetDefaultStats(buttonContent.text.ToString());
     }
 }
