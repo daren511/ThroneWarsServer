@@ -66,8 +66,8 @@ public class GameController : TMNController
 	};
 
     public int currPlayerTurn { get; set; }		// which player's turn it is, only if useTurns = true;
-    public Thread threadTurn;
-    public Thread threadAFK;
+    public static Thread threadTurn;
+    public static Thread threadAFK;
     #endregion
     // ====================================================================================================================
     #region start/init
@@ -542,8 +542,10 @@ public class GameController : TMNController
             }
             if(PlayerManager._instance.enemyMove)
             {
+                GameObject go = GameObject.Find(PlayerManager._instance._activeEnemyName);
+                Debug.Log(go.GetComponent<Character>()._name);
                 TileNode node = GameObject.Find("node" + PlayerManager._instance._destinationNodeNumber).GetComponent<TileNode>();
-                GameObject.FindGameObjectsWithTag(PlayerManager._instance._activeEnemyName)[0].GetComponent<Character>().MoveTo(node);
+                go.GetComponent<Character>().MoveTo(node);
 
                 PlayerManager._instance.enemyMove = false;
             }
