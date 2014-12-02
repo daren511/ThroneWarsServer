@@ -17,7 +17,7 @@ namespace ControleBD
         public bool hasConnected = false;
         public string Username;
         public int jid;
-        
+        public List<Potions> potions;
         public bool isConnected = false;
         public List<int> positionsPersonnages = new List<int>();
         public Joueur(Socket sck)
