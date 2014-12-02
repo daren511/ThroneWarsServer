@@ -597,7 +597,10 @@ public class GameController : TMNController
                 Debug.Log("jai fini`mon tour");
                 //on envoie au serveur une requête comme quoi que notre tour est terminé
                 PlayerManager._instance.SendObject(Controle.Game.ENDTURN);
+
                 ListenToServer();
+                ChangeTurn();
+
                 CombatMenu.FindObjectOfType<CombatMenu>().characterChosen = false;
 
                 PlayerManager._instance.enemyMove = false;
