@@ -49,8 +49,5 @@ namespace ControleBD
         public int MagicDef { get;  set; }
         public int Moves { get;  set; }
         public int Range { get;  set; }
-
-
-        public List<AttaqueSpeciale> Attaques = new List<AttaqueSpeciale>();
     }
 }
