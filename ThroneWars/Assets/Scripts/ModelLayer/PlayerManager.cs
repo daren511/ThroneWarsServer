@@ -490,10 +490,9 @@ public class PlayerManager : MonoBehaviour
     }
     public void InGameManager()
     {
+        Controle.Game action = 0;
         do
         {
-            Controle.Game action;
-
             int count = sck.ReceiveBufferSize;
             byte[] buffer = new byte[count];
             sck.Receive(buffer);
