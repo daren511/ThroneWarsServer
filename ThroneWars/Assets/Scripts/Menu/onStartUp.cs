@@ -48,7 +48,7 @@ public class onStartUp : MonoBehaviour
         if (PlayerManager._instance.DEV) { lblDev.normal.textColor = Color.red; GUI.Label(new Rect(10, 10, 200, 30), "DEV", lblDev); }
 
         onMenuLoad.createQuitWindow();
-        GUILayout.Window(2, rectLogin, doLoginWindow, "Login");   // Draw the login window
+        GUILayout.Window(2, rectLogin, doLoginWindow, "Connexion");   // Draw the login window
         onMenuLoad.createMenuWindow(false);
         showWindow();
         if (show)
