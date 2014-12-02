@@ -89,7 +89,7 @@ public class PlayerManager : MonoBehaviour
     }
     void OnDestroy()
     {
-        if (sck.Connected && !isLoading && !isInGame)
+        if (sck != null && sck.Connected && !isLoading && !isInGame)
             SendObject(Controle.Actions.QUIT);
         else if (sck.Connected && isInGame)
             SendObject(Controle.Game.QUIT);
