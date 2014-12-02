@@ -157,19 +157,20 @@ public class GameControllerSample6 : MonoBehaviour
         GameController.unitsFabs = unitFabs;
         GameController.enemyFabs = enemyFabs;
         ///destruction des instanciations de type Character de la scène de placement
-        ///
+
         StartCoroutine(DestroyPrefabs());
         ///on charge la scène de jeu
         Application.LoadLevel(scene);
     }
     IEnumerator DestroyPrefabs()
     {
+        yield return new WaitForSeconds(0.5f);
         Object[] allObjects = FindObjectsOfType(typeof(Character));
         for (int i = 0; i < allObjects.Length; ++i)
         {
             Destroy(allObjects[i], 0);
         }
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(0.5f);
     }
     private void CleanScene()
     {
@@ -247,16 +248,6 @@ public class GameControllerSample6 : MonoBehaviour
             matk = PlayerManager._instance._chosenTeam[placed]._magicAttack;
             pdef = PlayerManager._instance._chosenTeam[placed]._physDefense;
             mdef = PlayerManager._instance._chosenTeam[placed]._magicDefense;
-
-            //charName = unitFabs[placed].GetComponent<Character>()._name;
-            ////charClass = unitFabs[placed].GetComponent<Character>()._characterClass._className;
-            ////lvl = unitFabs[placed].GetComponent<Character>()._characterClass._classLevel;
-            //hpMax = unitFabs[placed].GetComponent<Character>()._maxHealth;
-            //mpMax = unitFabs[placed].GetComponent<Character>()._maxMagic;
-            //patk = unitFabs[placed].GetComponent<Character>()._currPhysAttack;
-            //matk = unitFabs[placed].GetComponent<Character>()._currMagicAttack;
-            //pdef = unitFabs[placed].GetComponent<Character>()._currPhysDefense;
-            //mdef = unitFabs[placed].GetComponent<Character>()._currMagicDefense;
         }
     }
 
@@ -282,7 +273,6 @@ public class GameControllerSample6 : MonoBehaviour
 
                     // finally, spawn a unit on the tile
                     Character.SpawnUnit(unitFabs[placed], map, node);
-
                     placed++;
                     table.Add(unitFab);
 
