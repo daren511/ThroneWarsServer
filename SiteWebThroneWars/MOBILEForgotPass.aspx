@@ -16,7 +16,7 @@
 </head>
 <body>
     <form id="form1" action="MOBILEForgotPass.aspx" runat="server">
-    <script type="text/javascript">
+    <script type="text/javascript"> 
         function MessageBoxReussi() {
             $(document).ready(function () {
                 swal({ title: "Bravo! ", text: "Veuillez visiter votre courriel pour changer votre mot de passe", type: "success", confirmButtonText: "Ok" });

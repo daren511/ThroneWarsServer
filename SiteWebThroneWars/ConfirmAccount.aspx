@@ -13,7 +13,7 @@
 </head>
 <body>
     <form runat="server" action="ConfirmAccount.aspx" autocomplete="on">
-        <script type="text/javascript">
+        <script type="text/javascript"> 
             function MessageBoxReussi() {
                 $(document).ready(function () {
                     swal({ title: "Bravo! ", text: "Votre confirmation de compte est réussie", type: "success", confirmButtonText: "Ok" }, function () { window.location.assign("default.aspx");});

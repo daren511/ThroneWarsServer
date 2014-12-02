@@ -18,7 +18,7 @@
             function MessageBoxReussi() {
                 $(document).ready(function () {
                     swal({ title: "Bravo! ", text: "Votre nouveau lien de confirmation est envoyé", type: "success", confirmButtonText: "Ok" });
-                });
+                }); 
             }
             function MessageBoxErreur(textadaptatif) {
                 $(document).ready(function () {

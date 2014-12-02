@@ -15,7 +15,7 @@
 	<body>
      <form runat="server" action="ForgotPass.aspx" autocomplete="on">
         <script type="text/javascript">
-            function MessageBoxReussi() {
+            function MessageBoxReussi() { 
                 $(document).ready(function () {
                     swal({ title: "Bravo! ", text: "Veuillez visiter votre courriel pour changer votre mot de passe", type: "success", confirmButtonText: "Ok" });
                 });
