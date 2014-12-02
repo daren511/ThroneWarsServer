@@ -615,7 +615,7 @@ public class GameController : TMNController
                 string[] numbers = Regex.Split(node.name, @"\D+");
 
                 PlayerManager._instance.SendObject<Controle.Game>(Controle.Game.MOVE);
-                PlayerManager._instance.SendObject<string>(selectedUnit._name + SPLITTER + numbers[1]);
+                PlayerManager._instance.SendMessage(selectedUnit._name + SPLITTER + numbers[1]);
 
                 selectedUnit._lookDirection = node.transform.position - prevNode.transform.position;
 
