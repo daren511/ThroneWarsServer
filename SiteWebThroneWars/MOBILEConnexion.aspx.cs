@@ -21,7 +21,7 @@ namespace SiteWebThroneWars
         protected void isSessionOn()
         {
             HttpCookie Cookie = Request.Cookies["Erreur"];
-            if (Session["username"] != null)
+            if (Session["username"] != null) 
             {
                 username.Enabled = false;
                 username.Text = Session["username"].ToString();
