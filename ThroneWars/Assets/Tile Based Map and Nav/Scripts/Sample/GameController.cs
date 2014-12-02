@@ -518,8 +518,8 @@ public class GameController : TMNController
         if (done == PlayerManager._instance._chosenTeam.Count && PlayerManager._instance._playerSide == currPlayerTurn + 1)
         {
             //on envoie au serveur une requête comme quoi que notre tour est terminé
-
             PlayerManager._instance.SendObject(Controle.Game.ENDTURN);
+            enemyIsDone = false;
         }
         OnNaviUnitClick(units[PlayerManager._instance._playerSide - 1][activeCharacterIndex].gameObject);
         if (PlayerManager._instance._playerSide - 1 == currPlayerTurn)
