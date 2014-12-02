@@ -18,7 +18,7 @@
     <form id="form1" runat="server" action="MOBILERecherche.aspx">
         <script type="text/javascript">
             $(document).ready(function () {
-                $("#my-menu").mmenu();
+                $("#my-menu").mmenu(); 
             });
             $("#my-button").click(function () {
                 $("#my-menu").trigger("open.mm");

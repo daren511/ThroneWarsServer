@@ -18,7 +18,7 @@
              $("#my-button").click(function () {
                  $("#my-menu").trigger("open.mm");
              });
-             $(document).ready(function () {
+             $(document).ready(function () { 
                  $("#my-menu").mmenu();
                  $("#my-button").click(function () {
                      $("#my-menu").trigger("close.mm");

@@ -90,7 +90,7 @@ public class PlayerManager : MonoBehaviour
     }
     void OnDestroy()
     {
-        if (sck.Connected && !isLoading && !isInGame)
+        if (sck != null && sck.Connected && !isLoading && !isInGame)
             SendObject(Controle.Actions.QUIT);
         else if (sck.Connected && isInGame)
             SendObject(Controle.Game.QUIT);
@@ -651,6 +651,7 @@ public class PlayerManager : MonoBehaviour
         {
             b.Serialize(stream, obj);
             sck.Send(stream.ToArray());
+            System.Threading.Thread.Sleep(500);
         }
     }
     /// <summary>

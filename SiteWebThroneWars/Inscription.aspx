@@ -16,7 +16,7 @@
 </head>
 <body>
     <form runat="server" action="Inscription.aspx" autocomplete="on">
-        <script type="text/javascript">
+        <script type="text/javascript"> 
             function MessageBoxReussi() {
                 $(document).ready(function () {
                     swal({ title: "Bravo! ", text: "Votre inscription est réussie, veuillez consulter votre courriel pour confirmer votre compte ", type: "success", confirmButtonText: "Ok" });

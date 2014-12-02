@@ -15,7 +15,7 @@
     // instead of editing the highslide.js file
     hs.graphicsDir = '/highslide/graphics/';
     </script>
-</head>
+</head> 
 
 <body>
     <form runat="server" action="Media.aspx" autocomplete="on">

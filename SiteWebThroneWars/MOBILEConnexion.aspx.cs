@@ -17,6 +17,7 @@ namespace SiteWebThroneWars
         protected void Page_Load(object sender, EventArgs e)
         {
             isSessionOn();
+     
         }
         protected void isSessionOn()
         {
@@ -50,7 +51,6 @@ namespace SiteWebThroneWars
             }
 
         }
-        
         
         protected void MOBILEConnexion_Click(object sender, EventArgs e)
         {

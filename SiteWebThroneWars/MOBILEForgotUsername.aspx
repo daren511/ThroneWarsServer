@@ -17,7 +17,7 @@
 	<body>
         <form runat="server" action="MOBILEForgotUsername.aspx" autocomplete="on">
         <script type="text/javascript">
-            $(document).ready(function () {
+            $(document).ready(function () { 
                 $("#my-menu").mmenu();
             });
             $("#my-button").click(function () {

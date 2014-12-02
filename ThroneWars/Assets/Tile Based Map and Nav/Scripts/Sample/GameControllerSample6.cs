@@ -119,7 +119,7 @@ public class GameControllerSample6 : MonoBehaviour
             GUILayout.Window(-10, rectWinning, doWinningWindow, "Victoire!");
 
         //flag thread
-        if (!PlayerManager._instance.isWaitingPlayer && !doneWaiting)
+        if (!PlayerManager._instance.isWaitingPlayer && !doneWaiting && !wantToQuit && !hasWon)
         {
             doneWaiting = true;
 
@@ -131,7 +131,7 @@ public class GameControllerSample6 : MonoBehaviour
             else
             {
                 ///l'adversaire a abandonné la partie, le joueur a gagné
-                hasWon = true;       
+                hasWon = true;
             }
         }
     }
@@ -175,7 +175,6 @@ public class GameControllerSample6 : MonoBehaviour
     private void CleanScene()
     {
         doneWaiting = false;
-        wantToQuit = false;
         isLoading = false;
     }
     private void doContainerWindow(int windowID)
@@ -382,6 +381,7 @@ public class GameControllerSample6 : MonoBehaviour
         GUILayout.BeginHorizontal();
         if (GUILayout.Button("Oui", GUILayout.Height(37)))
         {
+            DestroyUnits();
             PlayerManager._instance.ClearPlayer(false);
             CleanScene();
             PlayerManager._instance.SendObject(Controle.Game.CANCEL);
@@ -428,7 +428,7 @@ public class GameControllerSample6 : MonoBehaviour
         GUILayout.BeginHorizontal();
         if (GUILayout.Button("Retour au menu principal", GUILayout.Height(37)))
         {
-            hasWon = false;
+            DestroyUnits();
             CleanScene();
             PlayerManager._instance.ClearPlayer(false);
             PlayerManager._instance.LoadPlayer();
@@ -436,6 +436,25 @@ public class GameControllerSample6 : MonoBehaviour
         }
         GUILayout.EndHorizontal();
         GUILayout.Space(3);
+    }
+
+    /// <summary>
+    /// Destroy the remaining units
+    /// </summary>
+    private void DestroyUnits()
+    {
+        int index = 0;
+        foreach (TileNode n in map.nodes)
+        {
+            if (n != null)
+            {
+                if (n.units.Count > 0 && index >= 0)
+                {
+                    Character.RemoveUnit(unitFabs[index], n);
+                    index++;
+                }
+            }
+        }
     }
     // ====================================================================================================================
 }

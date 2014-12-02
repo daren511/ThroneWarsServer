@@ -17,7 +17,7 @@
     <form id="form1" runat="server">
         <script type="text/javascript">
             function MessageBoxReussi() {
-                $(document).ready(function () {
+                $(document).ready(function () { 
                     swal({ title: "Bravo! ", text: "Votre changement de mot de passe est réussi", type: "success", confirmButtonText: "Ok" });
                 });
             }

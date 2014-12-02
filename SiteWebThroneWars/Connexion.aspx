@@ -14,7 +14,7 @@
 </head>
 <body>
    <form runat="server" action="Connexion.aspx" autocomplete="on">
-    <script type="text/javascript">
+    <script type="text/javascript"> 
         function MessageBoxReussi() { 
             $(document).ready(function () {
                 swal({ title: "Bravo! ", text: "Vous êtes connecté", type: "success", confirmButtonText: "Ok" });

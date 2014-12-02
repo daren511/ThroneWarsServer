@@ -88,7 +88,10 @@ namespace ThroneWarsServer
                         {
                             try
                             {
+                                player1.Socket.Blocking = false;
                                 action1 = recevoirChoix(player1);
+                                player1.Socket.Blocking = true;
+
                                 timer = 0;
                             }
                             catch (Exception) { action1 = Controle.Game.NOTHING; }
@@ -106,20 +109,23 @@ namespace ThroneWarsServer
                                     if (timer == 5000)
                                     {
                                         envoyerObjet(Controle.Game.AFK, player1);
-
                                     }
                                     break;
                                 case Controle.Game.MOVE:
-
+                                    envoyerObjet(Controle.Game.MOVE, player2);
+                                    envoyerReponse(recevoirString(player1), player2);
                                     break;
                                 case Controle.Game.USEITEM:
-
+                                    envoyerObjet(Controle.Game.USEITEM, player2);
+                                    envoyerReponse(recevoirString(player1), player2);
                                     break;
                                 case Controle.Game.DEFEND:
-
+                                    envoyerObjet(Controle.Game.DEFEND, player2);
+                                    envoyerReponse(recevoirString(player1), player2);
                                     break;
                                 case Controle.Game.ATTACK:
-
+                                    envoyerObjet(Controle.Game.ATTACK, player2);
+                                    envoyerReponse(recevoirString(player1), player2);
                                     break;
                                 case Controle.Game.QUIT:
                                     envoyerObjet(Controle.Game.QUIT, player2);
@@ -167,6 +173,22 @@ namespace ThroneWarsServer
                                             envoyerObjet(Controle.Game.AFK, player2);
                                         }
                                         break;
+                                    case Controle.Game.MOVE:
+                                        envoyerObjet(Controle.Game.MOVE, player1);
+                                        envoyerReponse(recevoirString(player2), player1);
+                                        break;
+                                    case Controle.Game.USEITEM:
+                                        envoyerObjet(Controle.Game.USEITEM, player1);
+                                        envoyerReponse(recevoirString(player2), player1);
+                                        break;
+                                    case Controle.Game.DEFEND:
+                                        envoyerObjet(Controle.Game.DEFEND, player1);
+                                        envoyerReponse(recevoirString(player2), player1);
+                                        break;
+                                    case Controle.Game.ATTACK:
+                                        envoyerObjet(Controle.Game.ATTACK, player1);
+                                        envoyerReponse(recevoirString(player2), player1);
+                                        break;
                                     case Controle.Game.QUIT:
                                         envoyerObjet(Controle.Game.QUIT, player2);
                                         updateWinner(player2);
@@ -174,7 +196,6 @@ namespace ThroneWarsServer
                                         isWon = true;
                                         player2.isConnected = false;
                                         break;
-
                                     case Controle.Game.CANCEL:
                                         envoyerObjet(Controle.Game.QUIT, player2);
                                         envoyerObjet(Controle.Game.CANCEL, player1);
@@ -197,6 +218,10 @@ namespace ThroneWarsServer
             }
             this.T.Abort();
         }
+        /// <summary>
+        /// met a jour le gagant de la partie ainsi que la base de donnees pour la partie en cours
+        /// </summary>
+        /// <param name="j">le joueur gagnant</param>
         private void updateWinner(Joueur j)
         {
             Controle.updateMatch(this.mId, j.jid, player1.jid,
@@ -297,23 +322,33 @@ namespace ThroneWarsServer
         private void initGame()
         {
             envoyerObjet(Controle.Game.STARTING, player1);
-            envoyerObjet(Controle.Game.STARTING, player2);
-            //jouation
+            envoyerObjet(Controle.Game.STARTING, player2);//jouation
+            
             recevoirChoix(player1);
             recevoirChoix(player2);
+
             envoyerObjet(player2.Persos, player1);
             envoyerObjet(player1.Persos, player2);
             recevoirChoix(player1);
             recevoirChoix(player2);
+
             envoyerObjet(player2.positionsPersonnages, player1);
             envoyerObjet(player1.positionsPersonnages, player2);
+
             recevoirChoix(player1);
             recevoirChoix(player2);
-            envoyerObjet(traiterDataSet(Controle.listPotions(player1.jid, 1)), player1);
-            envoyerObjet(traiterDataSet(Controle.listPotions(player2.jid, 1)), player2);
-            recevoirChoix(player1);
+
+            envoyerObjet(player1.potions = traiterDataSet(Controle.listPotions(player1.jid, 1)), player1);
+            envoyerObjet(player2.potions = traiterDataSet(Controle.listPotions(player2.jid, 1)), player2);
+
+            recevoirChoix(player1);    
             recevoirChoix(player2);
         }
+        /// <summary>
+        /// Fonction traite le dataset pour creer les objets potions pour le joueur
+        /// </summary>
+        /// <param name="DS">DataSet a traiter</param>
+        /// <returns>une liste contenant les potions du joueur</returns>
         private List<Potions> traiterDataSet(DataSet DS)
         {
             List<Potions> Liste = new List<Potions>();
@@ -334,6 +369,9 @@ namespace ThroneWarsServer
             Liste.Capacity = Liste.Count;
             return Liste;
         }
+        /// <summary>
+        /// Execute les fonctione neccesaire pour creer la partie et recevoir les donnees basique usager
+        /// </summary>
         private void prepareGame()
         {
             envoyerReponse("1", player1);
@@ -343,6 +381,13 @@ namespace ThroneWarsServer
             this.mId = Controle.createMatch(player1.jid, 1, player1.Persos[0].Nom, player1.Persos[1].Nom, player1.Persos[2].Nom, player1.Persos[3].Nom);
             Controle.addPlayerMatch(this.mId, player2.jid, player2.Persos[0].Nom, player2.Persos[1].Nom, player2.Persos[2].Nom, player2.Persos[3].Nom);
         }
+        /// <summary>
+        /// CETTE FONCTION EST UN TEMPLATE:
+        /// elle retourne n'importe quel type de liste d'un joueur
+        /// </summary>
+        /// <typeparam name="T">Type de la liste attendu</typeparam>
+        /// <param name="j">Joueur sur lequel on lis cette liste</param>
+        /// <returns></returns>
         private List<T> RecevoirObjet<T>(Joueur j)
         {
 
@@ -366,6 +411,11 @@ namespace ThroneWarsServer
             }
             return list;
         }
+        /// <summary>
+        /// recoit un choix de l'enum 
+        /// </summary>
+        /// <param name="j">joueur a qui l'on souhaite demande l'action</param>
+        /// <returns>un choix dans Controle.Game</returns>
         private Controle.Game recevoirChoix(Joueur j)
         {
             int first = j.Socket.ReceiveBufferSize;
@@ -384,6 +434,12 @@ namespace ThroneWarsServer
             }
 
         }
+        /// <summary>
+        /// cette fonction envoie un objet de n'importe quel type serializable
+        /// </summary>
+        /// <typeparam name="T">Type serializable</typeparam>
+        /// <param name="ds">Objet a envoyer</param>
+        /// <param name="j">Joueur a qui envoyer l'objet</param>
         private void envoyerObjet<T>(T ds, Joueur j)
         {
             BinaryFormatter b = new BinaryFormatter();
@@ -391,14 +447,25 @@ namespace ThroneWarsServer
             {
                 b.Serialize(stream, ds);
                 j.Socket.Send(stream.ToArray());
+                System.Threading.Thread.Sleep(500);// le sleep assure que les informations dans la memoire tempon on ete envoyer au client
             }
         }
+        /// <summary>
+        /// envoie une chaine de charactere au client
+        /// </summary>
+        /// <param name="reponse">String a envoyer</param>
+        /// <param name="j">joueur a qui envoyer le string</param>
         private void envoyerReponse(string reponse, Joueur j)
         {
             byte[] data = Encoding.ASCII.GetBytes(reponse);
 
             j.Socket.Send(data);
         }
+        /// <summary>
+        /// recoit un string provenant du client
+        /// </summary>
+        /// <param name="j">joueur que l'on veut ecouter</param>
+        /// <returns>le string en question</returns>
         private string recevoirString(Joueur j)
         {
             string S;
