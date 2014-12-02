@@ -25,6 +25,8 @@ namespace SiteWebThroneWars
             string text = "";
             // Si user est plus que 4 characteres
             bool userOK = false;
+            // Si user est de format valide
+            bool isValid = false;
             // Verif si all textbox sont pas vide
             bool ok = VerifChamps();
             if (ok)
@@ -43,13 +45,24 @@ namespace SiteWebThroneWars
                     ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>MessageBoxErreur(\"" + text + "\");</script>", false);
                     ViderTB();
                 }
+                if (Regex.IsMatch(user, @"^[a-zA-Z0-9]+$"))
+                {
+                    isValid = true;
+                }
+                else
+                {
+                    text = "Le format de votre nom d'usager est invalide";
+                    ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>MessageBoxErreur(\"" + text + "\");</script>", false);
+                    ViderTB();
+                }
+                
 
                 // Verifier si email est legit ou non vide
                 bool legitEmail = IsEmail(courriel);
 
 
                 // Verifier si mot de passe = confirmation && Email == confirmation && Email legit
-                if (password.Text == cpassword.Text && email.Text == cemail.Text && legitEmail && userOK)
+                if (password.Text == cpassword.Text && email.Text == cemail.Text && legitEmail && userOK && isValid)
                 {
                     bool InsReussi = false;
                     // Inserer dans oracle
@@ -66,12 +79,12 @@ namespace SiteWebThroneWars
                         int randomNumber = random.Next(1, 9);
                         Controle.Rotation rot = new Controle.Rotation(randomNumber);
                         string userHash = rot.Chiffrer(user);
-                        userHash += randomNumber;
+                        userHash += randomNumber; 
                         string link = "<a href=http://www.thronewars.ca/ConfirmAccount.aspx?User=" + userHash + ">Ici</a>";
                         // Send email de confirmation
                         Email.sendMail(courriel, Email.SujetInscription, Email.BodyConfirmation + link);
                         // Vide les TB
-                        ViderTB();
+                        ViderTB(); 
                         //Remet la couleur noir au label
                         PasswordLB.ForeColor = System.Drawing.Color.Black;
                         CPasswordLB.ForeColor = System.Drawing.Color.Black;

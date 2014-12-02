@@ -13,8 +13,6 @@ using System.Text.RegularExpressions;
 
 public class GameController : TMNController
 {
-    public const char SPLITTER = '?';
-
     // ====================================================================================================================
     #region inspector properties
 
@@ -44,6 +42,7 @@ public class GameController : TMNController
 
     private int activeCharacterIndex = 0;
 
+    public const char SPLITTER = '?';
 
 
     #endregion
@@ -56,9 +55,6 @@ public class GameController : TMNController
     private Character selectedUnit = null;	// currently selected unit
     private TileNode hoverNode = null;	// that that mouse is hovering over
     private TileNode prevNode = null;	// helper during movement
-
-    static public bool hasMoved = false;
-    static public bool hasAttacked = false;
 
     public bool isPlayerTurn = false;
 
@@ -544,13 +540,13 @@ public class GameController : TMNController
             {
                 ClickNextActiveCharacter();
             }
-            if(PlayerManager._instance.enemyMove && !hasMoved)
+            if(PlayerManager._instance.enemyMove)
             {
                 GameObject go = GameObject.Find(PlayerManager._instance._activeEnemyName);
+                Debug.Log(go.GetComponent<Character>()._name);
                 TileNode node = GameObject.Find("node" + PlayerManager._instance._destinationNodeNumber).GetComponent<TileNode>();
                 go.GetComponent<Character>().MoveTo(node);
 
-                hasMoved = true;
                 PlayerManager._instance.enemyMove = false;
             }
             else if(PlayerManager._instance.enemyAttack)
@@ -561,7 +557,6 @@ public class GameController : TMNController
             {
 
             }
-            hasMoved = false;
         }
         else if (state == State.Init)
         {
@@ -693,6 +688,8 @@ public class GameController : TMNController
             base.OnNaviUnitClick(go);
             attackRangeMarker.HideAll();
             map.ShowAllTileNodes(false);
+
+
 
             // jump camera to the unit that was clicked on
             camMover.Follow(go.transform);

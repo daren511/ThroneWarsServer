@@ -88,6 +88,12 @@
     <Reference Include="UnityVS.VersionSpecific">
       <HintPath>Assets\UnityVS\Editor\UnityVS.VersionSpecific.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEditor.UI">
+      <HintPath>C:\Program Files (x86)\Unity\Editor\Data\UnityExtensions\Unity\GUISystem\4.6.0\Editor\UnityEditor.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>C:\Program Files (x86)\Unity\Editor\Data\UnityExtensions\Unity\GUISystem\4.6.0\UnityEngine.UI.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="UnityVS.ThroneWars.CSharp.csproj">
@@ -121,8 +127,6 @@
     <Compile Include="Assets\Tile Based Map and Nav\Editor\TMNEditorUtil.cs" />
     <Compile Include="Assets\Tile Based Map and Nav\Editor\TNELinksOnOffSwitch_Inspector.cs" />
     <Compile Include="Assets\Tile Based Map and Nav\Editor\TileNodeEditor.cs" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Assets\ReadMe.txt" />
     <None Include="Assets\ThirdParty\NGUI\ReadMe.txt" />
     <None Include="Assets\ThirdParty\NGUI\Resources\Shaders\Depth.shader" />
@@ -136,6 +140,12 @@
     <None Include="Assets\ThirdParty\NGUI\Resources\Shaders\Unlit - Transparent Colored.shader" />
     <None Include="Assets\Tile Based Map and Nav\Documentation\readme.txt" />
     <None Include="Assets\Water\Sources\Shaders\FX-Water Simple.shader" />
+    <None Include="Assets\ThirdParty\NGUI\DLLs\Editor\NGUI_Editor.dll" />
+    <None Include="Assets\UnityVS\Editor\SyntaxTree.VisualStudio.Unity.Bridge.dll" />
+    <None Include="Assets\UnityVS\Editor\SyntaxTree.VisualStudio.Unity.Messaging.dll" />
+    <None Include="Assets\UnityVS\Editor\UnityVS.VersionSpecific.dll" />
+    <None Include="C:\Program Files (x86)\Unity\Editor\Data\UnityExtensions\Unity\GUISystem\4.6.0\Editor\UnityEditor.UI.dll" />
+    <None Include="C:\Program Files (x86)\Unity\Editor\Data\UnityExtensions\Unity\GUISystem\4.6.0\UnityEngine.UI.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2013\UnityVS.CSharp.targets" />
 </Project>

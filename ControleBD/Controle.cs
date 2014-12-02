@@ -1111,7 +1111,7 @@ namespace ControleBD
                 OracleParameter OraParamUsername = new OracleParameter(":userNonHash", OracleDbType.Varchar2, 32);
 
                 OraParamHashKey.Value = passHash;
-                OraParamUsername.Value = userNonHash;
+                OraParamUsername.Value = userNonHash.ToLower();
 
                 oraUpdate.Parameters.Add(OraParamHashKey);
                 oraUpdate.Parameters.Add(OraParamUsername);
@@ -1158,10 +1158,21 @@ namespace ControleBD
 
                     if (tableau.IndexOf(lettre) < 26)
                     {
-                        mot += tableau[((lettre - 65 + increment) % 26)];
+                        bool isnumber = Char.IsNumber(lettre);
+                        if (!isnumber)
+                            mot += tableau[((lettre - 65 + increment) % 26)];
+                        else
+                         mot += (char)(lettre+1);
+                        
                     }
                     else
-                        mot += tableau[(lettre - 97 + increment) % 26 + 26];
+                    {
+                        bool isnumber = Char.IsNumber(lettre);
+                        if (!isnumber)
+                            mot += tableau[(lettre - 97 + increment) % 26 + 26];
+                        else
+                            mot += (char)(lettre + 1);
+                    }
                 }
                 return mot;
             }
@@ -1176,17 +1187,30 @@ namespace ControleBD
 
                     if (tableau.IndexOf(lettre) < 26)
                     {
-                        mot += tableau[((lettre + 65 - increment) % 26)];
+                        bool isnumber = Char.IsNumber(lettre);
+                        if (!isnumber)
+                            mot += tableau[((lettre + 65 - increment) % 26)];
+                        else
+                            mot += (char)(lettre - 1);
+
                     }
                     else
                     {
                         if (lettre - 97 - increment >= 0)
                         {
+                            bool isnumber = Char.IsNumber(lettre);
+                            if (!isnumber)
                             mot += tableau[(lettre - 97 - increment) % 26 + 26];
+                            else
+                                mot += (char)(lettre - 1);
                         }
                         else
                         {
-                            mot += tableau[52 - Math.Abs(lettre - 97 - increment)];
+                            bool isnumber = Char.IsNumber(lettre);
+                            if (!isnumber)
+                                mot += tableau[52 - Math.Abs(lettre - 97 - increment)];
+                            else
+                                mot += (char)(lettre - 1);
                         }
                     }
                 }
