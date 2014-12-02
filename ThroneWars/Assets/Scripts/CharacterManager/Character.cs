@@ -204,12 +204,6 @@ public class Character : NaviUnit
         this.GetComponent<Billboard>().AttackAnimation();
         weapon.Play(target);
 
-        /*
-         * TRAITER L'ATTAQUE, EN L'ENVOYANT AU SERVEUR ET AFFECTER LES 2 CLIENTS
-         * 
-         * */
-
-
         return true;
     }
     /// <summary>called by the weapon when it is done doing its thing</summary>

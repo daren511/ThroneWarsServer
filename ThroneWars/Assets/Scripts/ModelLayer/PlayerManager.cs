@@ -64,10 +64,18 @@ public class PlayerManager : MonoBehaviour
     public bool enemyMove = false;
     public bool enemyItem = false;
 
-
-    public string _destinationNodeNumber;
     public string _activeEnemyName;
 
+    //la tuile de destination, pour les mouvements
+    public string _destinationNodeNumber;
+
+    //la cible, pour le combat
+    public string _activeTargetUnit;
+    //les dégâts infligés, pour le combat
+    public int _damageDealt;
+
+    //le nom de l'item
+    public string _itemName;
 
     void OnApplicationQuit()
     {
@@ -491,6 +499,8 @@ public class PlayerManager : MonoBehaviour
     public void InGameManager()
     {
         Controle.Game action = 0;
+        string[] vals;
+
         do
         {
             int count = sck.ReceiveBufferSize;
@@ -508,25 +518,31 @@ public class PlayerManager : MonoBehaviour
             {
                 action = (Controle.Game)receive.Deserialize(recstream);
             }
-
             switch (action)
             {
                 case Controle.Game.ENDTURN:
-                    GameController.threadTurn.Abort();
+                    GameController.threadTurn.Abort();                    
                     break;
 
                 case Controle.Game.ATTACK:
+                     vals = ReceiveString().Split(SPLITTER);
+                    _activeEnemyName = vals[0];
+                    _activeTargetUnit = vals[1];
+                    _damageDealt = Int32.Parse(vals[2]);
                     enemyAttack = true;
                     break;
 
                 case Controle.Game.MOVE:
-                    string[] vals = ReceiveString().Split(SPLITTER);
+                    vals = ReceiveString().Split(SPLITTER);
                     _activeEnemyName = vals[0];
                     _destinationNodeNumber = vals[1];
                     enemyMove = true;
                     break;
 
                 case Controle.Game.USEITEM:
+                    vals = ReceiveString().Split(SPLITTER);
+                    _activeEnemyName = vals[0];
+                    
                     enemyItem = true;
                     break;
 

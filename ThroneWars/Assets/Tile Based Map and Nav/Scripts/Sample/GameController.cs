@@ -59,6 +59,7 @@ public class GameController : TMNController
 
     static public bool hasMoved = false;
     static public bool hasAttacked = false;
+    static public bool hasUsedItem = false;
 
     public bool isPlayerTurn = false;
 
@@ -361,7 +362,14 @@ public class GameController : TMNController
         TileNode node = GameObject.Find("node" + nodeNumber).GetComponent<TileNode>();
         unit.MoveTo(node);
     }
-    //private void AttackUnit(Unit unit, string)
+    //private void AttackUnit(Unit atker, Unit defender)
+    //{
+        
+    //}
+    //private void UnitUseItem(Unit unit, string itemName)
+    //{
+
+    //}
     #region combat
     /// <summary>
     /// Formule pour calculer les dégâts infligés
@@ -414,7 +422,7 @@ public class GameController : TMNController
         }
         return gain;
     }
-    private void DoCombat(Character atker, Character defender)
+    private void DoCombat(Character atker, Character defender, int damage)
     {
         if (atker.Attack(defender))
         {
@@ -431,6 +439,7 @@ public class GameController : TMNController
             defender.ReceiveDamage(dmg);
             selectedUnit.ReceiveExperience(exp);
             selectedUnit.ReceiveGold(gold);
+
             allowInput = false;
             attackRangeMarker.HideAll();
             StartCoroutine(WaitForAttack());
@@ -508,10 +517,9 @@ public class GameController : TMNController
             }
         }
         if (done == PlayerManager._instance._chosenTeam.Count && PlayerManager._instance._playerSide == currPlayerTurn + 1)
-        {
-            //tour du joueur terminer
-
+        {            
             //on envoie au serveur une requête comme quoi que notre tour est terminé
+            PlayerManager._instance.SendObject(Controle.Game.ENDTURN);
         }
         OnNaviUnitClick(units[PlayerManager._instance._playerSide - 1][activeCharacterIndex].gameObject);
         if (PlayerManager._instance._playerSide - 1 == currPlayerTurn)
@@ -553,15 +561,29 @@ public class GameController : TMNController
                 hasMoved = true;
                 PlayerManager._instance.enemyMove = false;
             }
-            else if(PlayerManager._instance.enemyAttack)
+            else if(PlayerManager._instance.enemyAttack && !hasAttacked)
             {
+                GameObject enemy = GameObject.Find(PlayerManager._instance._activeEnemyName);
+                GameObject target = GameObject.Find(PlayerManager._instance._activeTargetUnit);
+                int dmgDealt = PlayerManager._instance._damageDealt;
 
+                DoCombat(enemy.GetComponent<Character>(), target.GetComponent<Character>(), dmgDealt);
+
+                hasAttacked = true;
+                PlayerManager._instance.enemyAttack = false;
             }
-            else if(PlayerManager._instance.enemyItem)
+            else if(PlayerManager._instance.enemyItem && !hasUsedItem)
             {
+                GameObject enemy = GameObject.Find(PlayerManager._instance._activeEnemyName);
 
+                //enemy.GetComponent<Character>().UsePotion(PlayerManager._instance._itemName);
+
+                hasUsedItem = true;
+                PlayerManager._instance.enemyItem = false;
             }
             hasMoved = false;
+            hasAttacked = false;
+            hasUsedItem = false;
         }
         else if (state == State.Init)
         {
@@ -680,11 +702,6 @@ public class GameController : TMNController
     // ====================================================================================================================
     #region input handlers - click unit
 
-    public void FakeUnitClick(GameObject go)
-    {
-        this.OnNaviUnitClick(go);
-    }
-
     protected override void OnNaviUnitClick(GameObject go)
     {
         Character unit = go.GetComponent<Character>();
@@ -734,7 +751,7 @@ public class GameController : TMNController
             // else, not active player's unit but his opponent's unit that was clicked on
                 else if (selectedUnit != null && combatOn && unit._isAlive)
                 {
-                    DoCombat(selectedUnit, unit);
+                    DoCombat(selectedUnit, unit, 10);
                     PlayerManager._instance.SendObject(Controle.Game.ATTACK);
                     PlayerManager._instance.SendObject<string>(selectedUnit._name + SPLITTER + unit._name);
                 }
