@@ -84,7 +84,7 @@ namespace SiteWebThroneWars
                         // Send email de confirmation
                         Email.sendMail(courriel, Email.SujetInscription, Email.BodyConfirmation + link);
                         // Vide les TB
-                        ViderTB();
+                        ViderTB(); 
                         //Remet la couleur noir au label
                         PasswordLB.ForeColor = System.Drawing.Color.Black;
                         CPasswordLB.ForeColor = System.Drawing.Color.Black;
