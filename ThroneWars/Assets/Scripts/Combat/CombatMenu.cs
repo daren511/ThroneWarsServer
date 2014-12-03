@@ -5,7 +5,7 @@ public class CombatMenu : MonoBehaviour
 {
     #region GUIElements
     private Rect _menuContainer;
-    private Rect _characterStats = new Rect(0, 0, 320, 110);
+    private Rect _characterStats = new Rect(0, 0, 330, 110);
     private Rect _itemContainer;
     #endregion
 
@@ -249,22 +249,21 @@ public class CombatMenu : MonoBehaviour
     void DisplayItemMenu()
     {
         characterChosen = false;
-        _itemContainer = new Rect(_menuContainer.x - _menuContainer.width, _menuContainer.y, 450, 200);
+        _itemContainer = new Rect(_menuContainer.x - _menuContainer.width, _menuContainer.y, 500, 200);
         Rect button;
         GUI.Box(_itemContainer, "");
 
         ///affichage de la légende
-        GUI.Label(new Rect(_itemContainer.x + 50, _itemContainer.y + 10, 150, 25), "Item");
-        GUI.DrawTexture(new Rect(_itemContainer.x + 125, _itemContainer.y + 10, 20, 20), _healthTexture, ScaleMode.StretchToFill, true, 0.0f);
-        GUI.DrawTexture(new Rect(_itemContainer.x + 175, _itemContainer.y + 10, 20, 20), _atkTexture, ScaleMode.StretchToFill, true, 0.0f);
-        GUI.DrawTexture(new Rect(_itemContainer.x + 225, _itemContainer.y + 10, 20, 20), _defTexture, ScaleMode.StretchToFill, true, 0.0f);
-        GUI.DrawTexture(new Rect(_itemContainer.x + 275, _itemContainer.y + 10, 20, 20), _matkTexture, ScaleMode.StretchToFill, true, 0.0f);
-        GUI.DrawTexture(new Rect(_itemContainer.x + 325, _itemContainer.y + 10, 20, 20), _mdefTexture, ScaleMode.StretchToFill, true, 0.0f);
-        GUI.Label(new Rect(_itemContainer.x + 375, _itemContainer.y + 10, 150, 25), "Quantité");
+        GUI.Label(new Rect(_itemContainer.xMin + 95, _itemContainer.yMin + 10, 150, 25), "Item");
+        GUI.DrawTexture(new Rect(_itemContainer.xMin + 190, _itemContainer.yMin + 10, 20, 20), _healthTexture, ScaleMode.StretchToFill, true, 0.0f);
+        GUI.DrawTexture(new Rect(_itemContainer.xMin + 240, _itemContainer.yMin + 10, 20, 20), _atkTexture, ScaleMode.StretchToFill, true, 0.0f);
+        GUI.DrawTexture(new Rect(_itemContainer.xMin + 290, _itemContainer.yMin + 10, 20, 20), _defTexture, ScaleMode.StretchToFill, true, 0.0f);
+        GUI.DrawTexture(new Rect(_itemContainer.xMin + 340, _itemContainer.yMin + 10, 20, 20), _matkTexture, ScaleMode.StretchToFill, true, 0.0f);
+        GUI.DrawTexture(new Rect(_itemContainer.xMin + 390, _itemContainer.yMin + 10, 20, 20), _mdefTexture, ScaleMode.StretchToFill, true, 0.0f);
+        GUI.Label(new Rect(_itemContainer.xMin + 440, _itemContainer.yMin + 10, 150, 25), "QTE");
 
         ///pour revenir au menu  de commandes de combat
-        if (GUI.Button(new Rect(_itemContainer.x + _itemContainer.width - 100, _itemContainer.y + _itemContainer.height - 20, 100, 20),
-                        "Retour"))
+        if (GUI.Button(new Rect(_itemContainer.xMax - 110, _itemContainer.yMax - 40, 100, 30), "Retour"))
         {
             characterChosen = true;
             showItems = false;
@@ -279,7 +278,7 @@ public class CombatMenu : MonoBehaviour
         {
             Potion playerItem = PlayerManager._instance._playerInventory._potions[i];
 
-            button = new Rect(_itemContainer.x, _itemContainer.y + (displayed * 25) + 20, 100, 25);
+            button = new Rect(_itemContainer.x + 5, _itemContainer.y + (displayed * 25) + 30, 200, 25);
 
             //pour le "tooltip" du bouton, on stock le nom, ainsi que la description de l'objet
             GUIContent content = new GUIContent(playerItem._itemName, playerItem._itemDescription);
@@ -302,23 +301,23 @@ public class CombatMenu : MonoBehaviour
                     selectedCharacter.GetComponentInParent<NaviUnit>().onUnitEvent(selectedCharacter.GetComponentInParent<NaviUnit>(), 2);
                 }
                 //affichage des stats de l'item
-                GUI.Label(new Rect(_itemContainer.x + 125, _itemContainer.y + (displayed * 25) + 20, 20, 20), playerItem._lifeRestore.ToString());
-                GUI.Label(new Rect(_itemContainer.x + 175, _itemContainer.y + (displayed * 25) + 20, 20, 20), playerItem._bonusPhysAtk.ToString());
-                GUI.Label(new Rect(_itemContainer.x + 225, _itemContainer.y + (displayed * 25) + 20, 20, 20), playerItem._bonusPhysDef.ToString());
-                GUI.Label(new Rect(_itemContainer.x + 275, _itemContainer.y + (displayed * 25) + 20, 20, 20), playerItem._bonusMagicAtk.ToString());
-                GUI.Label(new Rect(_itemContainer.x + 325, _itemContainer.y + (displayed * 25) + 20, 20, 20), playerItem._bonusMagicDef.ToString());
-                GUI.Label(new Rect(_itemContainer.x + 390, _itemContainer.y + (displayed * 25) + 20, 20, 20), playerItem._quantity.ToString());
+                GUI.Label(new Rect(_itemContainer.xMin + 195, _itemContainer.yMin + (displayed * 25) + 30, 20, 20), playerItem._lifeRestore.ToString());
+                GUI.Label(new Rect(_itemContainer.xMin + 245, _itemContainer.yMin + (displayed * 25) + 30, 20, 20), playerItem._bonusPhysAtk.ToString());
+                GUI.Label(new Rect(_itemContainer.xMin + 295, _itemContainer.yMin + (displayed * 25) + 30, 20, 20), playerItem._bonusPhysDef.ToString());
+                GUI.Label(new Rect(_itemContainer.xMin + 345, _itemContainer.yMin + (displayed * 25) + 30, 20, 20), playerItem._bonusMagicAtk.ToString());
+                GUI.Label(new Rect(_itemContainer.xMin + 395, _itemContainer.yMin + (displayed * 25) + 30, 20, 20), playerItem._bonusMagicDef.ToString());
+                GUI.Label(new Rect(_itemContainer.xMin + 445, _itemContainer.yMin + (displayed * 25) + 30, 20, 20), playerItem._quantity.ToString());
                 displayed++;
             }
         }
         //le "tooltip" fournissant des informations de base sur l'item
-        GUI.Label(new Rect(_itemContainer.x, _itemContainer.y + _itemContainer.height - 40, _itemContainer.width, 20), GUI.tooltip);
+        GUI.Label(new Rect(_itemContainer.xMin + 13, _itemContainer.yMax - 55, _itemContainer.width, 30), GUI.tooltip);
 
         //fin du menu déroulant
         //
         
         
-        GUI.EndScrollView();
+        //GUI.EndScrollView();
     }
 
     void DisplayEndResults()
