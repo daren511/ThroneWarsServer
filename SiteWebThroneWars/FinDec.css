@@ -93,6 +93,8 @@ div.Telechargement{
 /* DIV MÉDIA*/
 div.Photos{ 
   background-color: #219ac2;
+  margin-left:11%;
+  width:75%;
   border-radius: 50px 50px 50px 50px;
   -moz-border-radius: 50px 50px 50px 50px;
   -webkit-border-radius: 50px 50px 50px 50px;
