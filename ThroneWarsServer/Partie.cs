@@ -147,6 +147,9 @@ namespace ThroneWarsServer
                                     break;
                                 case Controle.Game.WIN:
                                     envoyerObjet(Controle.Game.WIN, player2);
+                                    player1.Persos = RecevoirObjet<Personnages>(player1);
+                                    player2.Persos = RecevoirObjet<Personnages>(player2);
+                                    updateExp(Int32.Parse(recevoirString(player1)), Int32.Parse(recevoirString(player2)));
                                     updateWinner(player1);
                                     Program.addGoToMenu(player1);
                                     Program.addGoToMenu(player2);
@@ -221,7 +224,9 @@ namespace ThroneWarsServer
                                         break;
                                     case Controle.Game.WIN:
                                         envoyerObjet(Controle.Game.WIN, player1);
-
+                                        player2.Persos = RecevoirObjet<Personnages>(player2);
+                                        player1.Persos = RecevoirObjet<Personnages>(player1);
+                                        updateExp(Int32.Parse(recevoirString(player1)), Int32.Parse(recevoirString(player2)));
                                         updateWinner(player2);
                                         Program.addGoToMenu(player1);
                                         Program.addGoToMenu(player2);
@@ -241,10 +246,10 @@ namespace ThroneWarsServer
             }
             this.T.Abort();
         }
-        private void updateExp(int money1,int money2)
+        private void updateExp(int money1, int money2)
         {
-            Controle.ajoutMoneyJoueur(player1.jid,money1);
-            Controle.ajoutMoneyJoueur(player2.jid,money2);
+            Controle.ajoutMoneyJoueur(player1.jid, money1);
+            Controle.ajoutMoneyJoueur(player2.jid, money2);
             Controle.ajoutXPPersonnage(player1.Persos[0].Nom, player1.Persos[0].xpGained);
             Controle.ajoutXPPersonnage(player1.Persos[1].Nom, player1.Persos[1].xpGained);
             Controle.ajoutXPPersonnage(player1.Persos[2].Nom, player1.Persos[2].xpGained);
