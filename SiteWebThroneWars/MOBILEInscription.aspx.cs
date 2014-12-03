@@ -37,7 +37,7 @@ namespace SiteWebThroneWars
                 string courriel = email.Text;
 
                 // Vérifie si le nombre de charactere du username est respecté 
-                if (user.Length > 4 && user.Length <= 12)
+                if (user.Length >= 4 && user.Length <= 12)
                     userOK = true;
                 else
                 {

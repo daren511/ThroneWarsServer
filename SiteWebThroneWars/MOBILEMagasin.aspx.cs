@@ -138,12 +138,14 @@ namespace SiteWebThroneWars
         protected void BTN_Items_Click(object sender, EventArgs e)
         {
             Session["GV"] = "Items";
+            ViderTB();
             ListerItems();
         }
 
         protected void BTN_Potions_Click(object sender, EventArgs e)
         {
             Session["GV"] = "Potions";
+            ViderTB();
             ListerItems();
         }
 
