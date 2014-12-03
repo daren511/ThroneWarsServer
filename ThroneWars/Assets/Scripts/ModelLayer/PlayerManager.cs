@@ -64,6 +64,7 @@ public class PlayerManager : MonoBehaviour
     public bool enemyMove = false;
     public bool enemyItem = false;
     public bool enemyDone = false;
+    public bool enemyHasWon = false;
 
 
     public string _activeEnemyName;
@@ -582,7 +583,10 @@ public class PlayerManager : MonoBehaviour
 
                 case Controle.Game.WIN:
                     //l'adversaire a gagné
-                    SendEndResults();
+                    SendObject(SendEndResults());
+                    System.Threading.Thread.Sleep(500);
+                    Send(_gold.ToString());
+                    enemyHasWon = true;
                     break;
 
                 case Controle.Game.QUIT:
@@ -592,7 +596,7 @@ public class PlayerManager : MonoBehaviour
             // End Mutex
 
         
-        } while (action != Controle.Game.ENDTURN);
+        } while (action != Controle.Game.ENDTURN && action != Controle.Game.WIN);
     }
     public string ReceiveString()
     {

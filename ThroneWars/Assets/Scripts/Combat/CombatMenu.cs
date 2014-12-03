@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using ControleBD;
 
 public class CombatMenu : MonoBehaviour
 {
@@ -47,6 +48,7 @@ public class CombatMenu : MonoBehaviour
     public int winner = 0;
     public bool gameOver = false;
     private bool wantToQuit = false;
+    private bool enemyHasQuitOrDisconnected = false;
 
     public bool moveEnabled = true;
     public bool itemEnabled = true;
@@ -246,7 +248,7 @@ public class CombatMenu : MonoBehaviour
         {
             Potion playerItem = PlayerManager._instance._playerInventory._potions[i];
 
-            button = new Rect(_itemContainer.x + 5, _itemContainer.y + (displayed * 25) + 30, 200, 25);
+            button = new Rect(_itemContainer.x + 5, _itemContainer.y + (displayed * 25) + 30, 190, 25);
 
             //pour le "tooltip" du bouton, on stock le nom, ainsi que la description de l'objet
             GUIContent content = new GUIContent(playerItem._itemName, playerItem._itemDescription);
@@ -284,6 +286,7 @@ public class CombatMenu : MonoBehaviour
 
     void DisplayEndResults()
     {
+        enemyHasQuitOrDisconnected = PlayerManager._instance.hasWonDefault;
         if (winner == PlayerManager._instance._playerSide)
         {
             GUILayout.Window(-10, rectWinning, doWinningWindow, "Victoire!");
@@ -330,6 +333,7 @@ public class CombatMenu : MonoBehaviour
         GUILayout.BeginHorizontal();
         if (GUILayout.Button("Oui", GUILayout.Height(37)))
         {
+            PlayerManager._instance.SendObject(Controle.Game.CANCEL);
             PlayerManager._instance._characters.Clear();
             Object[] allObjects = GameController.FindObjectsOfType(typeof(Character));
 
@@ -340,6 +344,7 @@ public class CombatMenu : MonoBehaviour
 
             PlayerManager._instance.ClearPlayer();
             GameManager._instance.ClearEnemy();
+            PlayerManager._instance.LoadPlayer();
             Application.LoadLevel("MainMenu");
         }
         if (GUILayout.Button("Non", GUILayout.Height(37)))
@@ -370,7 +375,10 @@ public class CombatMenu : MonoBehaviour
             int offset = compteur * 25;
             GUILayout.BeginHorizontal();
             GUI.Label(new Rect(rectWinning.width - 450, 75 + offset, 100, 30), PlayerManager._instance._chosenTeam[i]._name);
-            GUI.Label(new Rect(rectWinning.width - 267, 75 + offset, 50, 30), PlayerManager._instance._chosenTeam[i]._characterClass._exp.ToString());
+            if (enemyHasQuitOrDisconnected)
+                GUI.Label(new Rect(rectWinning.width - 267, 75 + offset, 50, 30), "0");
+            else
+                GUI.Label(new Rect(rectWinning.width - 267, 75 + offset, 50, 30), PlayerManager._instance._chosenTeam[i]._characterClass._exp.ToString());
             if (!PlayerManager._instance._chosenTeam[i]._isAlive)
                 GUI.Label(new Rect(rectWinning.width - 168, 75 + offset, 50, 30), "Oui");
             else
@@ -385,7 +393,10 @@ public class CombatMenu : MonoBehaviour
 
         GUILayout.BeginVertical();
         GUILayout.FlexibleSpace();
-        GUILayout.Label("Argent: " + PlayerManager._instance._gold);
+        if (enemyHasQuitOrDisconnected)
+            GUILayout.Label("Argent: 0");
+        else
+            GUILayout.Label("Argent: " + PlayerManager._instance._gold);
         GUILayout.FlexibleSpace();
         GUILayout.EndVertical();
 
@@ -401,6 +412,7 @@ public class CombatMenu : MonoBehaviour
 
             PlayerManager._instance.ClearPlayer();
             GameManager._instance.ClearEnemy();
+            PlayerManager._instance.LoadPlayer();
             Application.LoadLevel("MainMenu");
         }
         GUILayout.EndHorizontal();
@@ -459,6 +471,7 @@ public class CombatMenu : MonoBehaviour
 
             PlayerManager._instance.ClearPlayer();
             GameManager._instance.ClearEnemy();
+            PlayerManager._instance.LoadPlayer();
             Application.LoadLevel("MainMenu");
         }
         GUILayout.EndHorizontal();
