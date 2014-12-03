@@ -527,7 +527,7 @@ public class PlayerManager : MonoBehaviour
         Controle.Game action = Controle.Game.NOTHING;
         string[] vals;
         string line;
-        //Debug.Log("j'ecoute");
+        
         do
         {
             int count = sck.ReceiveBufferSize;
