@@ -68,11 +68,20 @@ public class CombatMenu : MonoBehaviour
     public Texture2D _mdefTexture;
     #endregion
     private Vector2 scrollViewVector = Vector2.zero;
+    GUIStyle actionStyle = new GUIStyle();
+
 
     // Use this for initialization
     void Start()
     {
-
+        actionStyle.normal.textColor = Color.white;
+        actionStyle.alignment = TextAnchor.MiddleCenter;
+        actionStyle.onHover.background =
+            actionStyle.hover.background = (Texture2D)Resources.Load("Menu/img_invisible");
+        actionStyle.onHover.textColor = Color.yellow;
+        actionStyle.hover.textColor = Color.yellow;
+        actionStyle.padding.top = 5;
+        actionStyle.padding.bottom = 5;
     }
 
     // Update is called once per frame
@@ -102,7 +111,7 @@ public class CombatMenu : MonoBehaviour
     void OnGUI()
     {
         hasUpdatedGUI = ResourceManager.GetInstance.UpdateGUI(hasUpdatedGUI);
-        if(!gameOver)
+        if (!gameOver)
         {
             DisplayCharacterStats();
             InitializeStats();
@@ -131,41 +140,40 @@ public class CombatMenu : MonoBehaviour
     void DisplayCharacterStats()
     {
         GUI.Box(_characterStats, charName);
-        GUI.Label(new Rect(10f, 5f, 100, 100), charClass);
-        GUI.Label(new Rect(235f, 5f, 100, 100), "Niv. " + lvl.ToString());
+        GUI.Label(new Rect(_characterStats.xMin + 20f, _characterStats.yMin + 10f, 100, 100), charClass);
+        GUI.Label(new Rect(_characterStats.xMax - 80f, _characterStats.yMin + 10f, 100, 100), "Niv. " + lvl.ToString());
 
-        GUI.DrawTexture(new Rect(10f, 20f, 20, 20), _healthTexture, ScaleMode.StretchToFill, true, 0.0f);
-        GUI.Box(new Rect(50f, 30f, 180, 0.01f * Screen.height), "", GUIStyle.none);
-        GUI.Box(new Rect(50f, 30f, 180 * (hpLeft / hpMax), 0.01f * Screen.height), "", _healthBarFront);
-        GUI.Label(new Rect(235f, 22f, 100, 100), hpLeft + " / " + hpMax);
+        GUI.DrawTexture(new Rect(_characterStats.xMin + 20f, _characterStats.yMin + 33f, 15, 15), _healthTexture, ScaleMode.StretchToFill, true, 0.0f);
+        GUI.Box(new Rect(_characterStats.xMin + 50f, _characterStats.yMin + 34f, 180 * (hpLeft / hpMax), 0.01f * Screen.height), "", _healthBarFront);
+        GUI.Label(new Rect(_characterStats.xMax - 85f, _characterStats.yMin + 28f, 100, 100), hpLeft + " / " + hpMax);
 
-        GUI.DrawTexture(new Rect(10f, 40f, 20, 20), _magicTexture, ScaleMode.StretchToFill, true, 0.0f);
-        GUI.Box(new Rect(50f, 45f, 180, 0.01f * Screen.height), "", GUIStyle.none);
-        GUI.Box(new Rect(50f, 45f, 180 * (mpLeft / mpMax), 0.01f * Screen.height), "", _magicBarFront);
-        GUI.Label(new Rect(235f, 38f, 100, 100), mpLeft + " / " + mpMax);
+        GUI.DrawTexture(new Rect(_characterStats.xMin + 20f, _characterStats.yMin + 49, 20, 20), _magicTexture, ScaleMode.StretchToFill, true, 0.0f);
+        GUI.Box(new Rect(_characterStats.xMin + 50f, _characterStats.yMin + 53f, 180 * (mpLeft / mpMax), 0.01f * Screen.height), "", _magicBarFront);
+        GUI.Label(new Rect(_characterStats.xMax - 85f, _characterStats.yMin + 47, 100, 100), mpLeft + " / " + mpMax);
 
-        GUI.DrawTexture(new Rect(10f, 60f, 32, 32), _atkTexture, ScaleMode.StretchToFill, true, 0.0f);
-        GUI.Label(new Rect(50f, 70f, 100, 100), patk.ToString());
+        GUI.DrawTexture(new Rect(_characterStats.xMin + 15f, _characterStats.yMax - 35f, 20, 20), _atkTexture, ScaleMode.StretchToFill, true, 0.0f);
+        GUI.Label(new Rect(_characterStats.xMin + 35f, _characterStats.yMax - 35f, 100, 100), patk.ToString());
 
-        GUI.DrawTexture(new Rect(70f, 60f, 32, 32), _defTexture, ScaleMode.StretchToFill, true, 0.0f);
-        GUI.Label(new Rect(110f, 70f, 100, 100), pdef.ToString());
+        GUI.DrawTexture(new Rect(_characterStats.xMin + 90f, _characterStats.yMax - 35f, 20, 20), _defTexture, ScaleMode.StretchToFill, true, 0.0f);
+        GUI.Label(new Rect(_characterStats.xMin + 110f, _characterStats.yMax - 35f, 100, 100), pdef.ToString());
 
-        GUI.DrawTexture(new Rect(140f, 60f, 32, 32), _matkTexture, ScaleMode.StretchToFill, true, 0.0f);
-        GUI.Label(new Rect(180f, 70f, 100, 100), matk.ToString());
+        GUI.DrawTexture(new Rect(_characterStats.xMin + 170f, _characterStats.yMax - 35f, 20, 20), _matkTexture, ScaleMode.StretchToFill, true, 0.0f);
+        GUI.Label(new Rect(_characterStats.xMin + 190f, _characterStats.yMax - 35f, 100, 100), matk.ToString());
 
-        GUI.DrawTexture(new Rect(220f, 60f, 32, 32), _mdefTexture, ScaleMode.StretchToFill, true, 0.0f);
-        GUI.Label(new Rect(260f, 70f, 100, 100), mdef.ToString());
+        GUI.DrawTexture(new Rect(_characterStats.xMin + 250f, _characterStats.yMax - 35f, 20, 20), _mdefTexture, ScaleMode.StretchToFill, true, 0.0f);
+        GUI.Label(new Rect(_characterStats.xMin + 270f, _characterStats.yMax - 35f, 100, 100), mdef.ToString());
     }
     void DisplayCombatCommands()
     {
         Vector3 pos = selectedCharacter.GetComponent<Character>().transform.position;
         pos = Camera.main.WorldToScreenPoint(pos);
-        _menuContainer = new Rect(pos.x, pos.y, 100, 80);
+        _menuContainer = new Rect(pos.x, pos.y, 100, 125);
 
-        GUI.Box(_menuContainer, "");
+        //GUI.Box(_menuContainer, "");
+        GUILayout.BeginArea(_menuContainer, ColoredGUISkin.Skin.box);
 
         GUI.enabled = !selectedCharacter.GetComponent<Character>().didMove;
-        if (GUI.Button(new Rect(_menuContainer.x, _menuContainer.y, 100, 20), "Déplacer"))
+        if (GUILayout.Button("Déplacer", actionStyle))
         {
             GameController.FindObjectOfType<GameController>().allowInput = false;
             GameController.FindObjectOfType<GameController>().attackRangeMarker.HideAll();
@@ -173,7 +181,7 @@ public class CombatMenu : MonoBehaviour
         }
 
         GUI.enabled = !selectedCharacter.GetComponent<Character>().didAttack;
-        if (GUI.Button(new Rect(_menuContainer.x, _menuContainer.y + 20, 100, 20), "Attaquer"))
+        if (GUILayout.Button("Attaquer", actionStyle))
         {
             GameController.FindObjectOfType<GameController>().allowInput = false;
             GameController.FindObjectOfType<GameController>().map.ShowAllTileNodes(false);
@@ -181,17 +189,48 @@ public class CombatMenu : MonoBehaviour
         }
 
         GUI.enabled = !selectedCharacter.GetComponent<Character>().didAttack;
-        if (GUI.Button(new Rect(_menuContainer.x, _menuContainer.y + 40, 100, 20), "Item"))
+        if (GUILayout.Button("Item", actionStyle))
         {
             showItems = true;
         }
         GUI.enabled = true;
-        if (GUI.Button(new Rect(_menuContainer.x, _menuContainer.y + 60, 100, 20), "Défendre"))
+        if (GUILayout.Button("Défendre", actionStyle))
         {
             ///augmente la défense et passe le tour du personnage
             selectedCharacter.GetComponent<Character>().Defend();
             GameController.FindObjectOfType<GameController>().ClickNextActiveCharacter();
         }
+
+        GUILayout.EndArea();
+
+        //GUI.enabled = !selectedCharacter.GetComponent<Character>().didMove;
+        //if (GUI.Button(new Rect(_menuContainer.x, _menuContainer.y, 100, 20), "Déplacer", GUIStyle.none))
+        //{
+        //    GameController.FindObjectOfType<GameController>().allowInput = false;
+        //    GameController.FindObjectOfType<GameController>().attackRangeMarker.HideAll();
+        //    StartCoroutine(AllowMovement());
+        //}
+
+        //GUI.enabled = !selectedCharacter.GetComponent<Character>().didAttack;
+        //if (GUI.Button(new Rect(_menuContainer.x, _menuContainer.y + 20, 100, 20), "Attaquer", GUIStyle.none))
+        //{
+        //    GameController.FindObjectOfType<GameController>().allowInput = false;
+        //    GameController.FindObjectOfType<GameController>().map.ShowAllTileNodes(false);
+        //    StartCoroutine(AllowAttack());
+        //}
+
+        //GUI.enabled = !selectedCharacter.GetComponent<Character>().didAttack;
+        //if (GUI.Button(new Rect(_menuContainer.x, _menuContainer.y + 40, 100, 20), "Item", GUIStyle.none))
+        //{
+        //    showItems = true;
+        //}
+        //GUI.enabled = true;
+        //if (GUI.Button(new Rect(_menuContainer.x, _menuContainer.y + 60, 100, 20), "Défendre", GUIStyle.none))
+        //{
+        //    ///augmente la défense et passe le tour du personnage
+        //    selectedCharacter.GetComponent<Character>().Defend();
+        //    GameController.FindObjectOfType<GameController>().ClickNextActiveCharacter();
+        //}
     }
     IEnumerator AllowMovement()
     {
@@ -214,13 +253,13 @@ public class CombatMenu : MonoBehaviour
         GUI.Box(_itemContainer, "");
 
         ///affichage de la légende
-        GUI.Label(new Rect(_itemContainer.x + 50, _itemContainer.y, 150, 25), "Item");
-        GUI.DrawTexture(new Rect(_itemContainer.x + 125, _itemContainer.y, 20, 20), _healthTexture, ScaleMode.StretchToFill, true, 0.0f);
-        GUI.DrawTexture(new Rect(_itemContainer.x + 175, _itemContainer.y, 20, 20), _atkTexture, ScaleMode.StretchToFill, true, 0.0f);
-        GUI.DrawTexture(new Rect(_itemContainer.x + 225, _itemContainer.y, 20, 20), _defTexture, ScaleMode.StretchToFill, true, 0.0f);
-        GUI.DrawTexture(new Rect(_itemContainer.x + 275, _itemContainer.y, 20, 20), _matkTexture, ScaleMode.StretchToFill, true, 0.0f);
-        GUI.DrawTexture(new Rect(_itemContainer.x + 325, _itemContainer.y, 20, 20), _mdefTexture, ScaleMode.StretchToFill, true, 0.0f);
-        GUI.Label(new Rect(_itemContainer.x + 375, _itemContainer.y, 150, 25), "Quantité");
+        GUI.Label(new Rect(_itemContainer.x + 50, _itemContainer.y + 10, 150, 25), "Item");
+        GUI.DrawTexture(new Rect(_itemContainer.x + 125, _itemContainer.y + 10, 20, 20), _healthTexture, ScaleMode.StretchToFill, true, 0.0f);
+        GUI.DrawTexture(new Rect(_itemContainer.x + 175, _itemContainer.y + 10, 20, 20), _atkTexture, ScaleMode.StretchToFill, true, 0.0f);
+        GUI.DrawTexture(new Rect(_itemContainer.x + 225, _itemContainer.y + 10, 20, 20), _defTexture, ScaleMode.StretchToFill, true, 0.0f);
+        GUI.DrawTexture(new Rect(_itemContainer.x + 275, _itemContainer.y + 10, 20, 20), _matkTexture, ScaleMode.StretchToFill, true, 0.0f);
+        GUI.DrawTexture(new Rect(_itemContainer.x + 325, _itemContainer.y + 10, 20, 20), _mdefTexture, ScaleMode.StretchToFill, true, 0.0f);
+        GUI.Label(new Rect(_itemContainer.x + 375, _itemContainer.y + 10, 150, 25), "Quantité");
 
         ///pour revenir au menu  de commandes de combat
         if (GUI.Button(new Rect(_itemContainer.x + _itemContainer.width - 100, _itemContainer.y + _itemContainer.height - 20, 100, 20),
@@ -231,8 +270,8 @@ public class CombatMenu : MonoBehaviour
         }
 
         ///début du menu déroulant
-        scrollViewVector = GUI.BeginScrollView(new Rect(_itemContainer.x, _itemContainer.y, _itemContainer.width, _itemContainer.height - 20),
-                                                         scrollViewVector, new Rect(_itemContainer.x, _itemContainer.y, 200, 400));
+        //scrollViewVector = GUI.BeginScrollView(new Rect(_itemContainer.x, _itemContainer.y, _itemContainer.width, _itemContainer.height - 20),
+        //                                                 scrollViewVector, new Rect(_itemContainer.x, _itemContainer.y, 200, 400));
 
         int displayed = 0;
         for (int i = 0; i < PlayerManager._instance._playerInventory._potions.Count; ++i)
@@ -275,13 +314,16 @@ public class CombatMenu : MonoBehaviour
         GUI.Label(new Rect(_itemContainer.x, _itemContainer.y + _itemContainer.height - 40, _itemContainer.width, 20), GUI.tooltip);
 
         //fin du menu déroulant
+        //
+        
+        
         GUI.EndScrollView();
     }
 
     void DisplayEndResults()
     {
         string msg = "";
-        if(winner == PlayerManager._instance._playerSide)
+        if (winner == PlayerManager._instance._playerSide)
         {
             GUILayout.Window(-10, rectWinning, doWinningWindow, "Victoire!");
         }
@@ -337,7 +379,7 @@ public class CombatMenu : MonoBehaviour
 
             PlayerManager._instance.ClearPlayer();
             GameManager._instance.ClearEnemy();
-            Application.LoadLevel("MainMenu");       
+            Application.LoadLevel("MainMenu");
         }
         if (GUILayout.Button("Non", GUILayout.Height(37)))
         {
@@ -371,7 +413,7 @@ public class CombatMenu : MonoBehaviour
 
             PlayerManager._instance.ClearPlayer();
             GameManager._instance.ClearEnemy();
-            Application.LoadLevel("MainMenu");    
+            Application.LoadLevel("MainMenu");
         }
         GUILayout.EndHorizontal();
         GUILayout.Space(3);

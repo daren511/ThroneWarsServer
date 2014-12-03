@@ -506,7 +506,7 @@ public class PlayerManager : MonoBehaviour
     {
         Controle.Game action = Controle.Game.NOTHING;
         string[] vals;
-        Debug.Log("j'ecoute");
+        //Debug.Log("j'ecoute");
         do
         {
             int count = sck.ReceiveBufferSize;
@@ -524,12 +524,12 @@ public class PlayerManager : MonoBehaviour
             {
                 action = (Controle.Game)receive.Deserialize(recstream);
             }
-            Debug.Log(action.ToString());
+            //Debug.Log(action.ToString());
             // Mutex
             switch (action)
             {
                 case Controle.Game.ENDTURN:
-                    Debug.Log("endturn");
+                    //Debug.Log("endturn");
                     enemyDone = true;
                     break;
 
@@ -542,10 +542,9 @@ public class PlayerManager : MonoBehaviour
                     break;
 
                 case Controle.Game.MOVE:
-                    Debug.Log("move");
-                    string derptest = ReceiveString();
-                    Debug.Log(derptest);
-                    vals = derptest.Split(SPLITTER);
+                    //Debug.Log("move");
+                    string line = ReceiveString();
+                    vals = line.Split(SPLITTER);
                     _activeEnemyName = vals[0];
                     _destinationNodeNumber = vals[1];
                     enemyMove = true;
@@ -572,7 +571,7 @@ public class PlayerManager : MonoBehaviour
 
         
         } while (action != Controle.Game.ENDTURN);
-        Debug.Log("j'ecoute pu");
+        //Debug.Log("j'ecoute pu");
     }
     public string ReceiveString()
     {

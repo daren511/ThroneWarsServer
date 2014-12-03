@@ -586,19 +586,20 @@ public class GameController : TMNController
             }
             else if(PlayerManager._instance.enemyDone && !enemyIsDone)
             {
-                Debug.Log("ennemi termine");
+                //Debug.Log("ennemi termine");
                 enemyIsDone = true;
                 ChangeTurn();
+                isMyTurn = true;
                 //InactivityAndQuitCheck();
             }
             if(PlayerTurnDone() && currPlayerTurn == PlayerManager._instance._playerSide - 1 && isMyTurn)
             {
                 isMyTurn = false;
-                Debug.Log("jai fini`mon tour");
+                //Debug.Log("jai fini`mon tour");
                 //on envoie au serveur une requête comme quoi que notre tour est terminé
                 PlayerManager._instance.SendObject(Controle.Game.ENDTURN);
-
                 ListenToServer();
+
                 ChangeTurn();
 
                 CombatMenu.FindObjectOfType<CombatMenu>().characterChosen = false;
@@ -785,10 +786,10 @@ public class GameController : TMNController
             // else, not active player's unit but his opponent's unit that was clicked on
                 else if (selectedUnit != null && combatOn && unit._isAlive)
                 {
-                    //int dmg = CalculateDamage(selectedUnit, unit, false);
-                    //PlayerManager._instance.SendObject(Controle.Game.ATTACK);
-                    //PlayerManager._instance.SendObject<string>(selectedUnit._name + SPLITTER + unit._name + SPLITTER + dmg.ToString());
-                    //DoCombat(selectedUnit, unit, dmg);
+                    int dmg = CalculateDamage(selectedUnit, unit, false);
+                    PlayerManager._instance.SendObject(Controle.Game.ATTACK);
+                    PlayerManager._instance.SendObject<string>(selectedUnit._name + SPLITTER + unit._name + SPLITTER + dmg.ToString());
+                    DoCombat(selectedUnit, unit, dmg);
                 }
             }
 
