@@ -543,9 +543,8 @@ public class PlayerManager : MonoBehaviour
 
                 case Controle.Game.MOVE:
                     //Debug.Log("move");
-                    string derptest = ReceiveString();
-                    Debug.Log(derptest);
-                    vals = derptest.Split(SPLITTER);
+                    string line = ReceiveString();
+                    vals = line.Split(SPLITTER);
                     _activeEnemyName = vals[0];
                     _destinationNodeNumber = vals[1];
                     enemyMove = true;

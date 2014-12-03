@@ -589,6 +589,7 @@ public class GameController : TMNController
                 //Debug.Log("ennemi termine");
                 enemyIsDone = true;
                 ChangeTurn();
+                isMyTurn = true;
                 //InactivityAndQuitCheck();
             }
             if(PlayerTurnDone() && currPlayerTurn == PlayerManager._instance._playerSide - 1 && isMyTurn)
@@ -597,8 +598,8 @@ public class GameController : TMNController
                 //Debug.Log("jai fini`mon tour");
                 //on envoie au serveur une requête comme quoi que notre tour est terminé
                 PlayerManager._instance.SendObject(Controle.Game.ENDTURN);
-
                 ListenToServer();
+
                 ChangeTurn();
 
                 CombatMenu.FindObjectOfType<CombatMenu>().characterChosen = false;
