@@ -14,12 +14,12 @@ public class CombatMenu : MonoBehaviour
     private static float hQ = 170.0f;
     private static Rect rectQuit = new Rect((Screen.width - wQ) / 2, (Screen.height - hQ) / 2, wQ, hQ);
     // Winning window
-    private static float wW = 275.0f;
-    private static float hW = 115.0f;
+    private static float wW = 775.0f;
+    private static float hW = 515.0f;
     private static Rect rectWinning = new Rect((Screen.width - wW) / 2, (Screen.height - hW) / 2, wW, hW);
     // Losing window
-    private static float wL = 275.0f;
-    private static float hL = 115.0f;
+    private static float wL = 775.0f;
+    private static float hL = 515.0f;
     private static Rect rectLosing = new Rect((Screen.width - wL) / 2, (Screen.height - hL) / 2, wL, hL);
 
     ///le personnage sélectionné
@@ -110,6 +110,7 @@ public class CombatMenu : MonoBehaviour
 
     void OnGUI()
     {
+        gameOver = true;
         hasUpdatedGUI = ResourceManager.GetInstance.UpdateGUI(hasUpdatedGUI);
         if (!gameOver)
         {
@@ -203,35 +204,6 @@ public class CombatMenu : MonoBehaviour
         }
 
         GUILayout.EndArea();
-
-        //GUI.enabled = !selectedCharacter.GetComponent<Character>().didMove;
-        //if (GUI.Button(new Rect(_menuContainer.x, _menuContainer.y, 100, 20), "Déplacer", GUIStyle.none))
-        //{
-        //    GameController.FindObjectOfType<GameController>().allowInput = false;
-        //    GameController.FindObjectOfType<GameController>().attackRangeMarker.HideAll();
-        //    StartCoroutine(AllowMovement());
-        //}
-
-        //GUI.enabled = !selectedCharacter.GetComponent<Character>().didAttack;
-        //if (GUI.Button(new Rect(_menuContainer.x, _menuContainer.y + 20, 100, 20), "Attaquer", GUIStyle.none))
-        //{
-        //    GameController.FindObjectOfType<GameController>().allowInput = false;
-        //    GameController.FindObjectOfType<GameController>().map.ShowAllTileNodes(false);
-        //    StartCoroutine(AllowAttack());
-        //}
-
-        //GUI.enabled = !selectedCharacter.GetComponent<Character>().didAttack;
-        //if (GUI.Button(new Rect(_menuContainer.x, _menuContainer.y + 40, 100, 20), "Item", GUIStyle.none))
-        //{
-        //    showItems = true;
-        //}
-        //GUI.enabled = true;
-        //if (GUI.Button(new Rect(_menuContainer.x, _menuContainer.y + 60, 100, 20), "Défendre", GUIStyle.none))
-        //{
-        //    ///augmente la défense et passe le tour du personnage
-        //    selectedCharacter.GetComponent<Character>().Defend();
-        //    GameController.FindObjectOfType<GameController>().ClickNextActiveCharacter();
-        //}
     }
     IEnumerator AllowMovement()
     {
@@ -268,10 +240,6 @@ public class CombatMenu : MonoBehaviour
             characterChosen = true;
             showItems = false;
         }
-
-        ///début du menu déroulant
-        //scrollViewVector = GUI.BeginScrollView(new Rect(_itemContainer.x, _itemContainer.y, _itemContainer.width, _itemContainer.height - 20),
-        //                                                 scrollViewVector, new Rect(_itemContainer.x, _itemContainer.y, 200, 400));
 
         int displayed = 0;
         for (int i = 0; i < PlayerManager._instance._playerInventory._potions.Count; ++i)
@@ -312,12 +280,6 @@ public class CombatMenu : MonoBehaviour
         }
         //le "tooltip" fournissant des informations de base sur l'item
         GUI.Label(new Rect(_itemContainer.xMin + 13, _itemContainer.yMax - 55, _itemContainer.width, 30), GUI.tooltip);
-
-        //fin du menu déroulant
-        //
-        
-        
-        //GUI.EndScrollView();
     }
 
     void DisplayEndResults()
@@ -397,10 +359,32 @@ public class CombatMenu : MonoBehaviour
 
         GUILayout.Space(20);
         GUILayout.BeginHorizontal();
-        GUILayout.Label("Félicitation, vous avez gagné la partie!");
+        GUI.Label(new Rect(rectWinning.xMin + 10, rectWinning.yMin + 30, 50, 30), "Personnages");
+        GUI.Label(new Rect(rectWinning.xMin + 60, rectWinning.yMin + 30, 50, 30), "XP");
+        GUI.Label(new Rect(rectWinning.xMin + 100, rectWinning.yMin + 30, 50, 30), "Morts");
+        GUI.Label(new Rect(rectWinning.xMin + 160, rectWinning.yMin + 30, 50, 30), "Tués");
         GUILayout.EndHorizontal();
 
+        for (int i = 0; i < PlayerManager._instance._chosenTeam.Count; ++i)
+        {
+            Character unit = PlayerManager._instance._chosenTeam[i].GetComponent<Character>();
+
+            GUILayout.BeginHorizontal();
+            GUI.Label(new Rect(rectWinning.xMin + 10, rectWinning.yMin + 30, 50, 30), unit._name);
+            GUI.Label(new Rect(rectWinning.xMin + 60, rectWinning.yMin + 30, 50, 30), unit._characterClass._exp.ToString());
+            if (unit._isAlive)
+                GUI.Label(new Rect(rectWinning.xMin + 100, rectWinning.yMin + 30, 50, 30), "Oui");
+            else
+                GUI.Label(new Rect(rectWinning.xMin + 100, rectWinning.yMin + 30, 50, 30), "Non");
+            GUI.Label(new Rect(rectWinning.xMin + 160, rectWinning.yMin + 30, 50, 30), unit._kills.ToString());
+            GUILayout.EndHorizontal();
+        }
+
+        GUILayout.BeginArea(new Rect(rectWinning.xMin, rectWinning.height, rectWinning.width, 40));
         GUILayout.BeginHorizontal();
+        GUILayout.Label("Argent: " + PlayerManager._instance._gold);
+
+        GUILayout.FlexibleSpace();
         if (GUILayout.Button("Retour au menu principal", GUILayout.Height(37)))
         {
             PlayerManager._instance._characters.Clear();
@@ -413,9 +397,11 @@ public class CombatMenu : MonoBehaviour
 
             PlayerManager._instance.ClearPlayer();
             GameManager._instance.ClearEnemy();
+            PlayerManager._instance.LoadPlayer();
             Application.LoadLevel("MainMenu");
         }
         GUILayout.EndHorizontal();
+        GUILayout.EndArea();
         GUILayout.Space(3);
     }
 
@@ -427,10 +413,35 @@ public class CombatMenu : MonoBehaviour
 
         GUILayout.Space(20);
         GUILayout.BeginHorizontal();
-        GUILayout.Label("Vous avez été vaincu!");
+        GUI.Label(new Rect(rectWinning.width - 450, rectWinning.yMin + 30, 50, 30), "Personnages");
+        GUI.Label(new Rect(rectWinning.width - 350, rectWinning.yMin + 30, 50, 30), "XP");
+        GUI.Label(new Rect(rectWinning.width - 250, rectWinning.yMin + 30, 50, 30), "Morts");
+        GUI.Label(new Rect(rectWinning.width - 150, rectWinning.yMin + 30, 50, 30), "Tués");
         GUILayout.EndHorizontal();
 
+        int compteur = 0;
+        for (int i = 0; i < PlayerManager._instance._chosenTeam.Count; ++i)
+        {
+            int offset = compteur * 25;
+            Character unit = PlayerManager._instance._chosenTeam[i].GetComponent<Character>();
+
+            GUILayout.BeginHorizontal();
+            GUI.Label(new Rect(rectWinning.width - 450, 50 + offset, 50, 30), unit._name);
+            GUI.Label(new Rect(rectWinning.width - 350, 50 + offset, 50, 30), unit._characterClass._exp.ToString());
+            if (unit._isAlive)
+                GUI.Label(new Rect(rectWinning.width - 250, 50 + offset, 50, 30), "Oui");
+            else
+                GUI.Label(new Rect(rectWinning.width - 250, 50 + offset, 50, 30), "Non");
+            GUI.Label(new Rect(rectWinning.width - 150, 50 + offset, 50, 30), unit._kills.ToString());
+            GUILayout.EndHorizontal();
+            compteur++;
+        }
+
+        GUILayout.BeginArea(new Rect(rectWinning.xMin, rectWinning.height, rectWinning.width, 40));
         GUILayout.BeginHorizontal();
+        GUILayout.Label("Argent: " + PlayerManager._instance._gold);
+
+        GUILayout.FlexibleSpace();
         if (GUILayout.Button("Retour au menu principal", GUILayout.Height(37)))
         {
             PlayerManager._instance._characters.Clear();
@@ -443,9 +454,11 @@ public class CombatMenu : MonoBehaviour
 
             PlayerManager._instance.ClearPlayer();
             GameManager._instance.ClearEnemy();
+            PlayerManager._instance.LoadPlayer();
             Application.LoadLevel("MainMenu");
         }
         GUILayout.EndHorizontal();
+        GUILayout.EndArea();
         GUILayout.Space(3);
     }
 }
