@@ -289,7 +289,7 @@ public class CombatMenu : MonoBehaviour
     {
         enemyHasQuitOrDisconnected = PlayerManager._instance.enemyHasLeft;
 
-        if (winner == PlayerManager._instance._playerSide)
+        if (winner == PlayerManager._instance._playerSide || enemyHasQuitOrDisconnected)
         {
             GUILayout.Window(-10, rectWinning, doWinningWindow, "Victoire!");
         }
