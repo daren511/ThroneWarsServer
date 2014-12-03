@@ -487,6 +487,7 @@ public class GameController : TMNController
         else if (CountAliveCharacters(units[GameManager._instance._enemySide - 1].ToArray()) == 0)
         {
             gameOver = PlayerManager._instance._playerSide;
+            PlayerManager._instance.SendObject(Controle.Game.WIN);
         }
 
         return gameOver;

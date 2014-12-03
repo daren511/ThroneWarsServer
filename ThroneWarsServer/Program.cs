@@ -14,7 +14,7 @@ namespace ThroneWarsServer
 {
     class Program
     {
-        const int PORT = 50052;
+        const int PORT = 50053;
         static List<Joueur> v = new List<Joueur>();
         static List<Joueur> queue = new List<Joueur>();
         static List<Partie> games = new List<Partie>();

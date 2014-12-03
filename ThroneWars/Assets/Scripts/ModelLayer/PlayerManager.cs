@@ -448,6 +448,24 @@ public class PlayerManager : MonoBehaviour
         return GetPersonnage();
     }
 
+
+    public List<Personnages> SendEndResults()
+    {
+        List<Personnages> list = new List<Personnages>();
+        Personnages p;
+        Character c;
+
+        for(int i = 0; i < _chosenTeam.Count; ++i)
+        {
+            c = _chosenTeam[i];
+            p = new Personnages();
+            p.kills = c._kills;
+            p.Nom = c._name;
+            p.idDead = c._isAlive;
+            list.Add(p);
+        }
+        return list;
+    }
     #region Scenes methods
     /// <summary>
     /// Cette méthode est appellée par un thread lorsque l'on attend un autre joueur pour commencer la partie.
@@ -536,6 +554,7 @@ public class PlayerManager : MonoBehaviour
 
                 case Controle.Game.ATTACK:
                     line = ReceiveString();
+                    Debug.Log(line);
                     vals = line.Split(SPLITTER);
                     _activeEnemyName = vals[0];
                     _activeTargetUnit = vals[1];
@@ -562,6 +581,8 @@ public class PlayerManager : MonoBehaviour
                     break;
 
                 case Controle.Game.WIN:
+                    //l'adversaire a gagné
+                    SendEndResults();
                     break;
 
                 case Controle.Game.QUIT:
@@ -572,7 +593,6 @@ public class PlayerManager : MonoBehaviour
 
         
         } while (action != Controle.Game.ENDTURN);
-        //Debug.Log("j'ecoute pu");
     }
     public string ReceiveString()
     {

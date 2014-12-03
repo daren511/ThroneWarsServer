@@ -78,14 +78,15 @@ namespace ThroneWarsServer
                 if (!isWon)
                 {
                     initGame();
-                    Controle.Game action1;
-                    Controle.Game action2;
+                    Controle.Game action1 = Controle.Game.NOTHING;
+                    Controle.Game action2 = Controle.Game.NOTHING;
                     int timer = 0;
                     while (!isWon)
                     {
                         timer = 0;
                         do
                         {
+                            action1 = Controle.Game.NOTHING;
                             try
                             {
                                 player1.Socket.Blocking = false;
@@ -125,6 +126,7 @@ namespace ThroneWarsServer
                                     break;
                                 case Controle.Game.ATTACK:
                                     envoyerObjet(Controle.Game.ATTACK, player2);
+                                    System.Threading.Thread.Sleep(500);
                                     envoyerReponse(recevoirString(player1), player2);
                                     break;
                                 case Controle.Game.QUIT:
@@ -143,18 +145,29 @@ namespace ThroneWarsServer
                                     Program.addGoToMenu(player2);
                                     isWon = true;
                                     break;
+                                case Controle.Game.WIN:
+                                    envoyerObjet(Controle.Game.WIN, player2);
+                                    updateWinner(player1);
+                                    Program.addGoToMenu(player1);
+                                    Program.addGoToMenu(player2);
+                                    isWon = true;
+                                    break;
                             }
                         }
-                        while (action1 != Controle.Game.ENDTURN && timer < 5000 && !isWon);
+                        while (action1 != Controle.Game.ENDTURN && timer < 5000 && !isWon && action1 != Controle.Game.WIN);
 
                         if (!isWon)
                         {
                             timer = 0;
                             do
                             {
+                                action2 = Controle.Game.NOTHING;
                                 try
                                 {
-                                    action2 = recevoirChoix(player1);
+                                    player2.Socket.Blocking = false;
+                                    action2 = recevoirChoix(player2);
+                                    player2.Socket.Blocking = true;
+                                    timer = 0;
                                 }
                                 catch (Exception) { action2 = Controle.Game.NOTHING; }
                                 switch (action2)
@@ -175,6 +188,7 @@ namespace ThroneWarsServer
                                         break;
                                     case Controle.Game.MOVE:
                                         envoyerObjet(Controle.Game.MOVE, player1);
+                                        System.Threading.Thread.Sleep(500);
                                         envoyerReponse(recevoirString(player2), player1);
                                         break;
                                     case Controle.Game.USEITEM:
@@ -187,12 +201,13 @@ namespace ThroneWarsServer
                                         break;
                                     case Controle.Game.ATTACK:
                                         envoyerObjet(Controle.Game.ATTACK, player1);
+                                        System.Threading.Thread.Sleep(500);
                                         envoyerReponse(recevoirString(player2), player1);
                                         break;
                                     case Controle.Game.QUIT:
-                                        envoyerObjet(Controle.Game.QUIT, player2);
-                                        updateWinner(player2);
-                                        Program.addGoToMenu(player2);
+                                        envoyerObjet(Controle.Game.QUIT, player1);
+                                        updateWinner(player1);
+                                        Program.addGoToMenu(player1);
                                         isWon = true;
                                         player2.isConnected = false;
                                         break;
@@ -204,9 +219,17 @@ namespace ThroneWarsServer
                                         Program.addGoToMenu(player2);
                                         isWon = true;
                                         break;
+                                    case Controle.Game.WIN:
+                                        envoyerObjet(Controle.Game.WIN, player1);
+
+                                        updateWinner(player2);
+                                        Program.addGoToMenu(player1);
+                                        Program.addGoToMenu(player2);
+                                        isWon = true;
+                                        break;
                                 }
                             }
-                            while (action1 != Controle.Game.ENDTURN && timer < 5000 && !isWon);
+                            while (action2 != Controle.Game.ENDTURN && timer < 5000 && !isWon && action2 != Controle.Game.WIN);
                         }
                     }
                 }
@@ -217,6 +240,19 @@ namespace ThroneWarsServer
 
             }
             this.T.Abort();
+        }
+        private void updateExp(int money1,int money2)
+        {
+            Controle.ajoutMoneyJoueur(player1.jid,money1);
+            Controle.ajoutMoneyJoueur(player2.jid,money2);
+            Controle.ajoutXPPersonnage(player1.Persos[0].Nom, player1.Persos[0].xpGained);
+            Controle.ajoutXPPersonnage(player1.Persos[1].Nom, player1.Persos[1].xpGained);
+            Controle.ajoutXPPersonnage(player1.Persos[2].Nom, player1.Persos[2].xpGained);
+            Controle.ajoutXPPersonnage(player1.Persos[3].Nom, player1.Persos[3].xpGained);
+            Controle.ajoutXPPersonnage(player2.Persos[0].Nom, player1.Persos[0].xpGained);
+            Controle.ajoutXPPersonnage(player2.Persos[1].Nom, player1.Persos[1].xpGained);
+            Controle.ajoutXPPersonnage(player2.Persos[2].Nom, player1.Persos[2].xpGained);
+            Controle.ajoutXPPersonnage(player2.Persos[3].Nom, player1.Persos[3].xpGained);
         }
         /// <summary>
         /// met a jour le gagant de la partie ainsi que la base de donnees pour la partie en cours
@@ -323,7 +359,7 @@ namespace ThroneWarsServer
         {
             envoyerObjet(Controle.Game.STARTING, player1);
             envoyerObjet(Controle.Game.STARTING, player2);//jouation
-            
+
             recevoirChoix(player1);
             recevoirChoix(player2);
 
@@ -341,7 +377,7 @@ namespace ThroneWarsServer
             envoyerObjet(player1.potions = traiterDataSet(Controle.listPotions(player1.jid, 1)), player1);
             envoyerObjet(player2.potions = traiterDataSet(Controle.listPotions(player2.jid, 1)), player2);
 
-            recevoirChoix(player1);    
+            recevoirChoix(player1);
             recevoirChoix(player2);
         }
         /// <summary>
@@ -457,9 +493,10 @@ namespace ThroneWarsServer
         /// <param name="j">joueur a qui envoyer le string</param>
         private void envoyerReponse(string reponse, Joueur j)
         {
-            byte[] data = Encoding.ASCII.GetBytes(reponse);
+            byte[] data = Encoding.UTF8.GetBytes(reponse);
 
             j.Socket.Send(data);
+            System.Threading.Thread.Sleep(500);
         }
         /// <summary>
         /// recoit un string provenant du client
