@@ -92,7 +92,7 @@ public class CombatMenu : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape) && PlayerManager._instance._playerSide - 1 == currPlayerTurn)
             wantToQuit = !wantToQuit;
-        gameOver = winner > 0;
+        gameOver = winner > 0 || PlayerManager._instance.enemyHasLeft;
     }
     void InitializeStats()
     {
