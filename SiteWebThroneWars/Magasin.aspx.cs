@@ -48,9 +48,9 @@ namespace SiteWebThroneWars
 
         protected void Acheter_Click(object sender, EventArgs e)
         {
-            if (TB_Quantite.Text != "")
+            if (TB_Prix.Text != "")
             {
-                if (TB_Prix.Text != "")
+                if (TB_Quantite.Text != "")
                 {
                     if (Int32.Parse(TB_Total.Text) <= Int32.Parse(Money_Set.Text))
                     {
@@ -76,17 +76,17 @@ namespace SiteWebThroneWars
                 }
                 else
                 {
-                    string text = "Veuillez sélectionner un item";
+                    
+                    string text = "Veuillez indiquer une quantité";
                     ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>MessageBoxErreur(\"" + text + "\");</script>", false);
-                    ViderTB();
                 }
 
             }
             else
             {
-                string text = "Veuillez indiquer une quantité";
+                string text = "Veuillez sélectionner un item";
                 ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>MessageBoxErreur(\"" + text + "\");</script>", false);
-
+                ViderTB();
             }
 
         }

@@ -15,7 +15,7 @@ namespace SiteWebThroneWars
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+             
         }
         protected void PasswordRecovery(object sender, EventArgs e)
         {

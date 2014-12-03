@@ -12,7 +12,7 @@ namespace SiteWebThroneWars
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-        }
+        } 
 
 
         protected void ChangePassword_Click(object sender, EventArgs e)

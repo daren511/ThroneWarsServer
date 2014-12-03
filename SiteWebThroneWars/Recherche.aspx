@@ -18,10 +18,10 @@
                 $(document).ready(function () {
                     swal({ title: "Bravo! ", text: "Vous êtes connecté", type: "success", confirmButtonText: "Ok" });
                 });
-            }
+            } 
             function MessageBoxErreur(textadaptatif) {
                 $(document).ready(function () {
-                    swal({ title: "Échec! ", text: textadaptatif, type: "error", confirmButtonText: "I'm sad" });
+                    swal({ title: "Échec! ", text: textadaptatif, type: "error", confirmButtonText: "Ok" });
                 });
             }
             function changeVisibility() {

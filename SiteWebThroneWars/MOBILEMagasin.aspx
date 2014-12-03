@@ -16,7 +16,7 @@
 </head>
 <body>
    <script type="text/javascript">
-       $(document).ready(function () {
+       $(document).ready(function () { 
            $('#TB_Quantite').keyup(function () {
                calculate();
            });
