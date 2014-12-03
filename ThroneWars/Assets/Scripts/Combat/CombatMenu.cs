@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using ControleBD;
 
 public class CombatMenu : MonoBehaviour
 {
@@ -332,6 +333,7 @@ public class CombatMenu : MonoBehaviour
         GUILayout.BeginHorizontal();
         if (GUILayout.Button("Oui", GUILayout.Height(37)))
         {
+            PlayerManager._instance.SendObject(Controle.Game.CANCEL);
             PlayerManager._instance._characters.Clear();
             Object[] allObjects = GameController.FindObjectsOfType(typeof(Character));
 
@@ -342,6 +344,7 @@ public class CombatMenu : MonoBehaviour
 
             PlayerManager._instance.ClearPlayer();
             GameManager._instance.ClearEnemy();
+            PlayerManager._instance.LoadPlayer();
             Application.LoadLevel("MainMenu");
         }
         if (GUILayout.Button("Non", GUILayout.Height(37)))
