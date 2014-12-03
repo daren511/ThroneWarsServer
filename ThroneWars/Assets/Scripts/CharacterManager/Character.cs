@@ -336,7 +336,7 @@ public class Character : NaviUnit
     /// <returns>Si le personnage a fini son tour</returns>
     public bool TurnDone()
     {
-        return didMove && didAttack;
+        return (didMove && didAttack) || !_isAlive;
     }
     #endregion
     // ====================================================================================================================

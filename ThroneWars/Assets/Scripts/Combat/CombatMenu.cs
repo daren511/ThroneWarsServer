@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using ControleBD;
 
 public class CombatMenu : MonoBehaviour
 {
@@ -111,7 +112,7 @@ public class CombatMenu : MonoBehaviour
 
     void OnGUI()
     {
-        gameOver = true;
+        //gameOver = true;
         hasUpdatedGUI = ResourceManager.GetInstance.UpdateGUI(hasUpdatedGUI);
         if (!gameOver)
         {
@@ -247,7 +248,7 @@ public class CombatMenu : MonoBehaviour
         {
             Potion playerItem = PlayerManager._instance._playerInventory._potions[i];
 
-            button = new Rect(_itemContainer.x + 5, _itemContainer.y + (displayed * 25) + 30, 200, 25);
+            button = new Rect(_itemContainer.x + 5, _itemContainer.y + (displayed * 25) + 30, 190, 25);
 
             //pour le "tooltip" du bouton, on stock le nom, ainsi que la description de l'objet
             GUIContent content = new GUIContent(playerItem._itemName, playerItem._itemDescription);
@@ -332,6 +333,7 @@ public class CombatMenu : MonoBehaviour
         GUILayout.BeginHorizontal();
         if (GUILayout.Button("Oui", GUILayout.Height(37)))
         {
+            PlayerManager._instance.SendObject(Controle.Game.CANCEL);
             PlayerManager._instance._characters.Clear();
             Object[] allObjects = GameController.FindObjectsOfType(typeof(Character));
 
@@ -342,6 +344,7 @@ public class CombatMenu : MonoBehaviour
 
             PlayerManager._instance.ClearPlayer();
             GameManager._instance.ClearEnemy();
+            PlayerManager._instance.LoadPlayer();
             Application.LoadLevel("MainMenu");
         }
         if (GUILayout.Button("Non", GUILayout.Height(37)))
