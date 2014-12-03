@@ -13,7 +13,7 @@ namespace SiteWebThroneWars
         protected void Page_Load(object sender, EventArgs e)
         {
             bool RecoveryOK = false;
-            string text = "";
+            string text = ""; 
             string URL = HttpContext.Current.Request.Url.AbsoluteUri;
             Uri myUri = new Uri(URL);
             string userSplit = HttpUtility.ParseQueryString(myUri.Query).Get("User");

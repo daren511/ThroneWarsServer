@@ -17,7 +17,7 @@
             $(document).ready(function () {
                 $('#TB_Quantite').keyup(function () {
                     calculate();
-                });
+                }); 
             });
             function calculate(e) {
                 var Total = $('#TB_Total').val($('#TB_Quantite').val() * $('#TB_Prix').val());

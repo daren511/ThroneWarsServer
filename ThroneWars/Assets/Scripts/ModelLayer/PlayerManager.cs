@@ -65,6 +65,7 @@ public class PlayerManager : MonoBehaviour
     public bool enemyItem = false;
     public bool enemyDone = false;
 
+
     public string _activeEnemyName;
 
     //la tuile de destination, pour les mouvements
@@ -139,6 +140,7 @@ public class PlayerManager : MonoBehaviour
     {
         byte[] data = Encoding.UTF8.GetBytes(reponse);
         sck.Send(data);
+        System.Threading.Thread.Sleep(500);
     }
     /// <summary>
     /// Charge les paramètres du joueur, on envoi un message de confirmation entre chaque obtention
@@ -265,6 +267,11 @@ public class PlayerManager : MonoBehaviour
         return Encoding.UTF8.GetString(formatted).ToString();
     }
     #endregion
+
+    IEnumerator WaitFor(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+    }
     /// <summary>
     /// Crée un objet de type Character, qui sera utilisé pour le jeu
     /// </summary>
@@ -499,9 +506,10 @@ public class PlayerManager : MonoBehaviour
     }
     public void InGameManager()
     {
-        Controle.Game action = 0;
+        Controle.Game action = Controle.Game.NOTHING;
         string[] vals;
-
+        string line;
+        //Debug.Log("j'ecoute");
         do
         {
             int count = sck.ReceiveBufferSize;
@@ -514,20 +522,21 @@ public class PlayerManager : MonoBehaviour
                 formatted[i] = buffer[i];
             }
 
-
             BinaryFormatter receive = new BinaryFormatter();
             using (var recstream = new MemoryStream(formatted))
             {
                 action = (Controle.Game)receive.Deserialize(recstream);
             }
+            // Mutex
             switch (action)
             {
-                case Controle.Game.ENDTURN:                    
+                case Controle.Game.ENDTURN:
                     enemyDone = true;
                     break;
 
                 case Controle.Game.ATTACK:
-                    vals = ReceiveString().Split(SPLITTER);
+                    line = ReceiveString();
+                    vals = line.Split(SPLITTER);
                     _activeEnemyName = vals[0];
                     _activeTargetUnit = vals[1];
                     _damageDealt = Int32.Parse(vals[2]);
@@ -535,7 +544,8 @@ public class PlayerManager : MonoBehaviour
                     break;
 
                 case Controle.Game.MOVE:
-                    vals = ReceiveString().Split(SPLITTER);
+                    line = ReceiveString();
+                    vals = line.Split(SPLITTER);
                     _activeEnemyName = vals[0];
                     _destinationNodeNumber = vals[1];
                     enemyMove = true;
@@ -558,8 +568,11 @@ public class PlayerManager : MonoBehaviour
                     break;
 
             }
-        } while (action != Controle.Game.ENDTURN);
+            // End Mutex
+
         
+        } while (action != Controle.Game.ENDTURN);
+        //Debug.Log("j'ecoute pu");
     }
     public string ReceiveString()
     {

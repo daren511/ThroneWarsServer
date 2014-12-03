@@ -55,7 +55,8 @@ div.Membres_Mobile img{
 /* DIV MÉDIA*/
 div.Photos_Mobile{
   text-align:center;
-  width:81%;
+  width:74%;
+  margin-left:3%;
   background-color: #219ac2;
   border-radius: 50px 50px 50px 50px;
   -moz-border-radius: 50px 50px 50px 50px;

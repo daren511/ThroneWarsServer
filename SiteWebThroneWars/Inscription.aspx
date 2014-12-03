@@ -16,7 +16,7 @@
 </head>
 <body>
     <form runat="server" action="Inscription.aspx" autocomplete="on">
-        <script type="text/javascript">
+        <script type="text/javascript"> 
             function MessageBoxReussi() {
                 $(document).ready(function () {
                     swal({ title: "Bravo! ", text: "Votre inscription est réussie, veuillez consulter votre courriel pour confirmer votre compte ", type: "success", confirmButtonText: "Ok" });
@@ -24,7 +24,7 @@
             }
             function MessageBoxErreur(textadaptatif) {
                 $(document).ready(function () {
-                    swal({ title: "Échec! ", text: textadaptatif, type: "error", confirmButtonText: "I'm sad" });
+                    swal({ title: "Échec! ", text: textadaptatif, type: "error", confirmButtonText: "Ok" });
                 });
             }
         </script>

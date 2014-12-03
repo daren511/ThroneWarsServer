@@ -11,7 +11,7 @@
     <title>Throne Wars -Projet FinDec - Changer son mot de passe</title>
 </head>
 <body>
-    <form id="form1" runat="server">
+    <form id="form1" runat="server"> 
     <script type="text/javascript">
         function MessageBoxReussi() {
             $(document).ready(function () {
@@ -20,7 +20,7 @@
         }
         function MessageBoxErreur(textadaptatif) {
             $(document).ready(function () {
-                swal({ title: "Échec! ", text: textadaptatif, type: "error", confirmButtonText: "I'm sad" });
+                swal({ title: "Échec! ", text: textadaptatif, type: "error", confirmButtonText: "Ok" });
             });
         }
     </script>
