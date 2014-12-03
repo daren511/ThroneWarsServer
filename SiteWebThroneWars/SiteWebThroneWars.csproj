@@ -104,12 +104,16 @@
     <Content Include="highslide\highslide.min.js" />
     <Content Include="highslide\highslide.packed.js" />
     <Content Include="Images\background1.jpg" />
+    <Content Include="Images\ingame.jpg" />
     <Content Include="Images\menu.png" />
+    <Content Include="Images\Placing.jpg" />
+    <Content Include="Images\ScreenSelection.jpg" />
     <Content Include="Images\ThroneWars.zip" />
     <Content Include="highslide\graphics\outlines\Outlines.psd" />
     <Content Include="Downloads\CHACHAsecret.zip" />
     <None Include="Properties\PublishProfiles\Francis Site Web.pubxml" />
     <None Include="Properties\PublishProfiles\Throne.pubxml" />
+    <Content Include="Images\Wait.jpg" />
     <Content Include="Magasin.aspx" />
     <Content Include="Menu\jquery.mmenu.all.css" />
     <Content Include="Menu\jquery.mmenu.css" />
