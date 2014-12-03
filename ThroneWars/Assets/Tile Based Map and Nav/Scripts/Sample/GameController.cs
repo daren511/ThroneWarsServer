@@ -786,10 +786,10 @@ public class GameController : TMNController
             // else, not active player's unit but his opponent's unit that was clicked on
                 else if (selectedUnit != null && combatOn && unit._isAlive)
                 {
-                    //int dmg = CalculateDamage(selectedUnit, unit, false);
-                    //PlayerManager._instance.SendObject(Controle.Game.ATTACK);
-                    //PlayerManager._instance.SendObject<string>(selectedUnit._name + SPLITTER + unit._name + SPLITTER + dmg.ToString());
-                    //DoCombat(selectedUnit, unit, dmg);
+                    int dmg = CalculateDamage(selectedUnit, unit, false);
+                    PlayerManager._instance.SendObject(Controle.Game.ATTACK);
+                    PlayerManager._instance.SendObject<string>(selectedUnit._name + SPLITTER + unit._name + SPLITTER + dmg.ToString());
+                    DoCombat(selectedUnit, unit, dmg);
                 }
             }
 
