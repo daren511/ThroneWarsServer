@@ -506,6 +506,7 @@ public class PlayerManager : MonoBehaviour
     {
         Controle.Game action = Controle.Game.NOTHING;
         string[] vals;
+        string line;
         //Debug.Log("j'ecoute");
         do
         {
@@ -524,17 +525,16 @@ public class PlayerManager : MonoBehaviour
             {
                 action = (Controle.Game)receive.Deserialize(recstream);
             }
-            //Debug.Log(action.ToString());
             // Mutex
             switch (action)
             {
                 case Controle.Game.ENDTURN:
-                    //Debug.Log("endturn");
                     enemyDone = true;
                     break;
 
                 case Controle.Game.ATTACK:
-                    vals = ReceiveString().Split(SPLITTER);
+                    line = ReceiveString();
+                    vals = line.Split(SPLITTER);
                     _activeEnemyName = vals[0];
                     _activeTargetUnit = vals[1];
                     _damageDealt = Int32.Parse(vals[2]);
@@ -542,8 +542,7 @@ public class PlayerManager : MonoBehaviour
                     break;
 
                 case Controle.Game.MOVE:
-                    //Debug.Log("move");
-                    string line = ReceiveString();
+                    line = ReceiveString();
                     vals = line.Split(SPLITTER);
                     _activeEnemyName = vals[0];
                     _destinationNodeNumber = vals[1];
