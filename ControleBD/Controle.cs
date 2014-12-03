@@ -113,20 +113,21 @@ namespace ControleBD
             }
         }
 
-        public static bool ajoutXPPersonnage(int GUID, int XP)
+        public static bool ajoutXPPersonnage(string nom, int XP)
         {
             OracleConnection conn = Connection.getInstance().conn;
 
-            string sqlupdate = "update Personnages set XP=:xp where guid=:GUID";
+            string sqlupdate = "update Personnages set XP=:xp where guid=select guid from personnages where nom =:nom";
 
             try
             {
                 OracleCommand oraUpdate = new OracleCommand(sqlupdate, conn);
-                OracleParameter OraParaGUID = new OracleParameter(":GUID", OracleDbType.Int32);
+
                 OracleParameter OraParaXP = new OracleParameter(":XP", OracleDbType.Int32);
-                OraParaGUID.Value = GUID;
+                OracleParameter OraParaNom = new OracleParameter(":nom", OracleDbType.Varchar2,12);
+                OraParaNom.Value = nom;
                 OraParaXP.Value = XP;
-                oraUpdate.Parameters.Add(OraParaGUID);
+                oraUpdate.Parameters.Add(OraParaNom);
                 oraUpdate.Parameters.Add(OraParaXP);
                 oraUpdate.ExecuteNonQuery();
                 return true;
