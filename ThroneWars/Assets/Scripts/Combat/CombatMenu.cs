@@ -111,7 +111,7 @@ public class CombatMenu : MonoBehaviour
 
     void OnGUI()
     {
-        //gameOver = true;
+        gameOver = true;
         hasUpdatedGUI = ResourceManager.GetInstance.UpdateGUI(hasUpdatedGUI);
         if (!gameOver)
         {
@@ -409,6 +409,7 @@ public class CombatMenu : MonoBehaviour
 
             PlayerManager._instance.ClearPlayer();
             GameManager._instance.ClearEnemy();
+            PlayerManager._instance.LoadPlayer();
             Application.LoadLevel("MainMenu");
         }
         GUILayout.EndHorizontal();
@@ -467,6 +468,7 @@ public class CombatMenu : MonoBehaviour
 
             PlayerManager._instance.ClearPlayer();
             GameManager._instance.ClearEnemy();
+            PlayerManager._instance.LoadPlayer();
             Application.LoadLevel("MainMenu");
         }
         GUILayout.EndHorizontal();

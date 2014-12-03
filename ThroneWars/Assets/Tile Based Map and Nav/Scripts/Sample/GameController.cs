@@ -488,6 +488,9 @@ public class GameController : TMNController
         {
             gameOver = PlayerManager._instance._playerSide;
             PlayerManager._instance.SendObject(Controle.Game.WIN);
+            PlayerManager._instance.SendObject(PlayerManager._instance.SendEndResults());
+            //System.Threading.Thread.Sleep(500);
+            PlayerManager._instance.Send(PlayerManager._instance._gold.ToString());
         }
 
         return gameOver;
