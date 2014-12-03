@@ -140,10 +140,7 @@ public class PlayerManager : MonoBehaviour
     {
         byte[] data = Encoding.UTF8.GetBytes(reponse);
         sck.Send(data);
-    }
-    IEnumerator Wait()
-    {
-        yield return new WaitForSeconds(1.0f);
+        System.Threading.Thread.Sleep(500);
     }
     /// <summary>
     /// Charge les paramètres du joueur, on envoi un message de confirmation entre chaque obtention
@@ -270,6 +267,11 @@ public class PlayerManager : MonoBehaviour
         return Encoding.UTF8.GetString(formatted).ToString();
     }
     #endregion
+
+    IEnumerator WaitFor(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+    }
     /// <summary>
     /// Crée un objet de type Character, qui sera utilisé pour le jeu
     /// </summary>
