@@ -656,7 +656,7 @@ public class GameController : TMNController
     public void ChangeTurn()
     {
         currPlayerTurn = (currPlayerTurn == 0 ? 1 : 0);
-
+        CombatMenu.FindObjectOfType<CombatMenu>().currPlayerTurn = currPlayerTurn;
         // unselect any selected unit
         OnClearNaviUnitSelection(null);
 

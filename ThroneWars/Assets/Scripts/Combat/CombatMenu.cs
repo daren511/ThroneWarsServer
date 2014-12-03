@@ -53,6 +53,7 @@ public class CombatMenu : MonoBehaviour
     public bool moveEnabled = true;
     public bool itemEnabled = true;
     private bool hasUpdatedGUI = false;
+    public int currPlayerTurn = 0;
 
     #region textures
     public GUISkin _skin;
@@ -89,7 +90,7 @@ public class CombatMenu : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && PlayerManager._instance._playerSide == GameController.currPlayerTurn)
+        if (Input.GetKeyDown(KeyCode.Escape) && PlayerManager._instance._playerSide - 1 == currPlayerTurn)
             wantToQuit = !wantToQuit;
         gameOver = winner > 0;
     }
