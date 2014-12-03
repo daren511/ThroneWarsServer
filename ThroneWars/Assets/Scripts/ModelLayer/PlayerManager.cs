@@ -65,7 +65,7 @@ public class PlayerManager : MonoBehaviour
     public bool enemyItem = false;
     public bool enemyDone = false;
     public bool enemyHasWon = false;
-
+    public bool enemyHasLeft = false;
 
     public string _activeEnemyName;
 
@@ -590,6 +590,11 @@ public class PlayerManager : MonoBehaviour
                     break;
 
                 case Controle.Game.QUIT:
+                    enemyHasLeft = true;
+                    break;
+
+                case Controle.Game.CANCEL:
+                    enemyHasLeft = true;
                     break;
 
             }

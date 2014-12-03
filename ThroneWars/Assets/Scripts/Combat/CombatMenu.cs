@@ -198,7 +198,7 @@ public class CombatMenu : MonoBehaviour
             showItems = true;
         }
         GUI.enabled = true;
-        if (GUILayout.Button("Défendre", actionStyle))
+        if (GUILayout.Button("Terminé", actionStyle))
         {
             ///augmente la défense et passe le tour du personnage
             selectedCharacter.GetComponent<Character>().Defend();
@@ -286,7 +286,8 @@ public class CombatMenu : MonoBehaviour
 
     void DisplayEndResults()
     {
-        enemyHasQuitOrDisconnected = PlayerManager._instance.hasWonDefault;
+        enemyHasQuitOrDisconnected = PlayerManager._instance.enemyHasLeft;
+
         if (winner == PlayerManager._instance._playerSide)
         {
             GUILayout.Window(-10, rectWinning, doWinningWindow, "Victoire!");
