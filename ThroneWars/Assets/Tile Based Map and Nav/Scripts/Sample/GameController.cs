@@ -586,7 +586,7 @@ public class GameController : TMNController
             }
             else if(PlayerManager._instance.enemyDone && !enemyIsDone)
             {
-                Debug.Log("ennemi termine");
+                //Debug.Log("ennemi termine");
                 enemyIsDone = true;
                 ChangeTurn();
                 //InactivityAndQuitCheck();
@@ -594,7 +594,7 @@ public class GameController : TMNController
             if(PlayerTurnDone() && currPlayerTurn == PlayerManager._instance._playerSide - 1 && isMyTurn)
             {
                 isMyTurn = false;
-                Debug.Log("jai fini`mon tour");
+                //Debug.Log("jai fini`mon tour");
                 //on envoie au serveur une requête comme quoi que notre tour est terminé
                 PlayerManager._instance.SendObject(Controle.Game.ENDTURN);
 
