@@ -62,6 +62,8 @@ public class GameController : TMNController
     static public bool enemyIsDone = false;
     static public bool isMyTurn = false;
 
+    static public bool wantToAttack = false;
+
     public bool isPlayerTurn = false;
 
     public bool allowInput { get; set; }
@@ -586,7 +588,6 @@ public class GameController : TMNController
             }
             else if(PlayerManager._instance.enemyDone && !enemyIsDone)
             {
-                //Debug.Log("ennemi termine");
                 enemyIsDone = true;
                 ChangeTurn();
                 isMyTurn = true;
@@ -595,7 +596,6 @@ public class GameController : TMNController
             if(PlayerTurnDone() && currPlayerTurn == PlayerManager._instance._playerSide - 1 && isMyTurn)
             {
                 isMyTurn = false;
-                //Debug.Log("jai fini`mon tour");
                 //on envoie au serveur une requête comme quoi que notre tour est terminé
                 PlayerManager._instance.SendObject(Controle.Game.ENDTURN);
                 ListenToServer();
@@ -783,13 +783,15 @@ public class GameController : TMNController
                     //}
                 }
 
-            // else, not active player's unit but his opponent's unit that was clicked on
-                else if (selectedUnit != null && combatOn && unit._isAlive)
+                //else, not active player's unit but his opponent's unit that was clicked on
+                else if (wantToAttack)
                 {
+                   
                     int dmg = CalculateDamage(selectedUnit, unit, false);
                     PlayerManager._instance.SendObject(Controle.Game.ATTACK);
-                    PlayerManager._instance.SendObject<string>(selectedUnit._name + SPLITTER + unit._name + SPLITTER + dmg.ToString());
+                    PlayerManager._instance.SendMessage(selectedUnit._name + SPLITTER + unit._name + SPLITTER + dmg.ToString());
                     DoCombat(selectedUnit, unit, dmg);
+                    wantToAttack = false;
                 }
             }
 
