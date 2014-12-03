@@ -73,7 +73,7 @@ public class GameController : TMNController
 		new List<Character>()	// player 2's units
 	};
 
-    public int currPlayerTurn { get; set; }		// which player's turn it is, only if useTurns = true;
+    public static int currPlayerTurn { get; set; }		// which player's turn it is, only if useTurns = true;
     public static Thread threadTurn;
     public static Thread threadAFK;
     #endregion

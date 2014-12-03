@@ -89,7 +89,7 @@ public class CombatMenu : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && PlayerManager._instance._playerSide == GameController.currPlayerTurn)
             wantToQuit = !wantToQuit;
         gameOver = winner > 0;
     }
