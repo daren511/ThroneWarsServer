@@ -186,6 +186,7 @@ public class CombatMenu : MonoBehaviour
             GameController.FindObjectOfType<GameController>().allowInput = false;
             GameController.FindObjectOfType<GameController>().map.ShowAllTileNodes(false);
             StartCoroutine(AllowAttack());
+            GameController.wantToAttack = true;
         }
 
         GUI.enabled = !selectedCharacter.GetComponent<Character>().didAttack;
