@@ -789,7 +789,7 @@ public class GameController : TMNController
                    
                     int dmg = CalculateDamage(selectedUnit, unit, false);
                     PlayerManager._instance.SendObject(Controle.Game.ATTACK);
-                    PlayerManager._instance.SendObject(selectedUnit._name + SPLITTER + unit._name + SPLITTER + dmg.ToString());
+                    PlayerManager._instance.SendMessage(selectedUnit._name + SPLITTER + unit._name + SPLITTER + dmg.ToString());
                     DoCombat(selectedUnit, unit, dmg);
                     wantToAttack = false;
                 }
