@@ -110,6 +110,7 @@ public class CombatMenu : MonoBehaviour
 
     void OnGUI()
     {
+        //gameOver = true;
         hasUpdatedGUI = ResourceManager.GetInstance.UpdateGUI(hasUpdatedGUI);
         if (!gameOver)
         {
