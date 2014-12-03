@@ -139,7 +139,6 @@ namespace ThroneWarsServer
 
                                 case Controle.Game.CANCEL:
                                     envoyerObjet(Controle.Game.QUIT, player2);
-                                    envoyerObjet(Controle.Game.CANCEL, player1);
                                     updateWinner(player2);//+traitement exp
                                     Program.addGoToMenu(player1);
                                     Program.addGoToMenu(player2);
@@ -213,7 +212,6 @@ namespace ThroneWarsServer
                                         break;
                                     case Controle.Game.CANCEL:
                                         envoyerObjet(Controle.Game.QUIT, player2);
-                                        envoyerObjet(Controle.Game.CANCEL, player1);
                                         updateWinner(player2);
                                         Program.addGoToMenu(player1);
                                         Program.addGoToMenu(player2);
