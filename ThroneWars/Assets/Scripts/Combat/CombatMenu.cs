@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class CombatMenu : MonoBehaviour
 {
@@ -14,17 +15,16 @@ public class CombatMenu : MonoBehaviour
     private static float hQ = 170.0f;
     private static Rect rectQuit = new Rect((Screen.width - wQ) / 2, (Screen.height - hQ) / 2, wQ, hQ);
     // Winning window
-    private static float wW = 775.0f;
-    private static float hW = 515.0f;
+    private static float wW = 490.0f;
+    private static float hW = 250.0f;
     private static Rect rectWinning = new Rect((Screen.width - wW) / 2, (Screen.height - hW) / 2, wW, hW);
     // Losing window
-    private static float wL = 775.0f;
-    private static float hL = 515.0f;
+    private static float wL = 490.0f;
+    private static float hL = 250.0f;
     private static Rect rectLosing = new Rect((Screen.width - wL) / 2, (Screen.height - hL) / 2, wL, hL);
 
     ///le personnage sélectionné
     public GameObject selectedCharacter;
-
 
     public string charName = "",
                   charClass = "";
@@ -284,7 +284,6 @@ public class CombatMenu : MonoBehaviour
 
     void DisplayEndResults()
     {
-        string msg = "";
         if (winner == PlayerManager._instance._playerSide)
         {
             GUILayout.Window(-10, rectWinning, doWinningWindow, "Victoire!");
@@ -357,35 +356,40 @@ public class CombatMenu : MonoBehaviour
         // Ornament
         GUI.DrawTexture(new Rect(20, 4, 31, 40), ColoredGUISkin.Skin.customStyles[0].normal.background);
 
-        GUILayout.Space(20);
+        GUILayout.Space(25);
         GUILayout.BeginHorizontal();
-        GUI.Label(new Rect(rectWinning.xMin + 10, rectWinning.yMin + 30, 50, 30), "Personnages");
-        GUI.Label(new Rect(rectWinning.xMin + 60, rectWinning.yMin + 30, 50, 30), "XP");
-        GUI.Label(new Rect(rectWinning.xMin + 100, rectWinning.yMin + 30, 50, 30), "Morts");
-        GUI.Label(new Rect(rectWinning.xMin + 160, rectWinning.yMin + 30, 50, 30), "Tués");
+        GUI.Label(new Rect(rectWinning.width - 450, 45, 100, 30), "Personnages");
+        GUI.Label(new Rect(rectWinning.width - 270, 45, 50, 30), "XP");
+        GUI.Label(new Rect(rectWinning.width - 170, 45, 50, 30), "Morts");
+        GUI.Label(new Rect(rectWinning.width - 70, 45, 50, 30), "Tués");
         GUILayout.EndHorizontal();
 
+        int compteur = 0;
         for (int i = 0; i < PlayerManager._instance._chosenTeam.Count; ++i)
         {
-            Character unit = PlayerManager._instance._chosenTeam[i].GetComponent<Character>();
-
+            int offset = compteur * 25;
             GUILayout.BeginHorizontal();
-            GUI.Label(new Rect(rectWinning.xMin + 10, rectWinning.yMin + 30, 50, 30), unit._name);
-            GUI.Label(new Rect(rectWinning.xMin + 60, rectWinning.yMin + 30, 50, 30), unit._characterClass._exp.ToString());
-            if (unit._isAlive)
-                GUI.Label(new Rect(rectWinning.xMin + 100, rectWinning.yMin + 30, 50, 30), "Oui");
+            GUI.Label(new Rect(rectWinning.width - 450, 75 + offset, 100, 30), PlayerManager._instance._chosenTeam[i]._name);
+            GUI.Label(new Rect(rectWinning.width - 267, 75 + offset, 50, 30), PlayerManager._instance._chosenTeam[i]._characterClass._exp.ToString());
+            if (!PlayerManager._instance._chosenTeam[i]._isAlive)
+                GUI.Label(new Rect(rectWinning.width - 168, 75 + offset, 50, 30), "Oui");
             else
-                GUI.Label(new Rect(rectWinning.xMin + 100, rectWinning.yMin + 30, 50, 30), "Non");
-            GUI.Label(new Rect(rectWinning.xMin + 160, rectWinning.yMin + 30, 50, 30), unit._kills.ToString());
+                GUI.Label(new Rect(rectWinning.width - 168, 75 + offset, 50, 30), "Non");
+            GUI.Label(new Rect(rectWinning.width - 62, 75 + offset, 50, 30), PlayerManager._instance._chosenTeam[i]._kills.ToString());
             GUILayout.EndHorizontal();
+            compteur++;
         }
 
-        GUILayout.BeginArea(new Rect(rectWinning.xMin, rectWinning.height, rectWinning.width, 40));
+        GUILayout.BeginArea(new Rect(15, rectWinning.height - 38, rectWinning.width - 15, 40));
         GUILayout.BeginHorizontal();
-        GUILayout.Label("Argent: " + PlayerManager._instance._gold);
 
+        GUILayout.BeginVertical();
         GUILayout.FlexibleSpace();
-        if (GUILayout.Button("Retour au menu principal", GUILayout.Height(37)))
+        GUILayout.Label("Argent: " + PlayerManager._instance._gold);
+        GUILayout.FlexibleSpace();
+        GUILayout.EndVertical();
+
+        if (GUILayout.Button("Retour au menu principal", GUILayout.Height(35)))
         {
             PlayerManager._instance._characters.Clear();
             Object[] allObjects = GameController.FindObjectsOfType(typeof(Character));
@@ -397,7 +401,6 @@ public class CombatMenu : MonoBehaviour
 
             PlayerManager._instance.ClearPlayer();
             GameManager._instance.ClearEnemy();
-            PlayerManager._instance.LoadPlayer();
             Application.LoadLevel("MainMenu");
         }
         GUILayout.EndHorizontal();
@@ -411,38 +414,40 @@ public class CombatMenu : MonoBehaviour
         // Ornament
         GUI.DrawTexture(new Rect(20, 4, 31, 40), ColoredGUISkin.Skin.customStyles[0].normal.background);
 
-        GUILayout.Space(20);
+        GUILayout.Space(25);
         GUILayout.BeginHorizontal();
-        GUI.Label(new Rect(rectWinning.width - 450, rectWinning.yMin + 30, 50, 30), "Personnages");
-        GUI.Label(new Rect(rectWinning.width - 350, rectWinning.yMin + 30, 50, 30), "XP");
-        GUI.Label(new Rect(rectWinning.width - 250, rectWinning.yMin + 30, 50, 30), "Morts");
-        GUI.Label(new Rect(rectWinning.width - 150, rectWinning.yMin + 30, 50, 30), "Tués");
+        GUI.Label(new Rect(rectLosing.width - 450, 45, 100, 30), "Personnages");
+        GUI.Label(new Rect(rectLosing.width - 270, 45, 50, 30), "XP");
+        GUI.Label(new Rect(rectLosing.width - 170, 45, 50, 30), "Morts");
+        GUI.Label(new Rect(rectLosing.width - 70, 45, 50, 30), "Tués");
         GUILayout.EndHorizontal();
 
         int compteur = 0;
         for (int i = 0; i < PlayerManager._instance._chosenTeam.Count; ++i)
         {
             int offset = compteur * 25;
-            Character unit = PlayerManager._instance._chosenTeam[i].GetComponent<Character>();
-
             GUILayout.BeginHorizontal();
-            GUI.Label(new Rect(rectWinning.width - 450, 50 + offset, 50, 30), unit._name);
-            GUI.Label(new Rect(rectWinning.width - 350, 50 + offset, 50, 30), unit._characterClass._exp.ToString());
-            if (unit._isAlive)
-                GUI.Label(new Rect(rectWinning.width - 250, 50 + offset, 50, 30), "Oui");
+            GUI.Label(new Rect(rectLosing.width - 450, 75 + offset, 100, 30), PlayerManager._instance._chosenTeam[i]._name);
+            GUI.Label(new Rect(rectLosing.width - 267, 75 + offset, 50, 30), PlayerManager._instance._chosenTeam[i]._characterClass._exp.ToString());
+            if (!PlayerManager._instance._chosenTeam[i]._isAlive)
+                GUI.Label(new Rect(rectLosing.width - 168, 75 + offset, 50, 30), "Oui");
             else
-                GUI.Label(new Rect(rectWinning.width - 250, 50 + offset, 50, 30), "Non");
-            GUI.Label(new Rect(rectWinning.width - 150, 50 + offset, 50, 30), unit._kills.ToString());
+                GUI.Label(new Rect(rectLosing.width - 168, 75 + offset, 50, 30), "Non");
+            GUI.Label(new Rect(rectLosing.width - 62, 75 + offset, 50, 30), PlayerManager._instance._chosenTeam[i]._kills.ToString());
             GUILayout.EndHorizontal();
             compteur++;
         }
 
-        GUILayout.BeginArea(new Rect(rectWinning.xMin, rectWinning.height, rectWinning.width, 40));
+        GUILayout.BeginArea(new Rect(15, rectLosing.height - 38, rectLosing.width - 15, 40));
         GUILayout.BeginHorizontal();
-        GUILayout.Label("Argent: " + PlayerManager._instance._gold);
 
+        GUILayout.BeginVertical();
         GUILayout.FlexibleSpace();
-        if (GUILayout.Button("Retour au menu principal", GUILayout.Height(37)))
+        GUILayout.Label("Argent: " + PlayerManager._instance._gold);
+        GUILayout.FlexibleSpace();
+        GUILayout.EndVertical();
+
+        if (GUILayout.Button("Retour au menu principal", GUILayout.Height(35)))
         {
             PlayerManager._instance._characters.Clear();
             Object[] allObjects = GameController.FindObjectsOfType(typeof(Character));
@@ -454,7 +459,6 @@ public class CombatMenu : MonoBehaviour
 
             PlayerManager._instance.ClearPlayer();
             GameManager._instance.ClearEnemy();
-            PlayerManager._instance.LoadPlayer();
             Application.LoadLevel("MainMenu");
         }
         GUILayout.EndHorizontal();
