@@ -64,7 +64,8 @@ public class PlayerManager : MonoBehaviour
     public bool enemyMove = false;
     public bool enemyItem = false;
     public bool enemyDone = false;
-
+    public bool enemyHasWon = false;
+    public bool enemyHasLeft = false;
 
     public string _activeEnemyName;
 
@@ -140,10 +141,7 @@ public class PlayerManager : MonoBehaviour
     {
         byte[] data = Encoding.UTF8.GetBytes(reponse);
         sck.Send(data);
-    }
-    IEnumerator Wait()
-    {
-        yield return new WaitForSeconds(1.0f);
+        System.Threading.Thread.Sleep(500);
     }
     /// <summary>
     /// Charge les paramètres du joueur, on envoi un message de confirmation entre chaque obtention
@@ -270,6 +268,11 @@ public class PlayerManager : MonoBehaviour
         return Encoding.UTF8.GetString(formatted).ToString();
     }
     #endregion
+
+    IEnumerator WaitFor(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+    }
     /// <summary>
     /// Crée un objet de type Character, qui sera utilisé pour le jeu
     /// </summary>
@@ -446,6 +449,24 @@ public class PlayerManager : MonoBehaviour
         return GetPersonnage();
     }
 
+
+    public List<Personnages> SendEndResults()
+    {
+        List<Personnages> list = new List<Personnages>();
+        Personnages p;
+        Character c;
+
+        for(int i = 0; i < _chosenTeam.Count; ++i)
+        {
+            c = _chosenTeam[i];
+            p = new Personnages();
+            p.kills = c._kills;
+            p.Nom = c._name;
+            p.idDead = c._isAlive;
+            list.Add(p);
+        }
+        return list;
+    }
     #region Scenes methods
     /// <summary>
     /// Cette méthode est appellée par un thread lorsque l'on attend un autre joueur pour commencer la partie.
@@ -506,7 +527,8 @@ public class PlayerManager : MonoBehaviour
     {
         Controle.Game action = Controle.Game.NOTHING;
         string[] vals;
-        //Debug.Log("j'ecoute");
+        string line;
+        
         do
         {
             int count = sck.ReceiveBufferSize;
@@ -524,17 +546,17 @@ public class PlayerManager : MonoBehaviour
             {
                 action = (Controle.Game)receive.Deserialize(recstream);
             }
-            //Debug.Log(action.ToString());
             // Mutex
             switch (action)
             {
                 case Controle.Game.ENDTURN:
-                    //Debug.Log("endturn");
                     enemyDone = true;
                     break;
 
                 case Controle.Game.ATTACK:
-                    vals = ReceiveString().Split(SPLITTER);
+                    line = ReceiveString();
+                    Debug.Log(line);
+                    vals = line.Split(SPLITTER);
                     _activeEnemyName = vals[0];
                     _activeTargetUnit = vals[1];
                     _damageDealt = Int32.Parse(vals[2]);
@@ -542,8 +564,7 @@ public class PlayerManager : MonoBehaviour
                     break;
 
                 case Controle.Game.MOVE:
-                    //Debug.Log("move");
-                    string line = ReceiveString();
+                    line = ReceiveString();
                     vals = line.Split(SPLITTER);
                     _activeEnemyName = vals[0];
                     _destinationNodeNumber = vals[1];
@@ -561,17 +582,26 @@ public class PlayerManager : MonoBehaviour
                     break;
 
                 case Controle.Game.WIN:
+                    //l'adversaire a gagné
+                    SendObject(SendEndResults());
+                    System.Threading.Thread.Sleep(500);
+                    Send(_gold.ToString());
+                    enemyHasWon = true;
                     break;
 
                 case Controle.Game.QUIT:
+                    enemyHasLeft = true;
+                    break;
+
+                case Controle.Game.CANCEL:
+                    enemyHasLeft = true;
                     break;
 
             }
             // End Mutex
 
         
-        } while (action != Controle.Game.ENDTURN);
-        //Debug.Log("j'ecoute pu");
+        } while (action != Controle.Game.ENDTURN && action != Controle.Game.WIN);
     }
     public string ReceiveString()
     {

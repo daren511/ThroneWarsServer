@@ -9,6 +9,7 @@ namespace ControleBD
         public string Nom { get;  set; }
         public int Level { get;  set; }
         public int Xp { get;  set; }
+        public int xpGained { get; set; }
         public List<Items> Item = new List<Items>();
         
         public Personnages()

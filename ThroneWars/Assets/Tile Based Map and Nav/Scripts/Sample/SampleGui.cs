@@ -37,7 +37,7 @@ public class SampleGui : MonoBehaviour
 			if (GUILayout.Button("Change Turns")) game.ChangeTurn();
 
 			GUILayout.Space(10f);
-			GUILayout.Label(string.Format("Player {0}'s Turn", game.currPlayerTurn+1));
+			//GUILayout.Label(string.Format("Player {0}'s Turn", game.currPlayerTurn+1));
 		}
 	}
 }
