@@ -1329,8 +1329,12 @@ namespace ControleBD
                 Erreur.ErrorMessage(ex);
             }
         }
-        //------------------------------ À ALEXIS ------------------------------//
-        // J'VOUS TOUCHE LE RECTUM SI VOUS MODIFIER QUELQUE CHOSE
+
+        /// <summary>
+        /// Liste les joueurs
+        /// </summary>
+        /// <param name="afficherTout">Affiche les joueurs non confirmés</param>
+        /// <returns>Le dataset</returns>
         public static DataSet listPlayers(bool afficherTout)
         {
             OracleConnection conn = Connection.getInstance().conn;
@@ -1455,6 +1459,19 @@ namespace ControleBD
             return monDataSet;
         }
 
+        /// <summary>
+        /// Ajoute un item
+        /// </summary>
+        /// <param name="nom">Le nom de l'item</param>
+        /// <param name="classe">la classe de l'item</param>
+        /// <param name="level">Le niveau de l'item</param>
+        /// <param name="watk">L'attaque physique de l'item</param>
+        /// <param name="wdef">La défense physique de l'item</param>
+        /// <param name="matk">L'attaque magique de l'item</param>
+        /// <param name="mdef">La défense magique de l'item</param>
+        /// <param name="actif">Si l'item est actif ou non</param>
+        /// <param name="price">Le prix de l'item</param>
+        /// <returns>Retourne si l'insertion a réussi ou non</returns>
         public static bool addItem(string nom, string classe, int level, int watk, int wdef, int matk, int mdef, string actif, int price)
         {
             OracleConnection conn = Connection.getInstance().conn;
@@ -1505,6 +1522,19 @@ namespace ControleBD
             }
         }
 
+        /// <summary>
+        /// Modifie l'item
+        /// </summary>
+        /// <param name="iid">Le numéro de l'item</param>
+        /// <param name="nom">Le nom de l'item</param>
+        /// <param name="level">Le niveau de l'item</param>
+        /// <param name="watk">L'attaque physique de l'item</param>
+        /// <param name="wdef">La défense physique de l'item</param>
+        /// <param name="matk">L'attaque magique de l'item</param>
+        /// <param name="mdef">La défense magique de l'item</param>
+        /// <param name="actif">Si l'item est actif ou non</param>
+        /// <param name="price">Le prix de l'item</param>
+        /// <returns>Retourne si la modification a réussi ou non</returns>
         public static bool updateItem(int iid, string nom, int level, int watk, int wdef, int matk, int mdef, string actif, int price)
         {
             OracleConnection conn = Connection.getInstance().conn;
@@ -1555,6 +1585,13 @@ namespace ControleBD
             }
         }
 
+        /// <summary>
+        /// Modifie la quantité de l'item
+        /// </summary>
+        /// <param name="jid">Le numéro du joueur</param>
+        /// <param name="iid">Le numéro de l'item</param>
+        /// <param name="qte">La quantité de l'item</param>
+        /// <returns>Retourne si la modification a réussi ou non</returns>
         public static bool updateQuantityItem(int jid, int iid, int qte)
         {
             OracleConnection conn = Connection.getInstance().conn;
@@ -1586,6 +1623,13 @@ namespace ControleBD
             }
         }
 
+        /// <summary>
+        /// Supprime l'item du personnage
+        /// </summary>
+        /// <param name="nom">Le nom de l'item</param>
+        /// <param name="iid">Le numéro de l'item</param>
+        /// <param name="jid">Le numéro du joueur</param>
+        /// <returns>Retourne si la suppression a réussi</returns>
         public static bool deleteItemPersonnages(string nom, int iid, int jid)
         {
             OracleConnection conn = Connection.getInstance().conn;
@@ -1617,6 +1661,12 @@ namespace ControleBD
             }
         }
 
+        /// <summary>
+        /// Modifie si l'item est actif ou non
+        /// </summary>
+        /// <param name="iid">Le numéro de l'item</param>
+        /// <param name="actif">Si l'item est actif ou non</param>
+        /// <returns>Retourne si la modification a réussi ou non</returns>
         public static bool updateStateItem(int iid, string actif)
         {
             OracleConnection conn = Connection.getInstance().conn;
@@ -1645,6 +1695,13 @@ namespace ControleBD
             }
         }
 
+        /// <summary>
+        /// Ajoute un item au personnage
+        /// </summary>
+        /// <param name="nom">Le nom de l'item</param>
+        /// <param name="iid">Le numéro de l'item</param>
+        /// <param name="jid">Le numéro du joueur</param>
+        /// <returns>Retourne si l'ajout a réussi ou non</returns>
         public static bool addItemPersonnages(string nom, int iid, int jid)
         {
             OracleConnection conn = Connection.getInstance().conn;
@@ -1676,6 +1733,13 @@ namespace ControleBD
             }
         }
 
+        /// <summary>
+        /// Ajoute un item à l'inventaire du joueur
+        /// </summary>
+        /// <param name="iid">Le numéro de l'item</param>
+        /// <param name="jid">Le numéro du joueur</param>
+        /// <param name="qte">La quantité voulue</param>
+        /// <returns>Retourne si l'ajout a réussi ou non</returns>
         public static bool addItemInventaire(int iid, int jid, int qte)
         {
             OracleConnection conn = Connection.getInstance().conn;
@@ -1708,6 +1772,13 @@ namespace ControleBD
             }
         }
 
+        /// <summary>
+        /// Modifie la quantité de la potion du joueur
+        /// </summary>
+        /// <param name="jid">Le numéro du joueur</param>
+        /// <param name="pid">Le numéro de la potion</param>
+        /// <param name="qte">La quantité voulue</param>
+        /// <returns>Retourne si la modification a réussi ou non</returns>
         public static bool updateQuantityPotion(int jid, int pid, int qte)
         {
             OracleConnection conn = Connection.getInstance().conn;
@@ -1739,6 +1810,19 @@ namespace ControleBD
             }
         }
 
+        /// <summary>
+        /// Ajoute une potion
+        /// </summary>
+        /// <param name="nom">Le nom de la potion</param>
+        /// <param name="description">La description de la potion</param>
+        /// <param name="duration">La durée de la potion</param>
+        /// <param name="health">La vie redonnée par la potion</param>
+        /// <param name="watk">L'attaque physique redonnée par la potion</param>
+        /// <param name="wdef">La défense physique redonnée par la potion</param>
+        /// <param name="matk">L'attaque magique redonnée par la potion</param>
+        /// <param name="mdef">La défense magique redonnée par la potion</param>
+        /// <param name="price">Le prix de la potion</param>
+        /// <returns>Retourne si l'ajout a réussi ou non</returns>
         public static bool addPotion(string nom, string description, int duration, int health, int watk, int wdef, int matk, int mdef, int price)
         {
             OracleConnection conn = Connection.getInstance().conn;
@@ -1788,6 +1872,14 @@ namespace ControleBD
                 return false;
             }
         }
+
+        /// <summary>
+        /// Ajoute une potion au joueur
+        /// </summary>
+        /// <param name="pid">Le numéro de la potion</param>
+        /// <param name="jid">Le numéro du joueur</param>
+        /// <param name="qte">la quantité voulue</param>
+        /// <returns>Retourne si l'ajout a réussi ou non</returns>
         public static bool addPotionJoueurs(int pid, int jid, int qte)
         {
             OracleConnection conn = Connection.getInstance().conn;
@@ -1817,6 +1909,20 @@ namespace ControleBD
             }
         }
 
+        /// <summary>
+        /// Modifie une potion
+        /// </summary>
+        /// <param name="pid">Le numéro de la potion</param>
+        /// <param name="nom">Le nom de la potion</param>
+        /// <param name="description">La description de la potion</param>
+        /// <param name="duration">La durée de la potion</param>
+        /// <param name="health">La vie redonnée par la potion</param>
+        /// <param name="watk">L'attaque physique redonnée par la potion</param>
+        /// <param name="wdef">La défense physique redonnée par la potion</param>
+        /// <param name="matk">L'attaque magique redonnée par la potion</param>
+        /// <param name="mdef">La défense magique redonnée par la potion</param>
+        /// <param name="price">Le prix de la potion</param>
+        /// <returns>Retourne si la modification a réussi ou non</returns>
         public static bool updatePotion(int pid, string nom, string description, int duration, int health, int watk, int wdef, int matk, int mdef, int price)
         {
             OracleConnection conn = Connection.getInstance().conn;
@@ -1870,6 +1976,17 @@ namespace ControleBD
             }
         }
 
+        /// <summary>
+        /// Modifie un joueur
+        /// </summary>
+        /// <param name="jid">le numéro de joueur</param>
+        /// <param name="nom">Le nom du joueur</param>
+        /// <param name="email">Le courriel du joueur</param>
+        /// <param name="password">Le mot de passe du joueur</param>
+        /// <param name="date">la date d'inscripiton du joueur</param>
+        /// <param name="argent">L'argent du joueur</param>
+        /// <param name="confirmer">Si le joueur est confirmé ou non</param>
+        /// <returns>Retourne si la modification a réussi ou non</returns>
         public static bool updateJoueur(int jid, string nom, string email, string password, DateTime date, int argent, string confirmer)
         {
             OracleConnection conn = Connection.getInstance().conn;
@@ -1914,6 +2031,12 @@ namespace ControleBD
             }
         }
 
+        /// <summary>
+        /// Modifie si le joueur est conmfirmé ou non
+        /// </summary>
+        /// <param name="jid">Le numéro du joueur</param>
+        /// <param name="confirmer">Si le joueur est confirmé ou non</param>
+        /// <returns>Retourne si la modification a réussi ou non</returns>
         public static bool updateStateJoueur(int jid, string confirmer)
         {
             OracleConnection conn = Connection.getInstance().conn;
@@ -1944,6 +2067,16 @@ namespace ControleBD
             }
         }
 
+        /// <summary>
+        /// Ajoute un personnage au joueur
+        /// </summary>
+        /// <param name="jid">Le numéro du joueur</param>
+        /// <param name="nom">Le nom du personnage</param>
+        /// <param name="classe">La classe du personnage</param>
+        /// <param name="actif">Si le personnage est actif ou non</param>
+        /// <param name="xp">L'expérience du personnage</param>
+        /// <param name="level">Le niveau du personnage</param>
+        /// <returns>Retourne si l'ajout a réussi ou non</returns>
         public static bool addPerso(int jid, string nom, string classe, string actif = "1",int xp = 0, int level = 1)
         {
             OracleConnection conn = Connection.getInstance().conn;
@@ -1988,6 +2121,17 @@ namespace ControleBD
             }
         }
 
+        /// <summary>
+        /// Modifie le personnage
+        /// </summary>
+        /// <param name="guid">Le numéro du personnage</param>
+        /// <param name="jid">Le numéro du joueur</param>
+        /// <param name="nom">Le nom du personnage</param>
+        /// <param name="xp">L'expérience du personnage</param>
+        /// <param name="level">Le niveau du personnage</param>
+        /// <param name="classe">La classe du personnage</param>
+        /// <param name="actif">Si le personnage est actif ou non</param>
+        /// <returns>Retourne si la modification a réussi ou non</returns>
         public static bool updatePerso(int guid, int jid, string nom, int xp, int level, string classe, string actif)
         {
             OracleConnection conn = Connection.getInstance().conn;
@@ -2032,6 +2176,12 @@ namespace ControleBD
             }
         }
 
+        /// <summary>
+        /// Modifie si le personnage est actif ou non
+        /// </summary>
+        /// <param name="guid">Le numéro du personnage</param>
+        /// <param name="actif">Si le personnage est actif ou non</param>
+        /// <returns>Retourne si la modification a réussi ou non</returns>
         public static bool updateStatePerso(int guid, string actif)
         {
             OracleConnection conn = Connection.getInstance().conn;
@@ -2062,6 +2212,11 @@ namespace ControleBD
             }
         }
 
+        /// <summary>
+        /// Retourne la liste des classes (remplir des combobox)
+        /// </summary>
+        /// <param name="estItem">Si c'est pour remplir les combobox pour les items ou pour les personnages</param>
+        /// <returns>Retourne la liste des classes</returns>
         public static List<string> fillClasses(bool estItem = true)
         {
             List<string> listItem = new List<string>();
@@ -2078,6 +2233,13 @@ namespace ControleBD
             return listItem;
         }
 
+        /// <summary>
+        /// Retourne la liste des personnages d'un certain joueur
+        /// </summary>
+        /// <param name="jid">Le numéro du joueur</param>
+        /// <param name="classe">La classe du personnage</param>
+        /// <param name="lvl">le numéro du personnage</param>
+        /// <returns>Retourne la liste des personnages</returns>
         public static List<string> fillPerso(int jid, string classe, int lvl)
         {
             List<string> listPerso = new List<string>();
@@ -2110,7 +2272,11 @@ namespace ControleBD
             }
             return listPerso;
         }
-
+        
+        /// <summary>
+        /// Retourne le liste des joueurs
+        /// </summary>
+        /// <returns>la liste des joueurs</returns>
         public static List<string> fillJoueurs()
         {
             List<string> listJoueur = new List<string>();
