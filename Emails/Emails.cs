@@ -7,6 +7,7 @@ namespace Emails
 {
     public static class Email
     {
+        // Variable en string pour différent message dans l'utilisation de la DLL
         public static string SujetInscription = "Confirmation compte - Throne Wars"; 
         public static string BodyConfirmation = "Veuillez confirmer votre compte lier à ce courriel." +
             "Voici votre lien pour confirmer : " ; 
@@ -23,10 +24,12 @@ namespace Emails
                 MailMessage mail = new MailMessage();
                 SmtpClient SmtpServer = new SmtpClient("smtpout.secureserver.net");
 
+                // À Qui , le sujet et le body du Email
                 mail.From = new MailAddress("noreply@thronewars.ca");
                 mail.To.Add(email);
                 mail.Subject = subject;
                 mail.Body = message;
+                // Le body est en HTML ( pour les lien en a href
                 mail.IsBodyHtml = true;
 
                 SmtpServer.Port = 80;

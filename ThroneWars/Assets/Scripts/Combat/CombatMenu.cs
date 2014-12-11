@@ -53,6 +53,7 @@ public class CombatMenu : MonoBehaviour
     public bool moveEnabled = true;
     public bool itemEnabled = true;
     private bool hasUpdatedGUI = false;
+    public int currPlayerTurn = 0;
 
     #region textures
     public GUISkin _skin;
@@ -89,9 +90,9 @@ public class CombatMenu : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && PlayerManager._instance._playerSide - 1 == currPlayerTurn)
             wantToQuit = !wantToQuit;
-        gameOver = winner > 0;
+        gameOver = winner > 0 || PlayerManager._instance.enemyHasLeft;
     }
     void InitializeStats()
     {
@@ -198,7 +199,7 @@ public class CombatMenu : MonoBehaviour
             showItems = true;
         }
         GUI.enabled = true;
-        if (GUILayout.Button("Défendre", actionStyle))
+        if (GUILayout.Button("Terminé", actionStyle))
         {
             ///augmente la défense et passe le tour du personnage
             selectedCharacter.GetComponent<Character>().Defend();
@@ -286,8 +287,9 @@ public class CombatMenu : MonoBehaviour
 
     void DisplayEndResults()
     {
-        enemyHasQuitOrDisconnected = PlayerManager._instance.hasWonDefault;
-        if (winner == PlayerManager._instance._playerSide)
+        enemyHasQuitOrDisconnected = PlayerManager._instance.enemyHasLeft;
+
+        if (winner == PlayerManager._instance._playerSide || enemyHasQuitOrDisconnected)
         {
             GUILayout.Window(-10, rectWinning, doWinningWindow, "Victoire!");
         }
@@ -333,7 +335,6 @@ public class CombatMenu : MonoBehaviour
         GUILayout.BeginHorizontal();
         if (GUILayout.Button("Oui", GUILayout.Height(37)))
         {
-            PlayerManager._instance.SendObject(Controle.Game.CANCEL);
             PlayerManager._instance._characters.Clear();
             Object[] allObjects = GameController.FindObjectsOfType(typeof(Character));
 
@@ -341,9 +342,9 @@ public class CombatMenu : MonoBehaviour
             {
                 Destroy(allObjects[i]);
             }
-
-            PlayerManager._instance.ClearPlayer();
+            PlayerManager._instance.ClearPlayer(false);
             GameManager._instance.ClearEnemy();
+            PlayerManager._instance.SendObject(Controle.Game.CANCEL);
             PlayerManager._instance.LoadPlayer();
             Application.LoadLevel("MainMenu");
         }
@@ -410,7 +411,7 @@ public class CombatMenu : MonoBehaviour
                 Destroy(allObjects[i]);
             }
 
-            PlayerManager._instance.ClearPlayer();
+            PlayerManager._instance.ClearPlayer(false);
             GameManager._instance.ClearEnemy();
             PlayerManager._instance.LoadPlayer();
             Application.LoadLevel("MainMenu");
@@ -469,7 +470,7 @@ public class CombatMenu : MonoBehaviour
                 Destroy(allObjects[i]);
             }
 
-            PlayerManager._instance.ClearPlayer();
+            PlayerManager._instance.ClearPlayer(false);
             GameManager._instance.ClearEnemy();
             PlayerManager._instance.LoadPlayer();
             Application.LoadLevel("MainMenu");

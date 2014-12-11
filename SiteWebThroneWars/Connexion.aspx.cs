@@ -16,24 +16,30 @@ namespace SiteWebThroneWars
 
         protected void Page_Load(object sender, EventArgs e)
         { 
+            // Regarde une session existe
             isSessionOn();
         }
         protected void isSessionOn()
         {
+            // Cherche si le cookie erreur est présent
             HttpCookie Cookie = Request.Cookies["Erreur"];
+            // Si la variable de session username n'est pas null
             if (Session["username"] != null)
             {
                 username.Enabled = false;
                 username.Text = Session["username"].ToString();
                 password.Enabled = false;
                 BTN_Connecter.Text = "Se déconnecter";
+                // Get le JID
                 int JID = Controle.getJID(Session["username"].ToString());
+                //Rempli le leaderbord
                 DataSet DSLeaderboard = Controle.getLeaderboard(Session["username"].ToString());
                 if (DSLeaderboard != null)
                 {
                     GV_Leaderboard.DataSource = DSLeaderboard;
                     GV_Leaderboard.DataBind();
                 }
+                // Rempli les stats
                 DataSet DS = Controle.getStatsWEB(JID);
                 if (DS != null)
                 {
@@ -52,6 +58,7 @@ namespace SiteWebThroneWars
         }
         protected void Connexion_Click(object sender, EventArgs e)
         {
+            // Si la session n'est pas null on abandonne la session
             if(Session["username"] != null)
             {
                 Session.Abandon();
@@ -76,8 +83,11 @@ namespace SiteWebThroneWars
                 string user = username.Text;
                 string pass = password.Text;
 
+                // Encrypte le password
                 string passHash = Controle.hashPassword(pass, null, System.Security.Cryptography.SHA256.Create());
+                // Si c'est correspondante
                 Connecter = Controle.userPassCorrespondant(user, passHash);
+                // si le username existe
                 siExiste = Controle.userExiste(user);
                 
                 if (!siExiste)
@@ -95,6 +105,7 @@ namespace SiteWebThroneWars
                     ViderTB();
                 }
                 else
+                    // Si l'account est confirmé
                     siConfirmer = Controle.accountIsConfirmed(user);
                     
                 if (!siConfirmer && Connecter)
@@ -140,7 +151,7 @@ namespace SiteWebThroneWars
                     else
                     {
                         text = "JID Invalide ";
-                        //Textbox vide erreur
+             
                         ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>MessageBoxErreur(\"" + text + "\");</script>", false);
                         if (Session["username"] != null)
                         {

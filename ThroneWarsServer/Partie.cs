@@ -26,6 +26,10 @@ namespace ThroneWarsServer
             player1 = J;
             T = new Thread(new ThreadStart(Run));
         }
+        /// <summary>
+        /// Cette fonction ajoute un joueur a la partie et demarre le thread si les 2 joueurs sont connecter et que la partie est complete
+        /// </summary>
+        /// <param name="j">Joueur a ajouter</param>
         public void addJoueur(Joueur j)
         {
             if (player2 == null)
@@ -77,8 +81,8 @@ namespace ThroneWarsServer
                 //la partie debute ou un joueur a quitter
                 if (!isWon)
                 {
-                    initGame();
-                    Controle.Game action1 = Controle.Game.NOTHING;
+                    initGame();//on effectue les operation de l'ecran de placement
+                    Controle.Game action1 = Controle.Game.NOTHING;// par defaut l'action est rien
                     Controle.Game action2 = Controle.Game.NOTHING;
                     int timer = 0;
                     while (!isWon)
@@ -91,11 +95,12 @@ namespace ThroneWarsServer
                             {
                                 player1.Socket.Blocking = false;
                                 action1 = recevoirChoix(player1);
+                                //cette partie est executer seulement s'il y a quelque chose a lire
                                 player1.Socket.Blocking = true;
-
+                                //on remet le timer d'inactivite a 0 puisque un action du joueur a ete entree
                                 timer = 0;
                             }
-                            catch (Exception) { action1 = Controle.Game.NOTHING; }
+                            catch (Exception) { action1 = Controle.Game.NOTHING; } // si une exception est levee il n'y a donc pas eu d'action de l'usager
                             switch (action1)
                             {
                                 case Controle.Game.ENDTURN:
@@ -105,48 +110,55 @@ namespace ThroneWarsServer
                                     timer++;
                                     if (timer == 2500)
                                     {
-                                        envoyerObjet(Controle.Game.HALFAFK, player1);
+                                        envoyerObjet(Controle.Game.HALFAFK, player1);//on envoie un avertissement au joueur pour lui dire que nous sommes a la moitier du timer
                                     }
                                     if (timer == 5000)
                                     {
-                                        envoyerObjet(Controle.Game.AFK, player1);
+                                        envoyerObjet(Controle.Game.AFK, player1);//on dis au joueur qu'il est inactif et donc qu'il est deconnecter
                                     }
                                     break;
+                                    //on dis au joueur 2 que le premier joueur a bouger
+                                    //et on lui envoie ensuite les informations pour deplacer le joueur correspondant a l'autre joueur 
                                 case Controle.Game.MOVE:
                                     envoyerObjet(Controle.Game.MOVE, player2);
                                     envoyerReponse(recevoirString(player1), player2);
                                     break;
+                                    //on dis au joueur 2 que le premier joueur a utiliser une potion
+                                    //on envoie aussi les information pour que le 2ieme client sache quelle potion sur quelle personnage a ete utiliser
                                 case Controle.Game.USEITEM:
                                     envoyerObjet(Controle.Game.USEITEM, player2);
                                     envoyerReponse(recevoirString(player1), player2);
                                     break;
-                                case Controle.Game.DEFEND:
-                                    envoyerObjet(Controle.Game.DEFEND, player2);
-                                    envoyerReponse(recevoirString(player1), player2);
-                                    break;
+                                    //on dis au joueur 2 qu'il a ete attaquer on lui envoie aussi toute les donnees neccessaires pour traiter cette action
                                 case Controle.Game.ATTACK:
                                     envoyerObjet(Controle.Game.ATTACK, player2);
                                     System.Threading.Thread.Sleep(500);
                                     envoyerReponse(recevoirString(player1), player2);
                                     break;
+                                    // on dis au joueur 2 que sont adversaire a quitter (en fesant Alt-F4)
+                                    //on met donc le joueur qui s'est deconnecter a etre deconnecter et on met a jour la partie avec le gagnant
                                 case Controle.Game.QUIT:
                                     envoyerObjet(Controle.Game.QUIT, player2);
-                                    updateWinner(player2);//+traitement exp
+                                    updateWinner(player2);
                                     Program.addGoToMenu(player2);
                                     player1.isConnected = false;
                                     isWon = true;
                                     break;
-
+                                    // on dis au joueur 2 que sont adversaire a quitter pour retourne au menu principale
+                                    //meme traitement que le quit mais aulieu de deconnecter un joueur on ajoute les 2 pour retourne au menu principale
                                 case Controle.Game.CANCEL:
                                     envoyerObjet(Controle.Game.QUIT, player2);
-                                    envoyerObjet(Controle.Game.CANCEL, player1);
                                     updateWinner(player2);//+traitement exp
                                     Program.addGoToMenu(player1);
                                     Program.addGoToMenu(player2);
                                     isWon = true;
                                     break;
+                                    //la partie a ete gagner
                                 case Controle.Game.WIN:
                                     envoyerObjet(Controle.Game.WIN, player2);
+                                    player1.Persos = RecevoirObjet<Personnages>(player1);
+                                    player2.Persos = RecevoirObjet<Personnages>(player2);
+                                    updateExp(Int32.Parse(recevoirString(player1)), Int32.Parse(recevoirString(player2)));
                                     updateWinner(player1);
                                     Program.addGoToMenu(player1);
                                     Program.addGoToMenu(player2);
@@ -213,7 +225,6 @@ namespace ThroneWarsServer
                                         break;
                                     case Controle.Game.CANCEL:
                                         envoyerObjet(Controle.Game.QUIT, player2);
-                                        envoyerObjet(Controle.Game.CANCEL, player1);
                                         updateWinner(player2);
                                         Program.addGoToMenu(player1);
                                         Program.addGoToMenu(player2);
@@ -221,7 +232,9 @@ namespace ThroneWarsServer
                                         break;
                                     case Controle.Game.WIN:
                                         envoyerObjet(Controle.Game.WIN, player1);
-
+                                        player2.Persos = RecevoirObjet<Personnages>(player2);
+                                        player1.Persos = RecevoirObjet<Personnages>(player1);
+                                        updateExp(Int32.Parse(recevoirString(player1)), Int32.Parse(recevoirString(player2)));
                                         updateWinner(player2);
                                         Program.addGoToMenu(player1);
                                         Program.addGoToMenu(player2);
@@ -241,10 +254,15 @@ namespace ThroneWarsServer
             }
             this.T.Abort();
         }
-        private void updateExp(int money1,int money2)
+        /// <summary>
+        /// on met a jour l'experience des personnages et leur argent respectives
+        /// </summary>
+        /// <param name="money1">argent gagner par le premier joueur</param>
+        /// <param name="money2">argent gagner par le deuxieme joueur</param>
+        private void updateExp(int money1, int money2)
         {
-            Controle.ajoutMoneyJoueur(player1.jid,money1);
-            Controle.ajoutMoneyJoueur(player2.jid,money2);
+            Controle.ajoutMoneyJoueur(player1.jid, money1);
+            Controle.ajoutMoneyJoueur(player2.jid, money2);
             Controle.ajoutXPPersonnage(player1.Persos[0].Nom, player1.Persos[0].xpGained);
             Controle.ajoutXPPersonnage(player1.Persos[1].Nom, player1.Persos[1].xpGained);
             Controle.ajoutXPPersonnage(player1.Persos[2].Nom, player1.Persos[2].xpGained);
@@ -273,11 +291,14 @@ namespace ThroneWarsServer
                         );
             isWon = true;
         }
+        /// <summary>
+        /// Fonction qui execute le traitement pour l'ecran de placement
+        /// </summary>
         private void placementScreen()
         {
             bool player1PlacedOrHasQuitted = false;
             bool player2PlacedOrHasQuitted = false;
-            while (!player1PlacedOrHasQuitted || !player2PlacedOrHasQuitted)
+            while (!player1PlacedOrHasQuitted || !player2PlacedOrHasQuitted)//tant que les 2 joueur n'ont pas placer leurs joueur ou qu'il n'ont pas quitter
             {
                 Controle.Game Action;
                 try

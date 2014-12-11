@@ -73,7 +73,7 @@ public class GameController : TMNController
 		new List<Character>()	// player 2's units
 	};
 
-    public int currPlayerTurn { get; set; }		// which player's turn it is, only if useTurns = true;
+    public static int currPlayerTurn { get; set; }		// which player's turn it is, only if useTurns = true;
     public static Thread threadTurn;
     public static Thread threadAFK;
     #endregion
@@ -427,10 +427,16 @@ public class GameController : TMNController
     }
     private void DoCombat(Character atker, Character defender, int damage)
     {
-        if (atker.Attack(defender))
-        {
+        //if (atker.Attack(defender))
+        //{
             int exp = CalculateExperience(selectedUnit, defender, damage);
             int gold = CalculateMoneyGain(selectedUnit, defender, damage);
+
+            atker.GetComponent<Billboard>().AttackAnimation();
+            //weapon.Play(target);
+            atker.didAttack = true;
+            atker.didMove = true;
+
 
             //à titre de tests
             Debug.Log(selectedUnit._name + "  attaque " + defender._name + ", et inflige " + damage.ToString() + " de dégâts!");
@@ -446,7 +452,7 @@ public class GameController : TMNController
             attackRangeMarker.HideAll();
             StartCoroutine(WaitForAttack());
             CombatMenu.FindObjectOfType<CombatMenu>().winner = CheckGameOver();
-        }
+        //}
     }
     #endregion
     public int CountAliveCharacters(Character[] tab)
@@ -575,9 +581,7 @@ public class GameController : TMNController
                 GameObject enemy = GameObject.Find(PlayerManager._instance._activeEnemyName);
                 GameObject target = GameObject.Find(PlayerManager._instance._activeTargetUnit);
                 int dmgDealt = PlayerManager._instance._damageDealt;
-
                 DoCombat(enemy.GetComponent<Character>(), target.GetComponent<Character>(), dmgDealt);
-
                 hasAttacked = true;
                 PlayerManager._instance.enemyAttack = false;
             }
@@ -652,7 +656,7 @@ public class GameController : TMNController
     public void ChangeTurn()
     {
         currPlayerTurn = (currPlayerTurn == 0 ? 1 : 0);
-
+        CombatMenu.FindObjectOfType<CombatMenu>().currPlayerTurn = currPlayerTurn;
         // unselect any selected unit
         OnClearNaviUnitSelection(null);
 
@@ -850,7 +854,7 @@ public class GameController : TMNController
     IEnumerator WaitForAttack()
     {
         yield return new WaitForSeconds(1.5f);
-        ClickNextActiveCharacter();
+        //ClickNextActiveCharacter();
     }
     protected override void OnClearNaviUnitSelection(GameObject clickedAnotherUnit)
     {

@@ -24,6 +24,7 @@ namespace SiteWebThroneWars
             string courriel = TB_Email.Text;
             // Valider que le email est legit
             if (verifOk)
+                // Vérifie si le format du courriel est adéquat
                 legitEmail = IsEmail(courriel);
             else
             {
@@ -33,7 +34,6 @@ namespace SiteWebThroneWars
             if (legitEmail && verifOk)
             {
                 // Aller chercher le username correspondant au courriel + envoie par email
-                // Fonction pas fini - UsernameRecovery
                 bool recoveryOk = Controle.usernameRecovery(courriel);
                 if (recoveryOk)
                     ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>MessageBoxReussi();</script>", false);
