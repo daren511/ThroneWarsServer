@@ -16,6 +16,13 @@ namespace ControleBD
         public enum Game { QUIT, SENDPOSITIONS, OK, NOTHING, CANCEL, STARTING, ENDTURN, MOVE, ATTACK, USEITEM, DEFEND, HALFAFK, AFK, WIN};
         //-------------------------------------INSERT / UPDATE / DELETE PLAYER-------------------------------------------
 
+        /// <summary>
+        /// Fonction qui sert à insérer un joueur dans la BD
+        /// </summary>
+        /// <param name="username"></param>
+        /// <param name="email"></param>
+        /// <param name="password"></param>
+        /// <returns> true ou false si l'ajout marche ou pas</returns>
         public static bool insertPlayer(string username, string email, string password)
         {
             OracleConnection conn = Connection.getInstance().conn;
@@ -550,7 +557,7 @@ namespace ControleBD
         /// Cette fonction sert à trouver le email associé au username en paramètre
         /// </summary>
         /// <param name="username"></param>
-        /// <returns></returns>
+        /// <returns> le email </returns>
         public static string getEmail(string username)
         {
             OracleConnection conn = Connection.getInstance().conn;
@@ -588,7 +595,7 @@ namespace ControleBD
         /// Fonction servant à retrouver le mot de passe du username passé en paramètre
         /// </summary>
         /// <param name="username"></param>
-        /// <returns></returns>
+        /// <returns>True ou false si l'operation est réussi ou non</returns>
         public static bool passwordRecovery(string username)
         {
             OracleConnection conn = Connection.getInstance().conn;
@@ -647,7 +654,7 @@ namespace ControleBD
         /// Fonction qui sert a confirmer le compte lorsque le user utilise le lien dans le courriel
         /// </summary>
         /// <param name="userHash"></param>
-        /// <returns></returns>
+        /// <returns>True ou false si l'operation est réussi ou non</returns>
         public static bool confirmAccount(string userHash)
         {
             OracleConnection conn = Connection.getInstance().conn;
@@ -689,7 +696,7 @@ namespace ControleBD
         /// Fonction servant à retrouver le username de l'email passé en paramètre
         /// </summary>
         /// <param name="email"></param>
-        /// <returns></returns>
+        /// <returns>True ou false si l'operation est réussi ou non</returns>
         public static bool usernameRecovery(string email)
         {
             OracleConnection conn = Connection.getInstance().conn;
@@ -772,7 +779,7 @@ namespace ControleBD
         /// Verifie si le compte est confirmee
         /// </summary>
         /// <param name="user"></param>
-        /// <returns>true si ok false sinon</returns>
+        /// <returns>True ou false si l'operation est réussi ou non</returns>
         public static bool accountIsConfirmed(string user)
         {
             try
@@ -805,7 +812,7 @@ namespace ControleBD
         /// </summary>
         /// <param name="username"></param>
         /// <param name="PassHash"></param>
-        /// <returns></returns>
+        /// <returns>True ou false si l'operation est réussi ou non</returns>
         public static bool updatePassword(string username, string PassHash)
         {
             OracleConnection conn = Connection.getInstance().conn;
@@ -1156,6 +1163,8 @@ namespace ControleBD
         /// <summary>
         ///  Cette classe est celle qui sert à encrypter les liens pour le username lors
         ///  des inscriptions , et différent usages tel que forgotpassword et resetpassword
+        ///  
+        /// Retourne le string crypter ou decrypter
         /// </summary>
         public class Rotation
         {
@@ -1252,7 +1261,7 @@ namespace ControleBD
         /// Cette function sert à savoir si un username existe deja pour des fins de nom d'utilisateur unique
         /// </summary>
         /// <param name="user"></param>
-        /// <returns> true ou false </returns>
+        /// <returns> True ou false si l'operation est réussi ou non </returns>
         public static bool userExiste(string user)
         {
             OracleConnection conn = Connection.getInstance().conn;
@@ -1284,7 +1293,7 @@ namespace ControleBD
         /// Cette function sert à savoir si un email existe deja pour des fins de email unique
         /// </summary>
         /// <param name="courriel"></param>
-        /// <returns>return true ou false </returns>
+        /// <returns>True ou false si l'operation est réussi ou non</returns>
         public static bool courrielExiste(string courriel)
         {
             OracleConnection conn = Connection.getInstance().conn;

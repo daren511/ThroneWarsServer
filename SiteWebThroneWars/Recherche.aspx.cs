@@ -120,15 +120,19 @@ namespace SiteWebThroneWars
 
         protected void GV_Leaderboard_SelectedIndexChanged(object sender, EventArgs e)
         {
+            // Pour toute les rows
             foreach (GridViewRow rowColor in GV_Leaderboard.Rows)
             {
                 rowColor.BackColor = System.Drawing.Color.Transparent;
             }
+            // Selectionne la row
             GridViewRow row = GV_Leaderboard.SelectedRow;
             DataSet DSLeaderboardSelection = new DataSet();
+            // Recupère le user par la cell 1 de la row
             string user = row.Cells[1].Text;
             row.BackColor = System.Drawing.Color.PowderBlue;
 
+            // Get le JID
             int JID = Controle.getJID(user);
             DSLeaderboardSelection = Controle.getStatsWEB(JID);
             if (DSLeaderboardSelection != null)

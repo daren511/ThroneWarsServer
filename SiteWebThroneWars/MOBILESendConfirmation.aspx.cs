@@ -24,17 +24,23 @@ namespace SiteWebThroneWars
             if (ok)
             {
                 bool userExiste = Controle.userExiste(user);
+                // Si user existe
                 if (userExiste)
                 {
+                    // Fonction qui confirme si l'account est confirmé
                     bool isConfirmed = Controle.accountIsConfirmed(user);
+                    // Get le email
                     string courriel = Controle.getEmail(user);
                     if (!isConfirmed)
                     {
+                        // Get la valeur pour encrypter
                         Random random = new Random();
                         int randomNumber = random.Next(1, 9);
                         Controle.Rotation rot = new Controle.Rotation(randomNumber);
+                        // Encrypte
                         string userHash = rot.Chiffrer(user);
                         userHash += randomNumber;
+                        // Envoie le lien
                         string link = "<a href=http://www.thronewars.ca/ConfirmAccount.aspx?User=" + userHash + ">Ici</a>";
                         // Send email de confirmation
                         Email.sendMail(courriel, Email.SujetInscription, Email.BodyConfirmation + link);

@@ -20,25 +20,22 @@ namespace SiteWebThroneWars
             bool ok = VerifChamps();
             if (ok)
             {
+                // Get le URL
                 string URL = HttpContext.Current.Request.Url.AbsoluteUri;
                 Uri myUri = new Uri(URL);
-                string userSplit = HttpUtility.ParseQueryString(myUri.Query).Get("User");
+                // Get la param User
+                string userHash = HttpUtility.ParseQueryString(myUri.Query).Get("User");
+
                 if (TB_NewPassord.Text == TB_ConfirmPass.Text)
                 {
                     bool ResetOK = false;
+                    // Hash le password
                     string passHash = Controle.hashPassword(TB_NewPassord.Text, null, System.Security.Cryptography.SHA256.Create());
-                    try
-                    {
-                        ResetOK = Controle.resetPassword(userSplit, passHash);
-                    }
-                    catch
-                    {
-                        ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>MessageBoxErreur(\"" + userSplit + "\");</script>", false);
-                    }
-
+                    // Fonction qui confirme que le mot de passe est changé
+                    ResetOK = Controle.resetPassword(userHash, passHash);
                     if (ResetOK)
                         ScriptManager.RegisterStartupScript(this.Page, this.GetType(), "tmp", "<script type='text/javascript'>MessageBoxReussi();</script>", false);
-
+                    
                 }
                 else
                 {
