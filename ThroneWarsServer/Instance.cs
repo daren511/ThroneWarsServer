@@ -31,22 +31,24 @@ namespace ThroneWarsServer
         {
             try
             {
+                //si le joueur est pas deja connecter et que sont socket est connecter
                 if (!Joueur.isConnected && Joueur.socketIsConnected())
                 {
                     Joueur.hasConnected = true;
                     string Login = recevoirString();
-                    Joueur.Username = Login.Remove(Login.LastIndexOf(SPLITTER));
+                    Joueur.Username = Login.Remove(Login.LastIndexOf(SPLITTER));//on affecter 
                     bool reponse = Controle.userPassCorrespondant(Joueur.Username, Login.Substring(Login.LastIndexOf(SPLITTER)+1));//verifie si les informations de login sont ok
-                    if (reponse)
+                    if (reponse)//le joueur peut se connecter le nom d'usager et le mot de passe sont bon
                     {
+                        //genere la string a envoyer au client
                         string rep = reponse.ToString() + SPLITTER + Controle.accountIsConfirmed(Joueur.Username).ToString() + SPLITTER + Program.checkAlreadyConnected(Joueur).ToString();
-                        envoyerReponse(rep);
-                        if(rep == "True?True?False")
+                        envoyerReponse(rep);//on envoie la reponse au client et lui la traite
+                        if(rep == "True?True?False")//si le joueur peut se connecter alors on le considere comme connecter parce qu'il n'est pas deja connecter et que le compte est confirme
                         Joueur.isConnected = true;
                     }
                     else 
                     { 
-                        envoyerReponse(reponse.ToString());
+                        envoyerReponse(reponse.ToString());//le compte n'existe pas ou le mot de passe est invalide
                     }
                     if(Joueur.isConnected)
                     {
@@ -144,7 +146,11 @@ namespace ThroneWarsServer
                 string allo = recevoirString();
             }            
         }
-
+        /// <summary>
+        /// charge un personnage pour afficher ses stats ainsi que sont inventaire
+        /// </summary>
+        /// <param name="nom">le nom du personnage a (re)charger</param>
+        /// <returns>le personnage en question</returns>
         private Personnages getPersonnage(string nom)
         {
             Personnages p = Controle.returnPersonnage(nom);
@@ -152,7 +158,10 @@ namespace ThroneWarsServer
 
             return p;
         }
-
+        /// <summary>
+        /// recoit un choix de l'enum 
+        /// </summary>
+        /// <returns>un choix dans Controle.Actions</returns>
         private Controle.Actions recevoirChoix()
         {
             int first = Joueur.Socket.ReceiveBufferSize;
@@ -171,7 +180,11 @@ namespace ThroneWarsServer
             }
             
         }
-
+        /// <summary>
+        /// traite le dataset obtenu pour le joueur
+        /// </summary>
+        /// <param name="DS">Data set a traiter</param>
+        /// <returns>une liste de string contenant les nom des personnages du joueur</returns>
         private List<string> traiterDataSet(DataSet DS)
         {
             List<string> Liste = new List<string>();
@@ -182,6 +195,11 @@ namespace ThroneWarsServer
             Liste.Capacity = Liste.Count;
             return Liste;
         }
+        /// <summary>
+        /// cette fonction envoie un objet de n'importe quel type serializable
+        /// </summary>
+        /// <typeparam name="T">Type serializable</typeparam>
+        /// <param name="ds">Objet a envoyer</param>
         private void envoyerObjet<T>(T ds)
         {
             BinaryFormatter b = new BinaryFormatter();
@@ -191,13 +209,20 @@ namespace ThroneWarsServer
                 Joueur.Socket.Send(stream.ToArray());
             }
         }
-        
+        /// <summary>
+        /// envoie une chaine de charactere au client
+        /// </summary>
+        /// <param name="reponse">String a envoyer</param>
         private void envoyerReponse(string reponse)
         {
             byte[] data = Encoding.ASCII.GetBytes(reponse);
 
             Joueur.Socket.Send(data);
         }
+        /// <summary>
+        /// recoit un string provenant du client
+        /// </summary>
+        /// <returns>le string en question</returns>
         private string recevoirString()
         {
             string S;
