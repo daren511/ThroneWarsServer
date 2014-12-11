@@ -26,6 +26,7 @@ namespace SiteWebThroneWars
             bool ok = VerifChamps();
             if (ok)
             {
+                // Execute la fonction qui renvoie un email pour faire un reset 
                 RecoveryOk = Controle.passwordRecovery(username);
                 if (RecoveryOk)
                 {

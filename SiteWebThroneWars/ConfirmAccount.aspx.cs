@@ -13,10 +13,13 @@ namespace SiteWebThroneWars
         protected void Page_Load(object sender, EventArgs e)
         {
             bool RecoveryOK = false;
-            string text = ""; 
+            string text = "";
+            // Prend le URL du browser
             string URL = HttpContext.Current.Request.Url.AbsoluteUri;
             Uri myUri = new Uri(URL);
+            // Split sur la partie apres le User ( .ca?User=__)
             string userSplit = HttpUtility.ParseQueryString(myUri.Query).Get("User");
+            // Confirme l'account 
             RecoveryOK = Controle.confirmAccount(userSplit);
 
             if (RecoveryOK)

@@ -546,6 +546,11 @@ namespace ControleBD
         }
 
         //-----------------------------------------  FONCTIONS SITE WEB ---------------------------------------------
+        /// <summary>
+        /// Cette fonction sert à trouver le email associé au username en paramètre
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns></returns>
         public static string getEmail(string username)
         {
             OracleConnection conn = Connection.getInstance().conn;
@@ -580,7 +585,7 @@ namespace ControleBD
         }
 
         /// <summary>
-        /// Fonction qui est utilisé dans le form web de ForgotPassword
+        /// Fonction servant à retrouver le mot de passe du username passé en paramètre
         /// </summary>
         /// <param name="username"></param>
         /// <returns></returns>
@@ -613,11 +618,15 @@ namespace ControleBD
                     objRead.Close();
                     if (result != null && resultemail != null)
                     {
+                        // Choisi un chiffre random entre 1 et 9
                         Random random = new Random();
                         int randomNumber = random.Next(1, 9);
                         Rotation rot = new Rotation(randomNumber);
+                        // Encrypte le username avec le nombre tiré
                         string UserHash = rot.Chiffrer(username);
+                        // Ajoute le numero à la fin du username encrypté
                         UserHash += randomNumber;
+                        // Envoie le email pour resetter son password
                         string link = "<a href=http://www.thronewars.ca/ResetPassword.aspx?User=" + UserHash + ">Ici</a>";
                         //Reset password
                         Email.sendMail(resultemail, Email.SubjectResetPass, Email.BodyResetPass + link);
@@ -642,9 +651,12 @@ namespace ControleBD
         public static bool confirmAccount(string userHash)
         {
             OracleConnection conn = Connection.getInstance().conn;
+            // Prend le dernier numero du usersplit qui a servi a encrypter
             int encrypthint = Int32.Parse(userHash.Substring(userHash.Length - 1));
             Rotation rot = new Rotation(encrypthint);
+            // Met le userhash sans le dernier int qui sert à l'encrypter
             userHash = userHash.Substring(0, userHash.Length - 1);
+            // Decrypte le username
             string userNonHash = rot.Dechiffrer(userHash);
 
 
@@ -674,7 +686,7 @@ namespace ControleBD
             }
         }
         /// <summary>
-        /// Fonction qui est utlisé dans le form web de ForgotUsername 
+        /// Fonction servant à retrouver le username de l'email passé en paramètre
         /// </summary>
         /// <param name="email"></param>
         /// <returns></returns>
@@ -898,7 +910,7 @@ namespace ControleBD
             return personnage;
         }
         /// <summary>
-        /// Cette fonction retourne une inventaire complete de joueurs
+        /// Cette fonction retourne un inventaire complete de joueurs
         /// </summary>
         /// <param name="jid">le numero du joueur en question</param>
         /// <returns>une liste contenant toute les items dans l'inventaire du joueur</returns>
@@ -969,7 +981,11 @@ namespace ControleBD
         }
 
 
-
+        /// <summary>
+        /// Fonction qui met les statistiques des personnage lié au JID et le met dans un dataset
+        /// </summary>
+        /// <param name="JID"></param>
+        /// <returns> Le dataset </returns>
         public static DataSet getStatsWEB(int JID)
         {
             DataSet DSStats = new DataSet();
@@ -991,10 +1007,10 @@ namespace ControleBD
             return DSStats;
         }
         /// <summary>
-        /// Cette fonction retourne un dataset avec le leaderboard
+        /// Cette fonction sert à mettre le leaderboard dans un dataset
         /// </summary>
         /// <param name="JID"></param>
-        /// <returns></returns>
+        /// <returns> Le dataset </returns>
         public static DataSet getLeaderboard(string username, bool Recherche = false)
         {
             DataSet DSLeaderboard = new DataSet();
@@ -1035,7 +1051,7 @@ namespace ControleBD
             }
         }
         /// <summary>
-        /// cette fonction ramene le numero d'un joueur a l'aide du nom d'usager (puisqu'il est unique)
+        /// Cette fonction ramene le numero d'un joueur a l'aide du nom d'usager (puisqu'il est unique)
         /// </summary>
         /// <param name="username">nom d'usager du joueur</param>
         /// <returns>le numero 'JID' du joueur correspondant au nom d'usager donnee en parametre si l'usager n'existe pas,on retourne 0</returns>
@@ -1067,7 +1083,11 @@ namespace ControleBD
             }
             return 0;
         }
-
+        /// <summary>
+        /// Cette fonction sert a retourner le GUID par le nom du personnage
+        /// </summary>
+        /// <param name="characterName"></param>
+        /// <returns> Le GUID (INT)</returns>
         public static int getGUID(string characterName)
         {
             OracleConnection conn = Connection.getInstance().conn;
@@ -1094,6 +1114,12 @@ namespace ControleBD
             return -1;
         }
 
+        /// <summary>
+        /// Cette fonction sert a remettre un mot de passe lorsque perdu 
+        /// </summary>
+        /// <param name="userHash"></param>
+        /// <param name="passHash"></param>
+        /// <returns> true ou false </returns>
         public static bool resetPassword(string userHash, string passHash)
         {
             OracleConnection conn = Connection.getInstance().conn;
@@ -1127,7 +1153,10 @@ namespace ControleBD
                 return false;
             }
         }
-
+        /// <summary>
+        ///  Cette classe est celle qui sert à encrypter les liens pour le username lors
+        ///  des inscriptions , et différent usages tel que forgotpassword et resetpassword
+        /// </summary>
         public class Rotation
         {
             int increment; 
@@ -1219,6 +1248,11 @@ namespace ControleBD
             }
         }
 
+        /// <summary>
+        /// Cette function sert à savoir si un username existe deja pour des fins de nom d'utilisateur unique
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns> true ou false </returns>
         public static bool userExiste(string user)
         {
             OracleConnection conn = Connection.getInstance().conn;
@@ -1246,6 +1280,11 @@ namespace ControleBD
             }
         }
 
+        /// <summary>
+        /// Cette function sert à savoir si un email existe deja pour des fins de email unique
+        /// </summary>
+        /// <param name="courriel"></param>
+        /// <returns>return true ou false </returns>
         public static bool courrielExiste(string courriel)
         {
             OracleConnection conn = Connection.getInstance().conn;
@@ -1273,9 +1312,13 @@ namespace ControleBD
                 return false;
             }
         }
+        /// <summary>
+        /// Cette fonction sert a retrouver l'argent de la BD de l'usager utilisant le magasin
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns> L'argent de l'usager ( int )</returns>
         public static int GetJoueurMoney(string username)
-        {
-            
+        {          
             OracleConnection conn = Connection.getInstance().conn;
             string sql = "select MONEY from JOUEURS where USERNAME=:username";
 
@@ -1301,8 +1344,16 @@ namespace ControleBD
             return 0;
             
         }
+        /// <summary>
+        /// Cette fonction update le porte-feuille de l'usager utilisant le magasin
+        /// Update l'argent actuel - le total des articles achetés
+        /// </summary>
+        /// <param name="total"></param>
+        /// <param name="monnaie"></param>
+        /// <param name="jid"></param>
         public static void RetirerTotalFromMoney(int total,int monnaie,int jid)
         {
+            // Variable du nouveau solde
             int nouveauSolde = monnaie - total;
             OracleConnection conn = Connection.getInstance().conn;
             string sql = "UPDATE JOUEURS SET MONEY =:nouveauSolde WHERE JID =:jid";

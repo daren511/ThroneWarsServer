@@ -13,6 +13,7 @@ namespace SiteWebThroneWars
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            // Regarde si la page est parcourue par un mobile
             MobileCheck();
         }
         public void MobileCheck()

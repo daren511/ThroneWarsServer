@@ -17,6 +17,7 @@ namespace SiteWebThroneWars
 
         protected void ChangePassword_Click(object sender, EventArgs e)
         {
+            // Variable des champs textbox
             string text = "";
             bool ok = VerifChamps();
             string user = username.Text;
@@ -24,8 +25,10 @@ namespace SiteWebThroneWars
             string newPass = npassword.Text;
             string confirmNewPass = ncpassword.Text;
 
+            // Si tout les champs sont remplis
             if (ok)
             {
+                //Si le l'ancien mot de passe == le nouveau ou que le nouveau ne correspond pas à la confirmation
                 if (oldpass == newPass || newPass != confirmNewPass)
                 {
                     text = "L'ancien mot de pass et le nouveau sont les mêmes ou le nouveau et la confirmation ne correspondent pas";
@@ -37,7 +40,9 @@ namespace SiteWebThroneWars
                 }
                 else
                 {
+                    // Hash l'ancien password
                     string oldpassHash = Controle.hashPassword(oldpass, null, System.Security.Cryptography.SHA256.Create());
+                    // Verifie si c'est correspondant
                     bool Correspondant = Controle.userPassCorrespondant(user, oldpassHash);
                     if (Correspondant)
                     {
